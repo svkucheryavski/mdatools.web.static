@@ -1,0 +1,283 @@
+/* Common styles */
+html,
+body {
+   height: 100%;
+   padding: 0;
+   margin: 0;
+   min-width: 1200px;
+   overflow: scroll;
+}
+
+body {
+   background: #ffffff;
+   font-family: Helvetica, Arial, Helvetica, sans-serif;
+}
+
+#appPane {
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
+}
+
+#plotsPane, #settingsPane {
+   height: 100%;
+}
+
+#settingsPane {   
+   float: right;
+   width: 250px; 
+   border-left: solid 1px #ddd;
+}
+
+#plotsPane {
+   float: none;
+   width: auto;
+   overflow: hidden;
+}
+
+#plotsPane div.plot-pane.selected{
+   background-color: #ffaa00;
+}
+
+#plotsPane div.plot-container{
+   margin-top: 4px;
+}
+
+/* Styles for Dat.Gui: inherited from dat.gui light theme */ 
+
+.dg.main.taller-than-window .close-button {
+    border-top: 1px solid #ddd;
+}
+
+.dg.main .close-button {
+    background-color: #e8e8e8;
+}
+ 
+.dg.main .close-button:hover {
+    background-color: #ddd;
+}
+
+.dg {
+    color: #555;
+    text-shadow: none !important;
+}
+
+.dg.main::-webkit-scrollbar {
+    background: #fafafa;
+}
+
+.dg.main::-webkit-scrollbar-thumb {
+    background: #bbb;
+}
+ 
+.dg li:not(.folder) {
+    background: #fafafa;
+    border-bottom: 1px solid #ddd;
+}
+ 
+.dg li.save-row .button {
+    text-shadow: none !important;
+}
+
+.dg .cr.function:hover,.dg .cr.boolean:hover {
+    background: #fff;
+}
+ 
+.dg .cr.number input[type=text], 
+.dg .cr.number input[type=text]:hover 
+.dg .cr.number input[type=text]:focus
+{
+    background: #eee;
+    color: #555;
+    text-align: right;
+    padding-right: 3px;
+}
+ 
+  
+.dg .c .slider,
+.dg .c .slider:hover,
+.dg .c .slider:active {
+      background: #eee;
+}
+
+.dg .c .slider .slider-fg,
+.dg .c .slider .slider-fg:focus,
+.dg .c .slider .slider-fg:hover,
+.dg .c .slider:hover .slider-fg,
+.dg .c .slider:hover .slider-fg:focus,
+.dg .c .slider:hover .slider-fg:hover {
+      background: #a0a0a0;
+}
+
+.dg .c .function:hover {
+   background: #eee;
+}
+
+/* Styles for dat.gui - specific for mdatools */
+.dg.a {
+   width: 100%;
+   height: 100%;
+   margin: 0;
+   padding: 0;
+}
+
+.dg .cr.boolean, .dg .cr.string, .dg .cr.number, .dg .cr.object, .dg .cr.function {
+   border-right: solid 1px #d0d0d0;
+   border-left: none;
+   padding-left: 10px;
+}
+
+.dg .cr.function div{
+   height: 100%;
+}
+
+.dg .cr.function .button{
+   height: 1.5em;
+   border-radius: 5px;
+   margin: 5px 5px 5px 2px;
+   border: #e0e0e0 1px solid;
+   width: 5em;
+   line-height: 1.2em;
+   text-align: center;
+   border: solid 1px #c5c5c5;
+   color: #1c2343;
+   background: #ffffff;
+}
+
+.dg .cr.function .button:hover{
+   background: linear-gradient(to bottom, #f6f8ff, #ffffff);
+}
+
+.dg .cr.function div.button::after{
+   content: 'run';
+}
+
+.dg .close-button {
+   display: none;
+}
+
+/* color set for dat gui specific for plot settings */
+
+.plotSettingsPane .dg {
+   color: #b44010;
+   text-shadow: none !important;
+}
+  
+.plotSettingsPane .dg li:not(.folder) {
+   background: #fef8ed;
+   border-bottom: 1px solid #ddd;
+}
+
+.plotSettingsPane .dg li.save-row .button {
+   text-shadow: none !important;
+}
+
+.plotSettingsPane .dg .cr.function:hover,.dg .cr.boolean:hover {
+   background: #fef8ed;
+}
+
+.plotSettingsPane .dg .cr.number input[type=text], 
+.plotSettingsPane .dg .cr.number input[type=text]:hover 
+.plotSettingsPane .dg .cr.number input[type=text]:focus
+{
+   background: #f8f0c0;
+   color: #b44010;
+}
+
+.plotSettingsPane .dg .c .slider,
+.plotSettingsPane .dg .c .slider:hover,
+.plotSettingsPane .dg .c .slider:active {
+   background: #f8f0c0;
+}
+
+.plotSettingsPane .dg .c .slider .slider-fg,
+.plotSettingsPane .dg .c .slider .slider-fg:focus,
+.plotSettingsPane .dg .c .slider .slider-fg:hover,
+.plotSettingsPane .dg .c .slider:hover .slider-fg,
+.plotSettingsPane .dg .c .slider:hover .slider-fg:focus,
+.plotSettingsPane .dg .c .slider:hover .slider-fg:hover {
+   background: orange;
+}
+
+
+/* Styles for splitjs */
+.split {
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   overflow-y: auto;
+   overflow-x: hidden;
+}
+
+.gutter.gutter-horizontal {
+   cursor: col-resize;
+   background: #ddd; 
+}
+
+.gutter.gutter-vertical {
+   cursor: row-resize;
+   background: #ddd;
+}
+
+.split.split-horizontal,
+.gutter.gutter-horizontal {
+   height: 100%;
+   float: left;
+}
+
+/* Help and loading dialogs */
+
+.modalDialog {
+   width: 100%;  
+   height: 100%; 
+   background: rgba(220, 220, 220, 0.75);
+   z-index: 999;
+   position: fixed;
+   top: 0;
+   left: 0;
+   display: none;
+   overflow: auto;
+   font-family: Arial, Helvetica, sans-serif;
+}
+
+#helpDialog {
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 1em;
+}
+
+#helpDialog > div{
+   margin: 10% auto; 
+   padding: 20px;
+   border: 1px solid #888;
+   background: #fefefe;
+   width: 80%; 
+}
+
+#helpDialog p{
+   line-height: 1.35em;
+}
+
+#helpDialog h4{
+   margin-bottom: 0;
+   padding-bottom: 0;
+}
+
+#helpDialog ul li{
+   line-height: 1.5em;
+}
+
+#helpDialog kbd{
+   padding: 1px 3px;
+   border: solid 1px #a0a0a0;
+   border-radius: 2px;
+   background: #f8f8f8;
+}
+
+#loadingDialog > div{   
+   padding: 20%;
+   font-weight: bold;
+   font-size: 1.5em;
+   color: #909090;
+   text-align: center;
+}
+

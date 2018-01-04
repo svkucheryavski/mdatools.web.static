@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <title>PCA app</title>
+   <!-- external JS libraries -->
+   <script type="text/javascript" src="js/dat.gui.min.js"></script>
+   <script type="text/javascript" src="js/split.min.js"></script>
+   <script type="text/javascript" src="js/numeric.min.js"></script>
+   <script type="text/javascript" src="js/plotly.min.js"></script>
+   
+   <!-- mdaweb components -->
+   <script type="text/javascript" src="src/misc.js"></script>
+   <script type="text/javascript" src="src/dataset.js"></script>
+   <script type="text/javascript" src="src/octane.js"></script>
+   <script type="text/javascript" src="src/app.js"></script>   
+   <script type="text/javascript" src="src/pca.js"></script>   
+
+   <!-- styles -->
+   <link rel="stylesheet" type="text/css" href="css/mdatools.css">
+</head>
+<body>
+      <div id="helpDialog" class="modalDialog">
+            <div>
+               <h2>PCA app</h2>
+               <p>
+                  The application allows to apply Principal Component Analysis to several datasets and play with 
+                  main PCA results, including scores, loadings, residuals and explained variance interactively.
+                  The following datasets are currently available:                  
+               </p>
+               <ul>
+                  <li>
+                     <i>People</i> dataset from 
+                     <a href="https://books.google.dk/books?id=Qsn6yjRXOaMC&pg=PR7&lpg=PR7&dq=camo+esbensen+book&source=bl&ots=cC-m8XiU_4&sig=rtno2OA42U1ou1XrlkviR-Nmpfk&hl=da&sa=X&ved=0ahUKEwjSzerO7LHYAhUFAZoKHaOeA-gQ6AEIJjAA#v=onepage&q=camo%20esbensen%20book&f=false">Camo's book</a> 
+                     written by Kim Esbensen &mdash; 32 persons (16 males, 16 females) characterised by 12 parameters.
+                  </li>
+                  <li>
+                     <i>Wine</i> dataset from 
+                     <a href="http://pubs.rsc.org/en/content/articlehtml/2014/ay/c3ay41907j">PCA tutorial</a> by R. Bro 
+                     and A. Smilde &mdash; 44 wine samples characterised by 14 chemical parameters.
+                  </li>
+                  <li>
+                     <i>Octane</i> dataset from 
+                     <a href="https://books.google.dk/books?id=Qsn6yjRXOaMC&pg=PR7&lpg=PR7&dq=camo+esbensen+book&source=bl&ots=cC-m8XiU_4&sig=rtno2OA42U1ou1XrlkviR-Nmpfk&hl=da&sa=X&ved=0ahUKEwjSzerO7LHYAhUFAZoKHaOeA-gQ6AEIJjAA#v=onepage&q=camo%20esbensen%20book&f=false">Camo's book</a> 
+                     written by Kim Esbensen &mdash; NIR absorbance spectra (1100&mdash;1550 nm) of 39 gasoline samples 
+                     with different octane number.
+                  </li>
+               </ul>
+               <h3>Main controls and gestures</h2>
+               <h4>2D plots</h4>
+               <ul>
+                  <li>Drag and drop &mdash; select area and zoom in</li>
+                  <li>Double click &mdash; reset zoom</li>
+               </ul>
+               <h4>Keyboard shortcuts</h4>
+               <ul>
+                  <li><kbd>h</kbd> &mdash; show/hide this help dialog</li>
+               </ul>
+            </div>
+         </div>         
+   <script>
+      let app = new PCAApp({'people':people, 'wine':wine, 'octane':octane}, null);
+   </script>
+</body>
+
+</html>
