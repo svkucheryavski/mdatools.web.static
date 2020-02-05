@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Getting started with mdatools for R</title>
+  <title>Multiclass classification | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualise results for one method, he or she can easily do this for the others." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Getting started with mdatools for R" />
+  <meta property="og:title" content="Multiclass classification | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Getting started with mdatools for R" />
+  <meta name="twitter:title" content="Multiclass classification | Getting started with mdatools for R" />
   
   <meta name="twitter:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualise results for one method, he or she can easily do this for the others." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="what-is-new.html"/>
+<link rel="prev" href="calibration-and-validation.html"/>
+<link rel="next" href="partial-least-squares-regression.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -244,27 +244,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Getting started with mdatools for R</h1>
-<p class="author"><em>Sergey Kucheryavskiy</em></p>
-<p class="date"><em>February 3, 2020</em></p>
-</div>
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>This is a user guide for <em>mdatools</em> — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for <a href="http://en.wikipedia.org/wiki/Chemometrics">Chemometrics</a>. The general idea of the package is to collect the popular chemometric methods and give a similar “user interface” for applying the methods to different datasets. So, if a user knows how to make a model and visualize results for one method, he or she can easily do this for the other methods as well. Usually I update the tutorial when a new version of the package is released, you can track main changes <a href="what-is-new.html#what-is-new">here</a>.</p>
-<p>The current version of tutorial is compatible with version 0.10.0 of the package.</p>
-<p>All methods implemented in the package were tested using well-known datasets. However, there still could be some bugs, in this case please report to <a href="mailto:svkucheryavski@gmail.com">svkucheryavski@gmail.com</a> or use <a href="https://github.com/svkucheryavski/mdatools/issues">Issues tool</a> at GitHub. You are also very welcome to share your comments and suggestions about the package functionality.</p>
-<p>If you want to cite the package, please use the following:</p>
-<p>Sergey Kucheryavskiy, <em>mdatools – R package for chemometrics</em>, Chemometrics and Intelligent Laboratory Systems, Volume 198, 2020 (DOI: <a href="https://dx.doi.org/10.1016/j.chemolab.2020.103937">10.1016/j.chemolab.2020.103937</a>).</p>
+<div id="multiclass-classification" class="section level2">
+<h2>Multiclass classification</h2>
+<p>Several SIMCA models can be combined to a special object <code>simcam</code>, which is used to make a multiclass classification. Besides this, it also allows calculating distance between individual models and a <em>discrimination power</em> — importance of variables to discriminate between any two classes. Let’s see how it works.</p>
+<p>First we create three single-class SIMCA models with individual settings, such as number of
+optimal components and alpha.</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="multiclass-classification.html#cb139-1"></a>m.set =<span class="st"> </span><span class="kw">simca</span>(X.set, <span class="st">&quot;setosa&quot;</span>, <span class="dv">3</span>, <span class="dt">alpha =</span> <span class="fl">0.01</span>)</span>
+<span id="cb139-2"><a href="multiclass-classification.html#cb139-2"></a>m.set =<span class="st"> </span><span class="kw">selectCompNum</span>(m.set, <span class="dv">1</span>)</span>
+<span id="cb139-3"><a href="multiclass-classification.html#cb139-3"></a></span>
+<span id="cb139-4"><a href="multiclass-classification.html#cb139-4"></a>m.vir =<span class="st"> </span><span class="kw">simca</span>(X.vir, <span class="st">&quot;virginica&quot;</span>, <span class="dv">3</span>)</span>
+<span id="cb139-5"><a href="multiclass-classification.html#cb139-5"></a>m.vir =<span class="st"> </span><span class="kw">selectCompNum</span>(m.vir, <span class="dv">2</span>)</span>
+<span id="cb139-6"><a href="multiclass-classification.html#cb139-6"></a></span>
+<span id="cb139-7"><a href="multiclass-classification.html#cb139-7"></a>m.ver =<span class="st"> </span><span class="kw">simca</span>(X.ver, <span class="st">&quot;versicolor&quot;</span>, <span class="dv">3</span>)</span>
+<span id="cb139-8"><a href="multiclass-classification.html#cb139-8"></a>m.ver =<span class="st"> </span><span class="kw">selectCompNum</span>(m.ver, <span class="dv">1</span>)</span></code></pre></div>
+<p>Then we combine the models into a <code>simcam</code> model object. Summary will show the performance on
+calibration set, which is a combination of calibration sets for each of the individual models</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="multiclass-classification.html#cb140-1"></a>mm =<span class="st"> </span><span class="kw">simcam</span>(<span class="kw">list</span>(m.set, m.vir, m.ver))</span>
+<span id="cb140-2"><a href="multiclass-classification.html#cb140-2"></a><span class="kw">summary</span>(mm)</span></code></pre></div>
+<pre><code>## 
+## SIMCA multiple classes classification (class simcam)
+## 
+## Number of classes: 3
+## Info: 
+## 
+## Summary for calibration results
+##            Ncomp TP FP TN FN Spec. Sens. Accuracy
+## setosa         1 25  0 50  0  1.00  1.00     1.00
+## virginica      2 22  3 47  3  0.94  0.88     0.92
+## versicolor     1 25  3 47  0  0.94  1.00     0.96</code></pre>
+<p>Now we apply the combined model to the test set and look at the predictions.</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="multiclass-classification.html#cb142-1"></a>res =<span class="st"> </span><span class="kw">predict</span>(mm, Xt, ct)</span>
+<span id="cb142-2"><a href="multiclass-classification.html#cb142-2"></a><span class="kw">plotPredictions</span>(res)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-96-1.png" width="864" /></p>
+<p>In this case, the predictions are shown only for the number of components each model found optimal. The names of classes along y-axis are the individual models. Similarly we can show the predicted values.</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="multiclass-classification.html#cb143-1"></a><span class="kw">show</span>(res<span class="op">$</span>c.pred[<span class="dv">20</span><span class="op">:</span><span class="dv">30</span>, <span class="dv">1</span>, ])</span></code></pre></div>
+<pre><code>##    setosa virginica versicolor
+## 40      1        -1         -1
+## 42     -1        -1         -1
+## 44      1        -1         -1
+## 46      1        -1         -1
+## 48      1        -1         -1
+## 50      1        -1         -1
+## 52     -1        -1          1
+## 54     -1        -1          1
+## 56     -1        -1          1
+## 58     -1        -1          1
+## 60     -1        -1          1</code></pre>
+<p>Method <code>getConfusionMatrix()</code> is also available in this case.</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="multiclass-classification.html#cb145-1"></a><span class="kw">show</span>(<span class="kw">getConfusionMatrix</span>(res))</span></code></pre></div>
+<pre><code>##            setosa virginica versicolor None
+## setosa         23         0          0    2
+## virginica       0        21          4    4
+## versicolor      0         1         25    0</code></pre>
+<p>There are three additional plots available for multiclass SIMCA model. First of all it is a distance between a selected model and the others.</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="multiclass-classification.html#cb147-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb147-2"><a href="multiclass-classification.html#cb147-2"></a><span class="kw">plotModelDistance</span>(mm, <span class="dv">1</span>)</span>
+<span id="cb147-3"><a href="multiclass-classification.html#cb147-3"></a><span class="kw">plotModelDistance</span>(mm, <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-99-1.png" width="864" />
+The plot shows not a real distance but rather a similarity between a selected model and the others as a ratio of residual variances. You can find more detailed description about how model is calculated in description of the method or in help for <code>plotModelDistance.simcam</code> function.</p>
+<p>The second plot is a discrimination power, mentioned in the beginning of the section.</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="multiclass-classification.html#cb148-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb148-2"><a href="multiclass-classification.html#cb148-2"></a><span class="kw">plotDiscriminationPower</span>(mm, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb148-3"><a href="multiclass-classification.html#cb148-3"></a><span class="kw">plotDiscriminationPower</span>(mm, <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-100-1.png" width="864" /></p>
+<p>And, finally, a Cooman’s plot showing an orthogonal distance, <span class="math inline">\(q\)</span>, from objects to two selected classes/models.</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="multiclass-classification.html#cb149-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb149-2"><a href="multiclass-classification.html#cb149-2"></a><span class="kw">plotCooman</span>(mm, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb149-3"><a href="multiclass-classification.html#cb149-3"></a><span class="kw">plotCooman</span>(mm, <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-101-1.png" width="864" /></p>
+<p>The limits, shown as dashed lines, are computed using chi-square distribution but only for <span class="math inline">\(q\)</span> values.</p>
 
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="what-is-new.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="calibration-and-validation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="partial-least-squares-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

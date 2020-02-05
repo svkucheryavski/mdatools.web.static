@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Getting started with mdatools for R</title>
+  <title>Interval PLS | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualise results for one method, he or she can easily do this for the others." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Getting started with mdatools for R" />
+  <meta property="og:title" content="Interval PLS | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Getting started with mdatools for R" />
+  <meta name="twitter:title" content="Interval PLS | Getting started with mdatools for R" />
   
   <meta name="twitter:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualise results for one method, he or she can easily do this for the others." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="predictions-for-a-new-data.html"/>
 
-<link rel="next" href="what-is-new.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -244,27 +244,92 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Getting started with mdatools for R</h1>
-<p class="author"><em>Sergey Kucheryavskiy</em></p>
-<p class="date"><em>February 3, 2020</em></p>
+<div id="interval-pls" class="section level1">
+<h1>Interval PLS</h1>
+<p>Interval PLS (iPLS) is a variable selection method used mostly for spectroscopic data <a href="https://doi.org/10.1366/0003702001949500">proposed</a> by Lars Noergaard <em>at al</em> in 2000. The main idea is try different parts (or intervals — hence the name) of spectra and their combinations to find the most relevant for prediction of a response variable. There are two algorithms — forward and backward.</p>
+<div id="forward-ipls" class="section level3">
+<h3>Forward iPLS</h3>
+<p>The forward approach works as follows</p>
+<ol style="list-style-type: decimal">
+<li>Split spectral data into <span class="math inline">\(N\)</span> intervals</li>
+<li>Create an empty vector with selected intervals</li>
+<li>Create a model where intervals in the vector (already slected) are combined with one of the rest. If combination improves the model, add this new interval to the vector.</li>
+<li>Repeat previous step until there is no improvements.</li>
+</ol>
+<p>Apparently, when nothing is selected, on step 3 the algorithm simply create model for every interval available. As you can see, iPLS is based on iterative procedure. If you have 20 intervals you need to create 20 models on the first step, 19 models on the second step and so on.</p>
+<p>In <em>mdatools</em>, you can run iPLS selection by using function <code>ipls()</code>. You have to specify matrix with predictors (<code>x</code>) and responses (<code>y</code>), number of components in global model (<code>glob.ncomp</code>), and define the intervals. In addition to that, you can also specify parameters of cross-validation (<code>cv</code>) as well as criterion for selection of optimal number of components (<code>ncomp.selcrit</code>) for local models similar to PLS. Forward iPLS is used as a default algorithm.</p>
+<p>Intervals can be defined using one of the following three parameters: number of intervals (<code>int.num</code>), width of an interval (<code>int.width</code>) or specify start and end of each interval as a two-column matrix with variable indices (<code>int.limits</code>). In addition to that, you can specify maximum number of component for local models (<code>int.ncomp</code>) and maximum number of iterations — so method will stop regardless if you have improvements or not (<code>int.niter</code>). By default the maximum number of iterations is limited to 30.</p>
+<p>Here is an example of applying iPLS for Simdata (for concentration of second chemical component, C2) using 15 intervals.</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="interval-pls.html#cb249-1"></a><span class="kw">data</span>(simdata)</span>
+<span id="cb249-2"><a href="interval-pls.html#cb249-2"></a>X =<span class="st"> </span>simdata<span class="op">$</span>spectra.c</span>
+<span id="cb249-3"><a href="interval-pls.html#cb249-3"></a>y =<span class="st"> </span>simdata<span class="op">$</span>conc.c[, <span class="dv">2</span>, drop =<span class="st"> </span><span class="ot">FALSE</span>]</span>
+<span id="cb249-4"><a href="interval-pls.html#cb249-4"></a></span>
+<span id="cb249-5"><a href="interval-pls.html#cb249-5"></a>m =<span class="st"> </span><span class="kw">ipls</span>(X, y, <span class="dt">glob.ncomp =</span> <span class="dv">4</span>, <span class="dt">int.num =</span> <span class="dv">15</span>)</span></code></pre></div>
+<pre><code>## 
+## Model with all intervals: RMSECV = 0.027572, nLV = 3
+## Iteration   1/ 15... selected interval   6 (RMSECV = 0.030405, nLV = 1)
+## Iteration   2/ 15... selected interval  11 (RMSECV = 0.027882, nLV = 3)
+## Iteration   3/ 15... selected interval   1 (RMSECV = 0.027509, nLV = 3)
+## Iteration   4/ 15... selected interval   2 (RMSECV = 0.027243, nLV = 3)
+## Iteration   5/ 15... selected interval  13 (RMSECV = 0.027210, nLV = 3)
+## Iteration   6/ 15... selected interval  12 (RMSECV = 0.027201, nLV = 2)
+## Iteration   7/ 15... no improvements, stop.</code></pre>
+<p>As you can see, by default method shows information for every step in the console. Use parameter <code>silent = TRUE</code> to change this behaviour. From the example above we can see that the global model had RMSECV = 0.027572 with 3 components. Creating local models with individual intervals gave the best performance with RMSECV = 0.030405 (interval #6). Combination of the interval #6 with interval #11 (next step) gave RMSECV = 0.0027882. The small improvement was obtained for adding 4 more intervals giving final result with RMSECV = 0.027201.</p>
+<p>There are several ways to explore the iPLS results both graphically and numerically. First of all, summary will show full information about the selected interval, including number of variables on both ends:</p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="interval-pls.html#cb251-1"></a><span class="kw">summary</span>(m)</span></code></pre></div>
+<pre><code>## 
+## iPLS variable selection results
+##   Method: forward
+##   Validation: venetian blinds with 10 segments
+##   Number of intervals: 15
+##   Number of selected intervals: 6
+##   RMSECV for global model: 0.027572 (3 LVs)
+##   RMSECV for optimized model: 0.027201 (2 LVs)
+## 
+## Summary for selection procedure:
+##    n start end selected nComp       RMSE    R2
+## 1  0     1 150    FALSE     3 0.02757234 0.965
+## 2  6    51  60     TRUE     3 0.03040477 0.958
+## 3 11   101 110     TRUE     3 0.02788242 0.965
+## 4  1     1  10     TRUE     3 0.02750915 0.966
+## 5  2    11  20     TRUE     2 0.02724335 0.966
+## 6 13   121 130     TRUE     2 0.02720961 0.966
+## 7 12   111 120     TRUE     2 0.02720089 0.966</code></pre>
+<p>Also you can see the first step (performance of individual models) and the selected interval by using function <code>plot()</code> for the whole model:</p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="interval-pls.html#cb253-1"></a><span class="kw">plot</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-161-1.png" width="864" /></p>
+<p>The red curve here is an average spectrum. Bars are intervals, height of each bar corresponds to RMSECV value for local model made using variables from this interval as predictors (first iteration). Number inside each bar is number of PLS components used in the local model. Green color shows intervals which have been selected at the end and dashed line shows error for the global model</p>
+<p>You can also see the improvements of RMSECV graphically:</p>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="interval-pls.html#cb254-1"></a><span class="kw">plotRMSE</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-162-1.png" width="864" /></p>
+<p>Dashed line in this case shows RMSECV value for the global model with all intervals included.</p>
+<p>Fnally, you can get both seleced intervals and corresponding indices of variables (all of them not just interval limits) as follows:</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="interval-pls.html#cb255-1"></a><span class="kw">show</span>(m<span class="op">$</span>int.selected)</span></code></pre></div>
+<pre><code>## [1]  6 11  1  2 13 12</code></pre>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="interval-pls.html#cb257-1"></a><span class="kw">show</span>(m<span class="op">$</span>var.selected)</span></code></pre></div>
+<pre><code>##  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
+## [21]  51  52  53  54  55  56  57  58  59  60 101 102 103 104 105 106 107 108 109 110
+## [41] 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130</code></pre>
+<p>Also the model object contains the initial global model for full data (<code>m$gm</code>) and final PLS model made for the all selected data, <code>m$om</code>. In the following example I compare RMSE plots for both:</p>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="interval-pls.html#cb259-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb259-2"><a href="interval-pls.html#cb259-2"></a><span class="kw">plotRMSE</span>(m<span class="op">$</span>gm)</span>
+<span id="cb259-3"><a href="interval-pls.html#cb259-3"></a><span class="kw">plotRMSE</span>(m<span class="op">$</span>om)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-164-1.png" width="864" /></p>
 </div>
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>This is a user guide for <em>mdatools</em> — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for <a href="http://en.wikipedia.org/wiki/Chemometrics">Chemometrics</a>. The general idea of the package is to collect the popular chemometric methods and give a similar “user interface” for applying the methods to different datasets. So, if a user knows how to make a model and visualize results for one method, he or she can easily do this for the other methods as well. Usually I update the tutorial when a new version of the package is released, you can track main changes <a href="what-is-new.html#what-is-new">here</a>.</p>
-<p>The current version of tutorial is compatible with version 0.10.0 of the package.</p>
-<p>All methods implemented in the package were tested using well-known datasets. However, there still could be some bugs, in this case please report to <a href="mailto:svkucheryavski@gmail.com">svkucheryavski@gmail.com</a> or use <a href="https://github.com/svkucheryavski/mdatools/issues">Issues tool</a> at GitHub. You are also very welcome to share your comments and suggestions about the package functionality.</p>
-<p>If you want to cite the package, please use the following:</p>
-<p>Sergey Kucheryavskiy, <em>mdatools – R package for chemometrics</em>, Chemometrics and Intelligent Laboratory Systems, Volume 198, 2020 (DOI: <a href="https://dx.doi.org/10.1016/j.chemolab.2020.103937">10.1016/j.chemolab.2020.103937</a>).</p>
+<div id="backward-ipls" class="section level3">
+<h3>Backward iPLS</h3>
+<p>In backward iPLS, instead of selecting best intervals we do the opposite — get rid of the worst. So, at the first step, we try to remove every interval from the data to see if it gives any improvement. If it does, we keep it as exluded and then try to remove another one. The process continues until no improvement is observed.</p>
+<p>To use the backward method simply specify parameter <code>method = "backward"</code> when call <code>ipls()</code>. The rest, including plots and statistics, is the same.</p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="predictions-for-a-new-data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="what-is-new.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

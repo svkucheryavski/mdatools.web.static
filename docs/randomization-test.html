@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Getting started with mdatools for R</title>
+  <title>Randomization test | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualise results for one method, he or she can easily do this for the others." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Getting started with mdatools for R" />
+  <meta property="og:title" content="Randomization test | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Getting started with mdatools for R" />
+  <meta name="twitter:title" content="Randomization test | Getting started with mdatools for R" />
   
   <meta name="twitter:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualise results for one method, he or she can easily do this for the others." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="what-is-new.html"/>
+<link rel="prev" href="distances-and-outlier-detection.html"/>
+<link rel="next" href="pls-discriminant-analysis.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -244,27 +244,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Getting started with mdatools for R</h1>
-<p class="author"><em>Sergey Kucheryavskiy</em></p>
-<p class="date"><em>February 3, 2020</em></p>
-</div>
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>This is a user guide for <em>mdatools</em> — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for <a href="http://en.wikipedia.org/wiki/Chemometrics">Chemometrics</a>. The general idea of the package is to collect the popular chemometric methods and give a similar “user interface” for applying the methods to different datasets. So, if a user knows how to make a model and visualize results for one method, he or she can easily do this for the other methods as well. Usually I update the tutorial when a new version of the package is released, you can track main changes <a href="what-is-new.html#what-is-new">here</a>.</p>
-<p>The current version of tutorial is compatible with version 0.10.0 of the package.</p>
-<p>All methods implemented in the package were tested using well-known datasets. However, there still could be some bugs, in this case please report to <a href="mailto:svkucheryavski@gmail.com">svkucheryavski@gmail.com</a> or use <a href="https://github.com/svkucheryavski/mdatools/issues">Issues tool</a> at GitHub. You are also very welcome to share your comments and suggestions about the package functionality.</p>
-<p>If you want to cite the package, please use the following:</p>
-<p>Sergey Kucheryavskiy, <em>mdatools – R package for chemometrics</em>, Chemometrics and Intelligent Laboratory Systems, Volume 198, 2020 (DOI: <a href="https://dx.doi.org/10.1016/j.chemolab.2020.103937">10.1016/j.chemolab.2020.103937</a>).</p>
+<div id="randomization-test" class="section level2">
+<h2>Randomization test</h2>
+<p>Another additional option for PLS regression implemented in <em>mdatools</em> is randomization test for estimation of optimal number of components. The descirption of the method can be found in <a href="https://onlinelibrary.wiley.com/doi/10.1002/cem.1086">this paper</a>. The basic idea is that for each component from 1 to <code>ncomp</code> we compute a statistic <span class="math inline">\(T\)</span>, which is a covariance between X-scores and the reference Y values. After that, this procedure is repeated for randomly permuted Y-values and distribution of the statistic is obtained. A parameter <code>alpha</code> is computed to show how often the statistic <span class="math inline">\(T\)</span>, calculated for permuted Y-values, is the same or higher than the same statistic, calculated for original response values without permutations.</p>
+<p>If a component is important, then the covariance for unpermuted data should be larger than the covariance for permuted data and therefore the value for <code>alpha</code> will be quie small (there is still a small chance to get similar covariance). This makes <code>alpha</code> very similar to p-value in a statistical test.</p>
+<p>The function <code>randtest()</code> calculates alpha for each component, the values can be observed using <code>summary()</code> or <code>plot()</code> functions. There are also several functions, allowing e.g. to show distribution of statistics and the critical value for each component.</p>
+<p>In example of code below most of the functions are shown.</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="randomization-test.html#cb215-1"></a><span class="kw">data</span>(people)</span>
+<span id="cb215-2"><a href="randomization-test.html#cb215-2"></a></span>
+<span id="cb215-3"><a href="randomization-test.html#cb215-3"></a>y =<span class="st"> </span>people[, <span class="dv">4</span>, drop =<span class="st"> </span><span class="ot">FALSE</span>]</span>
+<span id="cb215-4"><a href="randomization-test.html#cb215-4"></a>X =<span class="st"> </span>people[, <span class="dv">-4</span>]</span>
+<span id="cb215-5"><a href="randomization-test.html#cb215-5"></a></span>
+<span id="cb215-6"><a href="randomization-test.html#cb215-6"></a>r =<span class="st"> </span><span class="kw">randtest</span>(X, y, <span class="dt">ncomp =</span> <span class="dv">5</span>, <span class="dt">nperm =</span> <span class="dv">1000</span>, <span class="dt">silent =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb215-7"><a href="randomization-test.html#cb215-7"></a><span class="kw">summary</span>(r)</span></code></pre></div>
+<pre><code>## 
+## Summary for permutation test results
+## Number of permutations: 1000
+## Suggested number of components: 4
+## 
+## Statistics and alpha values:
+##              Comp 1    Comp 2    Comp 3    Comp 4     Comp 5
+## Alpha     0.0560000 0.0010000 0.0000000 0.0000000 0.11400000
+## Statistic 0.2403837 0.4349094 0.3571243 0.2678767 0.03603819</code></pre>
+<p>As you can see, <code>alpha</code> is very small for components 2–4 and then jumps up.</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="randomization-test.html#cb217-1"></a><span class="kw">par</span>( <span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb217-2"><a href="randomization-test.html#cb217-2"></a><span class="kw">plotHist</span>(r, <span class="dt">ncomp =</span> <span class="dv">3</span>)</span>
+<span id="cb217-3"><a href="randomization-test.html#cb217-3"></a><span class="kw">plotHist</span>(r, <span class="dt">ncomp =</span> <span class="dv">5</span>)</span>
+<span id="cb217-4"><a href="randomization-test.html#cb217-4"></a><span class="kw">plotCorr</span>(r, <span class="dt">ncomp =</span> <span class="dv">3</span>)</span>
+<span id="cb217-5"><a href="randomization-test.html#cb217-5"></a><span class="kw">plotCorr</span>(r, <span class="dt">ncomp =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-139-1.png" width="864" /></p>
 
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="what-is-new.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="distances-and-outlier-detection.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pls-discriminant-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

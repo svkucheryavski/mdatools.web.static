@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Getting started with mdatools for R</title>
+  <title>Plots for groups of objects | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualise results for one method, he or she can easily do this for the others." />
   <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Getting started with mdatools for R" />
+  <meta property="og:title" content="Plots for groups of objects | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Getting started with mdatools for R" />
+  <meta name="twitter:title" content="Plots for groups of objects | Getting started with mdatools for R" />
   
   <meta name="twitter:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualise results for one method, he or she can easily do this for the others." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="what-is-new.html"/>
+<link rel="prev" href="simple-plots.html"/>
+<link rel="next" href="working-with-images.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -244,27 +244,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Getting started with mdatools for R</h1>
-<p class="author"><em>Sergey Kucheryavskiy</em></p>
-<p class="date"><em>February 3, 2020</em></p>
+<div id="plots-for-groups-of-objects" class="section level2">
+<h2>Plots for groups of objects</h2>
+<p>The package has another method for creating plots, <code>mdaplotg()</code>, which aims at making plots for groups of objects. It can be several groups of points, lines or bars, where every group has its own attributes, such as color, marker, line type and width, etc. There is a simple criterion to distinguish between the simple and group plots: group plots usually need a legend and simple plots — not. The <code>mdaplotg()</code> method allows to do a lot of things (e.g. split data into groups, add a legend and labels, etc) much easier and this section will show most of the details.</p>
+<p>I will use the <em>People</em> dataset for most of the examples, so let us load it first, add some attributes, and exclude column with income.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="plots-for-groups-of-objects.html#cb31-1"></a><span class="kw">data</span>(people)</span>
+<span id="cb31-2"><a href="plots-for-groups-of-objects.html#cb31-2"></a><span class="kw">attr</span>(people, <span class="st">&quot;name&quot;</span>) =<span class="st"> &quot;People&quot;</span></span>
+<span id="cb31-3"><a href="plots-for-groups-of-objects.html#cb31-3"></a><span class="kw">attr</span>(people, <span class="st">&quot;xaxis.name&quot;</span>) =<span class="st"> &quot;Parameters&quot;</span></span>
+<span id="cb31-4"><a href="plots-for-groups-of-objects.html#cb31-4"></a></span>
+<span id="cb31-5"><a href="plots-for-groups-of-objects.html#cb31-5"></a>people =<span class="st"> </span><span class="kw">mda.exclcols</span>(people, <span class="st">&quot;Income&quot;</span>)</span></code></pre></div>
+<p>There are three ways to provide data sets for making the group plots. Let’s discuss them first and then talk about some extra features.</p>
+<div id="one-matrix-or-data-frame" class="section level3">
+<h3>One matrix or data frame</h3>
+<p>If dataset is a matrix or a data frame, <code>mdaplotg()</code> will make a line, scatter-line or a bar plot, considering every row as a separate group. This can be useful, when, for example, you want to show how explained variance depends on a number of components for calibration and test set, or how loadings for first two components look like. If you want to change any parameters, like <code>pch</code>, <code>lty</code>, <code>lwd</code>, <code>col</code> or similar you need to provide either a vector with value for each group or one value for all groups. Axis limits, ticks, ticklabels, etc. can be defined similarly to the simple plots. Here are some examples.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="plots-for-groups-of-objects.html#cb32-1"></a><span class="co"># let&#39;s create a small subset of the people data</span></span>
+<span id="cb32-2"><a href="plots-for-groups-of-objects.html#cb32-2"></a>p =<span class="st"> </span><span class="kw">mda.subset</span>(people, <span class="dt">subset =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>), <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;Height&quot;</span>, <span class="st">&quot;Weight&quot;</span>, <span class="st">&quot;Shoesize&quot;</span>, <span class="st">&quot;Swim&quot;</span>))</span>
+<span id="cb32-3"><a href="plots-for-groups-of-objects.html#cb32-3"></a></span>
+<span id="cb32-4"><a href="plots-for-groups-of-objects.html#cb32-4"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb32-5"><a href="plots-for-groups-of-objects.html#cb32-5"></a><span class="kw">mdaplotg</span>(p, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb32-6"><a href="plots-for-groups-of-objects.html#cb32-6"></a><span class="kw">mdaplotg</span>(p, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</span>
+<span id="cb32-7"><a href="plots-for-groups-of-objects.html#cb32-7"></a><span class="kw">mdaplotg</span>(p, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">xticks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</span>
+<span id="cb32-8"><a href="plots-for-groups-of-objects.html#cb32-8"></a><span class="kw">mdaplotg</span>(p, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="dt">pch =</span> <span class="dv">1</span>,</span>
+<span id="cb32-9"><a href="plots-for-groups-of-objects.html#cb32-9"></a>         <span class="dt">xticks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">xticklabels =</span> <span class="kw">colnames</span>(p))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="864" /></p>
+<p>As you can see, <code>mdaplotg()</code> automatically created the legend and set colors, line parameters, etc. correctly. You can change position of the legend using same names as for basic <code>legend()</code> command from R, or hide it using parameter <code>show.legend = FALSE</code>, as it is shown below.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="plots-for-groups-of-objects.html#cb33-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb33-2"><a href="plots-for-groups-of-objects.html#cb33-2"></a><span class="kw">mdaplotg</span>(p, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span>
+<span id="cb33-3"><a href="plots-for-groups-of-objects.html#cb33-3"></a><span class="kw">mdaplotg</span>(p, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">legend.position =</span> <span class="st">&quot;bottomleft&quot;</span>)</span>
+<span id="cb33-4"><a href="plots-for-groups-of-objects.html#cb33-4"></a><span class="kw">mdaplotg</span>(p, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb33-5"><a href="plots-for-groups-of-objects.html#cb33-5"></a><span class="kw">mdaplotg</span>(p, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">show.legend =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="864" /></p>
+<p>Group plot also allow to show labels, in this case they can be either values, names or indices of the columns.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="plots-for-groups-of-objects.html#cb34-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb34-2"><a href="plots-for-groups-of-objects.html#cb34-2"></a><span class="kw">mdaplotg</span>(p, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb34-3"><a href="plots-for-groups-of-objects.html#cb34-3"></a><span class="kw">mdaplotg</span>(p, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>, <span class="dt">labels =</span> <span class="st">&quot;indices&quot;</span>)</span>
+<span id="cb34-4"><a href="plots-for-groups-of-objects.html#cb34-4"></a><span class="kw">mdaplotg</span>(p, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>, <span class="dt">labels =</span> <span class="st">&quot;values&quot;</span>)</span>
+<span id="cb34-5"><a href="plots-for-groups-of-objects.html#cb34-5"></a><span class="kw">mdaplotg</span>(p, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>, <span class="dt">labels =</span> <span class="st">&quot;values&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="864" /></p>
 </div>
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>This is a user guide for <em>mdatools</em> — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for <a href="http://en.wikipedia.org/wiki/Chemometrics">Chemometrics</a>. The general idea of the package is to collect the popular chemometric methods and give a similar “user interface” for applying the methods to different datasets. So, if a user knows how to make a model and visualize results for one method, he or she can easily do this for the other methods as well. Usually I update the tutorial when a new version of the package is released, you can track main changes <a href="what-is-new.html#what-is-new">here</a>.</p>
-<p>The current version of tutorial is compatible with version 0.10.0 of the package.</p>
-<p>All methods implemented in the package were tested using well-known datasets. However, there still could be some bugs, in this case please report to <a href="mailto:svkucheryavski@gmail.com">svkucheryavski@gmail.com</a> or use <a href="https://github.com/svkucheryavski/mdatools/issues">Issues tool</a> at GitHub. You are also very welcome to share your comments and suggestions about the package functionality.</p>
-<p>If you want to cite the package, please use the following:</p>
-<p>Sergey Kucheryavskiy, <em>mdatools – R package for chemometrics</em>, Chemometrics and Intelligent Laboratory Systems, Volume 198, 2020 (DOI: <a href="https://dx.doi.org/10.1016/j.chemolab.2020.103937">10.1016/j.chemolab.2020.103937</a>).</p>
+<div id="list-with-matrices-or-data-frames" class="section level3">
+<h3>List with matrices or data frames</h3>
+<p>In this case every element of the list will be treated as a separate group. This way allow to make scatter plots as well and line plots with several line in a group. Barplot can be also made but in this case first row from each datasets will be used. If you use names when create the list, the names will be taken as legend labels, otherwise method will look at attribute <code>"name"</code> for each data set.</p>
+<p>In the example below we split <em>People</em> data to males and females and show the group plots.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="plots-for-groups-of-objects.html#cb35-1"></a>sex =<span class="st"> </span>people[, <span class="st">&quot;Sex&quot;</span>]</span>
+<span id="cb35-2"><a href="plots-for-groups-of-objects.html#cb35-2"></a>m =<span class="st"> </span><span class="kw">mda.subset</span>(people, <span class="dt">subset =</span> sex <span class="op">==</span><span class="st"> </span><span class="dv">-1</span>)</span>
+<span id="cb35-3"><a href="plots-for-groups-of-objects.html#cb35-3"></a>f =<span class="st"> </span><span class="kw">mda.subset</span>(people, <span class="dt">subset =</span> sex <span class="op">==</span><span class="st">  </span><span class="dv">1</span>)</span>
+<span id="cb35-4"><a href="plots-for-groups-of-objects.html#cb35-4"></a>d =<span class="st"> </span><span class="kw">list</span>(<span class="dt">male =</span> m, <span class="dt">female =</span> f)</span>
+<span id="cb35-5"><a href="plots-for-groups-of-objects.html#cb35-5"></a></span>
+<span id="cb35-6"><a href="plots-for-groups-of-objects.html#cb35-6"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb35-7"><a href="plots-for-groups-of-objects.html#cb35-7"></a><span class="kw">mdaplotg</span>(d, <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>)</span>
+<span id="cb35-8"><a href="plots-for-groups-of-objects.html#cb35-8"></a><span class="kw">mdaplotg</span>(d, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</span>
+<span id="cb35-9"><a href="plots-for-groups-of-objects.html#cb35-9"></a><span class="kw">mdaplotg</span>(d, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>)</span>
+<span id="cb35-10"><a href="plots-for-groups-of-objects.html#cb35-10"></a><span class="kw">mdaplotg</span>(d, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="dt">pch =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="864" /></p>
+<p>Most of the things described in the previous subsection will work similarly for this case. We will just add a bit more details on how labels and excluded rows are processed for the scatter plots. By default labels are row names or indices. In <code>mdaplotg()</code> you can not provide vector with manual values, so the best way to change them is to assign them as the row names. Indices are unique within each group, so if you have, e.g. three groups of points, there will be three points with index “1”, three with “2”, etc.</p>
+</div>
+<div id="use-factors-to-split-a-dataset-into-groups" class="section level3">
+<h3>Use factors to split a dataset into groups</h3>
+<p>One more way to split data set into groups is to provide one or several factor columns using argument <code>groupby</code>. In this case <code>mdaplotg()</code> will find all combinations of the factor levels and split rows of dataset to the corresponding groups. In the example below we use variables <em>Region</em> and <em>Sex</em> to make plots for four groups.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="plots-for-groups-of-objects.html#cb36-1"></a>sex =<span class="st"> </span><span class="kw">factor</span>(people[, <span class="st">&quot;Sex&quot;</span>], <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>))</span>
+<span id="cb36-2"><a href="plots-for-groups-of-objects.html#cb36-2"></a>reg =<span class="st"> </span><span class="kw">factor</span>(people[, <span class="st">&quot;Region&quot;</span>], <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;M&quot;</span>))</span>
+<span id="cb36-3"><a href="plots-for-groups-of-objects.html#cb36-3"></a>groups =<span class="st"> </span><span class="kw">data.frame</span>(sex, reg)</span>
+<span id="cb36-4"><a href="plots-for-groups-of-objects.html#cb36-4"></a></span>
+<span id="cb36-5"><a href="plots-for-groups-of-objects.html#cb36-5"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb36-6"><a href="plots-for-groups-of-objects.html#cb36-6"></a><span class="kw">mdaplotg</span>(people, <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>, <span class="dt">groupby =</span> groups)</span>
+<span id="cb36-7"><a href="plots-for-groups-of-objects.html#cb36-7"></a><span class="kw">mdaplotg</span>(people, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">groupby =</span> groups)</span>
+<span id="cb36-8"><a href="plots-for-groups-of-objects.html#cb36-8"></a><span class="kw">mdaplotg</span>(people, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">groupby =</span> groups)</span>
+<span id="cb36-9"><a href="plots-for-groups-of-objects.html#cb36-9"></a><span class="kw">mdaplotg</span>(people, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">groupby =</span> groups)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="864" /></p>
+<p>All parameters, described before, will work the same way in this case.</p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="what-is-new.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="simple-plots.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="working-with-images.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
