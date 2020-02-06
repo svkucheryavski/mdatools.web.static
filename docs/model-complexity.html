@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="residuals-and-critical-limits.html"/>
+<link rel="prev" href="distances-and-critical-limits.html"/>
 <link rel="next" href="randomized-pca-algorithms.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -178,10 +178,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html"><i class="fa fa-check"></i>Residuals and critical limits</a>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
 <ul>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-complexity.html"><a href="model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="randomized-pca-algorithms.html"><a href="randomized-pca-algorithms.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
@@ -210,8 +210,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="variable-selection.html"><a href="variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
 <li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
 <ul>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-x-decomposition"><i class="fa fa-check"></i>Residual distance for X-decomposition</a></li>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Residual distance for Y-decomposition and total distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-x-decomposition"><i class="fa fa-check"></i>Distance plot for X-decomposition</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Distance plot for Y-decomposition and total distance</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="randomization-test.html"><a href="randomization-test.html"><i class="fa fa-check"></i>Randomization test</a></li>
 </ul></li>
@@ -248,7 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Model complexity</h2>
 <p>Complexity of PCA model is first of all associated with selection of proper (optimal) number of components. The optimal number should explain the systematic variation of the data points and keep the random variation uncaptured. Traditionally, number of components is selected by investigation of eigenvalues or looking at plot with residual or explained variance. However, this is quite complicated issue and result of selection depends very much on quality of data and purpose PCA model is built for. More details can be found in <a href="">this paper</a>.</p>
 <p>In <em>mdatools</em> there are several additional instruments both to select proper number of components as well as to see if, for example, new data (test set or new set of measurements) are well fitted by the model.</p>
-<p>The first tool is the use of degrees of freedom for orthogonal and score distances, we mentioned earlier. A simple plot, where number of the degrees of freedom is plotted agains number of components in PCA model can often reveal the presence of overfitting very clearly — the DoF value for the orthogonal distance, <span class="math inline">\(N_q\)</span> jumps up significantly.</p>
+<p>The first tool is the use of degrees of freedom for orthogonal and score distances, we mentioned earlier. A simple plot, where number of the degrees of freedom is plotted against number of components in PCA model can often reveal the presence of overfitting very clearly — the DoF value for the orthogonal distance, <span class="math inline">\(N_q\)</span> jumps up significantly.</p>
 <p>The code and its outcome below show how to make such plot separately for each distance and for both. The first plot in the figure is conventional plot with variance explained by each component. The model is made for <em>Simdata</em>, where it is known that the optimal number of components is two.</p>
 <div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="model-complexity.html#cb93-1"></a><span class="kw">data</span>(simdata)</span>
 <span id="cb93-2"><a href="model-complexity.html#cb93-2"></a>Xc =<span class="st"> </span>simdata<span class="op">$</span>spectra.c</span>
@@ -260,7 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb93-8"><a href="model-complexity.html#cb93-8"></a><span class="kw">plotQDoF</span>(m)</span>
 <span id="cb93-9"><a href="model-complexity.html#cb93-9"></a><span class="kw">plotT2DoF</span>(m)</span>
 <span id="cb93-10"><a href="model-complexity.html#cb93-10"></a><span class="kw">plotDistDoF</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-73-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-74-1.png" width="864" /></p>
 <p>As you can see from the plots, second component explains less than 1% of variance and can be considered as non significant. However, plot for <span class="math inline">\(N_q\)</span> shows a clear break at <span class="math inline">\(A = 3\)</span>, indicating that both first and second PCs are important. The <span class="math inline">\(N_h\)</span> values in this case do not provide any useful information.</p>
 <p>In case if outliers present it can be useful to investigate the plot for <span class="math inline">\(N_q\)</span> using classical and robust methods for estimation as shown in example below.</p>
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="model-complexity.html#cb94-1"></a>m =<span class="st"> </span><span class="kw">pca</span>(Xc, <span class="dv">6</span>)</span>
@@ -270,7 +270,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb94-5"><a href="model-complexity.html#cb94-5"></a></span>
 <span id="cb94-6"><a href="model-complexity.html#cb94-6"></a>m =<span class="st"> </span><span class="kw">setDistanceLimits</span>(m, <span class="dt">lim.type =</span> <span class="st">&quot;ddrobust&quot;</span>)</span>
 <span id="cb94-7"><a href="model-complexity.html#cb94-7"></a><span class="kw">plotQDoF</span>(m, <span class="dt">main =</span> <span class="st">&quot;DoF plot (robust)&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
 <p>In this case both plots demonstrate quite similar behavior, however if they look differently it can be an indicator for a presence of outliers. The DoF plots work only if data driven method is used for computing of critical limits.</p>
 <p>Another way to see how many components are optimal in the model, in case if you have a test set or just a new set of measurements you want to use the model with, is to employ the Extreme plot. The plot shows a number of extreme values for different <span class="math inline">\(\alpha\)</span>. Imaging that you make several distance plots with different <span class="math inline">\(\alpha\)</span> values and count how many objects model found as extremes. On the other hand you know that the expected value is <span class="math inline">\(\alpha I\)</span>. If you plot the number of extreme values vs. the expected number — this is the Extreme plot.</p>
 <p>If model captures systematic variation both for calibration and test set the points on this plot will lie within a confidence ellipse shown using light blue color. However, if model is overfitted, the points are getting outside it.</p>
@@ -282,7 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb95-5"><a href="model-complexity.html#cb95-5"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb95-6"><a href="model-complexity.html#cb95-6"></a><span class="kw">plotExtreme</span>(m, <span class="dt">comp =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">main =</span> <span class="st">&quot;Extreme plot (cal)&quot;</span>)</span>
 <span id="cb95-7"><a href="model-complexity.html#cb95-7"></a><span class="kw">plotExtreme</span>(m, <span class="dt">comp =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">res =</span> m<span class="op">$</span>res<span class="op">$</span>test, <span class="dt">main =</span> <span class="st">&quot;Extreme plot (test)&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-75-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-76-1.png" width="864" /></p>
 <p>As you can see, in case of calibration set, the points are lying withing confidence ellipse for both <span class="math inline">\(A = 2\)</span> and <span class="math inline">\(A = 3\)</span>. However for the test set, the picture is quite different. In case of <span class="math inline">\(A = 2\)</span> most of the points are inside the interval, but for <span class="math inline">\(A = 3\)</span> all of them are clearly outside.</p>
 <p>We hope these new tools will make the use of PCA more efficient.</p>
 </div>
@@ -291,7 +291,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="residuals-and-critical-limits.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="distances-and-critical-limits.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="randomized-pca-algorithms.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

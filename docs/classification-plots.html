@@ -178,10 +178,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html"><i class="fa fa-check"></i>Residuals and critical limits</a>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
 <ul>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-complexity.html"><a href="model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="randomized-pca-algorithms.html"><a href="randomized-pca-algorithms.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
@@ -210,8 +210,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="variable-selection.html"><a href="variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
 <li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
 <ul>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-x-decomposition"><i class="fa fa-check"></i>Residual distance for X-decomposition</a></li>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Residual distance for Y-decomposition and total distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-x-decomposition"><i class="fa fa-check"></i>Distance plot for X-decomposition</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Distance plot for Y-decomposition and total distance</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="randomization-test.html"><a href="randomization-test.html"><i class="fa fa-check"></i>Randomization test</a></li>
 </ul></li>
@@ -250,12 +250,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="classification-plots.html#cb236-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb236-2"><a href="classification-plots.html#cb236-2"></a><span class="kw">plotPredictions</span>(m.all)</span>
 <span id="cb236-3"><a href="classification-plots.html#cb236-3"></a><span class="kw">plotPredictions</span>(m.vir)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-150-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-151-1.png" width="864" /></p>
 <p>In case of multiple classes model you can select which class to show the predictions for.</p>
 <div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="classification-plots.html#cb237-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb237-2"><a href="classification-plots.html#cb237-2"></a><span class="kw">plotPredictions</span>(m.all, <span class="dt">nc =</span> <span class="dv">1</span>)</span>
 <span id="cb237-3"><a href="classification-plots.html#cb237-3"></a><span class="kw">plotPredictions</span>(m.all, <span class="dt">nc =</span> <span class="dv">3</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-151-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-152-1.png" width="864" /></p>
 </div>
             </section>
 

@@ -178,10 +178,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html"><i class="fa fa-check"></i>Residuals and critical limits</a>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
 <ul>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-complexity.html"><a href="model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="randomized-pca-algorithms.html"><a href="randomized-pca-algorithms.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
@@ -210,8 +210,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="variable-selection.html"><a href="variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
 <li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
 <ul>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-x-decomposition"><i class="fa fa-check"></i>Residual distance for X-decomposition</a></li>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Residual distance for Y-decomposition and total distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-x-decomposition"><i class="fa fa-check"></i>Distance plot for X-decomposition</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Distance plot for Y-decomposition and total distance</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="randomization-test.html"><a href="randomization-test.html"><i class="fa fa-check"></i>Randomization test</a></li>
 </ul></li>
@@ -254,12 +254,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb238-5"><a href="performance-plots.html#cb238-5"></a><span class="kw">plotSensitivity</span>(m.vir)</span>
 <span id="cb238-6"><a href="performance-plots.html#cb238-6"></a><span class="kw">plotSpecificity</span>(m.all, <span class="dt">nc =</span> <span class="dv">2</span>)</span>
 <span id="cb238-7"><a href="performance-plots.html#cb238-7"></a><span class="kw">plotSpecificity</span>(m.vir)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-152-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-153-1.png" width="864" /></p>
 <p>As usual, you can also change type of plot to line or scatter-line, change colors, etc. All PLS regression plots, including RMSE, X and Y variance, etc. will also work smoothly with PLS-DA models or results. You can also show regression coefficients like in the example below. To show regression coefficients for particular class you need to provide its number using parameter <code>ny</code> (the reason we use <code>ny</code> and not <code>nc</code> here is that this plot is inherited from PLS model). So in our example both plots show regression coefficients for prediction of virginica objects (left obtained using multiple class model and right — using one class model).</p>
 <div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="performance-plots.html#cb239-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb239-2"><a href="performance-plots.html#cb239-2"></a><span class="kw">plotRegcoeffs</span>(m.all, <span class="dt">ncomp =</span> <span class="dv">3</span>, <span class="dt">ny =</span> <span class="dv">3</span>)</span>
 <span id="cb239-3"><a href="performance-plots.html#cb239-3"></a><span class="kw">plotRegcoeffs</span>(m.vir, <span class="dt">ncomp =</span> <span class="dv">1</span>, <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-153-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-154-1.png" width="864" /></p>
 </div>
             </section>
 

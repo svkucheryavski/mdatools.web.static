@@ -178,10 +178,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html"><i class="fa fa-check"></i>Residuals and critical limits</a>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
 <ul>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-complexity.html"><a href="model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="randomized-pca-algorithms.html"><a href="randomized-pca-algorithms.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
@@ -210,8 +210,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="variable-selection.html"><a href="variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
 <li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
 <ul>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-x-decomposition"><i class="fa fa-check"></i>Residual distance for X-decomposition</a></li>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Residual distance for Y-decomposition and total distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-x-decomposition"><i class="fa fa-check"></i>Distance plot for X-decomposition</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Distance plot for Y-decomposition and total distance</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="randomization-test.html"><a href="randomization-test.html"><i class="fa fa-check"></i>Randomization test</a></li>
 </ul></li>
@@ -263,12 +263,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb98-2"><a href="randomized-pca-algorithms.html#cb98-2"></a>t1 =<span class="st"> </span><span class="kw">system.time</span>({m1 =<span class="st"> </span><span class="kw">pca</span>(D, <span class="dt">ncomp =</span> <span class="dv">2</span>)})</span>
 <span id="cb98-3"><a href="randomized-pca-algorithms.html#cb98-3"></a><span class="kw">show</span>(t1)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  29.572   0.621  30.205</code></pre>
+##  28.644   0.587  29.241</code></pre>
 <div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="randomized-pca-algorithms.html#cb100-1"></a><span class="co"># randomized SVD with p = 5 and q = 1</span></span>
 <span id="cb100-2"><a href="randomized-pca-algorithms.html#cb100-2"></a>t2 =<span class="st"> </span><span class="kw">system.time</span>({m2 =<span class="st"> </span><span class="kw">pca</span>(D, <span class="dt">ncomp =</span> <span class="dv">2</span>, <span class="dt">rand =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>))})</span>
 <span id="cb100-3"><a href="randomized-pca-algorithms.html#cb100-3"></a><span class="kw">show</span>(t2)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   4.578   0.348   4.927</code></pre>
+##   4.625   0.361   4.987</code></pre>
 <div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="randomized-pca-algorithms.html#cb102-1"></a><span class="co"># compare variances</span></span>
 <span id="cb102-2"><a href="randomized-pca-algorithms.html#cb102-2"></a><span class="kw">summary</span>(m1)</span></code></pre></div>
 <pre><code>## 
@@ -278,8 +278,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Gamma: 0.01
 ## 
 ##        Eigenvals Expvar Cumexpvar Nq Nh
-## Comp 1   112.307  62.13     62.13  4  2
-## Comp 2    49.712  27.50     89.63  6  5</code></pre>
+## Comp 1   112.275  61.98     61.98  4  2
+## Comp 2    50.150  27.68     89.67  6  5</code></pre>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="randomized-pca-algorithms.html#cb104-1"></a><span class="kw">summary</span>(m2)</span></code></pre></div>
 <pre><code>## 
 ## Summary for PCA model (class pca)
@@ -290,72 +290,72 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Gamma: 0.01
 ## 
 ##        Eigenvals Expvar Cumexpvar Nq Nh
-## Comp 1   112.307  62.13     62.13  4  2
-## Comp 2    49.712  27.50     89.63  6  5</code></pre>
+## Comp 1   112.275  61.98     61.98  4  2
+## Comp 2    50.150  27.68     89.67  6  5</code></pre>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="randomized-pca-algorithms.html#cb106-1"></a><span class="co"># compare loadings</span></span>
 <span id="cb106-2"><a href="randomized-pca-algorithms.html#cb106-2"></a><span class="kw">show</span>(m1<span class="op">$</span>loadings[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ])</span></code></pre></div>
 <pre><code>##              Comp 1        Comp 2
-##  [1,]  1.710969e-05 -3.800219e-05
-##  [2,] -3.852587e-02  6.937847e-02
-##  [3,] -6.803052e-02  7.533560e-02
-##  [4,] -8.136179e-02  1.266225e-02
-##  [5,] -7.469821e-02 -6.090483e-02
-##  [6,] -4.963403e-02 -7.783121e-02
-##  [7,] -1.180042e-02 -2.267555e-02
-##  [8,]  2.900967e-02  5.319157e-02
-##  [9,]  6.224124e-02  7.995579e-02
-## [10,]  7.995324e-02  3.237319e-02</code></pre>
+##  [1,]  8.773646e-06  1.240509e-05
+##  [2,] -3.905689e-02  6.913582e-02
+##  [3,] -6.862710e-02  7.476595e-02
+##  [4,] -8.136834e-02  1.194268e-02
+##  [5,] -7.423821e-02 -6.142574e-02
+##  [6,] -4.878990e-02 -7.819725e-02
+##  [7,] -1.162548e-02 -2.280476e-02
+##  [8,]  2.853790e-02  5.350519e-02
+##  [9,]  6.169641e-02  8.057262e-02
+## [10,]  7.968973e-02  3.333249e-02</code></pre>
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="randomized-pca-algorithms.html#cb108-1"></a><span class="kw">show</span>(m2<span class="op">$</span>loadings[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ])</span></code></pre></div>
 <pre><code>##              Comp 1        Comp 2
-##  [1,] -1.710969e-05  3.800219e-05
-##  [2,]  3.852587e-02 -6.937847e-02
-##  [3,]  6.803052e-02 -7.533560e-02
-##  [4,]  8.136179e-02 -1.266225e-02
-##  [5,]  7.469821e-02  6.090483e-02
-##  [6,]  4.963403e-02  7.783121e-02
-##  [7,]  1.180042e-02  2.267555e-02
-##  [8,] -2.900967e-02 -5.319157e-02
-##  [9,] -6.224124e-02 -7.995579e-02
-## [10,] -7.995324e-02 -3.237319e-02</code></pre>
+##  [1,] -8.773646e-06  1.240509e-05
+##  [2,]  3.905689e-02  6.913582e-02
+##  [3,]  6.862710e-02  7.476595e-02
+##  [4,]  8.136834e-02  1.194268e-02
+##  [5,]  7.423821e-02 -6.142574e-02
+##  [6,]  4.878990e-02 -7.819725e-02
+##  [7,]  1.162548e-02 -2.280476e-02
+##  [8,] -2.853790e-02  5.350519e-02
+##  [9,] -6.169641e-02  8.057262e-02
+## [10,] -7.968973e-02  3.333249e-02</code></pre>
 <p>As you can see the explained variance values, eigenvalues and loadings are identical in the two models and the second method is several times faster.</p>
-<p>It is possible to make PCA decomposition even faster if only loadings and scores are needed. In this case you can use method <code>pca.run()</code> and skip other steps, like calculation of residuals, variances, critical limits and so on. But in this case data matrix must be centered (and scaled if necessary) manually prior to the decomposition. Here is an example using the data generated in previous code.</p>
+<p>It is possible to make PCA decomposition even faster if only loadings and scores are needed. In this case you can use method <code>pca.run()</code> and skip other steps, like calculation of distances, variances, critical limits and so on. But in this case data matrix must be centered (and scaled if necessary) manually prior to the decomposition. Here is an example using the data generated in previous code.</p>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="randomized-pca-algorithms.html#cb110-1"></a>D =<span class="st"> </span><span class="kw">scale</span>(D, <span class="dt">center =</span> <span class="ot">TRUE</span>, <span class="dt">scale =</span> <span class="ot">FALSE</span>)</span>
 <span id="cb110-2"><a href="randomized-pca-algorithms.html#cb110-2"></a></span>
 <span id="cb110-3"><a href="randomized-pca-algorithms.html#cb110-3"></a><span class="co"># conventional SVD</span></span>
 <span id="cb110-4"><a href="randomized-pca-algorithms.html#cb110-4"></a>t1 =<span class="st"> </span><span class="kw">system.time</span>({m1 =<span class="st"> </span><span class="kw">pca.run</span>(D, <span class="dt">method =</span> <span class="st">&quot;svd&quot;</span>, <span class="dt">ncomp =</span> <span class="dv">2</span>)})</span>
 <span id="cb110-5"><a href="randomized-pca-algorithms.html#cb110-5"></a><span class="kw">show</span>(t1)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  25.419   0.064  25.488</code></pre>
+##  26.712   0.014  26.756</code></pre>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="randomized-pca-algorithms.html#cb112-1"></a><span class="co"># randomized SVD with p = 5 and q = 1</span></span>
 <span id="cb112-2"><a href="randomized-pca-algorithms.html#cb112-2"></a>t2 =<span class="st"> </span><span class="kw">system.time</span>({m2 =<span class="st"> </span><span class="kw">pca.run</span>(D, <span class="dt">method =</span> <span class="st">&quot;svd&quot;</span>, <span class="dt">ncomp =</span> <span class="dv">2</span>, <span class="dt">rand =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>))})</span>
 <span id="cb112-3"><a href="randomized-pca-algorithms.html#cb112-3"></a><span class="kw">show</span>(t2)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   2.225   0.020   2.246</code></pre>
+##   2.263   0.011   2.275</code></pre>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="randomized-pca-algorithms.html#cb114-1"></a><span class="co"># compare loadings</span></span>
 <span id="cb114-2"><a href="randomized-pca-algorithms.html#cb114-2"></a><span class="kw">show</span>(m1<span class="op">$</span>loadings[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ])</span></code></pre></div>
 <pre><code>##                [,1]          [,2]
-##  [1,]  1.710969e-05 -3.800219e-05
-##  [2,] -3.852587e-02  6.937847e-02
-##  [3,] -6.803052e-02  7.533560e-02
-##  [4,] -8.136179e-02  1.266225e-02
-##  [5,] -7.469821e-02 -6.090483e-02
-##  [6,] -4.963403e-02 -7.783121e-02
-##  [7,] -1.180042e-02 -2.267555e-02
-##  [8,]  2.900967e-02  5.319157e-02
-##  [9,]  6.224124e-02  7.995579e-02
-## [10,]  7.995324e-02  3.237319e-02</code></pre>
+##  [1,]  8.773646e-06  1.240509e-05
+##  [2,] -3.905689e-02  6.913582e-02
+##  [3,] -6.862710e-02  7.476595e-02
+##  [4,] -8.136834e-02  1.194268e-02
+##  [5,] -7.423821e-02 -6.142574e-02
+##  [6,] -4.878990e-02 -7.819725e-02
+##  [7,] -1.162548e-02 -2.280476e-02
+##  [8,]  2.853790e-02  5.350519e-02
+##  [9,]  6.169641e-02  8.057262e-02
+## [10,]  7.968973e-02  3.333249e-02</code></pre>
 <div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="randomized-pca-algorithms.html#cb116-1"></a><span class="kw">show</span>(m2<span class="op">$</span>loadings[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ])</span></code></pre></div>
 <pre><code>##                [,1]          [,2]
-##  [1,] -1.710969e-05  3.800219e-05
-##  [2,]  3.852587e-02 -6.937847e-02
-##  [3,]  6.803052e-02 -7.533560e-02
-##  [4,]  8.136179e-02 -1.266225e-02
-##  [5,]  7.469821e-02  6.090483e-02
-##  [6,]  4.963403e-02  7.783121e-02
-##  [7,]  1.180042e-02  2.267555e-02
-##  [8,] -2.900967e-02 -5.319157e-02
-##  [9,] -6.224124e-02 -7.995579e-02
-## [10,] -7.995324e-02 -3.237319e-02</code></pre>
+##  [1,] -8.773646e-06  1.240509e-05
+##  [2,]  3.905689e-02  6.913582e-02
+##  [3,]  6.862710e-02  7.476595e-02
+##  [4,]  8.136834e-02  1.194268e-02
+##  [5,]  7.423821e-02 -6.142574e-02
+##  [6,]  4.878990e-02 -7.819725e-02
+##  [7,]  1.162548e-02 -2.280476e-02
+##  [8,] -2.853790e-02  5.350519e-02
+##  [9,] -6.169641e-02  8.057262e-02
+## [10,] -7.968973e-02  3.333249e-02</code></pre>
 <p>As you can see the loadings are still the same but the probabilistic algorithm is about 10 times faster. The exact difference depends on computer of course so if you run these examples on your compute you will get a bit different results, however the randomized algorithm will always be a clear winner.</p>
 
 </div>

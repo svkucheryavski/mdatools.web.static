@@ -178,10 +178,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html"><i class="fa fa-check"></i>Residuals and critical limits</a>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
 <ul>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-complexity.html"><a href="model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="randomized-pca-algorithms.html"><a href="randomized-pca-algorithms.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
@@ -210,8 +210,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="variable-selection.html"><a href="variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
 <li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
 <ul>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-x-decomposition"><i class="fa fa-check"></i>Residual distance for X-decomposition</a></li>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Residual distance for Y-decomposition and total distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-x-decomposition"><i class="fa fa-check"></i>Distance plot for X-decomposition</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Distance plot for Y-decomposition and total distance</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="randomization-test.html"><a href="randomization-test.html"><i class="fa fa-check"></i>Randomization test</a></li>
 </ul></li>
@@ -297,24 +297,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 7 12   111 120     TRUE     2 0.02720089 0.966</code></pre>
 <p>Also you can see the first step (performance of individual models) and the selected interval by using function <code>plot()</code> for the whole model:</p>
 <div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="interval-pls.html#cb253-1"></a><span class="kw">plot</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-161-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-162-1.png" width="864" /></p>
 <p>The red curve here is an average spectrum. Bars are intervals, height of each bar corresponds to RMSECV value for local model made using variables from this interval as predictors (first iteration). Number inside each bar is number of PLS components used in the local model. Green color shows intervals which have been selected at the end and dashed line shows error for the global model</p>
 <p>You can also see the improvements of RMSECV graphically:</p>
 <div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="interval-pls.html#cb254-1"></a><span class="kw">plotRMSE</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-162-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-163-1.png" width="864" /></p>
 <p>Dashed line in this case shows RMSECV value for the global model with all intervals included.</p>
 <p>Fnally, you can get both seleced intervals and corresponding indices of variables (all of them not just interval limits) as follows:</p>
 <div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="interval-pls.html#cb255-1"></a><span class="kw">show</span>(m<span class="op">$</span>int.selected)</span></code></pre></div>
 <pre><code>## [1]  6 11  1  2 13 12</code></pre>
 <div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="interval-pls.html#cb257-1"></a><span class="kw">show</span>(m<span class="op">$</span>var.selected)</span></code></pre></div>
-<pre><code>##  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
-## [21]  51  52  53  54  55  56  57  58  59  60 101 102 103 104 105 106 107 108 109 110
-## [41] 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130</code></pre>
+<pre><code>##  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
+## [16]  16  17  18  19  20  51  52  53  54  55  56  57  58  59  60
+## [31] 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115
+## [46] 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130</code></pre>
 <p>Also the model object contains the initial global model for full data (<code>m$gm</code>) and final PLS model made for the all selected data, <code>m$om</code>. In the following example I compare RMSE plots for both:</p>
 <div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="interval-pls.html#cb259-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb259-2"><a href="interval-pls.html#cb259-2"></a><span class="kw">plotRMSE</span>(m<span class="op">$</span>gm)</span>
 <span id="cb259-3"><a href="interval-pls.html#cb259-3"></a><span class="kw">plotRMSE</span>(m<span class="op">$</span>om)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-164-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-165-1.png" width="864" /></p>
 </div>
 <div id="backward-ipls" class="section level3">
 <h3>Backward iPLS</h3>

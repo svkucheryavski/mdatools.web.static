@@ -178,10 +178,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html"><i class="fa fa-check"></i>Residuals and critical limits</a>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
 <ul>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-complexity.html"><a href="model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="randomized-pca-algorithms.html"><a href="randomized-pca-algorithms.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
@@ -210,8 +210,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="variable-selection.html"><a href="variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
 <li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
 <ul>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-x-decomposition"><i class="fa fa-check"></i>Residual distance for X-decomposition</a></li>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Residual distance for Y-decomposition and total distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-x-decomposition"><i class="fa fa-check"></i>Distance plot for X-decomposition</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Distance plot for Y-decomposition and total distance</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="randomization-test.html"><a href="randomization-test.html"><i class="fa fa-check"></i>Randomization test</a></li>
 </ul></li>
@@ -261,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="models-and-results.html#cb53-1"></a>m =<span class="st"> </span><span class="kw">pca</span>(Xc, <span class="dv">7</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">info =</span> <span class="st">&quot;People PCA model&quot;</span>)</span>
 <span id="cb53-2"><a href="models-and-results.html#cb53-2"></a>m =<span class="st"> </span><span class="kw">selectCompNum</span>(m, <span class="dv">5</span>)</span></code></pre></div>
 <p>Here <code>pca</code> is a function that builds (calibrates) a PCA model and returns the model object. In terms of programming we can call function <code>pca()</code> a constructor of pca model object. The constructor has one mandatory argument — matrix or data frame with data values. Other arguments are optional as they all have default values. In this case we use three additional: <code>7</code> is maximum number of components, <code>scale = TRUE</code> tells that data values should be standardized (centering is a default option) and <code>info</code> allows to add a short text with information about the model which can be shown later.</p>
-<p>Function <code>selectCompNum()</code> allows to select an “optimal” number of components for the model. In our case we calibrate model with 7 principal components however, e.g. after investigation of explained variance, we found out that 5 components is optimal. In this case we have two choices. Either recalibrate the model using 5 components or use the model that is calibrated already but “tell” the model that 5 components is the optimal number. In this case the model will keep all results calculated for 7 components but will use optimal number of components when necessary. For example, when showing residuals plot for the model. Or when PCA model is used in SIMCA classification.</p>
+<p>Function <code>selectCompNum()</code> allows to select an “optimal” number of components for the model. In our case we calibrate model with 7 principal components however, e.g. after investigation of explained variance, we found out that 5 components is optimal. In this case we have two choices. Either recalibrate the model using 5 components or use the model that is calibrated already but “tell” the model that 5 components is the optimal number. In this case the model will keep all results calculated for 7 components but will use optimal number of components when necessary. For example, when showing distance plot for the model. Or when PCA model is used in SIMCA classification.</p>
 <p>Function <code>print</code> prints the model object info:</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="models-and-results.html#cb54-1"></a><span class="kw">print</span>(m)</span></code></pre></div>
 <pre><code>## 
@@ -283,7 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $Qlim - critical values and parameters for orthogonal distances
 ## $T2lim - critical values and parameters for score distances
 ## $res - list with model results (calibration, test)</code></pre>
-<p>As you can see, there are no scores, explained variance values, residuals and so on. Because they actually are not part of a PCA model, they are results of applying the model to a calibration set. But loadings, eigenvalues, number of calculated and selected principal components, vectors for centering and scaling the data, significance levels and corresponding critical limits for distances — all are parameters of the model.</p>
+<p>As you can see, there are no scores, explained variance values, distances and so on. Because they actually are not part of a PCA model, they are results of applying the model to a calibration set. But loadings, eigenvalues, number of calculated and selected principal components, vectors for centering and scaling the data, significance levels and corresponding critical limits for distances — all are parameters of the model.</p>
 <p>Here is an example how to get values from loading matrix having the model object:</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="models-and-results.html#cb56-1"></a>m<span class="op">$</span>loadings[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</span></code></pre></div>
 <pre><code>##              Comp 1      Comp 2      Comp 3      Comp 4

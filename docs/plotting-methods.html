@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="models-and-results.html"/>
-<link rel="next" href="residuals-and-critical-limits.html"/>
+<link rel="next" href="distances-and-critical-limits.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -178,10 +178,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
 <li class="chapter" data-level="" data-path="plotting-methods.html"><a href="plotting-methods.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html"><i class="fa fa-check"></i>Residuals and critical limits</a>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
 <ul>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
-<li class="chapter" data-level="" data-path="residuals-and-critical-limits.html"><a href="residuals-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-critical-limits.html"><a href="distances-and-critical-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="model-complexity.html"><a href="model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="randomized-pca-algorithms.html"><a href="randomized-pca-algorithms.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
@@ -210,8 +210,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="variable-selection.html"><a href="variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
 <li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
 <ul>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-x-decomposition"><i class="fa fa-check"></i>Residual distance for X-decomposition</a></li>
-<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#residual-distance-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Residual distance for Y-decomposition and total distance</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-x-decomposition"><i class="fa fa-check"></i>Distance plot for X-decomposition</a></li>
+<li class="chapter" data-level="" data-path="distances-and-outlier-detection.html"><a href="distances-and-outlier-detection.html#distance-plot-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Distance plot for Y-decomposition and total distance</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="randomization-test.html"><a href="randomization-test.html"><i class="fa fa-check"></i>Randomization test</a></li>
 </ul></li>
@@ -269,7 +269,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb76-11"><a href="plotting-methods.html#cb76-11"></a>p =<span class="st"> </span><span class="kw">plotScores</span>(m<span class="op">$</span>res<span class="op">$</span>cal, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">cgroup =</span> g)</span>
 <span id="cb76-12"><a href="plotting-methods.html#cb76-12"></a><span class="kw">plotConfidenceEllipse</span>(p)</span>
 <span id="cb76-13"><a href="plotting-methods.html#cb76-13"></a></span>
-<span id="cb76-14"><a href="plotting-methods.html#cb76-14"></a><span class="co"># residuals plot for calibration results with labels</span></span>
+<span id="cb76-14"><a href="plotting-methods.html#cb76-14"></a><span class="co"># distance plot for calibration results with labels</span></span>
 <span id="cb76-15"><a href="plotting-methods.html#cb76-15"></a><span class="kw">plotResiduals</span>(m<span class="op">$</span>res<span class="op">$</span>cal, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
 <span id="cb76-16"><a href="plotting-methods.html#cb76-16"></a></span>
 <span id="cb76-17"><a href="plotting-methods.html#cb76-17"></a><span class="co"># variance plot for calibration results with values as labels</span></span>
@@ -283,8 +283,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb77-4"><a href="plotting-methods.html#cb77-4"></a><span class="kw">plotResiduals</span>(m, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>))</span>
 <span id="cb77-5"><a href="plotting-methods.html#cb77-5"></a><span class="kw">plotVariance</span>(m, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>, <span class="dt">labels =</span> <span class="st">&quot;values&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-59-1.png" width="864" /></p>
-<p>As you can see, for in case of model, residual distance plot also shows some lines. These are critical limits, all details about them as well as how to use the distance/residuals plot will be given in the next section.</p>
-<p>If model plot show values from calibration and validation objects (e.g. scores, residuals, etc), you can specify which result to show. In the example below left plot is made using default settings, for the right plot we specified list with results explicitly. Note, that the results should be specified as a named list.</p>
+<p>As you can see, for in case of model, the distance plot also shows some lines. These are critical limits, all details about them as well as how to use the distance/residuals plot will be given in the next section.</p>
+<p>If model plot show values from calibration and validation objects (e.g. scores, distances, etc), you can specify which result to show. In the example below left plot is made using default settings, for the right plot we specified list with results explicitly. Note, that the results should be specified as a named list.</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="plotting-methods.html#cb78-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb78-2"><a href="plotting-methods.html#cb78-2"></a><span class="kw">plotResiduals</span>(m)</span>
 <span id="cb78-3"><a href="plotting-methods.html#cb78-3"></a><span class="kw">plotResiduals</span>(m, <span class="dt">res =</span> <span class="kw">list</span>(<span class="st">&quot;train&quot;</span> =<span class="st"> </span>m<span class="op">$</span>res<span class="op">$</span>cal))</span></code></pre></div>
@@ -295,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>You do not have to care about labels, names, legend and so on, however if necessary you can always change almost anything. See full list of methods available for PCA by <code>?pca</code> and <code>?pcares</code>.</p>
 <div id="support-for-images" class="section level3">
 <h3>Support for images</h3>
-<p>As it was described before, images can be used as a source of data for any methods. In this case the results, related to objects/pixels will inherit all necessary attributes and can be show as images as well. In the example below we make a PCA model for the image data from the package and show scores and residuals.</p>
+<p>As it was described before, images can be used as a source of data for any methods. In this case the results, related to objects/pixels will inherit all necessary attributes and can be show as images as well. In the example below we make a PCA model for the image data from the package and show scores and distances.</p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="plotting-methods.html#cb80-1"></a><span class="kw">data</span>(pellets)</span>
 <span id="cb80-2"><a href="plotting-methods.html#cb80-2"></a>X =<span class="st"> </span><span class="kw">mda.im2data</span>(pellets)</span>
 <span id="cb80-3"><a href="plotting-methods.html#cb80-3"></a>m =<span class="st"> </span><span class="kw">pca</span>(X)</span>
@@ -324,7 +324,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="excluding-rows-and-columns" class="section level3">
 <h3>Excluding rows and columns</h3>
 <p>PCA as well as any other method in <code>mdatools</code> can exclude rows and columns from calculations. For example, it can be useful if you have some candidates for outliers or do variable selection and do not want to remove rows and columns from the data matrix. In this case you can just specify two additional parameters, <code>exclcols</code> and <code>exclrows</code>, using either numbers or names of rows/columns to be excluded. You can also specify a vector with logical values (all <code>TRUE</code>s will be excluded).</p>
-<p>The excluded rows are not used for creating a model and calculaiton of model’s and results’ performance (e.g. explained variance). However main results (for PCA — scores and residual distances) are calculated for these rows as well and set hidden, so you will not see them on plots. You can always show values for excluded objects by using parameter <code>show.excluded = TRUE</code>. It is implemented via attributes “known” for plotting methods from <em>mdatools</em> so if you use e.g. <em>ggplot2</em> you will see all points.</p>
+<p>The excluded rows are not used for creating a model and calculation of model’s and results’ performance (e.g. explained variance). However main results (for PCA — scores and residual distances) are calculated for these rows as well and set hidden, so you will not see them on plots. You can always show values for excluded objects by using parameter <code>show.excluded = TRUE</code>. It is implemented via attributes “known” for plotting methods from <em>mdatools</em> so if you use e.g. <em>ggplot2</em> you will see all points.</p>
 <p>The excluded columns are not used for any calculations either, the corresponding results (e.g. loadings or regression coefficients) will have zero values for such columns and be also hidden on plots. Here is a simple example.</p>
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="plotting-methods.html#cb82-1"></a><span class="kw">data</span>(people)</span>
 <span id="cb82-2"><a href="plotting-methods.html#cb82-2"></a></span>
@@ -340,19 +340,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Here is the matrix with loadings, note that variable <code>Income</code> has zeros for loadings and the matrix has attribute <code>exclrows</code> set to 6 (which is a position of the variable):</p>
 <div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="plotting-methods.html#cb83-1"></a><span class="co"># show matrix with loadings (look at row Income and attribute &quot;exclrows&quot;)</span></span>
 <span id="cb83-2"><a href="plotting-methods.html#cb83-2"></a><span class="kw">show</span>(m<span class="op">$</span>loadings)</span></code></pre></div>
-<pre><code>##                Comp 1      Comp 2       Comp 3      Comp 4      Comp 5
-## Height   -0.386393327  0.10697019 -0.004829174  0.12693029 -0.13128331
-## Weight   -0.391013398  0.07820097  0.051916032  0.04049593 -0.14757465
-## Hairleng  0.350435073 -0.11623295 -0.103852349 -0.04969503 -0.73669997
-## Shoesize -0.385424793  0.13805817 -0.069172117  0.01049098 -0.17075488
-## Age      -0.103466285  0.18964288 -0.337243182 -0.89254403 -0.02998028
-## Income    0.000000000  0.00000000  0.000000000  0.00000000  0.00000000
-## Beer     -0.317356319 -0.38259695  0.044338872 -0.03908064 -0.21419831
-## Wine      0.140711271  0.57861817 -0.059833970  0.12347379 -0.41488773
-## Sex       0.364537185 -0.23838610  0.010818891  0.04025631 -0.18263577
-## Swim     -0.377470722  0.04330411  0.008151288  0.18149268 -0.30163601
-## Region    0.140581701  0.60435183  0.040969200  0.15147464  0.17857614
-## IQ        0.009849911  0.09372132  0.927669306 -0.32978247 -0.11815762
+<pre><code>##                Comp 1      Comp 2       Comp 3      Comp 4
+## Height   -0.386393327  0.10697019 -0.004829174  0.12693029
+## Weight   -0.391013398  0.07820097  0.051916032  0.04049593
+## Hairleng  0.350435073 -0.11623295 -0.103852349 -0.04969503
+## Shoesize -0.385424793  0.13805817 -0.069172117  0.01049098
+## Age      -0.103466285  0.18964288 -0.337243182 -0.89254403
+## Income    0.000000000  0.00000000  0.000000000  0.00000000
+## Beer     -0.317356319 -0.38259695  0.044338872 -0.03908064
+## Wine      0.140711271  0.57861817 -0.059833970  0.12347379
+## Sex       0.364537185 -0.23838610  0.010818891  0.04025631
+## Swim     -0.377470722  0.04330411  0.008151288  0.18149268
+## Region    0.140581701  0.60435183  0.040969200  0.15147464
+## IQ        0.009849911  0.09372132  0.927669306 -0.32978247
+##               Comp 5
+## Height   -0.13128331
+## Weight   -0.14757465
+## Hairleng -0.73669997
+## Shoesize -0.17075488
+## Age      -0.02998028
+## Income    0.00000000
+## Beer     -0.21419831
+## Wine     -0.41488773
+## Sex      -0.18263577
+## Swim     -0.30163601
+## Region    0.17857614
+## IQ       -0.11815762
 ## attr(,&quot;exclrows&quot;)
 ## [1] 6
 ## attr(,&quot;name&quot;)
@@ -370,7 +383,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="models-and-results.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="residuals-and-critical-limits.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="distances-and-critical-limits.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
