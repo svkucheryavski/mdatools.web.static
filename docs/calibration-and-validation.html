@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-02-03" />
+<meta name="date" content="2020-03-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -249,8 +249,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The model calibration is similar to PCA, but there are several additional arguments, which are important for classification. First of all it is a class name, which is a second mandatory argument. Class name is a string, which can be used later e.g. for identifying class members for testing. The second important argument is a level of significance, <code>alpha</code>. This parameter is used for calculation of statistical limits and can be considered as probability for false negatives. The default value is 0.05. Finally the parameter <code>lim.type</code> allows to select the method for computing critical limits for the distances, as it is described in the <a href="distances-and-critical-limits.html#distances-and-critical-limits">PCA chapter</a>. By default <code>lim.type = "ddmoments"</code> as in PCA.</p>
 <p>In this chapter as well as for describing other classification methods we will use a famous Iris dataset, available in R. The dataset includes 150 measurements of three Iris species: <em>Setosa</em>, <em>Virginica</em> and <em>Versicola</em>. The measurements are length and width of petals and sepals in cm. Use <code>?iris</code> for more details.</p>
 <p>Let’s get the data and split it to calibration and test sets.</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="calibration-and-validation.html#cb118-1"></a><span class="kw">data</span>(iris)</span>
-<span id="cb118-2"><a href="calibration-and-validation.html#cb118-2"></a><span class="kw">head</span>(iris)</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="calibration-and-validation.html#cb120-1"></a><span class="kw">data</span>(iris)</span>
+<span id="cb120-2"><a href="calibration-and-validation.html#cb120-2"></a><span class="kw">head</span>(iris)</span></code></pre></div>
 <pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ## 1          5.1         3.5          1.4         0.2  setosa
 ## 2          4.9         3.0          1.4         0.2  setosa
@@ -258,22 +258,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4          4.6         3.1          1.5         0.2  setosa
 ## 5          5.0         3.6          1.4         0.2  setosa
 ## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="calibration-and-validation.html#cb120-1"></a><span class="co"># generate indices for calibration set</span></span>
-<span id="cb120-2"><a href="calibration-and-validation.html#cb120-2"></a>idx =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(iris), <span class="dt">by =</span> <span class="dv">2</span>)</span>
-<span id="cb120-3"><a href="calibration-and-validation.html#cb120-3"></a></span>
-<span id="cb120-4"><a href="calibration-and-validation.html#cb120-4"></a><span class="co"># split the values</span></span>
-<span id="cb120-5"><a href="calibration-and-validation.html#cb120-5"></a>Xc =<span class="st"> </span>iris[idx, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</span>
-<span id="cb120-6"><a href="calibration-and-validation.html#cb120-6"></a>cc =<span class="st"> </span>iris[idx, <span class="dv">5</span>]</span>
-<span id="cb120-7"><a href="calibration-and-validation.html#cb120-7"></a></span>
-<span id="cb120-8"><a href="calibration-and-validation.html#cb120-8"></a>Xt =<span class="st"> </span>iris[<span class="op">-</span>idx, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</span>
-<span id="cb120-9"><a href="calibration-and-validation.html#cb120-9"></a>ct =<span class="st"> </span>iris[<span class="op">-</span>idx, <span class="dv">5</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="calibration-and-validation.html#cb122-1"></a><span class="co"># generate indices for calibration set</span></span>
+<span id="cb122-2"><a href="calibration-and-validation.html#cb122-2"></a>idx =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(iris), <span class="dt">by =</span> <span class="dv">2</span>)</span>
+<span id="cb122-3"><a href="calibration-and-validation.html#cb122-3"></a></span>
+<span id="cb122-4"><a href="calibration-and-validation.html#cb122-4"></a><span class="co"># split the values</span></span>
+<span id="cb122-5"><a href="calibration-and-validation.html#cb122-5"></a>Xc =<span class="st"> </span>iris[idx, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</span>
+<span id="cb122-6"><a href="calibration-and-validation.html#cb122-6"></a>cc =<span class="st"> </span>iris[idx, <span class="dv">5</span>]</span>
+<span id="cb122-7"><a href="calibration-and-validation.html#cb122-7"></a></span>
+<span id="cb122-8"><a href="calibration-and-validation.html#cb122-8"></a>Xt =<span class="st"> </span>iris[<span class="op">-</span>idx, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</span>
+<span id="cb122-9"><a href="calibration-and-validation.html#cb122-9"></a>ct =<span class="st"> </span>iris[<span class="op">-</span>idx, <span class="dv">5</span>]</span></code></pre></div>
 <p>Now, because for calibration we need only objects belonging to a class, we will split the <code>X.c</code> into three matrices — one for each species. The data is ordered by the species, so it can be done relatively easy by taking every 25 rows.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="calibration-and-validation.html#cb121-1"></a>X.set =<span class="st"> </span>Xc[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>, ]</span>
-<span id="cb121-2"><a href="calibration-and-validation.html#cb121-2"></a>X.ver =<span class="st"> </span>Xc[<span class="dv">26</span><span class="op">:</span><span class="dv">50</span>, ]</span>
-<span id="cb121-3"><a href="calibration-and-validation.html#cb121-3"></a>X.vir =<span class="st"> </span>Xc[<span class="dv">51</span><span class="op">:</span><span class="dv">75</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="calibration-and-validation.html#cb123-1"></a>X.set =<span class="st"> </span>Xc[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>, ]</span>
+<span id="cb123-2"><a href="calibration-and-validation.html#cb123-2"></a>X.ver =<span class="st"> </span>Xc[<span class="dv">26</span><span class="op">:</span><span class="dv">50</span>, ]</span>
+<span id="cb123-3"><a href="calibration-and-validation.html#cb123-3"></a>X.vir =<span class="st"> </span>Xc[<span class="dv">51</span><span class="op">:</span><span class="dv">75</span>, ]</span></code></pre></div>
 <p>Let’s start with creating a model for class <em>Versicolor</em> and exploring available statistics and plots. In this case default values for method and significance level to compute the critical limits (<code>lim.type = "ddmoments"</code> and <code>alpha = 0.05</code>) are used.</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="calibration-and-validation.html#cb122-1"></a>m =<span class="st"> </span><span class="kw">simca</span>(X.ver, <span class="st">&quot;versicolor&quot;</span>, <span class="dt">ncomp =</span> <span class="dv">3</span>)</span>
-<span id="cb122-2"><a href="calibration-and-validation.html#cb122-2"></a><span class="kw">summary</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="calibration-and-validation.html#cb124-1"></a>m =<span class="st"> </span><span class="kw">simca</span>(X.ver, <span class="st">&quot;versicolor&quot;</span>, <span class="dt">ncomp =</span> <span class="dv">3</span>)</span>
+<span id="cb124-2"><a href="calibration-and-validation.html#cb124-2"></a><span class="kw">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## SIMCA model for class &#39;versicolor&#39; summary
 ## 
@@ -287,14 +287,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Cal   8.45     98.82 23  0  0  2    NA  0.92     0.92</code></pre>
 <p>The summary output shows (in addition to explained and cumulative explained variance) number of true positives, false positives, true negatives, false negatives as well as specificity, sensitivity and accuracy of classification. All statistics are shown for each available result object (in this case only calibration) and only for optimal number of components (in this case 3).</p>
 <p>The summary plot look very much similar to what we have seen for PCA.</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="calibration-and-validation.html#cb124-1"></a><span class="kw">plot</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-84-1.png" width="864" /></p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="calibration-and-validation.html#cb126-1"></a><span class="kw">plot</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-86-1.png" width="864" /></p>
 <p>In addition to standard PCA plots, SIMCA model (as well as any other classification model, e.g. PLS-DA) can show plot for sensitivity and ratio of misclassified values depending on the number of components. Plus a prediction plot, which shows classification results for each object. See the example below.</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="calibration-and-validation.html#cb125-1"></a><span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">ncol =</span> <span class="dv">2</span>))</span>
-<span id="cb125-2"><a href="calibration-and-validation.html#cb125-2"></a><span class="kw">plotSensitivity</span>(m, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb125-3"><a href="calibration-and-validation.html#cb125-3"></a><span class="kw">plotMisclassified</span>(m, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb125-4"><a href="calibration-and-validation.html#cb125-4"></a><span class="kw">plotPredictions</span>(m, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-85-1.png" width="864" /></p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="calibration-and-validation.html#cb127-1"></a><span class="kw">layout</span>(<span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">ncol =</span> <span class="dv">2</span>))</span>
+<span id="cb127-2"><a href="calibration-and-validation.html#cb127-2"></a><span class="kw">plotSensitivity</span>(m, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb127-3"><a href="calibration-and-validation.html#cb127-3"></a><span class="kw">plotMisclassified</span>(m, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb127-4"><a href="calibration-and-validation.html#cb127-4"></a><span class="kw">plotPredictions</span>(m, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-87-1.png" width="864" /></p>
 <div id="cross-validation" class="section level3">
 <h3>Cross-validation</h3>
 <p>SIMCA model can be also cross-validated. Cross-validation settings are provided using parameter <code>cv</code> which can be either a number of a list. If it is a number, segmented cross-validation with random split will be used. The number then defines number of segments with one exception — if <code>cv = 1</code> then full cross-validation (leave-one-out) will be used.</p>
@@ -305,16 +305,16 @@ When cross-validation is used, only performance statistics will be computed (in 
 </p>
 </div>
 <p>All performance plots are also available for cross-validation results as shown below.</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="calibration-and-validation.html#cb126-1"></a>m =<span class="st"> </span><span class="kw">simca</span>(X.ver, <span class="st">&quot;versicolor&quot;</span>, <span class="dt">ncomp =</span> <span class="dv">3</span>, <span class="dt">cv =</span> <span class="dv">1</span>)</span>
-<span id="cb126-2"><a href="calibration-and-validation.html#cb126-2"></a></span>
-<span id="cb126-3"><a href="calibration-and-validation.html#cb126-3"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb126-4"><a href="calibration-and-validation.html#cb126-4"></a><span class="kw">plotSensitivity</span>(m)</span>
-<span id="cb126-5"><a href="calibration-and-validation.html#cb126-5"></a><span class="kw">plotMisclassified</span>(m)</span>
-<span id="cb126-6"><a href="calibration-and-validation.html#cb126-6"></a><span class="kw">plotPredictions</span>(m<span class="op">$</span>res<span class="op">$</span>cal, <span class="dt">main =</span> <span class="st">&quot;Predictions (cal)&quot;</span>)</span>
-<span id="cb126-7"><a href="calibration-and-validation.html#cb126-7"></a><span class="kw">plotPredictions</span>(m<span class="op">$</span>res<span class="op">$</span>cv, <span class="dt">main =</span> <span class="st">&quot;Predictions (cv)&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-87-1.png" width="864" /></p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="calibration-and-validation.html#cb128-1"></a>m =<span class="st"> </span><span class="kw">simca</span>(X.ver, <span class="st">&quot;versicolor&quot;</span>, <span class="dt">ncomp =</span> <span class="dv">3</span>, <span class="dt">cv =</span> <span class="dv">1</span>)</span>
+<span id="cb128-2"><a href="calibration-and-validation.html#cb128-2"></a></span>
+<span id="cb128-3"><a href="calibration-and-validation.html#cb128-3"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb128-4"><a href="calibration-and-validation.html#cb128-4"></a><span class="kw">plotSensitivity</span>(m)</span>
+<span id="cb128-5"><a href="calibration-and-validation.html#cb128-5"></a><span class="kw">plotMisclassified</span>(m)</span>
+<span id="cb128-6"><a href="calibration-and-validation.html#cb128-6"></a><span class="kw">plotPredictions</span>(m<span class="op">$</span>res<span class="op">$</span>cal, <span class="dt">main =</span> <span class="st">&quot;Predictions (cal)&quot;</span>)</span>
+<span id="cb128-7"><a href="calibration-and-validation.html#cb128-7"></a><span class="kw">plotPredictions</span>(m<span class="op">$</span>res<span class="op">$</span>cv, <span class="dt">main =</span> <span class="st">&quot;Predictions (cv)&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-89-1.png" width="864" /></p>
 <p>Although predictions plot available also for classification model it always shows results only for one result object, otherwise it would be overloaded with information. As you can see from the predictions plots above, cross-validation results have 3 false negatives comparing to 2 for calibration results. You can also see this in summary text, where cross-validation results are shown in the second row:</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="calibration-and-validation.html#cb127-1"></a><span class="kw">summary</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="calibration-and-validation.html#cb129-1"></a><span class="kw">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## SIMCA model for class &#39;versicolor&#39; summary
 ## 
@@ -338,8 +338,8 @@ When cross-validation is used, only performance statistics will be computed (in 
 <li>a vector with logical values (<code>TRUE</code> for class members and <code>FALSE</code> for strangers)</li>
 </ul>
 <p>In our case we have a vector with text values, which will be automatically converted to a factor by the function <code>predict()</code>. Instead of creating a new model and providing the values as test set we will simply make predictions.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="calibration-and-validation.html#cb129-1"></a>res =<span class="st"> </span><span class="kw">predict</span>(m, Xt, ct)</span>
-<span id="cb129-2"><a href="calibration-and-validation.html#cb129-2"></a><span class="kw">summary</span>(res)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="calibration-and-validation.html#cb131-1"></a>res =<span class="st"> </span><span class="kw">predict</span>(m, Xt, ct)</span>
+<span id="cb131-2"><a href="calibration-and-validation.html#cb131-2"></a><span class="kw">summary</span>(res)</span></code></pre></div>
 <pre><code>## 
 ## Summary for SIMCA one-class classification result
 ## 
@@ -351,15 +351,15 @@ When cross-validation is used, only performance statistics will be computed (in 
 ## Comp 2   1.67     65.95 25  4 46  0  0.92     1    0.947
 ## Comp 3  32.45     98.40 25  2 48  0  0.96     1    0.973</code></pre>
 <p>In this case we can also see the specificity values and corresponding plot can be made, as shown below together with other plots.</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="calibration-and-validation.html#cb131-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb131-2"><a href="calibration-and-validation.html#cb131-2"></a><span class="kw">plotSpecificity</span>(res, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb131-3"><a href="calibration-and-validation.html#cb131-3"></a><span class="kw">plotSensitivity</span>(res, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb131-4"><a href="calibration-and-validation.html#cb131-4"></a><span class="kw">plotMisclassified</span>(res, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb131-5"><a href="calibration-and-validation.html#cb131-5"></a><span class="kw">plotPredictions</span>(res)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-90-1.png" width="864" /></p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="calibration-and-validation.html#cb133-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb133-2"><a href="calibration-and-validation.html#cb133-2"></a><span class="kw">plotSpecificity</span>(res, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb133-3"><a href="calibration-and-validation.html#cb133-3"></a><span class="kw">plotSensitivity</span>(res, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb133-4"><a href="calibration-and-validation.html#cb133-4"></a><span class="kw">plotMisclassified</span>(res, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb133-5"><a href="calibration-and-validation.html#cb133-5"></a><span class="kw">plotPredictions</span>(res)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-92-1.png" width="864" /></p>
 <p>As you can see, the prediction plot looks a bit different in this case. Because the test set has objects from several classes and the class belongings is known, this information is shown as color bar legend. For instance, in the example above we can see, that two <em>Virginica</em> objects were erroneously classified as members of <em>Versicolor</em>.</p>
 <p>You can also show the predictions as a matrix with <span class="math inline">\(-1\)</span> and <span class="math inline">\(+1\)</span> using method <code>showPredictions()</code> or get the array with predicted class values directly as it is shown in the example below (for 10 rows in the middle of the data, different number of components and the first classification variable).</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="calibration-and-validation.html#cb132-1"></a><span class="kw">show</span>(res<span class="op">$</span>c.pred[<span class="dv">45</span><span class="op">:</span><span class="dv">55</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="calibration-and-validation.html#cb134-1"></a><span class="kw">show</span>(res<span class="op">$</span>c.pred[<span class="dv">45</span><span class="op">:</span><span class="dv">55</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span>])</span></code></pre></div>
 <pre><code>##     Comp 1 Comp 2 Comp 3
 ## 90       1      1      1
 ## 92       1      1      1
@@ -373,7 +373,7 @@ When cross-validation is used, only performance statistics will be computed (in 
 ## 108     -1     -1     -1
 ## 110     -1     -1     -1</code></pre>
 <p>You can also get and show the confusion matrix (rows correspond to real classes and columns to the predicted class) for an object with SIMCA results (as well as results obtained with any other classification method, e.g. PLS-DA).</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="calibration-and-validation.html#cb134-1"></a><span class="kw">show</span>(<span class="kw">getConfusionMatrix</span>(res))</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="calibration-and-validation.html#cb136-1"></a><span class="kw">show</span>(<span class="kw">getConfusionMatrix</span>(res))</span></code></pre></div>
 <pre><code>##            versicolor None
 ## versicolor         25    0
 ## setosa              0   25
@@ -387,7 +387,7 @@ When cross-validation is used, only performance statistics will be computed (in 
 <p>So if p-value is the same as significance level (which happens when object is lying exactly on the acceptance line) the probability is 0.5. If p-value is e.g. 0.04, <span class="math inline">\(\pi = 0.4\)</span>, or 40%, and the object will be rejected as a stranger (here we assume that the <span class="math inline">\(\alpha = 0.05\)</span>). If the p-value is e.g. 0.06, <span class="math inline">\(\pi = 0.6\)</span>, or 60%, and the object will be accepted as a member of the class. If p-value is larger than <span class="math inline">\(2\times\alpha\)</span> the probability is set to 1.</p>
 <p>In case of rectangular acceptance area (<code>lim.type = "jm"</code> or <code>"chisq"</code>) the probability is computed separately for <span class="math inline">\(q\)</span> and <span class="math inline">\(h\)</span> values and the smallest of the two is taken. In case of triangular acceptance area (<code>lim.type = "ddmoments"</code> or <code>"ddrobust"</code>) the probability is calculated for a full distance, <span class="math inline">\(f\)</span>.</p>
 <p>Here is how to show the probability values, that correspond to the predictions shown in the previous code chunk. I round the probability values to four decimals for better output.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="calibration-and-validation.html#cb136-1"></a><span class="kw">show</span>(<span class="kw">round</span>(res<span class="op">$</span>p.pred[<span class="dv">45</span><span class="op">:</span><span class="dv">55</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span>], <span class="dv">4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="calibration-and-validation.html#cb138-1"></a><span class="kw">show</span>(<span class="kw">round</span>(res<span class="op">$</span>p.pred[<span class="dv">45</span><span class="op">:</span><span class="dv">55</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">1</span>], <span class="dv">4</span>))</span></code></pre></div>
 <pre><code>##     Comp 1 Comp 2 Comp 3
 ## 90  1.0000 1.0000 1.0000
 ## 92  1.0000 1.0000 1.0000
@@ -401,10 +401,10 @@ When cross-validation is used, only performance statistics will be computed (in 
 ## 108 0.0006 0.0002 0.0000
 ## 110 0.0001 0.0000 0.0000</code></pre>
 <p>It is also possible to show the probability values as a plot with method <code>plotProbabilities()</code>:</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="calibration-and-validation.html#cb138-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb138-2"><a href="calibration-and-validation.html#cb138-2"></a><span class="kw">plotProbabilities</span>(res, <span class="dt">cgroup =</span> ct)</span>
-<span id="cb138-3"><a href="calibration-and-validation.html#cb138-3"></a><span class="kw">plotProbabilities</span>(res, <span class="dt">ncomp =</span> <span class="dv">2</span>, <span class="dt">cgroup =</span> ct)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-94-1.png" width="864" /></p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="calibration-and-validation.html#cb140-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb140-2"><a href="calibration-and-validation.html#cb140-2"></a><span class="kw">plotProbabilities</span>(res, <span class="dt">cgroup =</span> ct)</span>
+<span id="cb140-3"><a href="calibration-and-validation.html#cb140-3"></a><span class="kw">plotProbabilities</span>(res, <span class="dt">ncomp =</span> <span class="dv">2</span>, <span class="dt">cgroup =</span> ct)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-96-1.png" width="864" /></p>
 <p>The plot can be shown for any SIMCA results (including e.g. calibration set or cross-validated results).</p>
 </div>
 </div>

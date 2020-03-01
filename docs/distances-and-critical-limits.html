@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-02-03" />
+<meta name="date" content="2020-03-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -257,32 +257,32 @@ Historically, the distances are called in this package and also in some other so
 </div>
 <p>In <em>mdatools</em> both distances are calculated for all objects in dataset and all possible components. So every distance is represented by <span class="math inline">\(I \times A\)</span> matrix (will remind here that <span class="math inline">\(I\)</span> is number of objects or rows in data matrix and <span class="math inline">\(A\)</span> is number of components in PCA model), the first column contains distances for a model with only one component, second — for model with two components, and so on. The distances can be visualized using method <code>plotResiduals()</code> which is available both for PCA results as well as for PCA model. In the case of model the plot shows distances both for calibration set and test set (if available).</p>
 <p>Here is an example, where I split People data to calibration and test set as in one of the examples in previous sections and show distance plot for model and result objects.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="distances-and-critical-limits.html#cb85-1"></a><span class="kw">data</span>(people)</span>
-<span id="cb85-2"><a href="distances-and-critical-limits.html#cb85-2"></a>idx =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">32</span>, <span class="dv">4</span>)</span>
-<span id="cb85-3"><a href="distances-and-critical-limits.html#cb85-3"></a>Xc =<span class="st"> </span>people[<span class="op">-</span>idx, ]</span>
-<span id="cb85-4"><a href="distances-and-critical-limits.html#cb85-4"></a>Xt =<span class="st"> </span>people[idx, ]</span>
-<span id="cb85-5"><a href="distances-and-critical-limits.html#cb85-5"></a></span>
-<span id="cb85-6"><a href="distances-and-critical-limits.html#cb85-6"></a>m =<span class="st"> </span><span class="kw">pca</span>(Xc, <span class="dv">4</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">x.test =</span> Xt)</span>
-<span id="cb85-7"><a href="distances-and-critical-limits.html#cb85-7"></a></span>
-<span id="cb85-8"><a href="distances-and-critical-limits.html#cb85-8"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb85-9"><a href="distances-and-critical-limits.html#cb85-9"></a><span class="kw">plotResiduals</span>(m, <span class="dt">main =</span> <span class="st">&quot;Distances for model&quot;</span>)</span>
-<span id="cb85-10"><a href="distances-and-critical-limits.html#cb85-10"></a><span class="kw">plotResiduals</span>(m, <span class="dt">ncomp =</span> <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">&quot;Distances for model (2 Comp)&quot;</span>)</span>
-<span id="cb85-11"><a href="distances-and-critical-limits.html#cb85-11"></a><span class="kw">plotResiduals</span>(m<span class="op">$</span>res<span class="op">$</span>cal, <span class="dt">main =</span> <span class="st">&quot;Distances for calibration set&quot;</span>)</span>
-<span id="cb85-12"><a href="distances-and-critical-limits.html#cb85-12"></a><span class="kw">plotResiduals</span>(m<span class="op">$</span>res<span class="op">$</span>test, <span class="dt">main =</span> <span class="st">&quot;Distances for test set&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-67-1.png" width="864" /></p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="distances-and-critical-limits.html#cb87-1"></a><span class="kw">data</span>(people)</span>
+<span id="cb87-2"><a href="distances-and-critical-limits.html#cb87-2"></a>idx =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">32</span>, <span class="dv">4</span>)</span>
+<span id="cb87-3"><a href="distances-and-critical-limits.html#cb87-3"></a>Xc =<span class="st"> </span>people[<span class="op">-</span>idx, ]</span>
+<span id="cb87-4"><a href="distances-and-critical-limits.html#cb87-4"></a>Xt =<span class="st"> </span>people[idx, ]</span>
+<span id="cb87-5"><a href="distances-and-critical-limits.html#cb87-5"></a></span>
+<span id="cb87-6"><a href="distances-and-critical-limits.html#cb87-6"></a>m =<span class="st"> </span><span class="kw">pca</span>(Xc, <span class="dv">4</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">x.test =</span> Xt)</span>
+<span id="cb87-7"><a href="distances-and-critical-limits.html#cb87-7"></a></span>
+<span id="cb87-8"><a href="distances-and-critical-limits.html#cb87-8"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb87-9"><a href="distances-and-critical-limits.html#cb87-9"></a><span class="kw">plotResiduals</span>(m, <span class="dt">main =</span> <span class="st">&quot;Distances for model&quot;</span>)</span>
+<span id="cb87-10"><a href="distances-and-critical-limits.html#cb87-10"></a><span class="kw">plotResiduals</span>(m, <span class="dt">ncomp =</span> <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">&quot;Distances for model (2 Comp)&quot;</span>)</span>
+<span id="cb87-11"><a href="distances-and-critical-limits.html#cb87-11"></a><span class="kw">plotResiduals</span>(m<span class="op">$</span>res<span class="op">$</span>cal, <span class="dt">main =</span> <span class="st">&quot;Distances for calibration set&quot;</span>)</span>
+<span id="cb87-12"><a href="distances-and-critical-limits.html#cb87-12"></a><span class="kw">plotResiduals</span>(m<span class="op">$</span>res<span class="op">$</span>test, <span class="dt">main =</span> <span class="st">&quot;Distances for test set&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-69-1.png" width="864" /></p>
 <p>As it was briefly mentioned before, if residual/distance plot is made for a model, it also shows two critical limits: the dashed line is a limit for extreme objects and the dotted line is a limit for outliers. How they are computed is explained later in this section. If you want to hide them, just use additional parameter <code>show.limits = FALSE</code>. You can also change the color, line type and width for the lines by using options <code>lim.col</code>, <code>lim.lty</code> and <code>lim.lwd</code> as it is shown below.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="distances-and-critical-limits.html#cb86-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb86-2"><a href="distances-and-critical-limits.html#cb86-2"></a><span class="kw">plotResiduals</span>(m, <span class="dt">show.limits =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb86-3"><a href="distances-and-critical-limits.html#cb86-3"></a><span class="kw">plotResiduals</span>(m, <span class="dt">lim.col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>), <span class="dt">lim.lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">lim.lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-68-1.png" width="864" /></p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="distances-and-critical-limits.html#cb88-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb88-2"><a href="distances-and-critical-limits.html#cb88-2"></a><span class="kw">plotResiduals</span>(m, <span class="dt">show.limits =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb88-3"><a href="distances-and-critical-limits.html#cb88-3"></a><span class="kw">plotResiduals</span>(m, <span class="dt">lim.col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>), <span class="dt">lim.lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">lim.lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="864" /></p>
 <p>It is necessary to provide a vector with two values for each of the argument (first for extreme objects and second for outliers border).</p>
 <p>Finally, you can also notice that for model plot the distance values are normalized (<span class="math inline">\(h/h_0\)</span> and <span class="math inline">\(q/q_0\)</span> instead of just <span class="math inline">\(h\)</span> and <span class="math inline">\(q\)</span>). This is needed to show the limits correctly and, again, will be explained in detail below. You can switch this option by using logical parameter <code>norm</code>. Sometimes, it is also make sense to use log transform for the values, which can be switched by using parameter <code>log</code>. Code below shows example for using these parameters.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="distances-and-critical-limits.html#cb87-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb87-2"><a href="distances-and-critical-limits.html#cb87-2"></a><span class="kw">plotResiduals</span>(m, <span class="dt">norm =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb87-3"><a href="distances-and-critical-limits.html#cb87-3"></a><span class="kw">plotResiduals</span>(m, <span class="dt">norm =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb87-4"><a href="distances-and-critical-limits.html#cb87-4"></a><span class="kw">plotResiduals</span>(m, <span class="dt">norm =</span> <span class="ot">TRUE</span>, <span class="dt">log =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb87-5"><a href="distances-and-critical-limits.html#cb87-5"></a><span class="kw">plotResiduals</span>(m, <span class="dt">norm =</span> <span class="ot">FALSE</span>, <span class="dt">log =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-69-1.png" width="864" /></p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="distances-and-critical-limits.html#cb89-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb89-2"><a href="distances-and-critical-limits.html#cb89-2"></a><span class="kw">plotResiduals</span>(m, <span class="dt">norm =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb89-3"><a href="distances-and-critical-limits.html#cb89-3"></a><span class="kw">plotResiduals</span>(m, <span class="dt">norm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb89-4"><a href="distances-and-critical-limits.html#cb89-4"></a><span class="kw">plotResiduals</span>(m, <span class="dt">norm =</span> <span class="ot">TRUE</span>, <span class="dt">log =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb89-5"><a href="distances-and-critical-limits.html#cb89-5"></a><span class="kw">plotResiduals</span>(m, <span class="dt">norm =</span> <span class="ot">FALSE</span>, <span class="dt">log =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-71-1.png" width="864" /></p>
 </div>
 <div id="critical-limits" class="section level3">
 <h3>Critical limits</h3>
@@ -305,16 +305,16 @@ Historically, the distances are called in this package and also in some other so
 <p><span class="math display">\[f_{crit} = \chi^{-2}((1 - \gamma)^{1/I}, N_f)\]</span></p>
 <p>Here <span class="math inline">\(\gamma\)</span> is a significance level for outliers, so if it is <span class="math inline">\(0.01\)</span> every object has <span class="math inline">\(1\%\)</span> chance to be detected as outlier. The test for outliers should treat every object independently, so it requires Bonferroni correction, as one can see from the formula.</p>
 <p>You can change the significance level both for extreme objects and outliers either when you calibrate the model, by providing parameters <code>alpha</code> and <code>gamma</code>, or for existent model, by using function <code>setDistanceLimits()</code> as shown in the example below.</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="distances-and-critical-limits.html#cb88-1"></a><span class="co"># calibrate a model with alpha = 5% and gamma = 5%</span></span>
-<span id="cb88-2"><a href="distances-and-critical-limits.html#cb88-2"></a>m =<span class="st"> </span><span class="kw">pca</span>(people, <span class="dv">4</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">gamma =</span> <span class="fl">0.05</span>)</span>
-<span id="cb88-3"><a href="distances-and-critical-limits.html#cb88-3"></a></span>
-<span id="cb88-4"><a href="distances-and-critical-limits.html#cb88-4"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb88-5"><a href="distances-and-critical-limits.html#cb88-5"></a><span class="kw">plotResiduals</span>(m)</span>
-<span id="cb88-6"><a href="distances-and-critical-limits.html#cb88-6"></a></span>
-<span id="cb88-7"><a href="distances-and-critical-limits.html#cb88-7"></a><span class="co"># change both levels to 1%</span></span>
-<span id="cb88-8"><a href="distances-and-critical-limits.html#cb88-8"></a>m =<span class="st"> </span><span class="kw">setDistanceLimits</span>(m, <span class="dt">alpha =</span> <span class="fl">0.01</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>)</span>
-<span id="cb88-9"><a href="distances-and-critical-limits.html#cb88-9"></a><span class="kw">plotResiduals</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="864" /></p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="distances-and-critical-limits.html#cb90-1"></a><span class="co"># calibrate a model with alpha = 5% and gamma = 5%</span></span>
+<span id="cb90-2"><a href="distances-and-critical-limits.html#cb90-2"></a>m =<span class="st"> </span><span class="kw">pca</span>(people, <span class="dv">4</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">gamma =</span> <span class="fl">0.05</span>)</span>
+<span id="cb90-3"><a href="distances-and-critical-limits.html#cb90-3"></a></span>
+<span id="cb90-4"><a href="distances-and-critical-limits.html#cb90-4"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb90-5"><a href="distances-and-critical-limits.html#cb90-5"></a><span class="kw">plotResiduals</span>(m)</span>
+<span id="cb90-6"><a href="distances-and-critical-limits.html#cb90-6"></a></span>
+<span id="cb90-7"><a href="distances-and-critical-limits.html#cb90-7"></a><span class="co"># change both levels to 1%</span></span>
+<span id="cb90-8"><a href="distances-and-critical-limits.html#cb90-8"></a>m =<span class="st"> </span><span class="kw">setDistanceLimits</span>(m, <span class="dt">alpha =</span> <span class="fl">0.01</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>)</span>
+<span id="cb90-9"><a href="distances-and-critical-limits.html#cb90-9"></a><span class="kw">plotResiduals</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-72-1.png" width="864" /></p>
 <p>This function also allows to change method for computing the limits, which is discussed in next subsection.</p>
 </div>
 <div id="other-methods-for-computing-critical-limits" class="section level4">
@@ -326,31 +326,30 @@ Historically, the distances are called in this package and also in some other so
 <div id="categorization-of-data-rows-based-on-critical-limits" class="section level4">
 <h4>Categorization of data rows based on critical limits</h4>
 <p>It is possible to categorize every row (object, measurement) in a dataset based on the two distances and critical limits computed for given model and limit parameters (method and significance limit). Function <code>categorize()</code> is made for that. An example below shows how to categorize new predictions using this function.</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="distances-and-critical-limits.html#cb89-1"></a><span class="kw">data</span>(people)</span>
-<span id="cb89-2"><a href="distances-and-critical-limits.html#cb89-2"></a></span>
-<span id="cb89-3"><a href="distances-and-critical-limits.html#cb89-3"></a>idx =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">32</span>, <span class="dv">4</span>)</span>
-<span id="cb89-4"><a href="distances-and-critical-limits.html#cb89-4"></a>Xc =<span class="st"> </span>people[<span class="op">-</span>idx, ]</span>
-<span id="cb89-5"><a href="distances-and-critical-limits.html#cb89-5"></a>Xt =<span class="st"> </span>people[idx, ]</span>
-<span id="cb89-6"><a href="distances-and-critical-limits.html#cb89-6"></a></span>
-<span id="cb89-7"><a href="distances-and-critical-limits.html#cb89-7"></a>m =<span class="st"> </span><span class="kw">pca</span>(Xc, <span class="dv">4</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb89-8"><a href="distances-and-critical-limits.html#cb89-8"></a>r =<span class="st"> </span><span class="kw">predict</span>(m, Xt)</span>
-<span id="cb89-9"><a href="distances-and-critical-limits.html#cb89-9"></a></span>
-<span id="cb89-10"><a href="distances-and-critical-limits.html#cb89-10"></a>c =<span class="st"> </span><span class="kw">categorize</span>(m, r)</span>
-<span id="cb89-11"><a href="distances-and-critical-limits.html#cb89-11"></a><span class="kw">print</span>(c)</span></code></pre></div>
-<pre><code>## [1] outlier regular regular regular extreme regular outlier
-## [8] regular
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="distances-and-critical-limits.html#cb91-1"></a><span class="kw">data</span>(people)</span>
+<span id="cb91-2"><a href="distances-and-critical-limits.html#cb91-2"></a></span>
+<span id="cb91-3"><a href="distances-and-critical-limits.html#cb91-3"></a>idx =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">32</span>, <span class="dv">4</span>)</span>
+<span id="cb91-4"><a href="distances-and-critical-limits.html#cb91-4"></a>Xc =<span class="st"> </span>people[<span class="op">-</span>idx, ]</span>
+<span id="cb91-5"><a href="distances-and-critical-limits.html#cb91-5"></a>Xt =<span class="st"> </span>people[idx, ]</span>
+<span id="cb91-6"><a href="distances-and-critical-limits.html#cb91-6"></a></span>
+<span id="cb91-7"><a href="distances-and-critical-limits.html#cb91-7"></a>m =<span class="st"> </span><span class="kw">pca</span>(Xc, <span class="dv">4</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb91-8"><a href="distances-and-critical-limits.html#cb91-8"></a>r =<span class="st"> </span><span class="kw">predict</span>(m, Xt)</span>
+<span id="cb91-9"><a href="distances-and-critical-limits.html#cb91-9"></a></span>
+<span id="cb91-10"><a href="distances-and-critical-limits.html#cb91-10"></a>c =<span class="st"> </span><span class="kw">categorize</span>(m, r)</span>
+<span id="cb91-11"><a href="distances-and-critical-limits.html#cb91-11"></a><span class="kw">print</span>(c)</span></code></pre></div>
+<pre><code>## [1] outlier regular regular regular extreme regular outlier regular
 ## Levels: regular extreme outlier</code></pre>
 <p>As one can see, there are two outliers, one extreme and five regular objects. This can be visualized on distance plot:</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="distances-and-critical-limits.html#cb91-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb91-2"><a href="distances-and-critical-limits.html#cb91-2"></a><span class="kw">plotResiduals</span>(r, <span class="dt">cgroup =</span> c)</span>
-<span id="cb91-3"><a href="distances-and-critical-limits.html#cb91-3"></a><span class="kw">plotResiduals</span>(m, <span class="dt">res =</span> <span class="kw">list</span>(<span class="st">&quot;new&quot;</span> =<span class="st"> </span>r), <span class="dt">cgroup =</span> c)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-72-1.png" width="864" /></p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="distances-and-critical-limits.html#cb93-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb93-2"><a href="distances-and-critical-limits.html#cb93-2"></a><span class="kw">plotResiduals</span>(r, <span class="dt">cgroup =</span> c)</span>
+<span id="cb93-3"><a href="distances-and-critical-limits.html#cb93-3"></a><span class="kw">plotResiduals</span>(m, <span class="dt">res =</span> <span class="kw">list</span>(<span class="st">&quot;new&quot;</span> =<span class="st"> </span>r), <span class="dt">cgroup =</span> c)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-74-1.png" width="864" /></p>
 <p>The first plot is a normal distance/residuals plot for results, while the second plot is made for model with manually specified result list. The last has possibility to show critical limits and see why actually the objects have been categorized like this.</p>
 <p>When the plot is made for calibration set, this option can be simplified by providing specific value for parameter <code>cgroup</code> as shown below.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="distances-and-critical-limits.html#cb92-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb92-2"><a href="distances-and-critical-limits.html#cb92-2"></a><span class="kw">plotResiduals</span>(m)</span>
-<span id="cb92-3"><a href="distances-and-critical-limits.html#cb92-3"></a><span class="kw">plotResiduals</span>(m, <span class="dt">cgroup =</span> <span class="st">&quot;categories&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-73-1.png" width="864" /></p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="distances-and-critical-limits.html#cb94-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb94-2"><a href="distances-and-critical-limits.html#cb94-2"></a><span class="kw">plotResiduals</span>(m)</span>
+<span id="cb94-3"><a href="distances-and-critical-limits.html#cb94-3"></a><span class="kw">plotResiduals</span>(m, <span class="dt">cgroup =</span> <span class="st">&quot;categories&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-75-1.png" width="864" /></p>
 <p>This option will work only if plot is made for one result object.</p>
 </div>
 </div>

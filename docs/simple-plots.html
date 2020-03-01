@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-02-03" />
+<meta name="date" content="2020-03-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -433,72 +433,84 @@ hull for data points. To do this, points must be color grouped by a factor as sh
 <span id="cb23-6"><a href="simple-plots.html#cb23-6"></a>p =<span class="st"> </span><span class="kw">mdaplot</span>(people, <span class="dt">cgroup =</span> g)</span>
 <span id="cb23-7"><a href="simple-plots.html#cb23-7"></a><span class="kw">plotConfidenceEllipse</span>(p, <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="864" /></p>
+<p>In case when number of data points is large (e.g. when dealing with images, where every pixel is a data point), using density plot is a good alternative to conventional scatter plots. The plot does not show all data points but instead split the whole plot space into small hexagonal regions and use color gradient for illustration a density of the points in each region. This approach is known as <em>hexagonal binning</em>. To create a density plot simply use <code>type="d"</code>. You can also specify color map and number of bins along each axes (<code>nbins</code>).</p>
+<p>The code below show an example of using density plots for 100000 data points with x and y values taken from normally distributed population.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="simple-plots.html#cb24-1"></a>x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100000</span>)</span>
+<span id="cb24-2"><a href="simple-plots.html#cb24-2"></a>y =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100000</span>)</span>
+<span id="cb24-3"><a href="simple-plots.html#cb24-3"></a>d =<span class="st"> </span><span class="kw">cbind</span>(x, y)</span>
+<span id="cb24-4"><a href="simple-plots.html#cb24-4"></a></span>
+<span id="cb24-5"><a href="simple-plots.html#cb24-5"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb24-6"><a href="simple-plots.html#cb24-6"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;d&quot;</span>)</span>
+<span id="cb24-7"><a href="simple-plots.html#cb24-7"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;d&quot;</span>, <span class="dt">nbins =</span> <span class="dv">80</span>)</span>
+<span id="cb24-8"><a href="simple-plots.html#cb24-8"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;d&quot;</span>, <span class="dt">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span>
+<span id="cb24-9"><a href="simple-plots.html#cb24-9"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;d&quot;</span>, <span class="dt">nbins =</span> <span class="dv">80</span>, <span class="dt">colmap =</span> <span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="864" /></p>
 </div>
 <div id="line-plots" class="section level3">
 <h3>Line plots</h3>
 <p>When line plot is created, the <code>mdatools()</code> shows a line plot for every row. So if data set has more than one row, the plot will show a banch of lines having same properties (color, type, etc). This is particularly useful when working with signals and spectroscopic data. In this subsection we will use simulated UV/Vis spectra from <code>simdata</code>.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="simple-plots.html#cb24-1"></a><span class="kw">data</span>(simdata)</span>
-<span id="cb24-2"><a href="simple-plots.html#cb24-2"></a>spectra =<span class="st"> </span>simdata<span class="op">$</span>spectra.c</span>
-<span id="cb24-3"><a href="simple-plots.html#cb24-3"></a>conc =<span class="st"> </span>simdata<span class="op">$</span>conc.c[, <span class="dv">1</span>]</span>
-<span id="cb24-4"><a href="simple-plots.html#cb24-4"></a>wavelength =<span class="st"> </span>simdata<span class="op">$</span>wavelength</span>
-<span id="cb24-5"><a href="simple-plots.html#cb24-5"></a></span>
-<span id="cb24-6"><a href="simple-plots.html#cb24-6"></a><span class="kw">attr</span>(spectra, <span class="st">&quot;name&quot;</span>) =<span class="st"> &quot;UV/Vis spectra&quot;</span></span>
-<span id="cb24-7"><a href="simple-plots.html#cb24-7"></a><span class="kw">attr</span>(spectra, <span class="st">&quot;xaxis.name&quot;</span>) =<span class="st"> &quot;Band index&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="simple-plots.html#cb25-1"></a><span class="kw">data</span>(simdata)</span>
+<span id="cb25-2"><a href="simple-plots.html#cb25-2"></a>spectra =<span class="st"> </span>simdata<span class="op">$</span>spectra.c</span>
+<span id="cb25-3"><a href="simple-plots.html#cb25-3"></a>conc =<span class="st"> </span>simdata<span class="op">$</span>conc.c[, <span class="dv">1</span>]</span>
+<span id="cb25-4"><a href="simple-plots.html#cb25-4"></a>wavelength =<span class="st"> </span>simdata<span class="op">$</span>wavelength</span>
+<span id="cb25-5"><a href="simple-plots.html#cb25-5"></a></span>
+<span id="cb25-6"><a href="simple-plots.html#cb25-6"></a><span class="kw">attr</span>(spectra, <span class="st">&quot;name&quot;</span>) =<span class="st"> &quot;UV/Vis spectra&quot;</span></span>
+<span id="cb25-7"><a href="simple-plots.html#cb25-7"></a><span class="kw">attr</span>(spectra, <span class="st">&quot;xaxis.name&quot;</span>) =<span class="st"> &quot;Band index&quot;</span></span></code></pre></div>
 <p>Here are simple examples of how to make the line plots.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="simple-plots.html#cb25-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb25-2"><a href="simple-plots.html#cb25-2"></a><span class="kw">mdaplot</span>(spectra, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</span>
-<span id="cb25-3"><a href="simple-plots.html#cb25-3"></a><span class="kw">mdaplot</span>(spectra, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="864" /></p>
-<p>Most of the parameters described for scatter plots will work for the line plots as well. For example, you can colorise the lines by using a vector with some values (in the example below I use concentration of one of the chemical components).</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="simple-plots.html#cb26-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb26-2"><a href="simple-plots.html#cb26-2"></a><span class="kw">mdaplot</span>(spectra, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">cgroup =</span> conc)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="simple-plots.html#cb26-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb26-2"><a href="simple-plots.html#cb26-2"></a><span class="kw">mdaplot</span>(spectra, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb26-3"><a href="simple-plots.html#cb26-3"></a><span class="kw">mdaplot</span>(spectra, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="864" /></p>
-<p>One of the new features, appeared first in version 0.8.0, is a special attribute, allowing to provide manual x-values — <code>'xaxis.values'</code> (similar parameter for y-values is <code>'yaxis.values'</code>). In the example below we show the spectra using wavelength in nm and wavenumbers in inverse cm.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="simple-plots.html#cb27-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb27-2"><a href="simple-plots.html#cb27-2"></a></span>
-<span id="cb27-3"><a href="simple-plots.html#cb27-3"></a><span class="kw">attr</span>(spectra, <span class="st">&quot;xaxis.name&quot;</span>) =<span class="st"> </span><span class="kw">expression</span>(<span class="st">&quot;Wavenumbers, cm&quot;</span><span class="op">^-</span><span class="dv">1</span>)</span>
-<span id="cb27-4"><a href="simple-plots.html#cb27-4"></a><span class="kw">attr</span>(spectra, <span class="st">&quot;xaxis.values&quot;</span>) =<span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">7</span><span class="op">/</span>wavelength</span>
-<span id="cb27-5"><a href="simple-plots.html#cb27-5"></a><span class="kw">mdaplot</span>(spectra, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</span>
-<span id="cb27-6"><a href="simple-plots.html#cb27-6"></a></span>
-<span id="cb27-7"><a href="simple-plots.html#cb27-7"></a><span class="kw">attr</span>(spectra, <span class="st">&quot;xaxis.name&quot;</span>) =<span class="st"> &quot;Wavelength, nm&quot;</span></span>
-<span id="cb27-8"><a href="simple-plots.html#cb27-8"></a><span class="kw">attr</span>(spectra, <span class="st">&quot;xaxis.values&quot;</span>) =<span class="st"> </span>wavelength</span>
-<span id="cb27-9"><a href="simple-plots.html#cb27-9"></a><span class="kw">mdaplot</span>(spectra, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<p>Most of the parameters described for scatter plots will work for the line plots as well. For example, you can colorise the lines by using a vector with some values (in the example below I use concentration of one of the chemical components).</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="simple-plots.html#cb27-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb27-2"><a href="simple-plots.html#cb27-2"></a><span class="kw">mdaplot</span>(spectra, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">cgroup =</span> conc)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="864" /></p>
+<p>One of the new features, appeared first in version 0.8.0, is a special attribute, allowing to provide manual x-values — <code>'xaxis.values'</code> (similar parameter for y-values is <code>'yaxis.values'</code>). In the example below we show the spectra using wavelength in nm and wavenumbers in inverse cm.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="simple-plots.html#cb28-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb28-2"><a href="simple-plots.html#cb28-2"></a></span>
+<span id="cb28-3"><a href="simple-plots.html#cb28-3"></a><span class="kw">attr</span>(spectra, <span class="st">&quot;xaxis.name&quot;</span>) =<span class="st"> </span><span class="kw">expression</span>(<span class="st">&quot;Wavenumbers, cm&quot;</span><span class="op">^-</span><span class="dv">1</span>)</span>
+<span id="cb28-4"><a href="simple-plots.html#cb28-4"></a><span class="kw">attr</span>(spectra, <span class="st">&quot;xaxis.values&quot;</span>) =<span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">7</span><span class="op">/</span>wavelength</span>
+<span id="cb28-5"><a href="simple-plots.html#cb28-5"></a><span class="kw">mdaplot</span>(spectra, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb28-6"><a href="simple-plots.html#cb28-6"></a></span>
+<span id="cb28-7"><a href="simple-plots.html#cb28-7"></a><span class="kw">attr</span>(spectra, <span class="st">&quot;xaxis.name&quot;</span>) =<span class="st"> &quot;Wavelength, nm&quot;</span></span>
+<span id="cb28-8"><a href="simple-plots.html#cb28-8"></a><span class="kw">attr</span>(spectra, <span class="st">&quot;xaxis.values&quot;</span>) =<span class="st"> </span>wavelength</span>
+<span id="cb28-9"><a href="simple-plots.html#cb28-9"></a><span class="kw">mdaplot</span>(spectra, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="864" /></p>
 <p>When you provide such data to any model methods (e.g. PCA, PLS, etc), then all variable related results (loadings, regression coefficients, etc.) will inherit this attribute and use it for making line plots.</p>
 </div>
 <div id="bar-and-errorbar-plots" class="section level3">
 <h3>Bar and errorbar plots</h3>
 <p>Bar plot is perhaps the simplest as it shows values for the first row of the data as bars. Let us get back to the people data, calculate mean for all variables and show the calculated values as a bar plot (excluding column with Income as it has much bigger values comparing to the others) — in the simplest form as well as with some extra parameters.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="simple-plots.html#cb28-1"></a>m =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">apply</span>(people, <span class="dv">2</span>, mean), <span class="dt">nrow =</span> <span class="dv">1</span>)</span>
-<span id="cb28-2"><a href="simple-plots.html#cb28-2"></a><span class="kw">colnames</span>(m) =<span class="st"> </span><span class="kw">colnames</span>(people)</span>
-<span id="cb28-3"><a href="simple-plots.html#cb28-3"></a>m =<span class="st"> </span><span class="kw">mda.exclcols</span>(m, <span class="st">&quot;Income&quot;</span>)</span>
-<span id="cb28-4"><a href="simple-plots.html#cb28-4"></a><span class="kw">attr</span>(m, <span class="st">&quot;name&quot;</span>) =<span class="st"> &quot;People (means)&quot;</span></span>
-<span id="cb28-5"><a href="simple-plots.html#cb28-5"></a></span>
-<span id="cb28-6"><a href="simple-plots.html#cb28-6"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb28-7"><a href="simple-plots.html#cb28-7"></a><span class="kw">mdaplot</span>(m, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>)</span>
-<span id="cb28-8"><a href="simple-plots.html#cb28-8"></a><span class="kw">mdaplot</span>(m, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">xticks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">xticklabels =</span> <span class="kw">colnames</span>(people), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb28-9"><a href="simple-plots.html#cb28-9"></a>   <span class="dt">show.labels =</span> <span class="ot">TRUE</span>, <span class="dt">labels =</span> <span class="st">&quot;values&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="864" /></p>
-<p>Errorbar plot always expect data to have two or three rows. The first row is a origin points of the error bars, secod row is the size of the bottom part and the third row is the size of the top part. If data has only two rows the both parts will be symmetric related to the origin. In the example below we show mean and standard deviation of the people data as an error bar.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="simple-plots.html#cb29-1"></a>d =<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">apply</span>(people, <span class="dv">2</span>, mean), <span class="kw">apply</span>(people, <span class="dv">2</span>, sd))</span>
-<span id="cb29-2"><a href="simple-plots.html#cb29-2"></a><span class="kw">rownames</span>(d) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Mean&quot;</span>, <span class="st">&quot;Std&quot;</span>)</span>
-<span id="cb29-3"><a href="simple-plots.html#cb29-3"></a><span class="kw">colnames</span>(d) =<span class="st"> </span><span class="kw">colnames</span>(people)</span>
-<span id="cb29-4"><a href="simple-plots.html#cb29-4"></a><span class="kw">attr</span>(d, <span class="st">&#39;name&#39;</span>) =<span class="st"> &quot;Statistics&quot;</span></span>
-<span id="cb29-5"><a href="simple-plots.html#cb29-5"></a>d =<span class="st"> </span><span class="kw">mda.exclcols</span>(d, <span class="st">&quot;Income&quot;</span>)</span>
-<span id="cb29-6"><a href="simple-plots.html#cb29-6"></a></span>
-<span id="cb29-7"><a href="simple-plots.html#cb29-7"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb29-8"><a href="simple-plots.html#cb29-8"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;e&quot;</span>)</span>
-<span id="cb29-9"><a href="simple-plots.html#cb29-9"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;e&quot;</span>, <span class="dt">xticks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">xticklabels =</span> <span class="kw">colnames</span>(people), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="simple-plots.html#cb29-1"></a>m =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">apply</span>(people, <span class="dv">2</span>, mean), <span class="dt">nrow =</span> <span class="dv">1</span>)</span>
+<span id="cb29-2"><a href="simple-plots.html#cb29-2"></a><span class="kw">colnames</span>(m) =<span class="st"> </span><span class="kw">colnames</span>(people)</span>
+<span id="cb29-3"><a href="simple-plots.html#cb29-3"></a>m =<span class="st"> </span><span class="kw">mda.exclcols</span>(m, <span class="st">&quot;Income&quot;</span>)</span>
+<span id="cb29-4"><a href="simple-plots.html#cb29-4"></a><span class="kw">attr</span>(m, <span class="st">&quot;name&quot;</span>) =<span class="st"> &quot;People (means)&quot;</span></span>
+<span id="cb29-5"><a href="simple-plots.html#cb29-5"></a></span>
+<span id="cb29-6"><a href="simple-plots.html#cb29-6"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb29-7"><a href="simple-plots.html#cb29-7"></a><span class="kw">mdaplot</span>(m, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>)</span>
+<span id="cb29-8"><a href="simple-plots.html#cb29-8"></a><span class="kw">mdaplot</span>(m, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">xticks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">xticklabels =</span> <span class="kw">colnames</span>(people), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb29-9"><a href="simple-plots.html#cb29-9"></a>   <span class="dt">show.labels =</span> <span class="ot">TRUE</span>, <span class="dt">labels =</span> <span class="st">&quot;values&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="864" /></p>
-<p>All simple plots can be combined together on the same axes. In this case, first plot is created as usual and all other plots have to be created with option <code>show.axes = FALSE</code> as it is shown below. It must be noted that in this case axes limits have to be set manually when creating the first plot.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="simple-plots.html#cb30-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb30-2"><a href="simple-plots.html#cb30-2"></a></span>
-<span id="cb30-3"><a href="simple-plots.html#cb30-3"></a><span class="kw">mdaplot</span>(m, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;lightgray&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">400</span>))</span>
-<span id="cb30-4"><a href="simple-plots.html#cb30-4"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;e&quot;</span>, <span class="dt">show.axes =</span> <span class="ot">FALSE</span>, <span class="dt">pch =</span> <span class="ot">NA</span>)</span>
-<span id="cb30-5"><a href="simple-plots.html#cb30-5"></a></span>
-<span id="cb30-6"><a href="simple-plots.html#cb30-6"></a><span class="kw">mdaplot</span>(m, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">400</span>))</span>
-<span id="cb30-7"><a href="simple-plots.html#cb30-7"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;e&quot;</span>, <span class="dt">show.axes =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p>Errorbar plot always expect data to have two or three rows. The first row is a origin points of the error bars, secod row is the size of the bottom part and the third row is the size of the top part. If data has only two rows the both parts will be symmetric related to the origin. In the example below we show mean and standard deviation of the people data as an error bar.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="simple-plots.html#cb30-1"></a>d =<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">apply</span>(people, <span class="dv">2</span>, mean), <span class="kw">apply</span>(people, <span class="dv">2</span>, sd))</span>
+<span id="cb30-2"><a href="simple-plots.html#cb30-2"></a><span class="kw">rownames</span>(d) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Mean&quot;</span>, <span class="st">&quot;Std&quot;</span>)</span>
+<span id="cb30-3"><a href="simple-plots.html#cb30-3"></a><span class="kw">colnames</span>(d) =<span class="st"> </span><span class="kw">colnames</span>(people)</span>
+<span id="cb30-4"><a href="simple-plots.html#cb30-4"></a><span class="kw">attr</span>(d, <span class="st">&#39;name&#39;</span>) =<span class="st"> &quot;Statistics&quot;</span></span>
+<span id="cb30-5"><a href="simple-plots.html#cb30-5"></a>d =<span class="st"> </span><span class="kw">mda.exclcols</span>(d, <span class="st">&quot;Income&quot;</span>)</span>
+<span id="cb30-6"><a href="simple-plots.html#cb30-6"></a></span>
+<span id="cb30-7"><a href="simple-plots.html#cb30-7"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb30-8"><a href="simple-plots.html#cb30-8"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;e&quot;</span>)</span>
+<span id="cb30-9"><a href="simple-plots.html#cb30-9"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;e&quot;</span>, <span class="dt">xticks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">xticklabels =</span> <span class="kw">colnames</span>(people), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="864" /></p>
+<p>All simple plots can be combined together on the same axes. In this case, first plot is created as usual and all other plots have to be created with option <code>show.axes = FALSE</code> as it is shown below. It must be noted that in this case axes limits have to be set manually when creating the first plot.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="simple-plots.html#cb31-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb31-2"><a href="simple-plots.html#cb31-2"></a></span>
+<span id="cb31-3"><a href="simple-plots.html#cb31-3"></a><span class="kw">mdaplot</span>(m, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;lightgray&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">400</span>))</span>
+<span id="cb31-4"><a href="simple-plots.html#cb31-4"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;e&quot;</span>, <span class="dt">show.axes =</span> <span class="ot">FALSE</span>, <span class="dt">pch =</span> <span class="ot">NA</span>)</span>
+<span id="cb31-5"><a href="simple-plots.html#cb31-5"></a></span>
+<span id="cb31-6"><a href="simple-plots.html#cb31-6"></a><span class="kw">mdaplot</span>(m, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">400</span>))</span>
+<span id="cb31-7"><a href="simple-plots.html#cb31-7"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;e&quot;</span>, <span class="dt">show.axes =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="864" /></p>
 <p>In the next section we will discuss plots for several groups of objects (rows).</p>
 
 </div>

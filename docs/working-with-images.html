@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-02-03" />
+<meta name="date" content="2020-03-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -250,14 +250,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>There are three methods that make this procedure easier: <code>mda.im2data()</code>, <code>mda.data2im()</code> and <code>imshow()</code>. The first convert an image (represented as 3-way array) to a data set, second does the opposite and the third takes dataset and shows it as an image. In the code chunk below you will see several examples how the methods work.</p>
 <p>We will use a dataset <code>image</code> available in the package. It is a 3-way array of numbers, if you want to work with e.g. JPEG, PNG or other standard image files you can load them using specific packages (<a href="https://cran.r-project.org/web/packages/jpeg/index.html">jpeg</a>,
 <a href="https://cran.r-project.org/web/packages/png/index.html">png</a>).</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="working-with-images.html#cb37-1"></a><span class="kw">data</span>(pellets)</span>
-<span id="cb37-2"><a href="working-with-images.html#cb37-2"></a><span class="co"># convert image to a data matrix and add some attributed</span></span>
-<span id="cb37-3"><a href="working-with-images.html#cb37-3"></a>d =<span class="st"> </span><span class="kw">mda.im2data</span>(pellets)</span>
-<span id="cb37-4"><a href="working-with-images.html#cb37-4"></a><span class="kw">colnames</span>(d) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Red&quot;</span>, <span class="st">&quot;Green&quot;</span>, <span class="st">&quot;Blue&quot;</span>)</span>
-<span id="cb37-5"><a href="working-with-images.html#cb37-5"></a><span class="kw">attr</span>(d, <span class="st">&quot;name&quot;</span>) =<span class="st"> &quot;Image&quot;</span></span>
-<span id="cb37-6"><a href="working-with-images.html#cb37-6"></a></span>
-<span id="cb37-7"><a href="working-with-images.html#cb37-7"></a><span class="co"># show data values</span></span>
-<span id="cb37-8"><a href="working-with-images.html#cb37-8"></a><span class="kw">mda.show</span>(d, <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="working-with-images.html#cb38-1"></a><span class="kw">data</span>(pellets)</span>
+<span id="cb38-2"><a href="working-with-images.html#cb38-2"></a><span class="co"># convert image to a data matrix and add some attributed</span></span>
+<span id="cb38-3"><a href="working-with-images.html#cb38-3"></a>d =<span class="st"> </span><span class="kw">mda.im2data</span>(pellets)</span>
+<span id="cb38-4"><a href="working-with-images.html#cb38-4"></a><span class="kw">colnames</span>(d) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Red&quot;</span>, <span class="st">&quot;Green&quot;</span>, <span class="st">&quot;Blue&quot;</span>)</span>
+<span id="cb38-5"><a href="working-with-images.html#cb38-5"></a><span class="kw">attr</span>(d, <span class="st">&quot;name&quot;</span>) =<span class="st"> &quot;Image&quot;</span></span>
+<span id="cb38-6"><a href="working-with-images.html#cb38-6"></a></span>
+<span id="cb38-7"><a href="working-with-images.html#cb38-7"></a><span class="co"># show data values</span></span>
+<span id="cb38-8"><a href="working-with-images.html#cb38-8"></a><span class="kw">mda.show</span>(d, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## Image
 ## -----
 ##       Red Green Blue
@@ -271,43 +271,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  [8,] 193    83  110
 ##  [9,] 188    83  114
 ## [10,] 172    86  115</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="working-with-images.html#cb39-1"></a><span class="co"># show separate channels and the whole image in plots</span></span>
-<span id="cb39-2"><a href="working-with-images.html#cb39-2"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb39-3"><a href="working-with-images.html#cb39-3"></a><span class="kw">imshow</span>(d, <span class="dv">1</span>)</span>
-<span id="cb39-4"><a href="working-with-images.html#cb39-4"></a><span class="kw">imshow</span>(d, <span class="dv">2</span>)</span>
-<span id="cb39-5"><a href="working-with-images.html#cb39-5"></a><span class="kw">imshow</span>(d, <span class="dv">3</span>)</span>
-<span id="cb39-6"><a href="working-with-images.html#cb39-6"></a><span class="kw">imshow</span>(d, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="864" /></p>
-<p>By default image for one channels is shown using jet color palette for intensities, but you can also use gray colors, palette from <em>colorbrewer2</em> as well as your own.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="working-with-images.html#cb40-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb40-2"><a href="working-with-images.html#cb40-2"></a><span class="kw">imshow</span>(d, <span class="dv">1</span>)</span>
-<span id="cb40-3"><a href="working-with-images.html#cb40-3"></a><span class="kw">imshow</span>(d, <span class="dv">1</span>, <span class="dt">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span>
-<span id="cb40-4"><a href="working-with-images.html#cb40-4"></a><span class="kw">imshow</span>(d, <span class="dv">1</span>, <span class="dt">colmap =</span> <span class="kw">heat.colors</span>(<span class="dv">256</span>))</span>
-<span id="cb40-5"><a href="working-with-images.html#cb40-5"></a><span class="kw">imshow</span>(d, <span class="dv">1</span>, <span class="dt">colmap =</span> <span class="kw">colorRampPalette</span>(<span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>))(<span class="dv">256</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="working-with-images.html#cb40-1"></a><span class="co"># show separate channels and the whole image in plots</span></span>
+<span id="cb40-2"><a href="working-with-images.html#cb40-2"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb40-3"><a href="working-with-images.html#cb40-3"></a><span class="kw">imshow</span>(d, <span class="dv">1</span>)</span>
+<span id="cb40-4"><a href="working-with-images.html#cb40-4"></a><span class="kw">imshow</span>(d, <span class="dv">2</span>)</span>
+<span id="cb40-5"><a href="working-with-images.html#cb40-5"></a><span class="kw">imshow</span>(d, <span class="dv">3</span>)</span>
+<span id="cb40-6"><a href="working-with-images.html#cb40-6"></a><span class="kw">imshow</span>(d, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="864" /></p>
-<p>You can work with the image values as normal dataset and show scatter, line plots, calculate statistics, etc.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="working-with-images.html#cb41-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb41-2"><a href="working-with-images.html#cb41-2"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>)</span>
-<span id="cb41-3"><a href="working-with-images.html#cb41-3"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<p>By default image for one channels is shown using jet color palette for intensities, but you can also use gray colors, palette from <em>colorbrewer2</em> as well as your own.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="working-with-images.html#cb41-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb41-2"><a href="working-with-images.html#cb41-2"></a><span class="kw">imshow</span>(d, <span class="dv">1</span>)</span>
+<span id="cb41-3"><a href="working-with-images.html#cb41-3"></a><span class="kw">imshow</span>(d, <span class="dv">1</span>, <span class="dt">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span>
+<span id="cb41-4"><a href="working-with-images.html#cb41-4"></a><span class="kw">imshow</span>(d, <span class="dv">1</span>, <span class="dt">colmap =</span> <span class="kw">heat.colors</span>(<span class="dv">256</span>))</span>
+<span id="cb41-5"><a href="working-with-images.html#cb41-5"></a><span class="kw">imshow</span>(d, <span class="dv">1</span>, <span class="dt">colmap =</span> <span class="kw">colorRampPalette</span>(<span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>))(<span class="dv">256</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="864" /></p>
-<p>However, it will take some time to show these plots as this image has several hundreds of thousands pixels, a faster alternative can be the use density plot based on hexagonal binning. Use <code>type = "d"</code> for this as shown below. Number of bins can be adjusted by using parameter <code>nbins</code>.</p>
+<p>You can work with the image values as normal dataset and show scatter, line plots, calculate statistics, etc.</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="working-with-images.html#cb42-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb42-2"><a href="working-with-images.html#cb42-2"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;d&quot;</span>)</span>
-<span id="cb42-3"><a href="working-with-images.html#cb42-3"></a><span class="kw">mdaplot</span>(<span class="kw">mda.subset</span>(d, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;Red&quot;</span>, <span class="st">&quot;Blue&quot;</span>)), <span class="dt">type =</span> <span class="st">&quot;d&quot;</span>, <span class="dt">nbins =</span> <span class="dv">40</span>)</span></code></pre></div>
+<span id="cb42-2"><a href="working-with-images.html#cb42-2"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>)</span>
+<span id="cb42-3"><a href="working-with-images.html#cb42-3"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="864" /></p>
-<p>Another useful thing is to set some of the pixels as background. The background pixels are removed from the image dataset physically, there is no way to get them back (in cotrast to excluded rows/pixels). It can be particularly useful when working with e.g. geocorrected hyperspectral images, where, often, many pixels have NA values and there is no need to keep them in memory. To set pixels as background you need to use method <code>mda.setimbg()</code> with either pixel indices or vector with logical values as it is shown below.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="working-with-images.html#cb43-1"></a><span class="co"># original size</span></span>
-<span id="cb43-2"><a href="working-with-images.html#cb43-2"></a><span class="kw">show</span>(<span class="kw">dim</span>(d))</span></code></pre></div>
-<pre><code>## [1] 114000      3</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="working-with-images.html#cb45-1"></a><span class="co"># set red epixels as background and show new size</span></span>
-<span id="cb45-2"><a href="working-with-images.html#cb45-2"></a>d =<span class="st"> </span><span class="kw">mda.setimbg</span>(d, d[, <span class="st">&quot;Red&quot;</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">100</span>)</span>
-<span id="cb45-3"><a href="working-with-images.html#cb45-3"></a><span class="kw">show</span>(<span class="kw">dim</span>(d))</span></code></pre></div>
-<pre><code>## [1] 66471     3</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="working-with-images.html#cb47-1"></a><span class="co"># show image with background pixels</span></span>
-<span id="cb47-2"><a href="working-with-images.html#cb47-2"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb47-3"><a href="working-with-images.html#cb47-3"></a><span class="kw">imshow</span>(d, <span class="dv">1</span>)</span>
-<span id="cb47-4"><a href="working-with-images.html#cb47-4"></a><span class="kw">imshow</span>(d, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</span></code></pre></div>
+<p>However, it will take some time to show these plots as this image has several hundreds of thousands pixels, a faster alternative can be the use density plot based on hexagonal binning. Use <code>type = "d"</code> for this as shown below. Number of bins can be adjusted by using parameter <code>nbins</code>.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="working-with-images.html#cb43-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb43-2"><a href="working-with-images.html#cb43-2"></a><span class="kw">mdaplot</span>(d, <span class="dt">type =</span> <span class="st">&quot;d&quot;</span>)</span>
+<span id="cb43-3"><a href="working-with-images.html#cb43-3"></a><span class="kw">mdaplot</span>(<span class="kw">mda.subset</span>(d, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;Red&quot;</span>, <span class="st">&quot;Blue&quot;</span>)), <span class="dt">type =</span> <span class="st">&quot;d&quot;</span>, <span class="dt">nbins =</span> <span class="dv">40</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-40-1.png" width="864" /></p>
+<p>Another useful thing is to set some of the pixels as background. The background pixels are removed from the image dataset physically, there is no way to get them back (in cotrast to excluded rows/pixels). It can be particularly useful when working with e.g. geocorrected hyperspectral images, where, often, many pixels have NA values and there is no need to keep them in memory. To set pixels as background you need to use method <code>mda.setimbg()</code> with either pixel indices or vector with logical values as it is shown below.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="working-with-images.html#cb44-1"></a><span class="co"># original size</span></span>
+<span id="cb44-2"><a href="working-with-images.html#cb44-2"></a><span class="kw">show</span>(<span class="kw">dim</span>(d))</span></code></pre></div>
+<pre><code>## [1] 114000      3</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="working-with-images.html#cb46-1"></a><span class="co"># set red epixels as background and show new size</span></span>
+<span id="cb46-2"><a href="working-with-images.html#cb46-2"></a>d =<span class="st"> </span><span class="kw">mda.setimbg</span>(d, d[, <span class="st">&quot;Red&quot;</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">100</span>)</span>
+<span id="cb46-3"><a href="working-with-images.html#cb46-3"></a><span class="kw">show</span>(<span class="kw">dim</span>(d))</span></code></pre></div>
+<pre><code>## [1] 66471     3</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="working-with-images.html#cb48-1"></a><span class="co"># show image with background pixels</span></span>
+<span id="cb48-2"><a href="working-with-images.html#cb48-2"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb48-3"><a href="working-with-images.html#cb48-3"></a><span class="kw">imshow</span>(d, <span class="dv">1</span>)</span>
+<span id="cb48-4"><a href="working-with-images.html#cb48-4"></a><span class="kw">imshow</span>(d, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-41-1.png" width="864" /></p>
 <p>All image related attributes are inherited by all object/rows related results, e.g. scores, residuals, predicted values and classes, etc. This means if you provide an image to any modelling method, you can visualise the corresponding results also as an image. Some examples will be shown in
 <a href="principal-component-analysis.html#principal-component-analysis">chapter about PCA</a>.</p>
 
