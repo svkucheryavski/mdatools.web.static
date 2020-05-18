@@ -355,6 +355,11 @@ a:active, a:hover, a:focus {
 
 @media(max-width: 500px) {
 
+   html, body {
+      font-size: 16px;
+   }
+
+
    .page-header {
       height: 100px;
       background-size: auto 100px;
