@@ -3,7 +3,7 @@
  }
 
 html {
-   font-size: 16px;
+   font-size: 18px;
    height: 100%;
    margin: 0;
    padding: 0;
@@ -11,7 +11,7 @@ html {
 
  body {
    font-family: 'Open Sans', sans-serif;
-   font-size: 16px;
+   font-size: 18px;
    line-height: 1.5em;
    color: #404040;
    height: 100%;
@@ -36,10 +36,27 @@ a:active, a:hover, a:focus {
    width: 100%;
 }
 
+.page-top {
+   background-color: #eaecef;
+   color: #606060;
+   text-align: center;
+   font-size: 0.75em;
+   padding: 0.25em;
+}
+
+.telegram {
+   background-image: url('../images/telegram.png');
+   background-position: left center;
+   background-repeat: no-repeat;
+   background-size: contain;
+   padding-left: 21px;
+   margin: 0 0.35em;
+   font-weight: 500;
+}
+
 .page-header {
    height: 130px;
-
-   background-image: url('data:image/svg+xml;utf8,<svg width="2000px" height="130px" viewpoint="0 0 1 1" xmlns="http://www.w3.org/2000/svg"><polygon fill="%23ebf0f4" points="0,0, 2000,0, 2000,110 1000,130 0,110 0,0"/><polygon fill="%23f0f4f8" points="0,0, 2000,0, 2000,108 1000,128 0,108 0,0"/></svg>');
+   background-image: url('data:image/svg+xml;utf8,<svg width="2000px" height="130px" viewpoint="0 0 1 1" xmlns="http://www.w3.org/2000/svg"><polygon fill="%23e8f0f4" points="0,0, 2000,0, 2000,110 1000,130 0,110 0,0"/><polygon fill="%23f6faff" points="0,0, 2000,0, 2000,109 1000,129 0,109 0,0"/></svg>');
    background-position: center center;
    background-repeat: no-repeat;
 }
@@ -56,11 +73,13 @@ a:active, a:hover, a:focus {
    font-weight: extra-bold;
    font-size: 3em;
    color: #1e90ff;
-   padding: 20px 0 20px 0.5em;
+   padding: 20px 10px 20px 0.5em;
 
-   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill-opacity="0.8" width="100" height="75" viewbox="0 0 75 75"><path fill="%234aa6ff" transform="scale(0.125, 0.125)" d="M129.818,124.495V74.181c0-15.374-12.444-27.818-27.818-27.818S74.182,58.807,74.182,74.181v50.314    C31.435,136.643,0,175.959,0,222.545c0,46.586,31.435,85.902,74.182,98.051v217.223c0,15.355,12.444,27.818,27.818,27.818    s27.818-12.463,27.818-27.818V320.596C172.565,308.447,204,269.15,204,222.545C204,175.959,172.565,136.643,129.818,124.495z M102,268.909c-25.556,0-46.364-20.808-46.364-46.364S76.444,176.181,102,176.181s46.364,20.808,46.364,46.364    S127.556,268.909,102,268.909z"/><path fill="%23fc4a1a" transform="scale(0.125, 0.125)" d=" M333.818,291.404V74.181c0-15.374-12.444-27.818-27.818-27.818s-27.818,12.444-27.818,27.818    v217.223C235.435,303.551,204,342.867,204,389.453c0,46.588,31.435,85.904,74.182,98.051v50.314    c0,15.355,12.444,27.818,27.818,27.818s27.818-12.463,27.818-27.818v-50.314C376.565,475.357,408,436.041,408,389.453    C408,342.867,376.565,303.551,333.818,291.404z M306,435.818c-25.556,0-46.364-20.791-46.364-46.365    c0-25.572,20.808-46.363,46.364-46.363s46.363,20.791,46.363,46.363C352.363,415.027,331.556,435.818,306,435.818z"/><path fill="%23f7b733" transform="scale(0.125, 0.125)" d="M537.818,124.495V74.181c0-15.374-12.444-27.818-27.818-27.818s-27.818,12.444-27.818,27.818v50.314 C439.435,136.643,408,175.94,408,222.545c0,46.586,31.435,85.902,74.182,98.051v217.223c0,15.355,12.444,27.818,27.818,27.818    s27.818-12.463,27.818-27.818V320.596C580.565,308.447,612,269.15,612,222.545C612,175.959,580.565,136.643,537.818,124.495z     M510,268.909c-25.556,0-46.363-20.808-46.363-46.364s20.808-46.364,46.363-46.364s46.363,20.808,46.363,46.364    S535.556,268.909,510,268.909z"/></svg>');
+   background-image: url(../images/logo.svg);
+   background-size: 90px 90px;
    background-position: center right;
    background-repeat: no-repeat;
+   background-origin: content-box, padding-box;
 }
 
 .page-header__title > span{
@@ -134,8 +153,8 @@ a:active, a:hover, a:focus {
 }
 
 .list-item span {
-   color: #a0a0a0;
-   font-size: 0.85em;
+   color: #909090;
+   font-size: 0.95em;
 }
 
 .list-item_github {
@@ -160,6 +179,9 @@ a:active, a:hover, a:focus {
 
 .page-section_cards {
    background: #ebf0f4;
+   background-color: #f6faff;
+   border-top: solid 1px #e8f0f4;
+   border-bottom: solid 1px #e8f0f4;
    margin-top: 1em;
 }
 
@@ -200,6 +222,10 @@ a:active, a:hover, a:focus {
    background-position: 15px 1em;
    background-size: auto 30px;
    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"></svg>');
+}
+
+.card:hover {
+   background-color: #fff;
 }
 
 .card_github {
@@ -265,6 +291,17 @@ a:active, a:hover, a:focus {
    .page-section_main {
       grid-template-columns: 1fr 1fr;
     }
+
+    .page-header__title {
+      padding-right: 20px;
+    }
+
+}
+
+@media(max-width: 800px) {
+   html, body {
+      font-size: 16px;
+   }
 }
 
 @media(max-width: 640px) {
