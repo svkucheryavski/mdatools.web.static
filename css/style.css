@@ -48,9 +48,9 @@ a:active, a:hover, a:focus {
    background-image: url('../images/telegram.png');
    background-position: left center;
    background-repeat: no-repeat;
-   background-size: 20px 20px;
-   padding-left: 21px;
-   margin: 0 0.35em;
+   background-size: auto 1.4em;
+   padding-left: 1.6em;
+   margin: 0 0.2em;
    font-weight: 500;
 }
 
@@ -309,6 +309,9 @@ a:active, a:hover, a:focus {
 }
 
 @media(max-width: 640px) {
+   html, body {
+      font-size: 18px;
+   }
 
    .page-section_main {
       grid-template-areas: "header"
