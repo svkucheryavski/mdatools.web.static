@@ -307,10 +307,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="interval-pls.html#cb257-1"></a><span class="kw">show</span>(m<span class="op">$</span>int.selected)</span></code></pre></div>
 <pre><code>## [1]  6 11  1  2 13 12</code></pre>
 <div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="interval-pls.html#cb259-1"></a><span class="kw">show</span>(m<span class="op">$</span>var.selected)</span></code></pre></div>
-<pre><code>##  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
-## [16]  16  17  18  19  20  51  52  53  54  55  56  57  58  59  60
-## [31] 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115
-## [46] 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130</code></pre>
+<pre><code>##  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19
+## [20]  20  51  52  53  54  55  56  57  58  59  60 101 102 103 104 105 106 107 108
+## [39] 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127
+## [58] 128 129 130</code></pre>
 <p>Also the model object contains the initial global model for full data (<code>m$gm</code>) and final PLS model made for the all selected data, <code>m$om</code>. In the following example I compare RMSE plots for both:</p>
 <div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="interval-pls.html#cb261-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb261-2"><a href="interval-pls.html#cb261-2"></a><span class="kw">plotRMSE</span>(m<span class="op">$</span>gm)</span>

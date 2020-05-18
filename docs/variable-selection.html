@@ -298,129 +298,105 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## 
 ## Regression coefficients for Shoesize (ncomp = 2)
 ## ------------------------------------------------
-##               Coeffs   Std. err. t-value p-value        2.5%
-## Height    0.19357436 0.008270469   23.39   0.000  0.17646559
-## Weight    0.18935489 0.005386414   35.12   0.000  0.17821224
-## Hairleng -0.17730737 0.010368912  -17.09   0.000 -0.19875710
-## Age       0.02508113 0.026525148    0.95   0.351 -0.02979032
-## Income    0.01291497 0.033491494    0.39   0.702 -0.05636746
-## Beer      0.11441573 0.017851922    6.40   0.000  0.07748621
-## Wine      0.08278735 0.030960265    2.68   0.013  0.01874117
-## Sex      -0.17730737 0.010368912  -17.09   0.000 -0.19875710
-## Swim      0.19426871 0.013654151   14.21   0.000  0.16602295
-## Region    0.02673161 0.023989628    1.12   0.275 -0.02289471
-## IQ       -0.01705852 0.032399035   -0.53   0.602 -0.08408103
-##                97.5%
-## Height    0.21068313
-## Weight    0.20049754
-## Hairleng -0.15585764
-## Age       0.07995258
-## Income    0.08219740
-## Beer      0.15134524
-## Wine      0.14683354
-## Sex      -0.15585764
-## Swim      0.22251448
-## Region    0.07635794
-## IQ        0.04996399
+##               Coeffs   Std. err. t-value p-value        2.5%       97.5%
+## Height    0.19357436 0.008270469   23.39   0.000  0.17646559  0.21068313
+## Weight    0.18935489 0.005386414   35.12   0.000  0.17821224  0.20049754
+## Hairleng -0.17730737 0.010368912  -17.09   0.000 -0.19875710 -0.15585764
+## Age       0.02508113 0.026525148    0.95   0.351 -0.02979032  0.07995258
+## Income    0.01291497 0.033491494    0.39   0.702 -0.05636746  0.08219740
+## Beer      0.11441573 0.017851922    6.40   0.000  0.07748621  0.15134524
+## Wine      0.08278735 0.030960265    2.68   0.013  0.01874117  0.14683354
+## Sex      -0.17730737 0.010368912  -17.09   0.000 -0.19875710 -0.15585764
+## Swim      0.19426871 0.013654151   14.21   0.000  0.16602295  0.22251448
+## Region    0.02673161 0.023989628    1.12   0.275 -0.02289471  0.07635794
+## IQ       -0.01705852 0.032399035   -0.53   0.602 -0.08408103  0.04996399
 ## 
 ## Degrees of freedom (Jack-Knifing): 23</code></pre>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="variable-selection.html#cb194-1"></a><span class="kw">summary</span>(mjk<span class="op">$</span>coeffs, <span class="dt">ncomp =</span> <span class="dv">2</span>, <span class="dt">alpha =</span> <span class="fl">0.01</span>)</span></code></pre></div>
 <pre><code>## 
 ## Regression coefficients for Shoesize (ncomp = 2)
 ## ------------------------------------------------
-##               Coeffs   Std. err. t-value p-value         0.5%
-## Height    0.19357436 0.008270469   23.39   0.000  0.170356376
-## Weight    0.18935489 0.005386414   35.12   0.000  0.174233417
-## Hairleng -0.17730737 0.010368912  -17.09   0.000 -0.206416384
-## Age       0.02508113 0.026525148    0.95   0.351 -0.049383866
-## Income    0.01291497 0.033491494    0.39   0.702 -0.081106896
-## Beer      0.11441573 0.017851922    6.40   0.000  0.064299387
-## Wine      0.08278735 0.030960265    2.68   0.013 -0.004128502
-## Sex      -0.17730737 0.010368912  -17.09   0.000 -0.206416384
-## Swim      0.19426871 0.013654151   14.21   0.000  0.155936928
-## Region    0.02673161 0.023989628    1.12   0.275 -0.040615325
-## IQ       -0.01705852 0.032399035   -0.53   0.602 -0.108013488
-##                99.5%
-## Height    0.21679234
-## Weight    0.20447636
-## Hairleng -0.14819835
-## Age       0.09954612
-## Income    0.10693683
-## Beer      0.16453206
-## Wine      0.16970321
-## Sex      -0.14819835
-## Swim      0.23260050
-## Region    0.09407855
-## IQ        0.07389645
+##               Coeffs   Std. err. t-value p-value         0.5%       99.5%
+## Height    0.19357436 0.008270469   23.39   0.000  0.170356376  0.21679234
+## Weight    0.18935489 0.005386414   35.12   0.000  0.174233417  0.20447636
+## Hairleng -0.17730737 0.010368912  -17.09   0.000 -0.206416384 -0.14819835
+## Age       0.02508113 0.026525148    0.95   0.351 -0.049383866  0.09954612
+## Income    0.01291497 0.033491494    0.39   0.702 -0.081106896  0.10693683
+## Beer      0.11441573 0.017851922    6.40   0.000  0.064299387  0.16453206
+## Wine      0.08278735 0.030960265    2.68   0.013 -0.004128502  0.16970321
+## Sex      -0.17730737 0.010368912  -17.09   0.000 -0.206416384 -0.14819835
+## Swim      0.19426871 0.013654151   14.21   0.000  0.155936928  0.23260050
+## Region    0.02673161 0.023989628    1.12   0.275 -0.040615325  0.09407855
+## IQ       -0.01705852 0.032399035   -0.53   0.602 -0.108013488  0.07389645
 ## 
 ## Degrees of freedom (Jack-Knifing): 23</code></pre>
 <p>Function <code>getRegcoeffs()</code> in this case may also return corresponding t-value, standard error, p-value, and confidence interval for each of the coefficient (except intercept) if user specifies a parameter <code>full</code>. The standard error and confidence intervals are also computed for raw, non-standardized, variables (similar to coefficients).</p>
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="variable-selection.html#cb196-1"></a><span class="kw">show</span>(<span class="kw">getRegcoeffs</span>(mjk, <span class="dt">ncomp =</span> <span class="dv">2</span>, <span class="dt">full =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
-<pre><code>##               Estimated    Std. err.     t-value      p-value
-## Intercept  1.342626e+01           NA          NA           NA
-## Height     7.456695e-02 3.185875e-03  23.3854388 0.000000e+00
-## Weight     4.896328e-02 1.392816e-03  35.1242970 0.000000e+00
-## Hairleng  -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14
-## Age        1.081716e-02 1.143995e-02   0.9524214 3.507861e-01
-## Income     5.642220e-06 1.463158e-05   0.3875343 7.019238e-01
-## Beer       5.010542e-03 7.817789e-04   6.3971862 1.579903e-06
-## Wine       7.511377e-03 2.809055e-03   2.6802915 1.336266e-02
-## Sex       -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14
-## Swim       1.010496e-01 7.102257e-03  14.2147650 7.018830e-13
-## Region     1.035071e-01 9.288992e-02   1.1174095 2.753561e-01
-## IQ        -5.277164e-03 1.002285e-02  -0.5285419 6.021868e-01
-##                  2.5%       97.5%
-## Intercept          NA          NA
-## Height     0.14310275  0.20905257
-## Weight     0.14272997  0.20887799
-## Hairleng  -0.19852297 -0.13073192
-## Age       -0.03032377  0.12353583
-## Income    -0.02372318  0.14371942
-## Beer       0.11003515  0.15623859
-## Wine      -0.07053100  0.07603415
-## Sex       -0.19852297 -0.13073192
-## Swim       0.14236915  0.20510992
-## Region    -0.10563433  0.04291911
-## IQ        -0.08281410  0.07610725
+<pre><code>##               Estimated    Std. err.     t-value      p-value        2.5%
+## Intercept  1.342626e+01           NA          NA           NA          NA
+## Height     7.456695e-02 3.185875e-03  23.3854388 0.000000e+00  0.14310275
+## Weight     4.896328e-02 1.392816e-03  35.1242970 0.000000e+00  0.14272997
+## Hairleng  -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14 -0.19852297
+## Age        1.081716e-02 1.143995e-02   0.9524214 3.507861e-01 -0.03032377
+## Income     5.642220e-06 1.463158e-05   0.3875343 7.019238e-01 -0.02372318
+## Beer       5.010542e-03 7.817789e-04   6.3971862 1.579903e-06  0.11003515
+## Wine       7.511377e-03 2.809055e-03   2.6802915 1.336266e-02 -0.07053100
+## Sex       -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14 -0.19852297
+## Swim       1.010496e-01 7.102257e-03  14.2147650 7.018830e-13  0.14236915
+## Region     1.035071e-01 9.288992e-02   1.1174095 2.753561e-01 -0.10563433
+## IQ        -5.277164e-03 1.002285e-02  -0.5285419 6.021868e-01 -0.08281410
+##                 97.5%
+## Intercept          NA
+## Height     0.20905257
+## Weight     0.20887799
+## Hairleng  -0.13073192
+## Age        0.12353583
+## Income     0.14371942
+## Beer       0.15623859
+## Wine       0.07603415
+## Sex       -0.13073192
+## Swim       0.20510992
+## Region     0.04291911
+## IQ         0.07610725
 ## attr(,&quot;name&quot;)
 ## [1] &quot;Regression coefficients for  Shoesize&quot;</code></pre>
 <p>It is also possible to change significance level for confidence intervals.</p>
 <div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="variable-selection.html#cb198-1"></a><span class="kw">show</span>(<span class="kw">getRegcoeffs</span>(mjk, <span class="dt">ncomp =</span> <span class="dv">2</span>, <span class="dt">full =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.01</span>))</span></code></pre></div>
-<pre><code>##               Estimated    Std. err.     t-value      p-value
-## Intercept  1.342626e+01           NA          NA           NA
-## Height     7.456695e-02 3.185875e-03  23.3854388 0.000000e+00
-## Weight     4.896328e-02 1.392816e-03  35.1242970 0.000000e+00
-## Hairleng  -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14
-## Age        1.081716e-02 1.143995e-02   0.9524214 3.507861e-01
-## Income     5.642220e-06 1.463158e-05   0.3875343 7.019238e-01
-## Beer       5.010542e-03 7.817789e-04   6.3971862 1.579903e-06
-## Wine       7.511377e-03 2.809055e-03   2.6802915 1.336266e-02
-## Sex       -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14
-## Swim       1.010496e-01 7.102257e-03  14.2147650 7.018830e-13
-## Region     1.035071e-01 9.288992e-02   1.1174095 2.753561e-01
-## IQ        -5.277164e-03 1.002285e-02  -0.5285419 6.021868e-01
-##                  0.5%       99.5%
-## Intercept          NA          NA
-## Height     0.13132804  0.22082728
-## Weight     0.13091988  0.22068808
-## Hairleng  -0.21062642 -0.11862847
-## Age       -0.05779394  0.15100599
-## Income    -0.05361845  0.17361469
-## Beer       0.10178596  0.16448777
-## Wine      -0.09669881  0.10220196
-## Sex       -0.21062642 -0.11862847
-## Swim       0.13116738  0.21631168
-## Region    -0.13215712  0.06944191
-## IQ        -0.11118799  0.10448113
+<pre><code>##               Estimated    Std. err.     t-value      p-value        0.5%
+## Intercept  1.342626e+01           NA          NA           NA          NA
+## Height     7.456695e-02 3.185875e-03  23.3854388 0.000000e+00  0.13132804
+## Weight     4.896328e-02 1.392816e-03  35.1242970 0.000000e+00  0.13091988
+## Hairleng  -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14 -0.21062642
+## Age        1.081716e-02 1.143995e-02   0.9524214 3.507861e-01 -0.05779394
+## Income     5.642220e-06 1.463158e-05   0.3875343 7.019238e-01 -0.05361845
+## Beer       5.010542e-03 7.817789e-04   6.3971862 1.579903e-06  0.10178596
+## Wine       7.511377e-03 2.809055e-03   2.6802915 1.336266e-02 -0.09669881
+## Sex       -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14 -0.21062642
+## Swim       1.010496e-01 7.102257e-03  14.2147650 7.018830e-13  0.13116738
+## Region     1.035071e-01 9.288992e-02   1.1174095 2.753561e-01 -0.13215712
+## IQ        -5.277164e-03 1.002285e-02  -0.5285419 6.021868e-01 -0.11118799
+##                 99.5%
+## Intercept          NA
+## Height     0.22082728
+## Weight     0.22068808
+## Hairleng  -0.11862847
+## Age        0.15100599
+## Income     0.17361469
+## Beer       0.16448777
+## Wine       0.10220196
+## Sex       -0.11862847
+## Swim       0.21631168
+## Region     0.06944191
+## IQ         0.10448113
 ## attr(,&quot;name&quot;)
 ## [1] &quot;Regression coefficients for  Shoesize&quot;</code></pre>
 <p>The p-values, t-values and standard errors are stored each as a 3-way array similar to regression coefficients. The selection can be made by comparing e.g. p-values with a threshold similar to what we have done with VIP-scores and selectivity ratio.</p>
 <div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="variable-selection.html#cb200-1"></a>exclcols =<span class="st"> </span>mjk<span class="op">$</span>coeffs<span class="op">$</span>p.values[, <span class="dv">2</span>, <span class="dv">1</span>] <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.05</span></span>
 <span id="cb200-2"><a href="variable-selection.html#cb200-2"></a><span class="kw">show</span>(exclcols)</span></code></pre></div>
-<pre><code>##   Height   Weight Hairleng      Age   Income     Beer     Wine 
-##    FALSE    FALSE    FALSE     TRUE     TRUE    FALSE    FALSE 
-##      Sex     Swim   Region       IQ 
-##    FALSE    FALSE     TRUE     TRUE</code></pre>
+<pre><code>##   Height   Weight Hairleng      Age   Income     Beer     Wine      Sex     Swim 
+##    FALSE    FALSE    FALSE     TRUE     TRUE    FALSE    FALSE    FALSE    FALSE 
+##   Region       IQ 
+##     TRUE     TRUE</code></pre>
 <p>Here <code>p.values[, 2, 1]</code> means values for all predictors, model with two components, first y-variable.</p>
 <div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="variable-selection.html#cb202-1"></a>newm =<span class="st"> </span><span class="kw">pls</span>(Xc, yc, <span class="dv">3</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">cv =</span> <span class="dv">1</span>, <span class="dt">exclcols =</span> exclcols)</span>
 <span id="cb202-2"><a href="variable-selection.html#cb202-2"></a><span class="kw">summary</span>(newm)</span></code></pre></div>
