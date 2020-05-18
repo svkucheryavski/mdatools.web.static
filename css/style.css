@@ -302,6 +302,10 @@ a:active, a:hover, a:focus {
    html, body {
       font-size: 16px;
    }
+
+   .page-header__title {
+      background-size: auto 80px;
+   }
 }
 
 @media(max-width: 640px) {
@@ -403,11 +407,6 @@ a:active, a:hover, a:focus {
    .page-header {
       height: 100px;
       background-size: auto 100px;
-   }
-
-   .page-header__title {
-      height: 90px;
-      background-size: auto 60px;
    }
 
    .page-header__subtitle {
