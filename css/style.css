@@ -42,6 +42,7 @@ a:active, a:hover, a:focus {
    text-align: center;
    font-size: 0.75em;
    padding: 0.25em;
+   line-height: 2em;
 }
 
 .telegram {
