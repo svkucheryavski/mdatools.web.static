@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Purity based | Getting started with mdatools for R</title>
+  <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Purity based | Getting started with mdatools for R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
+  <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Purity based | Getting started with mdatools for R" />
+  
+  <meta name="twitter:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
+  
+
+<meta name="author" content="Sergey Kucheryavskiy" />
+
+
+<meta name="date" content="2020-07-12" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="mcr.html"/>
+<link rel="next" href="mcr-als.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html"><i class="fa fa-check"></i>What is new</a></li>
+<li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
+<ul>
+<li class="chapter" data-level="" data-path="overview-what-mdatools-can-do.html"><a href="overview-what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
+<li class="chapter" data-level="" data-path="overview-how-to-install.html"><a href="overview-how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
+<ul>
+<li class="chapter" data-level="" data-path="datasets-attributes-and-factors.html"><a href="datasets-attributes-and-factors.html"><i class="fa fa-check"></i>Attributes and factors</a>
+<ul>
+<li class="chapter" data-level="" data-path="datasets-attributes-and-factors.html"><a href="datasets-attributes-and-factors.html#package-specific-attributes"><i class="fa fa-check"></i>Package specific attributes</a></li>
+<li class="chapter" data-level="" data-path="datasets-attributes-and-factors.html"><a href="datasets-attributes-and-factors.html#attributes-for-plots"><i class="fa fa-check"></i>Attributes for plots</a></li>
+<li class="chapter" data-level="" data-path="datasets-attributes-and-factors.html"><a href="datasets-attributes-and-factors.html#special-methods-for-data-transformations"><i class="fa fa-check"></i>Special methods for data transformations</a></li>
+<li class="chapter" data-level="" data-path="datasets-attributes-and-factors.html"><a href="datasets-attributes-and-factors.html#data-frames-with-factors"><i class="fa fa-check"></i>Data frames with factors</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datasets-simple-plots.html"><a href="datasets-simple-plots.html"><i class="fa fa-check"></i>Simple plots</a>
+<ul>
+<li class="chapter" data-level="" data-path="datasets-simple-plots.html"><a href="datasets-simple-plots.html#scatter-plots"><i class="fa fa-check"></i>Scatter plots</a></li>
+<li class="chapter" data-level="" data-path="datasets-simple-plots.html"><a href="datasets-simple-plots.html#line-plots"><i class="fa fa-check"></i>Line plots</a></li>
+<li class="chapter" data-level="" data-path="datasets-simple-plots.html"><a href="datasets-simple-plots.html#bar-and-errorbar-plots"><i class="fa fa-check"></i>Bar and errorbar plots</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datasets-group-plots.html"><a href="datasets-group-plots.html"><i class="fa fa-check"></i>Plots for groups of objects</a>
+<ul>
+<li class="chapter" data-level="" data-path="datasets-group-plots.html"><a href="datasets-group-plots.html#one-matrix-or-data-frame"><i class="fa fa-check"></i>One matrix or data frame</a></li>
+<li class="chapter" data-level="" data-path="datasets-group-plots.html"><a href="datasets-group-plots.html#list-with-matrices-or-data-frames"><i class="fa fa-check"></i>List with matrices or data frames</a></li>
+<li class="chapter" data-level="" data-path="datasets-group-plots.html"><a href="datasets-group-plots.html#use-factors-to-split-a-dataset-into-groups"><i class="fa fa-check"></i>Use factors to split a dataset into groups</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datasets-images.html"><a href="datasets-images.html"><i class="fa fa-check"></i>Working with images</a></li>
+<li class="chapter" data-level="" data-path="datasets-preprocessing.html"><a href="datasets-preprocessing.html"><i class="fa fa-check"></i>Preprocessing</a>
+<ul>
+<li class="chapter" data-level="" data-path="datasets-preprocessing.html"><a href="datasets-preprocessing.html#autoscaling"><i class="fa fa-check"></i>Autoscaling</a></li>
+<li class="chapter" data-level="" data-path="datasets-preprocessing.html"><a href="datasets-preprocessing.html#correction-of-spectral-baseline"><i class="fa fa-check"></i>Correction of spectral baseline</a></li>
+<li class="chapter" data-level="" data-path="datasets-preprocessing.html"><a href="datasets-preprocessing.html#smoothing-and-derivatives"><i class="fa fa-check"></i>Smoothing and derivatives</a></li>
+<li class="chapter" data-level="" data-path="datasets-preprocessing.html"><a href="datasets-preprocessing.html#prep--alsbasecorr"><i class="fa fa-check"></i>Baseline correction with asymmetric least squares</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i>Principal component analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca-models-and-results.html"><a href="pca-models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca-models-and-results.html"><a href="pca-models-and-results.html#model-calibration"><i class="fa fa-check"></i>Model calibration</a></li>
+<li class="chapter" data-level="" data-path="pca-models-and-results.html"><a href="pca-models-and-results.html#model-validation"><i class="fa fa-check"></i>Model validation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pca-plots.html"><a href="pca-plots.html"><i class="fa fa-check"></i>Plotting methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca-plots.html"><a href="pca-plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
+<li class="chapter" data-level="" data-path="pca-plots.html"><a href="pca-plots.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
+<li class="chapter" data-level="" data-path="pca-plots.html"><a href="pca-plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pca-distances-and-limits.html"><a href="pca-distances-and-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca-distances-and-limits.html"><a href="pca-distances-and-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
+<li class="chapter" data-level="" data-path="pca-distances-and-limits.html"><a href="pca-distances-and-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pca-model-complexity.html"><a href="pca-model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
+<li class="chapter" data-level="" data-path="pca-randomized-algorithm.html"><a href="pca-randomized-algorithm.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="simca.html"><a href="simca.html"><i class="fa fa-check"></i>SIMCA/DD-SIMCA classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="simca-calibration-and-validation.html"><a href="simca-calibration-and-validation.html"><i class="fa fa-check"></i>Calibration and validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="simca-calibration-and-validation.html"><a href="simca-calibration-and-validation.html#cross-validation"><i class="fa fa-check"></i>Cross-validation</a></li>
+<li class="chapter" data-level="" data-path="simca-calibration-and-validation.html"><a href="simca-calibration-and-validation.html#predictions-and-validation-with-a-test-set"><i class="fa fa-check"></i>Predictions and validation with a test set</a></li>
+<li class="chapter" data-level="" data-path="simca-calibration-and-validation.html"><a href="simca-calibration-and-validation.html#class-belonging-probabilities"><i class="fa fa-check"></i>Class belonging probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="simca-multiclass-classification.html"><a href="simca-multiclass-classification.html"><i class="fa fa-check"></i>Multiclass classification</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls-models-and-results.html"><a href="pls-models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca-models-and-results.html"><a href="pca-models-and-results.html#model-calibration"><i class="fa fa-check"></i>Model calibration</a></li>
+<li class="chapter" data-level="" data-path="pca-models-and-results.html"><a href="pca-models-and-results.html#model-validation"><i class="fa fa-check"></i>Model validation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pls-plotting-methods.html"><a href="pls-plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca-plots.html"><a href="pca-plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pls-variable-selection.html"><a href="pls-variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
+<li class="chapter" data-level="" data-path="pls-distances-and-outliers.html"><a href="pls-distances-and-outliers.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls-distances-and-outliers.html"><a href="pls-distances-and-outliers.html#distance-plot-for-x-decomposition"><i class="fa fa-check"></i>Distance plot for X-decomposition</a></li>
+<li class="chapter" data-level="" data-path="pls-distances-and-outliers.html"><a href="pls-distances-and-outliers.html#distance-plot-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Distance plot for Y-decomposition and total distance</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pls-randomization-test.html"><a href="pls-randomization-test.html"><i class="fa fa-check"></i>Randomization test</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="plsda.html"><a href="plsda.html"><i class="fa fa-check"></i>PLS Discriminant Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="plsda-calibration.html"><a href="plsda-calibration.html"><i class="fa fa-check"></i>Calibration of PLS-DA model</a></li>
+<li class="chapter" data-level="" data-path="plsda-classification-plots.html"><a href="plsda-classification-plots.html"><i class="fa fa-check"></i>Classification plots</a></li>
+<li class="chapter" data-level="" data-path="plsda-performance-plots.html"><a href="plsda-performance-plots.html"><i class="fa fa-check"></i>Performance plots</a></li>
+<li class="chapter" data-level="" data-path="plsda-predictions.html"><a href="plsda-predictions.html"><i class="fa fa-check"></i>Predictions for a new data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
+<ul>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
+<ul>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html"><i class="fa fa-check"></i>Purity based</a>
+<ul>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#an-example"><i class="fa fa-check"></i>An example</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#using-derivatives"><i class="fa fa-check"></i>Using derivatives</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
+<ul>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Getting started with mdatools for R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="mcr--purity" class="section level2">
+<h2>Purity based</h2>
+<p>The purity based approach implemented in <em>mdatools</em> was <a href="https://pubs.acs.org/doi/abs/10.1021/ac00014a016#">proposed</a> by Willem Windig and Jean Guilment in 1991 as a simple alternative to interactive self-modeling multivariate analysis technique. The general idea of the approach is to find variables (wavelength, wavenumbers, etc.) in <span class="math inline">\(\mathbf{D}\)</span>, which are influenced mostly by one chemical component. Such variables are called as <em>pure variables</em>. If we can identify pure variable for each of the pure components, then we can solve the MCR problem by using ordinary least squares method:</p>
+<p><span class="math display">\[\mathbf{\hat{S}} = \mathbf{D}^T \mathbf{D}_R (\mathbf{D}^T_R \mathbf{D})^{-1}\]</span>
+<span class="math display">\[\mathbf{\hat{C}} = \mathbf{D} \mathbf{\hat{S}} (\mathbf{\hat{S}}^T \mathbf{\hat{S}})^{-1}\]</span></p>
+<p>Here <span class="math inline">\(\mathbf{\hat{S}}\)</span> and <span class="math inline">\(\mathbf{\hat{C}}\)</span> are the spectra and concentrations of the pure components estimated by this method. The matrix <span class="math inline">\(\mathbf{D}_R\)</span> is a reduced version of <span class="math inline">\(\mathbf{D}\)</span> where only pure variables are kept (one for each pure component, so this matrix has a dimension <span class="math inline">\(A \times A\)</span>). So the question is how to find the pure variables?</p>
+<p>Windig and co-authors proposed to do it by computing a <em>purity</em> of a variable <span class="math inline">\(j\)</span> as follows:</p>
+<p><span class="math display">\[p_j = \frac{\sigma_j}{\mu_j + \alpha}\]</span></p>
+<p>Here <span class="math inline">\(\sigma_j\)</span> and <span class="math inline">\(\mu_j\)</span> are standard deviation and mean values computed for the variable (<span class="math inline">\(j^{th}\)</span> column of the matrix <span class="math inline">\(\mathbf{D}\)</span>). Computing the purity for all variables in <span class="math inline">\(\mathbf{D}\)</span> results in a purity spectrum, <span class="math inline">\(\mathbf{p}\)</span>.</p>
+<p>Parameter <span class="math inline">\(\alpha\)</span> is computed as 1–10% of a maximum of all mean values. More details about the method can be found both in the <a href="https://pubs.acs.org/doi/abs/10.1021/ac00014a016#">original paper</a> as well as in one of the <a href="https://www.sciencedirect.com/science/article/pii/B9780444636386000036">recent reviews</a>.</p>
+<div id="an-example" class="section level3">
+<h3>An example</h3>
+<p>Function <code>mcrpure()</code> implements the purity based method in <em>mdatools</em>. It has two mandatory arguments — matrix with the original spectra and number of pure components — as well as several extra parameters. The most important parameter is the <code>offset</code> which defines value <span class="math inline">\(\alpha\)</span> in the purity spectrum. Thus <code>offset = 0.01</code> will compute <span class="math inline">\(\alpha\)</span> as 1% of the maximum mean value. The default offset is 0.05.</p>
+<p>The code below shows how to resolve the spectra from the <code>carbs</code> dataset and show summary information:</p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="mcr-purity.html#cb263-1"></a><span class="kw">data</span>(carbs)</span>
+<span id="cb263-2"><a href="mcr-purity.html#cb263-2"></a>m =<span class="st"> </span><span class="kw">mcrpure</span>(carbs<span class="op">$</span>D, <span class="dt">ncomp =</span> <span class="dv">3</span>)</span>
+<span id="cb263-3"><a href="mcr-purity.html#cb263-3"></a><span class="kw">summary</span>(m)</span></code></pre></div>
+<pre><code>## 
+## Summary for MCR Purity case (class mcrpure)
+## 
+## Offset: 0.05
+## Use of derivative: no
+## 
+##        Expvar Cumexpvar Varindex Purity
+## Comp 1  61.94     61.94      782  0.639
+## Comp 2  24.96     86.91     1245  0.338
+## Comp 3  12.65     99.56     1059  0.176</code></pre>
+<p>The summary shows explained variance, cumulative explained variance, index of pure variable and its purity value for each of the three components. For example, in case of the first component, the purest variable is located in column 782 and its purity is equal to 0.639. As one can see, current solution explains 99.6% of the total variance.</p>
+<p>Any MCR method in <em>mdatools</em> contains the resolved spectra (as <code>m$respec</code>) and contributions (as <code>m$rescont</code>) as well as some extra data, e.g. purity spectra for each component, etc. You can see a list of all objects available by simply printing the object with <em>mcrpure</em> results:</p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="mcr-purity.html#cb265-1"></a><span class="kw">show</span>(m)</span></code></pre></div>
+<pre><code>## 
+## MCR Purity unmixing case (class mcrpure)
+## 
+## 
+## Call:
+## mcrpure(x = carbs$D, ncomp = 3)
+## 
+## Major model fields:
+## $ncomp - number of calculated components
+## $resspec - matrix with resolved spectra
+## $rescont - matrix with resolved contributions
+## $purityspec - matrix with purity spectra
+## $purevars - vector with indices of pure variables
+## $purevals - purity values for the selected pure variables
+## $use.deriv - show how derivative was employed
+## $savgol - Savitzky-Golay transformation parameters
+## $expvar - vector with explained variance
+## $cumexpvar - vector with cumulative explained variance
+## $offset - offset value used to compute the purity
+## $info - case info provided by user</code></pre>
+<p>The reason we use word <em>contributions</em> instead of <em>concentrations</em> is that the method does not give the real concentrations, measured in the units of interest. The resolved values are rather in arbitrary units and can be later scaled/re-scaled accordingly.</p>
+<p>The result object also has several graphical methods, which let user to plot the resolved spectra (<code>plotSpectra()</code>) and the resolved contributions (<code>plotContributions()</code>). The example below demonstrates how to show the plots for all three components as well as for a selected one.</p>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="mcr-purity.html#cb267-1"></a><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb267-2"><a href="mcr-purity.html#cb267-2"></a><span class="kw">plotSpectra</span>(m)</span>
+<span id="cb267-3"><a href="mcr-purity.html#cb267-3"></a><span class="kw">plotContributions</span>(m)</span>
+<span id="cb267-4"><a href="mcr-purity.html#cb267-4"></a></span>
+<span id="cb267-5"><a href="mcr-purity.html#cb267-5"></a><span class="kw">plotSpectra</span>(m, <span class="dt">comp =</span> <span class="dv">2</span>)</span>
+<span id="cb267-6"><a href="mcr-purity.html#cb267-6"></a><span class="kw">plotContributions</span>(m, <span class="dt">comp =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-169-1.png" width="864" /></p>
+<p>As you can see, when you select particular components the plot preserves their color. One can also create the explained variance plot (both individual as well as cumulative) as it is shown below.</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="mcr-purity.html#cb268-1"></a><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb268-2"><a href="mcr-purity.html#cb268-2"></a><span class="kw">plotVariance</span>(m)</span>
+<span id="cb268-3"><a href="mcr-purity.html#cb268-3"></a><span class="kw">plotCumVariance</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-170-1.png" width="864" /></p>
+<p>All plot parameters are similar to what you have used for other methods (e.g. PCA, PLS, etc), so you can change type of plot, colors, etc. in a similar way.</p>
+</div>
+<div id="purity-values-and-spectra" class="section level3">
+<h3>Purity values and spectra</h3>
+<p>The purity spectra and the purity values for each component are quite important and investigation of the spectra can be very useful. For example, the code below creates two solutions using different offset values and shows purity spectra for each solution. The plots on the left side shows purity spectra for all three components, while the plots on the right side show purity only for the first component.</p>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="mcr-purity.html#cb269-1"></a>m1 =<span class="st"> </span><span class="kw">mcrpure</span>(carbs<span class="op">$</span>D, <span class="dt">ncomp =</span> <span class="dv">3</span>, <span class="dt">offset =</span> <span class="fl">0.01</span>)</span>
+<span id="cb269-2"><a href="mcr-purity.html#cb269-2"></a>m2 =<span class="st"> </span><span class="kw">mcrpure</span>(carbs<span class="op">$</span>D, <span class="dt">ncomp =</span> <span class="dv">3</span>, <span class="dt">offset =</span> <span class="fl">0.10</span>)</span>
+<span id="cb269-3"><a href="mcr-purity.html#cb269-3"></a></span>
+<span id="cb269-4"><a href="mcr-purity.html#cb269-4"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb269-5"><a href="mcr-purity.html#cb269-5"></a><span class="kw">plotPuritySpectra</span>(m1)</span>
+<span id="cb269-6"><a href="mcr-purity.html#cb269-6"></a><span class="kw">plotPuritySpectra</span>(m1, <span class="dt">comp =</span> <span class="dv">1</span>)</span>
+<span id="cb269-7"><a href="mcr-purity.html#cb269-7"></a><span class="kw">plotPuritySpectra</span>(m2)</span>
+<span id="cb269-8"><a href="mcr-purity.html#cb269-8"></a><span class="kw">plotPuritySpectra</span>(m2, <span class="dt">comp =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-171-1.png" width="864" /></p>
+<p>The vertical dashed lines on the purity spectra plot show the selected pure variables. As we can see, indeed they correspond to the largest values in the corresponding purity spectrum (so have the highest purity). We can also notice that when offset is small (top plots, 1%) the purity spectra look quite noisy. On the other hand, using too large offset can lead to a selection of less pure variables, so this parameter should be selected with caution. In most cases, having offset around 5% of the largest mean value allows to achieve satisfactory results. But it is always a good idea to vary the parameter and investigate all plots before the final decision.</p>
+<p>Since dataset <code>carbs</code> contains spectra of pure components as well, we can compare the resolved spectra with the original ones as shown in the example below. To do that we normalize both sets of spectra to a unit length to avoid a scaling problem. The original spectra are shown as red and thick curves while the resolved spectra are black and thin.</p>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="mcr-purity.html#cb270-1"></a><span class="co"># get spectra, transpose and normalize to unit area</span></span>
+<span id="cb270-2"><a href="mcr-purity.html#cb270-2"></a>S      =<span class="st"> </span><span class="kw">prep.norm</span>(<span class="kw">mda.t</span>(carbs<span class="op">$</span>S), <span class="st">&quot;length&quot;</span>)</span>
+<span id="cb270-3"><a href="mcr-purity.html#cb270-3"></a>S1.hat =<span class="st"> </span><span class="kw">prep.norm</span>(<span class="kw">mda.t</span>(m1<span class="op">$</span>resspec), <span class="st">&quot;length&quot;</span>)</span>
+<span id="cb270-4"><a href="mcr-purity.html#cb270-4"></a>S2.hat =<span class="st"> </span><span class="kw">prep.norm</span>(<span class="kw">mda.t</span>(m2<span class="op">$</span>resspec), <span class="st">&quot;length&quot;</span>)</span>
+<span id="cb270-5"><a href="mcr-purity.html#cb270-5"></a></span>
+<span id="cb270-6"><a href="mcr-purity.html#cb270-6"></a><span class="co"># define color and line width for the spectral curves</span></span>
+<span id="cb270-7"><a href="mcr-purity.html#cb270-7"></a>col =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb270-8"><a href="mcr-purity.html#cb270-8"></a>lwd =<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb270-9"><a href="mcr-purity.html#cb270-9"></a></span>
+<span id="cb270-10"><a href="mcr-purity.html#cb270-10"></a><span class="co"># show the plots separately for each component and each result object</span></span>
+<span id="cb270-11"><a href="mcr-purity.html#cb270-11"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>))</span>
+<span id="cb270-12"><a href="mcr-purity.html#cb270-12"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) {</span>
+<span id="cb270-13"><a href="mcr-purity.html#cb270-13"></a>   s =<span class="st"> </span><span class="kw">mda.subset</span>(S, a)</span>
+<span id="cb270-14"><a href="mcr-purity.html#cb270-14"></a>   s1.hat =<span class="st"> </span><span class="kw">mda.subset</span>(S1.hat, a)</span>
+<span id="cb270-15"><a href="mcr-purity.html#cb270-15"></a>   s2.hat =<span class="st"> </span><span class="kw">mda.subset</span>(S2.hat, a)</span>
+<span id="cb270-16"><a href="mcr-purity.html#cb270-16"></a>   <span class="kw">mdaplotg</span>(<span class="kw">list</span>(<span class="dt">orig =</span> s, <span class="dt">resolved =</span> s1.hat), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> col, <span class="dt">lwd =</span> lwd)</span>
+<span id="cb270-17"><a href="mcr-purity.html#cb270-17"></a>   <span class="kw">mdaplotg</span>(<span class="kw">list</span>(<span class="dt">orig =</span> s, <span class="dt">resolved =</span> s2.hat), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> col, <span class="dt">lwd =</span> lwd)</span>
+<span id="cb270-18"><a href="mcr-purity.html#cb270-18"></a>}</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-172-1.png" width="864" /></p>
+<p>In the code we use <code>mda.t()</code> and <code>mda.subset()</code> instead of just <code>t</code> and <code>subset()</code> to preserve values for Raman shift and axis titles which are defined as attributes of the matrices with spectra, you can read more details in section about <a href="datasets-attributes-and-factors.html#datasets--attributes-and-factors">Attributes and factors</a>.</p>
+<p>As one can see, the quality of resolving is quite good in both cases. However, in case with offset = 10% (right plot), one can also notice large artifacts for example for the third component, which looks like a sort of negative peaks. You can try and play with the offset parameter and see how it influences the quality of the resolution.</p>
+</div>
+<div id="predictions" class="section level3">
+<h3>Predictions</h3>
+<p>It is also possible to predict concentration for one or several spectra based on already resolved data. In the code chunk below we predict the concentration values using the matrix with spectra of the pure components. Then we scale the predicted values, so they sum up to one and show the results.</p>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="mcr-purity.html#cb271-1"></a>c =<span class="st"> </span><span class="kw">predict</span>(m, <span class="kw">mda.t</span>(carbs<span class="op">$</span>S))</span>
+<span id="cb271-2"><a href="mcr-purity.html#cb271-2"></a>c =<span class="st"> </span>c <span class="op">/</span><span class="st"> </span><span class="kw">apply</span>(c, <span class="dv">2</span>, sum)</span>
+<span id="cb271-3"><a href="mcr-purity.html#cb271-3"></a><span class="kw">show</span>(c)</span></code></pre></div>
+<pre><code>##              Comp 1     Comp 2      Comp 3
+## fructose 0.94329239 0.03701313 0.094968338
+## lactose  0.02396884 0.86686908 0.003781956
+## ribose   0.06152230 0.09344879 0.847020106</code></pre>
+<p>In ideal case we should see an identity matrix. However in this case, we got, for example, <span class="math inline">\([0.943, 0.024, 0.062]\)</span> for the first component instead of expected <span class="math inline">\([1, 0, 0]\)</span>. The result is a bit worse for the second and the third components.</p>
+</div>
+<div id="using-derivatives" class="section level3">
+<h3>Using derivatives</h3>
+<p>One of the ways to improve the result of resolution based on the purity approach is to use derivatives of the spectra. This can be especially efficient if spectra show broad overlapping peaks, e.g. in case of NIR or UV/Vis spectra.</p>
+<p>The derivatives in <code>mcrpure()</code> can be used either only for detection of pure variables or for both detection of pure variables and the resolving. To use derivatives one has to specify two parameters. First, <code>use.deriv</code>, is a number between 0 and 2 (0 — do not use, 1 — use only for detection of pure variables, 2 — use for both the detection and the resolution). Second parameter, <code>savgol</code> is a list with Savitzky-Golay settings (see <code>?prep.savgol</code> for details).</p>
+<p>The code below shows the result of applying <code>mcrpure()</code> to the <em>Simdata</em>, which consists of 150 UV/Vis spectra with very broad peaks.</p>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="mcr-purity.html#cb273-1"></a>   <span class="kw">data</span>(simdata)</span>
+<span id="cb273-2"><a href="mcr-purity.html#cb273-2"></a></span>
+<span id="cb273-3"><a href="mcr-purity.html#cb273-3"></a>   <span class="co"># define Savitzky-Golay parameters</span></span>
+<span id="cb273-4"><a href="mcr-purity.html#cb273-4"></a>   savgol =<span class="st"> </span><span class="kw">list</span>(<span class="dt">porder =</span> <span class="dv">2</span>, <span class="dt">dorder =</span> <span class="dv">2</span>, <span class="dt">width =</span> <span class="dv">5</span>)</span>
+<span id="cb273-5"><a href="mcr-purity.html#cb273-5"></a></span>
+<span id="cb273-6"><a href="mcr-purity.html#cb273-6"></a>   <span class="co"># get spectra and resolve them with and without derivatives</span></span>
+<span id="cb273-7"><a href="mcr-purity.html#cb273-7"></a>   D &lt;-<span class="st"> </span>simdata<span class="op">$</span>spectra.c</span>
+<span id="cb273-8"><a href="mcr-purity.html#cb273-8"></a>   m1 &lt;-<span class="st"> </span><span class="kw">mcrpure</span>(D, <span class="dt">ncomp =</span> <span class="dv">3</span>)</span>
+<span id="cb273-9"><a href="mcr-purity.html#cb273-9"></a>   m2 &lt;-<span class="st"> </span><span class="kw">mcrpure</span>(D, <span class="dt">ncomp =</span> <span class="dv">3</span>, <span class="dt">offset =</span> <span class="fl">0.04</span>, <span class="dt">use.deriv =</span> <span class="dv">2</span>, <span class="dt">savgol =</span> savgol)</span>
+<span id="cb273-10"><a href="mcr-purity.html#cb273-10"></a></span>
+<span id="cb273-11"><a href="mcr-purity.html#cb273-11"></a></span>
+<span id="cb273-12"><a href="mcr-purity.html#cb273-12"></a>   <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb273-13"><a href="mcr-purity.html#cb273-13"></a>   <span class="kw">plotPuritySpectra</span>(m1)</span>
+<span id="cb273-14"><a href="mcr-purity.html#cb273-14"></a>   <span class="kw">plotPuritySpectra</span>(m2)</span>
+<span id="cb273-15"><a href="mcr-purity.html#cb273-15"></a></span>
+<span id="cb273-16"><a href="mcr-purity.html#cb273-16"></a>   <span class="kw">plotSpectra</span>(m1)</span>
+<span id="cb273-17"><a href="mcr-purity.html#cb273-17"></a>   <span class="kw">plotSpectra</span>(m2)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-174-1.png" width="864" /></p>
+<p>Using the default settings (left plots) does not allow to get any meaningful solutions (you can notice, for example, negative peaks). However, combination of derivatives and adjustment of the offset, results in a very good outcome — the resolved spectra are very similar to the original ones (original spectra are not shown on the plots).</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="mcr.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="mcr-als.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 1
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
