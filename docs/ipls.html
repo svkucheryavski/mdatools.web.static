@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-07-12" />
+<meta name="date" content="2020-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#an-example"><i class="fa fa-check"></i>An example</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
-<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#using-derivatives"><i class="fa fa-check"></i>Using derivatives</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
@@ -326,11 +326,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="ipls.html#cb258-1"></a><span class="kw">show</span>(m<span class="op">$</span>int.selected)</span></code></pre></div>
 <pre><code>## [1]  6 11  1  2 13 12</code></pre>
 <div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="ipls.html#cb260-1"></a><span class="kw">show</span>(m<span class="op">$</span>var.selected)</span></code></pre></div>
-<pre><code>##  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14
-## [15]  15  16  17  18  19  20  51  52  53  54  55  56  57  58
-## [29]  59  60 101 102 103 104 105 106 107 108 109 110 111 112
-## [43] 113 114 115 116 117 118 119 120 121 122 123 124 125 126
-## [57] 127 128 129 130</code></pre>
+<pre><code>##  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13
+## [14]  14  15  16  17  18  19  20  51  52  53  54  55  56
+## [27]  57  58  59  60 101 102 103 104 105 106 107 108 109
+## [40] 110 111 112 113 114 115 116 117 118 119 120 121 122
+## [53] 123 124 125 126 127 128 129 130</code></pre>
 <p>Also the model object contains the initial global model for full data (<code>m$gm</code>) and final PLS model made for the all selected data, <code>m$om</code>. In the following example I compare RMSE plots for both:</p>
 <div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="ipls.html#cb262-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb262-2"><a href="ipls.html#cb262-2"></a><span class="kw">plotRMSE</span>(m<span class="op">$</span>gm)</span>

@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-07-12" />
+<meta name="date" content="2020-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#an-example"><i class="fa fa-check"></i>An example</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
-<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#using-derivatives"><i class="fa fa-check"></i>Using derivatives</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
@@ -274,36 +274,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Number of selected components: 1
 ## 
 ## Class #1 (setosa):
-##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN FN
-## Comp 1   92.924      92.924   42.703      42.703 25  1 49  0
-## Comp 2    4.560      97.484   11.216      53.920 25  0 50  0
-## Comp 3    1.790      99.274    1.717      55.637 25  0 50  0
-##        Spec. Sens. Accuracy
-## Comp 1  0.98     1    0.987
-## Comp 2  1.00     1    1.000
-## Comp 3  1.00     1    1.000
+##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP
+## Comp 1   92.924      92.924   42.703      42.703 25  1
+## Comp 2    4.560      97.484   11.216      53.920 25  0
+## Comp 3    1.790      99.274    1.717      55.637 25  0
+##        TN FN Spec. Sens. Accuracy
+## Comp 1 49  0  0.98     1    0.987
+## Comp 2 50  0  1.00     1    1.000
+## Comp 3 50  0  1.00     1    1.000
 ## 
 ## 
 ## Class #2 (versicolor):
-##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN FN
-## Comp 1   92.924      92.924   42.703      42.703  0  0 50 25
-## Comp 2    4.560      97.484   11.216      53.920 10  4 46 15
-## Comp 3    1.790      99.274    1.717      55.637 10  6 44 15
-##        Spec. Sens. Accuracy
-## Comp 1  1.00   0.0    0.667
-## Comp 2  0.92   0.4    0.747
-## Comp 3  0.88   0.4    0.720
+##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP
+## Comp 1   92.924      92.924   42.703      42.703  0  0
+## Comp 2    4.560      97.484   11.216      53.920 10  4
+## Comp 3    1.790      99.274    1.717      55.637 10  6
+##        TN FN Spec. Sens. Accuracy
+## Comp 1 50 25  1.00   0.0    0.667
+## Comp 2 46 15  0.92   0.4    0.747
+## Comp 3 44 15  0.88   0.4    0.720
 ## 
 ## 
 ## Class #3 (virginica):
-##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN FN
-## Comp 1   92.924      92.924   42.703      42.703 25  4 46  0
-## Comp 2    4.560      97.484   11.216      53.920 25  4 46  0
-## Comp 3    1.790      99.274    1.717      55.637 24  4 46  1
-##        Spec. Sens. Accuracy
-## Comp 1  0.92  1.00    0.947
-## Comp 2  0.92  1.00    0.947
-## Comp 3  0.92  0.96    0.933</code></pre>
+##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP
+## Comp 1   92.924      92.924   42.703      42.703 25  4
+## Comp 2    4.560      97.484   11.216      53.920 25  4
+## Comp 3    1.790      99.274    1.717      55.637 24  4
+##        TN FN Spec. Sens. Accuracy
+## Comp 1 46  0  0.92  1.00    0.947
+## Comp 2 46  0  0.92  1.00    0.947
+## Comp 3 46  1  0.92  0.96    0.933</code></pre>
 <p>And the corresponding plot with predictions.</p>
 <div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="plsda-predictions.html#cb245-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
 <span id="cb245-2"><a href="plsda-predictions.html#cb245-2"></a><span class="kw">plotPredictions</span>(res)</span></code></pre></div>
@@ -317,14 +317,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Number of selected components: 3
 ## 
 ## Class #1 (virginica):
-##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN FN
-## Comp 1   93.107      93.107   54.394      54.394 25  4 46  0
-## Comp 2    1.588      94.695    6.039      60.433 24  4 46  1
-## Comp 3    2.641      97.336   -0.149      60.284 22  4 46  3
-##        Spec. Sens. Accuracy
-## Comp 1  0.92  1.00    0.947
-## Comp 2  0.92  0.96    0.933
-## Comp 3  0.92  0.88    0.907</code></pre>
+##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP
+## Comp 1   93.107      93.107   54.394      54.394 25  4
+## Comp 2    1.588      94.695    6.039      60.433 24  4
+## Comp 3    2.641      97.336   -0.149      60.284 22  4
+##        TN FN Spec. Sens. Accuracy
+## Comp 1 46  0  0.92  1.00    0.947
+## Comp 2 46  1  0.92  0.96    0.933
+## Comp 3 46  3  0.92  0.88    0.907</code></pre>
 <div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="plsda-predictions.html#cb248-1"></a>res22 =<span class="st"> </span><span class="kw">predict</span>(m.vir, Xv, cv.vir)</span>
 <span id="cb248-2"><a href="plsda-predictions.html#cb248-2"></a><span class="kw">summary</span>(res22)</span></code></pre></div>
 <pre><code>## 
@@ -332,14 +332,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Number of selected components: 3
 ## 
 ## Class #1 (virginica):
-##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN FN
-## Comp 1   93.107      93.107   54.394      54.394 25  4 46  0
-## Comp 2    1.588      94.695    6.039      60.433 24  4 46  1
-## Comp 3    2.641      97.336   -0.149      60.284 22  4 46  3
-##        Spec. Sens. Accuracy
-## Comp 1  0.92  1.00    0.947
-## Comp 2  0.92  0.96    0.933
-## Comp 3  0.92  0.88    0.907</code></pre>
+##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP
+## Comp 1   93.107      93.107   54.394      54.394 25  4
+## Comp 2    1.588      94.695    6.039      60.433 24  4
+## Comp 3    2.641      97.336   -0.149      60.284 22  4
+##        TN FN Spec. Sens. Accuracy
+## Comp 1 46  0  0.92  1.00    0.947
+## Comp 2 46  1  0.92  0.96    0.933
+## Comp 3 46  3  0.92  0.88    0.907</code></pre>
 <p>As you can see, statistically results are identical. However, predictions plot will look a bit different for these two cases, as you can see below.</p>
 <div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="plsda-predictions.html#cb250-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
 <span id="cb250-2"><a href="plsda-predictions.html#cb250-2"></a><span class="kw">plotPredictions</span>(res21)</span>

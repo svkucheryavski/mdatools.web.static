@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-07-12" />
+<meta name="date" content="2020-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#an-example"><i class="fa fa-check"></i>An example</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
-<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#using-derivatives"><i class="fa fa-check"></i>Using derivatives</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
@@ -265,33 +265,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="mcr--purity" class="section level2">
 <h2>Purity based</h2>
-<p>The purity based approach implemented in <em>mdatools</em> was <a href="https://pubs.acs.org/doi/abs/10.1021/ac00014a016#">proposed</a> by Willem Windig and Jean Guilment in 1991 as a simple alternative to interactive self-modeling multivariate analysis technique. The general idea of the approach is to find variables (wavelength, wavenumbers, etc.) in <span class="math inline">\(\mathbf{D}\)</span>, which are influenced mostly by one chemical component. Such variables are called as <em>pure variables</em>. If we can identify pure variable for each of the pure components, then we can solve the MCR problem by using ordinary least squares method:</p>
+<p>The purity based approach implemented in <em>mdatools</em> was <a href="https://www.sciencedirect.com/science/article/abs/pii/S0169743904002011">proposed</a> by Willem Windig and co-authors in 2005 as an alternative to classical SIMPLISMA method. The general idea of the approach is to find variables (wavelength, wavenumbers, etc.) in <span class="math inline">\(\mathbf{D}\)</span>, which are influenced mostly by one chemical component. Such variables are called as <em>pure variables</em>. If we identify pure variable for each of the components, then we can solve the MCR problem by using ordinary least squares method:</p>
 <p><span class="math display">\[\mathbf{\hat{S}} = \mathbf{D}^T \mathbf{D}_R (\mathbf{D}^T_R \mathbf{D})^{-1}\]</span>
 <span class="math display">\[\mathbf{\hat{C}} = \mathbf{D} \mathbf{\hat{S}} (\mathbf{\hat{S}}^T \mathbf{\hat{S}})^{-1}\]</span></p>
-<p>Here <span class="math inline">\(\mathbf{\hat{S}}\)</span> and <span class="math inline">\(\mathbf{\hat{C}}\)</span> are the spectra and concentrations of the pure components estimated by this method. The matrix <span class="math inline">\(\mathbf{D}_R\)</span> is a reduced version of <span class="math inline">\(\mathbf{D}\)</span> where only pure variables are kept (one for each pure component, so this matrix has a dimension <span class="math inline">\(A \times A\)</span>). So the question is how to find the pure variables?</p>
-<p>Windig and co-authors proposed to do it by computing a <em>purity</em> of a variable <span class="math inline">\(j\)</span> as follows:</p>
-<p><span class="math display">\[p_j = \frac{\sigma_j}{\mu_j + \alpha}\]</span></p>
-<p>Here <span class="math inline">\(\sigma_j\)</span> and <span class="math inline">\(\mu_j\)</span> are standard deviation and mean values computed for the variable (<span class="math inline">\(j^{th}\)</span> column of the matrix <span class="math inline">\(\mathbf{D}\)</span>). Computing the purity for all variables in <span class="math inline">\(\mathbf{D}\)</span> results in a purity spectrum, <span class="math inline">\(\mathbf{p}\)</span>.</p>
-<p>Parameter <span class="math inline">\(\alpha\)</span> is computed as 1–10% of a maximum of all mean values. More details about the method can be found both in the <a href="https://pubs.acs.org/doi/abs/10.1021/ac00014a016#">original paper</a> as well as in one of the <a href="https://www.sciencedirect.com/science/article/pii/B9780444636386000036">recent reviews</a>.</p>
+<p>Here <span class="math inline">\(\mathbf{\hat{S}}\)</span> and <span class="math inline">\(\mathbf{\hat{C}}\)</span> are the spectra and concentrations (contributions) of the pure components estimated by this method. The matrix <span class="math inline">\(\mathbf{D}_R\)</span> is a reduced version of <span class="math inline">\(\mathbf{D}\)</span> where only pure variables are kept (one for each pure component, so this matrix has a dimension <span class="math inline">\(A \times A\)</span>). So the question is how to find the pure variables?</p>
+<p>Windig and co-authors proposed to do it by computing angles between the spectral variables. For the first component angle between all variables and a vector of ones is computed and first pure variable is selected as the one having the largest angle. Then, angles between the first selected pure variable and the rest are computed and, again, variable with the largest angle is selected as the purest. This continues until pure variables for all components are identified.</p>
+<p>To reduce the influence of noisy variables, correction factor, is computed for each variable as follows:</p>
+<p><span class="math display">\[\mathbf{n} = \frac{\mathbf{m}}{\mathbf{m} + offset \times \mathrm{max}(\mathbf{m})}\]</span></p>
+<p>Here <span class="math inline">\(\mathbf{m}\)</span> is a mean spectrum computed for the original data, <span class="math inline">\(\mathbf{D}\)</span>, and the <span class="math inline">\(offset\)</span> is a tuning parameter defined by a user. Usually a value between 0.001 and 0.05 is a good choice for the offset. More details about the method can be found in the above mentioned paper.</p>
 <div id="an-example" class="section level3">
 <h3>An example</h3>
-<p>Function <code>mcrpure()</code> implements the purity based method in <em>mdatools</em>. It has two mandatory arguments — matrix with the original spectra and number of pure components — as well as several extra parameters. The most important parameter is the <code>offset</code> which defines value <span class="math inline">\(\alpha\)</span> in the purity spectrum. Thus <code>offset = 0.01</code> will compute <span class="math inline">\(\alpha\)</span> as 1% of the maximum mean value. The default offset is 0.05.</p>
+<p>Function <code>mcrpure()</code> implements the purity based method in <em>mdatools</em>. It has two mandatory arguments — matrix with the original spectra and number of pure components — as well as several extra parameters. The most important one is the offset, which by default is 0.05.</p>
 <p>The code below shows how to resolve the spectra from the <code>carbs</code> dataset and show summary information:</p>
 <div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="mcr-purity.html#cb263-1"></a><span class="kw">data</span>(carbs)</span>
 <span id="cb263-2"><a href="mcr-purity.html#cb263-2"></a>m =<span class="st"> </span><span class="kw">mcrpure</span>(carbs<span class="op">$</span>D, <span class="dt">ncomp =</span> <span class="dv">3</span>)</span>
 <span id="cb263-3"><a href="mcr-purity.html#cb263-3"></a><span class="kw">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## Summary for MCR Purity case (class mcrpure)
-## 
-## Offset: 0.05
-## Use of derivative: no
-## 
 ##        Expvar Cumexpvar Varindex Purity
-## Comp 1  61.94     61.94      782  0.639
-## Comp 2  24.96     86.91     1245  0.338
-## Comp 3  12.65     99.56     1059  0.176</code></pre>
-<p>The summary shows explained variance, cumulative explained variance, index of pure variable and its purity value for each of the three components. For example, in case of the first component, the purest variable is located in column 782 and its purity is equal to 0.639. As one can see, current solution explains 99.6% of the total variance.</p>
-<p>Any MCR method in <em>mdatools</em> contains the resolved spectra (as <code>m$respec</code>) and contributions (as <code>m$rescont</code>) as well as some extra data, e.g. purity spectra for each component, etc. You can see a list of all objects available by simply printing the object with <em>mcrpure</em> results:</p>
+## Comp 1  61.94     61.94      782 36.038
+## Comp 2  24.96     86.91     1245 56.703
+## Comp 3  12.65     99.56     1059 46.941</code></pre>
+<p>The summary shows explained variance, cumulative explained variance, index of pure variable and its purity value for each of the three components. For example, in case of the first component, the purest variable is located in column 782 and its purity (in this case an angle between this variable and a vector of ones) is equal to 36.038 degrees. As one can see, current solution explains 99.6% of the total variance.</p>
+<p>Any MCR method in <em>mdatools</em> contains the resolved spectra (as <code>m$resspec</code>) and contributions (as <code>m$rescont</code>) as well as some extra data, e.g. purity spectra for each component, etc. You can see a list of all objects available by simply printing the object with <em>mcrpure</em> results:</p>
 <div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="mcr-purity.html#cb265-1"></a><span class="kw">show</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## MCR Purity unmixing case (class mcrpure)
@@ -307,8 +303,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $purityspec - matrix with purity spectra
 ## $purevars - vector with indices of pure variables
 ## $purevals - purity values for the selected pure variables
-## $use.deriv - show how derivative was employed
-## $savgol - Savitzky-Golay transformation parameters
 ## $expvar - vector with explained variance
 ## $cumexpvar - vector with cumulative explained variance
 ## $offset - offset value used to compute the purity
@@ -341,26 +335,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb269-7"><a href="mcr-purity.html#cb269-7"></a><span class="kw">plotPuritySpectra</span>(m2)</span>
 <span id="cb269-8"><a href="mcr-purity.html#cb269-8"></a><span class="kw">plotPuritySpectra</span>(m2, <span class="dt">comp =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-171-1.png" width="864" /></p>
-<p>The vertical dashed lines on the purity spectra plot show the selected pure variables. As we can see, indeed they correspond to the largest values in the corresponding purity spectrum (so have the highest purity). We can also notice that when offset is small (top plots, 1%) the purity spectra look quite noisy. On the other hand, using too large offset can lead to a selection of less pure variables, so this parameter should be selected with caution. In most cases, having offset around 5% of the largest mean value allows to achieve satisfactory results. But it is always a good idea to vary the parameter and investigate all plots before the final decision.</p>
+<p>The vertical dashed lines on the purity spectra plot show the selected pure variables. As we can see, indeed they correspond to the largest values in the corresponding purity spectrum (so have the highest purity). We can also notice that when offset is small (top plots, 1%) the purity spectra look quite noisy. On the other hand, using too large offset can lead to a selection of less pure variables, so this parameter should be selected with caution. It is always a good idea to vary the parameter and investigate all plots before the final decision.</p>
 <p>Since dataset <code>carbs</code> contains spectra of pure components as well, we can compare the resolved spectra with the original ones as shown in the example below. To do that we normalize both sets of spectra to a unit length to avoid a scaling problem. The original spectra are shown as red and thick curves while the resolved spectra are black and thin.</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="mcr-purity.html#cb270-1"></a><span class="co"># get spectra, transpose and normalize to unit area</span></span>
-<span id="cb270-2"><a href="mcr-purity.html#cb270-2"></a>S      =<span class="st"> </span><span class="kw">prep.norm</span>(<span class="kw">mda.t</span>(carbs<span class="op">$</span>S), <span class="st">&quot;length&quot;</span>)</span>
-<span id="cb270-3"><a href="mcr-purity.html#cb270-3"></a>S1.hat =<span class="st"> </span><span class="kw">prep.norm</span>(<span class="kw">mda.t</span>(m1<span class="op">$</span>resspec), <span class="st">&quot;length&quot;</span>)</span>
-<span id="cb270-4"><a href="mcr-purity.html#cb270-4"></a>S2.hat =<span class="st"> </span><span class="kw">prep.norm</span>(<span class="kw">mda.t</span>(m2<span class="op">$</span>resspec), <span class="st">&quot;length&quot;</span>)</span>
-<span id="cb270-5"><a href="mcr-purity.html#cb270-5"></a></span>
-<span id="cb270-6"><a href="mcr-purity.html#cb270-6"></a><span class="co"># define color and line width for the spectral curves</span></span>
-<span id="cb270-7"><a href="mcr-purity.html#cb270-7"></a>col =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)</span>
-<span id="cb270-8"><a href="mcr-purity.html#cb270-8"></a>lwd =<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">1</span>)</span>
-<span id="cb270-9"><a href="mcr-purity.html#cb270-9"></a></span>
-<span id="cb270-10"><a href="mcr-purity.html#cb270-10"></a><span class="co"># show the plots separately for each component and each result object</span></span>
-<span id="cb270-11"><a href="mcr-purity.html#cb270-11"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>))</span>
-<span id="cb270-12"><a href="mcr-purity.html#cb270-12"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) {</span>
-<span id="cb270-13"><a href="mcr-purity.html#cb270-13"></a>   s =<span class="st"> </span><span class="kw">mda.subset</span>(S, a)</span>
-<span id="cb270-14"><a href="mcr-purity.html#cb270-14"></a>   s1.hat =<span class="st"> </span><span class="kw">mda.subset</span>(S1.hat, a)</span>
-<span id="cb270-15"><a href="mcr-purity.html#cb270-15"></a>   s2.hat =<span class="st"> </span><span class="kw">mda.subset</span>(S2.hat, a)</span>
-<span id="cb270-16"><a href="mcr-purity.html#cb270-16"></a>   <span class="kw">mdaplotg</span>(<span class="kw">list</span>(<span class="dt">orig =</span> s, <span class="dt">resolved =</span> s1.hat), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> col, <span class="dt">lwd =</span> lwd)</span>
-<span id="cb270-17"><a href="mcr-purity.html#cb270-17"></a>   <span class="kw">mdaplotg</span>(<span class="kw">list</span>(<span class="dt">orig =</span> s, <span class="dt">resolved =</span> s2.hat), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> col, <span class="dt">lwd =</span> lwd)</span>
-<span id="cb270-18"><a href="mcr-purity.html#cb270-18"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="mcr-purity.html#cb270-1"></a><span class="co"># apply purity method</span></span>
+<span id="cb270-2"><a href="mcr-purity.html#cb270-2"></a>m =<span class="st"> </span><span class="kw">mcrpure</span>(carbs<span class="op">$</span>D, <span class="dt">ncomp =</span> <span class="dv">3</span>, <span class="dt">offset =</span> <span class="fl">0.05</span>)</span>
+<span id="cb270-3"><a href="mcr-purity.html#cb270-3"></a></span>
+<span id="cb270-4"><a href="mcr-purity.html#cb270-4"></a><span class="co"># get spectra, transpose and normalize to unit area</span></span>
+<span id="cb270-5"><a href="mcr-purity.html#cb270-5"></a>S      =<span class="st"> </span><span class="kw">prep.norm</span>(<span class="kw">mda.t</span>(carbs<span class="op">$</span>S), <span class="st">&quot;length&quot;</span>)</span>
+<span id="cb270-6"><a href="mcr-purity.html#cb270-6"></a>S.hat =<span class="st"> </span><span class="kw">prep.norm</span>(<span class="kw">mda.t</span>(m1<span class="op">$</span>resspec), <span class="st">&quot;length&quot;</span>)</span>
+<span id="cb270-7"><a href="mcr-purity.html#cb270-7"></a></span>
+<span id="cb270-8"><a href="mcr-purity.html#cb270-8"></a><span class="co"># define color and line width for the spectral curves</span></span>
+<span id="cb270-9"><a href="mcr-purity.html#cb270-9"></a>col =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb270-10"><a href="mcr-purity.html#cb270-10"></a>lwd =<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb270-11"><a href="mcr-purity.html#cb270-11"></a></span>
+<span id="cb270-12"><a href="mcr-purity.html#cb270-12"></a><span class="co"># show the plots separately for each component and each result object</span></span>
+<span id="cb270-13"><a href="mcr-purity.html#cb270-13"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb270-14"><a href="mcr-purity.html#cb270-14"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>) {</span>
+<span id="cb270-15"><a href="mcr-purity.html#cb270-15"></a>   s =<span class="st"> </span><span class="kw">mda.subset</span>(S, a)</span>
+<span id="cb270-16"><a href="mcr-purity.html#cb270-16"></a>   s.hat =<span class="st"> </span><span class="kw">mda.subset</span>(S.hat, a)</span>
+<span id="cb270-17"><a href="mcr-purity.html#cb270-17"></a>   <span class="kw">mdaplotg</span>(<span class="kw">list</span>(<span class="dt">orig =</span> s, <span class="dt">resolved =</span> s.hat), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> col, <span class="dt">lwd =</span> lwd,</span>
+<span id="cb270-18"><a href="mcr-purity.html#cb270-18"></a>      <span class="dt">main =</span> <span class="kw">paste0</span>(<span class="st">&quot;Component &quot;</span>, a))</span>
+<span id="cb270-19"><a href="mcr-purity.html#cb270-19"></a>}</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-172-1.png" width="864" /></p>
 <p>In the code we use <code>mda.t()</code> and <code>mda.subset()</code> instead of just <code>t</code> and <code>subset()</code> to preserve values for Raman shift and axis titles which are defined as attributes of the matrices with spectra, you can read more details in section about <a href="datasets-attributes-and-factors.html#datasets--attributes-and-factors">Attributes and factors</a>.</p>
 <p>As one can see, the quality of resolving is quite good in both cases. However, in case with offset = 10% (right plot), one can also notice large artifacts for example for the third component, which looks like a sort of negative peaks. You can try and play with the offset parameter and see how it influences the quality of the resolution.</p>
@@ -377,30 +372,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ribose   0.06152230 0.09344879 0.847020106</code></pre>
 <p>In ideal case we should see an identity matrix. However in this case, we got, for example, <span class="math inline">\([0.943, 0.024, 0.062]\)</span> for the first component instead of expected <span class="math inline">\([1, 0, 0]\)</span>. The result is a bit worse for the second and the third components.</p>
 </div>
-<div id="using-derivatives" class="section level3">
-<h3>Using derivatives</h3>
-<p>One of the ways to improve the result of resolution based on the purity approach is to use derivatives of the spectra. This can be especially efficient if spectra show broad overlapping peaks, e.g. in case of NIR or UV/Vis spectra.</p>
-<p>The derivatives in <code>mcrpure()</code> can be used either only for detection of pure variables or for both detection of pure variables and the resolving. To use derivatives one has to specify two parameters. First, <code>use.deriv</code>, is a number between 0 and 2 (0 — do not use, 1 — use only for detection of pure variables, 2 — use for both the detection and the resolution). Second parameter, <code>savgol</code> is a list with Savitzky-Golay settings (see <code>?prep.savgol</code> for details).</p>
-<p>The code below shows the result of applying <code>mcrpure()</code> to the <em>Simdata</em>, which consists of 150 UV/Vis spectra with very broad peaks.</p>
+<div id="tuning-the-offset-parameter" class="section level3">
+<h3>Tuning the offset parameter</h3>
+<p>One of the ways to improve the result of resolution based on the purity approach is to tune the offset. The code below shows the result of applying <code>mcrpure()</code> to the <em>Simdata</em>, which consists of 150 UV/Vis spectra with very broad peaks.</p>
 <div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="mcr-purity.html#cb273-1"></a>   <span class="kw">data</span>(simdata)</span>
-<span id="cb273-2"><a href="mcr-purity.html#cb273-2"></a></span>
-<span id="cb273-3"><a href="mcr-purity.html#cb273-3"></a>   <span class="co"># define Savitzky-Golay parameters</span></span>
-<span id="cb273-4"><a href="mcr-purity.html#cb273-4"></a>   savgol =<span class="st"> </span><span class="kw">list</span>(<span class="dt">porder =</span> <span class="dv">2</span>, <span class="dt">dorder =</span> <span class="dv">2</span>, <span class="dt">width =</span> <span class="dv">5</span>)</span>
-<span id="cb273-5"><a href="mcr-purity.html#cb273-5"></a></span>
-<span id="cb273-6"><a href="mcr-purity.html#cb273-6"></a>   <span class="co"># get spectra and resolve them with and without derivatives</span></span>
-<span id="cb273-7"><a href="mcr-purity.html#cb273-7"></a>   D &lt;-<span class="st"> </span>simdata<span class="op">$</span>spectra.c</span>
-<span id="cb273-8"><a href="mcr-purity.html#cb273-8"></a>   m1 &lt;-<span class="st"> </span><span class="kw">mcrpure</span>(D, <span class="dt">ncomp =</span> <span class="dv">3</span>)</span>
-<span id="cb273-9"><a href="mcr-purity.html#cb273-9"></a>   m2 &lt;-<span class="st"> </span><span class="kw">mcrpure</span>(D, <span class="dt">ncomp =</span> <span class="dv">3</span>, <span class="dt">offset =</span> <span class="fl">0.04</span>, <span class="dt">use.deriv =</span> <span class="dv">2</span>, <span class="dt">savgol =</span> savgol)</span>
-<span id="cb273-10"><a href="mcr-purity.html#cb273-10"></a></span>
+<span id="cb273-2"><a href="mcr-purity.html#cb273-2"></a>   D &lt;-<span class="st"> </span>simdata<span class="op">$</span>spectra.c</span>
+<span id="cb273-3"><a href="mcr-purity.html#cb273-3"></a></span>
+<span id="cb273-4"><a href="mcr-purity.html#cb273-4"></a>   m1 &lt;-<span class="st"> </span><span class="kw">mcrpure</span>(D, <span class="dt">ncomp =</span> <span class="dv">3</span>)</span>
+<span id="cb273-5"><a href="mcr-purity.html#cb273-5"></a>   m2 &lt;-<span class="st"> </span><span class="kw">mcrpure</span>(D, <span class="dt">ncomp =</span> <span class="dv">3</span>, <span class="dt">offset =</span> <span class="fl">0.001</span>)</span>
+<span id="cb273-6"><a href="mcr-purity.html#cb273-6"></a></span>
+<span id="cb273-7"><a href="mcr-purity.html#cb273-7"></a></span>
+<span id="cb273-8"><a href="mcr-purity.html#cb273-8"></a>   <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb273-9"><a href="mcr-purity.html#cb273-9"></a>   <span class="kw">plotPuritySpectra</span>(m1)</span>
+<span id="cb273-10"><a href="mcr-purity.html#cb273-10"></a>   <span class="kw">plotPuritySpectra</span>(m2)</span>
 <span id="cb273-11"><a href="mcr-purity.html#cb273-11"></a></span>
-<span id="cb273-12"><a href="mcr-purity.html#cb273-12"></a>   <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb273-13"><a href="mcr-purity.html#cb273-13"></a>   <span class="kw">plotPuritySpectra</span>(m1)</span>
-<span id="cb273-14"><a href="mcr-purity.html#cb273-14"></a>   <span class="kw">plotPuritySpectra</span>(m2)</span>
-<span id="cb273-15"><a href="mcr-purity.html#cb273-15"></a></span>
-<span id="cb273-16"><a href="mcr-purity.html#cb273-16"></a>   <span class="kw">plotSpectra</span>(m1)</span>
-<span id="cb273-17"><a href="mcr-purity.html#cb273-17"></a>   <span class="kw">plotSpectra</span>(m2)</span></code></pre></div>
+<span id="cb273-12"><a href="mcr-purity.html#cb273-12"></a>   <span class="kw">plotSpectra</span>(m1)</span>
+<span id="cb273-13"><a href="mcr-purity.html#cb273-13"></a>   <span class="kw">plotSpectra</span>(m2)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-174-1.png" width="864" /></p>
-<p>Using the default settings (left plots) does not allow to get any meaningful solutions (you can notice, for example, negative peaks). However, combination of derivatives and adjustment of the offset, results in a very good outcome — the resolved spectra are very similar to the original ones (original spectra are not shown on the plots).</p>
+<p>Using the default settings (left plots) does not allow to get any meaningful solutions (you can notice, for example, negative peaks). However, tuning the offset value results in a very good outcome — the resolved spectra are very similar to the original ones (original spectra are not shown on the plots).</p>
 </div>
 </div>
             </section>

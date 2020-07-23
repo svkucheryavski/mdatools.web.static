@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-07-12" />
+<meta name="date" content="2020-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#an-example"><i class="fa fa-check"></i>An example</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
-<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#using-derivatives"><i class="fa fa-check"></i>Using derivatives</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
@@ -286,9 +286,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Cross-validation: full (leave one out)
 ## 
 ## Response variable: Shoesize
-##     X cumexpvar Y cumexpvar    R2  RMSE Slope   Bias  RPD
-## Cal    93.51369    95.27241 0.953 0.842 0.953 0.0000 4.70
-## Cv           NA          NA 0.933 1.005 0.935 0.0254 3.94</code></pre>
+##     X cumexpvar Y cumexpvar    R2  RMSE Slope   Bias
+## Cal    93.51369    95.27241 0.953 0.842 0.953 0.0000
+## Cv           NA          NA 0.933 1.005 0.935 0.0254
+##      RPD
+## Cal 4.70
+## Cv  3.94</code></pre>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="pls-variable-selection.html#cb189-1"></a>sr =<span class="st"> </span><span class="kw">selratio</span>(m1, <span class="dt">ncomp =</span> <span class="dv">2</span>)</span>
 <span id="cb189-2"><a href="pls-variable-selection.html#cb189-2"></a>m4 =<span class="st"> </span><span class="kw">pls</span>(Xc, yc, <span class="dv">4</span>, <span class="dt">scale =</span> T, <span class="dt">cv =</span> <span class="dv">1</span>, <span class="dt">exclcols =</span> (sr <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>))</span>
 <span id="cb189-3"><a href="pls-variable-selection.html#cb189-3"></a><span class="kw">summary</span>(m4)</span></code></pre></div>
@@ -317,30 +320,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## 
 ## Regression coefficients for Shoesize (ncomp = 2)
 ## ------------------------------------------------
-##               Coeffs   Std. err. t-value p-value        2.5%
-## Height    0.19357436 0.008270469   23.39   0.000  0.17646559
-## Weight    0.18935489 0.005386414   35.12   0.000  0.17821224
-## Hairleng -0.17730737 0.010368912  -17.09   0.000 -0.19875710
-## Age       0.02508113 0.026525148    0.95   0.351 -0.02979032
-## Income    0.01291497 0.033491494    0.39   0.702 -0.05636746
-## Beer      0.11441573 0.017851922    6.40   0.000  0.07748621
-## Wine      0.08278735 0.030960265    2.68   0.013  0.01874117
-## Sex      -0.17730737 0.010368912  -17.09   0.000 -0.19875710
-## Swim      0.19426871 0.013654151   14.21   0.000  0.16602295
-## Region    0.02673161 0.023989628    1.12   0.275 -0.02289471
-## IQ       -0.01705852 0.032399035   -0.53   0.602 -0.08408103
-##                97.5%
-## Height    0.21068313
-## Weight    0.20049754
-## Hairleng -0.15585764
-## Age       0.07995258
-## Income    0.08219740
-## Beer      0.15134524
-## Wine      0.14683354
-## Sex      -0.15585764
-## Swim      0.22251448
-## Region    0.07635794
-## IQ        0.04996399
+##               Coeffs   Std. err. t-value p-value
+## Height    0.19357436 0.008270469   23.39   0.000
+## Weight    0.18935489 0.005386414   35.12   0.000
+## Hairleng -0.17730737 0.010368912  -17.09   0.000
+## Age       0.02508113 0.026525148    0.95   0.351
+## Income    0.01291497 0.033491494    0.39   0.702
+## Beer      0.11441573 0.017851922    6.40   0.000
+## Wine      0.08278735 0.030960265    2.68   0.013
+## Sex      -0.17730737 0.010368912  -17.09   0.000
+## Swim      0.19426871 0.013654151   14.21   0.000
+## Region    0.02673161 0.023989628    1.12   0.275
+## IQ       -0.01705852 0.032399035   -0.53   0.602
+##                 2.5%       97.5%
+## Height    0.17646559  0.21068313
+## Weight    0.17821224  0.20049754
+## Hairleng -0.19875710 -0.15585764
+## Age      -0.02979032  0.07995258
+## Income   -0.05636746  0.08219740
+## Beer      0.07748621  0.15134524
+## Wine      0.01874117  0.14683354
+## Sex      -0.19875710 -0.15585764
+## Swim      0.16602295  0.22251448
+## Region   -0.02289471  0.07635794
+## IQ       -0.08408103  0.04996399
 ## 
 ## Degrees of freedom (Jack-Knifing): 23</code></pre>
 <div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="pls-variable-selection.html#cb195-1"></a><span class="kw">summary</span>(mjk<span class="op">$</span>coeffs, <span class="dt">ncomp =</span> <span class="dv">2</span>, <span class="dt">alpha =</span> <span class="fl">0.01</span>)</span></code></pre></div>
@@ -451,9 +454,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Cross-validation: full (leave one out)
 ## 
 ## Response variable: Shoesize
-##     X cumexpvar Y cumexpvar    R2  RMSE Slope    Bias  RPD
-## Cal    98.63485    97.79127 0.978 0.575 0.978  0.0000 6.87
-## Cv           NA          NA 0.965 0.727 0.972 -0.0161 5.44</code></pre>
+##     X cumexpvar Y cumexpvar    R2  RMSE Slope    Bias
+## Cal    98.63485    97.79127 0.978 0.575 0.978  0.0000
+## Cv           NA          NA 0.965 0.727 0.972 -0.0161
+##      RPD
+## Cal 6.87
+## Cv  5.44</code></pre>
 <div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="pls-variable-selection.html#cb205-1"></a><span class="kw">show</span>(<span class="kw">getRegcoeffs</span>(newm))</span></code></pre></div>
 <pre><code>##              Estimated
 ## Intercept  4.952691046

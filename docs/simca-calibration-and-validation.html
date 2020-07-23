@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-07-12" />
+<meta name="date" content="2020-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#an-example"><i class="fa fa-check"></i>An example</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
-<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#using-derivatives"><i class="fa fa-check"></i>Using derivatives</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
@@ -270,13 +270,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s get the data and split it to calibration and test sets.</p>
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="simca-calibration-and-validation.html#cb121-1"></a><span class="kw">data</span>(iris)</span>
 <span id="cb121-2"><a href="simca-calibration-and-validation.html#cb121-2"></a><span class="kw">head</span>(iris)</span></code></pre></div>
-<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-## 1          5.1         3.5          1.4         0.2  setosa
-## 2          4.9         3.0          1.4         0.2  setosa
-## 3          4.7         3.2          1.3         0.2  setosa
-## 4          4.6         3.1          1.5         0.2  setosa
-## 5          5.0         3.6          1.4         0.2  setosa
-## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width
+## 1          5.1         3.5          1.4         0.2
+## 2          4.9         3.0          1.4         0.2
+## 3          4.7         3.2          1.3         0.2
+## 4          4.6         3.1          1.5         0.2
+## 5          5.0         3.6          1.4         0.2
+## 6          5.4         3.9          1.7         0.4
+##   Species
+## 1  setosa
+## 2  setosa
+## 3  setosa
+## 4  setosa
+## 5  setosa
+## 6  setosa</code></pre>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="simca-calibration-and-validation.html#cb123-1"></a><span class="co"># generate indices for calibration set</span></span>
 <span id="cb123-2"><a href="simca-calibration-and-validation.html#cb123-2"></a>idx =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(iris), <span class="dt">by =</span> <span class="dv">2</span>)</span>
 <span id="cb123-3"><a href="simca-calibration-and-validation.html#cb123-3"></a></span>

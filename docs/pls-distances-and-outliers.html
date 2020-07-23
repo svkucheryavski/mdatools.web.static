@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-07-12" />
+<meta name="date" content="2020-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#an-example"><i class="fa fa-check"></i>An example</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
-<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#using-derivatives"><i class="fa fa-check"></i>Using derivatives</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
@@ -322,11 +322,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The proper procedure for detection and removing outliers can be found in the <a href="https://pubs.acs.org/doi/10.1021/acs.analchem.9b04611">paper</a> and will be very briefly touched upon here. The detection can be done using function <code>categorize()</code> which works similar to the same function for PCA decomposition — returns vector with categories for each measurement, as shown in an example below:</p>
 <div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="pls-distances-and-outliers.html#cb210-1"></a>c =<span class="st"> </span><span class="kw">categorize</span>(m, m<span class="op">$</span>res<span class="op">$</span>cal)</span>
 <span id="cb210-2"><a href="pls-distances-and-outliers.html#cb210-2"></a><span class="kw">print</span>(c)</span></code></pre></div>
-<pre><code>##  [1] outlier regular regular regular regular regular extreme
-##  [8] regular outlier regular regular regular regular regular
-## [15] regular regular regular extreme regular regular regular
-## [22] regular regular regular regular regular extreme regular
-## [29] regular regular regular regular
+<pre><code>##  [1] outlier regular regular regular regular regular
+##  [7] extreme regular outlier regular regular regular
+## [13] regular regular regular regular regular extreme
+## [19] regular regular regular regular regular regular
+## [25] regular regular extreme regular regular regular
+## [31] regular regular
 ## Levels: regular extreme outlier</code></pre>
 <p>A simplified description of the recommended procedure proposed in the <a href="https://pubs.acs.org/doi/10.1021/acs.analchem.9b04611">mentioned paper</a> is following:</p>
 <ol style="list-style-type: decimal">
@@ -392,9 +393,12 @@ Again, four or three components seem to be optimal and this time no extra outlie
 ## Number of selected components: 4
 ## Cross-validation: full (leave one out)
 ## 
-##     X cumexpvar Y cumexpvar    R2  RMSE Slope    Bias  RPD
-## Cal     85.9168    97.03856 0.970 0.620 0.970  0.0000 5.91
-## Cv           NA          NA 0.945 0.843 0.953 -0.0261 4.35</code></pre>
+##     X cumexpvar Y cumexpvar    R2  RMSE Slope    Bias
+## Cal     85.9168    97.03856 0.970 0.620 0.970  0.0000
+## Cv           NA          NA 0.945 0.843 0.953 -0.0261
+##      RPD
+## Cal 5.91
+## Cv  4.35</code></pre>
 <div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="pls-distances-and-outliers.html#cb217-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb217-2"><a href="pls-distances-and-outliers.html#cb217-2"></a><span class="kw">plotXYResiduals</span>(m)</span>
 <span id="cb217-3"><a href="pls-distances-and-outliers.html#cb217-3"></a><span class="kw">plotRegcoeffs</span>(m, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>, <span class="dt">show.ci =</span> <span class="ot">TRUE</span>)</span>

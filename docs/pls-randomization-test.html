@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-07-12" />
+<meta name="date" content="2020-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#an-example"><i class="fa fa-check"></i>An example</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
-<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#using-derivatives"><i class="fa fa-check"></i>Using derivatives</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
@@ -282,9 +282,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Suggested number of components: 4
 ## 
 ## Statistics and alpha values:
-##              Comp 1    Comp 2    Comp 3    Comp 4     Comp 5
-## Alpha     0.0550000 0.0000000 0.0000000 0.0000000 0.11600000
-## Statistic 0.2403837 0.4349094 0.3571243 0.2678767 0.03603819</code></pre>
+##              Comp 1    Comp 2    Comp 3    Comp 4
+## Alpha     0.0550000 0.0000000 0.0000000 0.0000000
+## Statistic 0.2403837 0.4349094 0.3571243 0.2678767
+##               Comp 5
+## Alpha     0.11600000
+## Statistic 0.03603819</code></pre>
 <p>As you can see, <code>alpha</code> is very small for components 2–4 and then jumps up.</p>
 <div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="pls-randomization-test.html#cb220-1"></a><span class="kw">par</span>( <span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb220-2"><a href="pls-randomization-test.html#cb220-2"></a><span class="kw">plotHist</span>(r, <span class="dt">ncomp =</span> <span class="dv">3</span>)</span>

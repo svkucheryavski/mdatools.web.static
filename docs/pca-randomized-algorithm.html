@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-07-12" />
+<meta name="date" content="2020-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#an-example"><i class="fa fa-check"></i>An example</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
-<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#using-derivatives"><i class="fa fa-check"></i>Using derivatives</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
@@ -282,12 +282,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb101-2"><a href="pca-randomized-algorithm.html#cb101-2"></a>t1 =<span class="st"> </span><span class="kw">system.time</span>({m1 =<span class="st"> </span><span class="kw">pca</span>(D, <span class="dt">ncomp =</span> <span class="dv">2</span>)})</span>
 <span id="cb101-3"><a href="pca-randomized-algorithm.html#cb101-3"></a><span class="kw">show</span>(t1)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  27.618   0.206  27.830</code></pre>
+##  30.021   0.286  30.334</code></pre>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="pca-randomized-algorithm.html#cb103-1"></a><span class="co"># randomized SVD with p = 5 and q = 1</span></span>
 <span id="cb103-2"><a href="pca-randomized-algorithm.html#cb103-2"></a>t2 =<span class="st"> </span><span class="kw">system.time</span>({m2 =<span class="st"> </span><span class="kw">pca</span>(D, <span class="dt">ncomp =</span> <span class="dv">2</span>, <span class="dt">rand =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>))})</span>
 <span id="cb103-3"><a href="pca-randomized-algorithm.html#cb103-3"></a><span class="kw">show</span>(t2)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   4.289   0.181   4.472</code></pre>
+##   4.595   0.217   4.818</code></pre>
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="pca-randomized-algorithm.html#cb105-1"></a><span class="co"># compare variances</span></span>
 <span id="cb105-2"><a href="pca-randomized-algorithm.html#cb105-2"></a><span class="kw">summary</span>(m1)</span></code></pre></div>
 <pre><code>## 
@@ -344,12 +344,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb113-4"><a href="pca-randomized-algorithm.html#cb113-4"></a>t1 =<span class="st"> </span><span class="kw">system.time</span>({m1 =<span class="st"> </span><span class="kw">pca.run</span>(D, <span class="dt">method =</span> <span class="st">&quot;svd&quot;</span>, <span class="dt">ncomp =</span> <span class="dv">2</span>)})</span>
 <span id="cb113-5"><a href="pca-randomized-algorithm.html#cb113-5"></a><span class="kw">show</span>(t1)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  26.891   0.040  26.952</code></pre>
+##  27.105   0.081  27.204</code></pre>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="pca-randomized-algorithm.html#cb115-1"></a><span class="co"># randomized SVD with p = 5 and q = 1</span></span>
 <span id="cb115-2"><a href="pca-randomized-algorithm.html#cb115-2"></a>t2 =<span class="st"> </span><span class="kw">system.time</span>({m2 =<span class="st"> </span><span class="kw">pca.run</span>(D, <span class="dt">method =</span> <span class="st">&quot;svd&quot;</span>, <span class="dt">ncomp =</span> <span class="dv">2</span>, <span class="dt">rand =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>))})</span>
 <span id="cb115-3"><a href="pca-randomized-algorithm.html#cb115-3"></a><span class="kw">show</span>(t2)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   2.315   0.009   2.327</code></pre>
+##   2.302   0.007   2.310</code></pre>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="pca-randomized-algorithm.html#cb117-1"></a><span class="co"># compare loadings</span></span>
 <span id="cb117-2"><a href="pca-randomized-algorithm.html#cb117-2"></a><span class="kw">show</span>(m1<span class="op">$</span>loadings[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ])</span></code></pre></div>
 <pre><code>##                [,1]         [,2]

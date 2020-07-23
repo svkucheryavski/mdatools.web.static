@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-07-12" />
+<meta name="date" content="2020-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -236,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#an-example"><i class="fa fa-check"></i>An example</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
-<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#using-derivatives"><i class="fa fa-check"></i>Using derivatives</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
@@ -356,8 +356,8 @@ Historically, the distances are called in this package and also in some other so
 <span id="cb92-9"><a href="pca-distances-and-limits.html#cb92-9"></a></span>
 <span id="cb92-10"><a href="pca-distances-and-limits.html#cb92-10"></a>c =<span class="st"> </span><span class="kw">categorize</span>(m, r)</span>
 <span id="cb92-11"><a href="pca-distances-and-limits.html#cb92-11"></a><span class="kw">print</span>(c)</span></code></pre></div>
-<pre><code>## [1] outlier regular regular regular extreme regular outlier
-## [8] regular
+<pre><code>## [1] outlier regular regular regular extreme regular
+## [7] outlier regular
 ## Levels: regular extreme outlier</code></pre>
 <p>As one can see, there are two outliers, one extreme and five regular objects. This can be visualized on distance plot:</p>
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="pca-distances-and-limits.html#cb94-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
