@@ -1,7 +1,7 @@
 // **********************************
 //    Classes and methods for PCA
 // **********************************
-//    written using ES6 
+//    written using ES6
 
 'strict mode';
 
@@ -10,12 +10,12 @@
  */
 class LDecomp {
    /**
-    * 
+    *
     * @param {Dataset} scores Dataset with scores
-    * @param {Dataset} T2  Dataset with T2 residuals
-    * @param {Dataset} Q  Dataset with Q residuals
-    * @param {Dataset} variance 
-    * @param {string} info 
+    * @param {Dataset} T2  Dataset with Score distances
+    * @param {Dataset} Q  Dataset with Orthogonal distances
+    * @param {Dataset} variance
+    * @param {string} info
     */
    constructor (scores, T2, Q, variance, info) {
       this.scores = scores;
@@ -37,12 +37,18 @@ class LDecomp {
       return this.scores.subset(comp).plot(id, param);
    }
 
-   plotResiduals (id, ncomp = 1, param = {}) {
+   plotDistance (id, ncomp = 1, param = {}) {
+
+      let h = this.T2.values[ncomp - 1]
+      let q = this.Q.values[ncomp - 1]
+      let h0 = mean(h)
+      let q0 = mean(q)
+
       const plotData = new Dataset(
-         [this.T2.values[ncomp - 1], this.Q.values[ncomp - 1]],
-         ['Hotteling T<sup>2</sup> residuals', 'Squared orthogonal distance'],
+         [h.map(x => x/h0), q.map(x => x/q0)],
+         ['Score distance, h/h0', 'Orthogonal distance, q/q0'],
          this.T2.objNames,
-         'Residuals'
+         'Distance plot'
       );
 
       return plotData.plot(id, param);
@@ -84,7 +90,7 @@ class PCAModel {
       this.param = {
          ncomp: 1,               // number of components to compute
          method: 0,                 // choice for method
-         autoscale: 3,              // choice for autoscaling   
+         autoscale: 3,              // choice for autoscaling
       };
 
       /* values using for scale and center of data */
@@ -94,7 +100,7 @@ class PCAModel {
    }
 
    /**
-    * Compute loadings using the selected method 
+    * Compute loadings using the selected method
     * @param {Array} data Numeric 2D array with data after preprocessing
     */
    calibrate (data, ncomp) {
@@ -115,7 +121,7 @@ class PCAModel {
       // define number of components and number of selected components
       if (ncomp > 0) {
          this.param.ncomp = Math.min(data.nObj - 1, data.nVar, 20, ncomp);
-      } 
+      }
 
       // autoscale the data values
       let values = autoscale(data.values, this.centerValues, this.scaleValues);
@@ -144,7 +150,7 @@ class PCAModel {
          data.varAxisValues
       );
 
-      // calculate PCA resilts for calibration set 
+      // calculate PCA resilts for calibration set
       this.tnorm = null;
       this.calres = this.predict(data);
    }
@@ -312,18 +318,18 @@ class PCAModel {
                width: 2,
             }
          };
-   
+
          if (param.type == 'h') {
-            Plotly.addTraces(plot, [meanTrace]);   
+            Plotly.addTraces(plot, [meanTrace]);
          } else {
-            Plotly.addTraces(plot, [meanTrace], 0);   
+            Plotly.addTraces(plot, [meanTrace], 0);
          }
       }
       return plot;
    }
 
-   /** 
-    * Creates a plot for scores using Plotly 
+   /**
+    * Creates a plot for scores using Plotly
     * @param {HTMLDomObject} id ID of DOM object (div) to show the plot in
     * @param {Numeric[]} comp Which components to make the plot for (one value or an array)
     * @param {Character} type Type of plot ('p', 'l', 'h')
@@ -334,18 +340,18 @@ class PCAModel {
       return plot;
    }
 
-   /** 
-    * Creates a plot for scores using Plotly 
+   /**
+    * Creates a plot for scores using Plotly
     * @param {HTMLDomObject} id ID of DOM object (div) to show the plot in
     * @param {Numeric} ncomp Which component to make the plot for (one value)
     * @param {Object} param JSON object with plot parameters (see Dataset.plot() method for details)
     */
-   plotResiduals (id, ncomp = 1, param = {}) {
+   plotDistance (id, ncomp = 1, param = {}) {
 
-      let plot = this.calres.plotResiduals(id, ncomp, modelPlotParam.calres(param));
-      
+      let plot = this.calres.plotDistance(id, ncomp, modelPlotParam.calres(param));
+
       if (this.cvres != null) {
-         Plotly.addTraces(plot, this.cvres.plotResiduals(null, ncomp, modelPlotParam.cvres(param)));
+         Plotly.addTraces(plot, this.cvres.plotDistance(null, ncomp, modelPlotParam.cvres(param)));
          Plotly.relayout(plot, { showlegend: false });
       }
 
@@ -353,17 +359,17 @@ class PCAModel {
       return plot;
    }
 
-   /** 
-    * Creates a plot for variance using Plotly 
+   /**
+    * Creates a plot for variance using Plotly
     * @param {HTMLDomObject} id ID of DOM object (div) to show the plot in
     * @param {Numeric} variance Which variance to make the plot for ('expvar' or 'cumexpvar')
     * @param {Object} param JSON object with plot parameters (see Dataset.plot() method for details)
     */
     plotVariance (id, variance = 'Expvar', param = {}) {
       let plot = this.calres.plotVariance(id, variance, modelPlotParam.calres(param));
-      
+
       if (this.cvres != null) {
-         Plotly.addTraces(plot, this.cvres.plotResiduals(null, variance, modelPlotParam.cvres(param)));
+         Plotly.addTraces(plot, this.cvres.plotDistance(null, variance, modelPlotParam.cvres(param)));
          Plotly.relayout(plot, { showlegend: false });
       }
 
@@ -418,7 +424,7 @@ class PCAModel {
    }
 }
 
-/** 
+/**
  * Interactive 3D application for PCA
  */
 class PCA3DApp {
@@ -510,7 +516,7 @@ class PCA3DApp {
          this.gui.settings.varset
             .add(this.varset, 'X1', this.data.varNames)
             .onFinishChange(() => {
-               this.updateVarset(0);               
+               this.updateVarset(0);
             });
          this.gui.settings.varset
             .add(this.varset, 'X2', this.data.varNames)
@@ -554,18 +560,18 @@ class PCA3DApp {
             .onFinishChange(() => {
                this.updateAll('X3');
             });
-         el3.appendChild(this.gui.settings.selectedObject.domElement);         
+         el3.appendChild(this.gui.settings.selectedObject.domElement);
       }
 
       this.computePlotData();
       this.plot();
-      this.updateInfo();   
-      this.select(0);       
+      this.updateInfo();
+      this.select(0);
    }
 
    /**
     * Updates control elements when variables are changed
-    * @param {Numeric} varNum which variable is changed (X1, X2 or X3) 
+    * @param {Numeric} varNum which variable is changed (X1, X2 or X3)
     * @param {*} value new value for the variable
    */
    updateVarset(varNum, value) {
@@ -580,7 +586,7 @@ class PCA3DApp {
 
       // change limits for the selected variable
       if (this.gui.settings.selectedObject.__controllers[varNum]) {
-         
+
          // calculate limits for the variable
          const mn = Math.min(...varValues);
          const mx = Math.max(...varValues);
@@ -640,30 +646,30 @@ class PCA3DApp {
          let scores = this.model.calres.scores.rbind(this.model.calres.scores.mean());
 
          obj.innerHTML = '' +
-            '<div><h2>X, raw</h2>' + dataRaw.asTable({ showObjNames: true, current: n }) + '</div>' + 
-            '<div><h2>X, autoscaled</h2>' + dataScaled.asTable({ showObjNames: false, dec: 1, current: n }) + '</div>' + 
-            "<div><h2>TP'</h2>" + proj.asTable({ showObjNames: false, dec: 1, current: n }) + '</div>' + 
-            '<div><h2>E</h2>' + res.asTable({ showObjNames: false, dec: 2, current: n }) + '</div>' + 
-            '<div><h2>Scores</h2>' + scores.asTable({ showObjNames: false, dec: 1, current: n }) + '</div>' + 
+            '<div><h2>X, raw</h2>' + dataRaw.asTable({ showObjNames: true, current: n }) + '</div>' +
+            '<div><h2>X, autoscaled</h2>' + dataScaled.asTable({ showObjNames: false, dec: 1, current: n }) + '</div>' +
+            "<div><h2>TP'</h2>" + proj.asTable({ showObjNames: false, dec: 1, current: n }) + '</div>' +
+            '<div><h2>E</h2>' + res.asTable({ showObjNames: false, dec: 2, current: n }) + '</div>' +
+            '<div><h2>Scores</h2>' + scores.asTable({ showObjNames: false, dec: 1, current: n }) + '</div>' +
             '<div><h2>Distances</h2>' + dist.asTable({ showObjNames: false, current: n }) + '</div>';
       }
    }
 
-   /** 
+   /**
     * Shows info about the model and variables mean values
     */
     updateInfo() {
       var obj = this.gui.dom.infoPane;
       if (obj) {
-         obj.innerHTML = '' + 
-         '<div class="info">' + 
-         this.model.loadings.asTable({showObjNames: true, dec: 3}) + 
+         obj.innerHTML = '' +
+         '<div class="info">' +
+         this.model.loadings.asTable({showObjNames: true, dec: 3}) +
          '</div>';
       }
    }
 
-   /** 
-    * Updates plots if values or parameters have been changed 
+   /**
+    * Updates plots if values or parameters have been changed
     * @param {boolean} variableChanged name of variable that has been changed for selected object
     */
    updateAll(variableChanged) {
@@ -683,24 +689,24 @@ class PCA3DApp {
       // prepare plot trace for the updated data and model
       const updatePlots = {
          x: [
-            this.values[0], 
-            this.projections[0], 
-            this.plane[0], 
-            [this.plane[0][1], this.plane[0][7]], 
+            this.values[0],
+            this.projections[0],
+            this.plane[0],
+            [this.plane[0][1], this.plane[0][7]],
             [this.plane[0][3], this.plane[0][5]]
          ],
          y: [
-            this.values[1], 
-            this.projections[1], 
-            this.plane[1], 
-            [this.plane[1][1], this.plane[1][7]], 
+            this.values[1],
+            this.projections[1],
+            this.plane[1],
+            [this.plane[1][1], this.plane[1][7]],
             [this.plane[1][3], this.plane[1][5]]
          ],
          z: [
-            this.values[2], 
-            this.projections[2], 
+            this.values[2],
+            this.projections[2],
             this.plane[2],
-            [this.plane[2][1], this.plane[2][7]], 
+            [this.plane[2][1], this.plane[2][7]],
             [this.plane[2][3], this.plane[2][5]]
          ],
       };
@@ -718,7 +724,7 @@ class PCA3DApp {
       if (this.gui.dom.plotPane != null) {
          Plotly.restyle(this.gui.dom.plotPane, updatePlots, [0, 1, 2, 3, 4]);
          Plotly.relayout(this.gui.dom.plotPane, updateLayout);
-         
+
          this.updateInfo();
          this.select(nObj);
       }
@@ -781,17 +787,17 @@ class PCA3DApp {
 
       Plotly.restyle(this.gui.dom.plotPane, update, null, [5, 6, 7]);
       this.plotModel();
-      this.updateTable();   
+      this.updateTable();
    }
 
-   /** 
+   /**
     * Resizes plots if splitters have been moved
     */
    resizePlots() {
       window.dispatchEvent(new Event('resize'));
    }
 
-   /** 
+   /**
     * Create a 3D plot with data and PCA model
     */
    plot() {
@@ -859,8 +865,7 @@ class PCA3DApp {
          mode: 'lines',
          marker: {
             color: 'orange',
-         },
-         opacity: 0.75
+         }
       };
 
       var modelPC2Trace = {
@@ -872,8 +877,7 @@ class PCA3DApp {
          mode: 'lines',
          marker: {
             color: 'orange',
-         },
-         opacity: 0.75
+         }
       };
 
       const selDataTrace = {
@@ -936,11 +940,11 @@ class PCA3DApp {
       // this option is off as it makes rotation of 3D plot more tricky
       // the use of setTimeout is a workaround for an plotly issue reported in
       // https://github.com/plotly/plotly.js/issues/1025
-      /*
+/*
       this.gui.dom.plotPane.on('plotly_click', (data) => {
          setTimeout(function(obj, n) { obj.select(n); }, 100, this, data.points[0].pointNumber);
-      });      
-      */
+      });
+*/
 
       if (this.gui.dom.plotPane != null) {
          var plotPane = this.gui.dom.plotPane;
@@ -949,7 +953,7 @@ class PCA3DApp {
 
    }
 
-   /** 
+   /**
     * show 2D plots for current MLR model
     */
    plotModel() {
@@ -960,29 +964,29 @@ class PCA3DApp {
       );
       p1.on('plotly_click', (data) => {
          this.select(data.points[0].pointNumber);
-      });      
+      });
 
-      let p2 = this.model.plotResiduals(
+      let p2 = this.model.plotDistance(
          document.getElementById('residualsPlot'), this.model.param.ncomp,
          { showLabels: true, markerSize: 6, current: nObj }
       );
       p2.on('plotly_click', (data) => {
          this.select(data.points[0].pointNumber);
-      });      
+      });
 
       this.model.plotLoadings(
          document.getElementById('loadingsPlot'), null,
          { showLabels: true, markerSize: 6 }
       );
-   } 
+   }
 }
 
 /** Class for PCA app */
 class PCAAppPlot extends MDAAppPlot {
    constructor (parent, plotPane, settingsPane, data = 'scores') {
-      super(parent, plotPane, settingsPane, ['scores', 'loadings', 'residuals', 'variance']);         
+      super(parent, plotPane, settingsPane, ['scores', 'loadings', 'residuals', 'variance']);
       this.parent = parent;
-      this.param.data = data;      
+      this.param.data = data;
       this.param.resncomp = 1;
       this.setDefaultSettings();
       this.update();
@@ -990,38 +994,38 @@ class PCAAppPlot extends MDAAppPlot {
 
    setDefaultSettings() {
       switch (this.param.data) {
-         case 'scores':  
+         case 'scores':
             this.param.type = 'p';
             break;
          case 'loadings':
             this.param.type = 'p';
             this.param.colorby = 'none';
-            break;   
+            break;
          case 'residuals':
            this.param.type = 'p';
            this.param.colorby = 'none';
-           break;   
+           break;
          case 'variance':
             this.param.type = 'h';
-            break;       
-      }     
+            break;
+      }
    }
 
-   updateSettings() {      
+   updateSettings() {
       super.updateSettings();
       switch (this.param.data) {
-         case 'scores':  
+         case 'scores':
             this.setScoresPlotSettings();
             break;
          case 'loadings':
             this.setLoadingsPlotSettings();
-            break;   
+            break;
          case 'residuals':
             this.setResidualsPlotSettings();
-            break;   
+            break;
          case 'variance':
             this.setVariancePlotSettings();
-            break;      
+            break;
       }
    }
 
@@ -1031,7 +1035,7 @@ class PCAAppPlot extends MDAAppPlot {
       param.colorby = 'none';
       if (this.param.colorby != 'none') {
          if (this.param.colorby == this.parent.dataset().objAxisName) {
-            param.colorby = this.parent.dataset().objAxisValues;            
+            param.colorby = this.parent.dataset().objAxisValues;
          } else {
             param.colorby = this.parent.dataset().subset(this.param.colorby).values[0];
          }
@@ -1047,18 +1051,18 @@ class PCAAppPlot extends MDAAppPlot {
             this.parent.model.plotScores(this.plotPane, comp, param);
             super.plot();
             break;
-         case 'loadings':   
+         case 'loadings':
             if (param.xaxis == 'Variables') {
                comp = [param.yaxis];
             }
             this.parent.model.plotLoadings(this.plotPane, comp, param);
             super.plot();
             break;
-         case 'residuals':   
-            this.parent.model.plotResiduals(this.plotPane, param.ncomp, param);
+         case 'residuals':
+            this.parent.model.plotDistance(this.plotPane, param.ncomp, param);
             super.plot();
             break;
-         case 'variance':   
+         case 'variance':
             this.parent.model.plotVariance(this.plotPane, param.variance, param);
             super.plot();
             break;
@@ -1068,10 +1072,10 @@ class PCAAppPlot extends MDAAppPlot {
 
 class PCAApp extends MDAApp {
    constructor(datasets, parent = null) {
-      super(datasets, parent);      
+      super(datasets, parent);
       this.nCompMax = 2;
-      this.model = new PCAModel();   
-      this.model.param.ncomp = 2;   
+      this.model = new PCAModel();
+      this.model.param.ncomp = 2;
 
       let el2 = this.gui.modelSettingsPane;
       if (el2) {
@@ -1089,23 +1093,23 @@ class PCAApp extends MDAApp {
             .onFinishChange(() => {
                this.updateAll();
             });
-         el2.appendChild(this.settings.model.domElement);      
+         el2.appendChild(this.settings.model.domElement);
       }
 
       this.selectDataset();
    }
-   
+
    selectDataset() {
       // set maximum number of components
       this.nCompMax = Math.min(this.dataset().nObj - 1, this.dataset().nVar, 10);
-      
+
       // change limits for the number of components settings element
-      if (this.settings.model.__controllers[0]) {         
+      if (this.settings.model.__controllers[0]) {
          this.settings.model.__controllers[0].__min = 1;
          this.settings.model.__controllers[0].__max = this.nCompMax;
          this.settings.model.__controllers[0].updateDisplay();
       }
-      
+
       super.selectDataset();
    }
 

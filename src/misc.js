@@ -2,6 +2,11 @@
 //  A set of class free methods
 // ******************************
 
+function mean(x) {
+   const sum = x.reduce((a, b) => a + b, 0);
+   const avg = (sum / x.length) || 0;
+   return avg;
+}
 
 class modelPlotParam {
    static calres(param = {}) {
@@ -14,10 +19,10 @@ class modelPlotParam {
          markerSize: 6,
          current: param.current,
          oopacity: param.opacity ? param.opacity : 1,
-         showLabels: param.showLabels ? param.showLabels : false,         
+         showLabels: param.showLabels ? param.showLabels : false,
          colorby: param.colorby && param.colorby != 'none' ? param.colorby : null,
          groupby: param.groupby && param.groupby != 'none'  ? param.groupby : null
-      };      
+      };
    }
 
    static cvres(param = {}) {
@@ -33,8 +38,8 @@ class modelPlotParam {
          showLabels: false,
          colorby: param.colorby && param.colorby != 'none' ? param.colorby : null,
          groupby: param.groupby && param.groupby != 'none'  ? param.groupby : null
-      };   
-   }   
+      };
+   }
 }
 
 /**
@@ -44,28 +49,28 @@ class modelPlotParam {
 function sort(arr) {
    let map = arr.map(function(v, i) { return {index: i, value: v}; });
    map.sort(function(a, b) { return a.value - b.value; });
-   return map.map(function(e){ return e.index; });   
+   return map.map(function(e){ return e.index; });
 }
 
-/** 
- * Permutes randomly elements in an array 
+/**
+ * Permutes randomly elements in an array
  */
 function shuffle(array) {
    let currentIndex = array.length, temporaryValue, randomIndex;
- 
+
    // While there remain elements to shuffle...
    while (0 !== currentIndex) {
- 
+
      // Pick a remaining element...
      randomIndex = Math.floor(Math.random() * currentIndex);
      currentIndex -= 1;
- 
+
      // And swap it with the current element.
      temporaryValue = array[currentIndex];
      array[currentIndex] = array[randomIndex];
      array[randomIndex] = temporaryValue;
    }
- 
+
    return array;
  }
 
@@ -148,7 +153,7 @@ function rowFun (arr, fun) {
          out[i] = Math.sqrt(out[i] / (k - 1));
       }
    }
-   
+
    return out;
 }
 
@@ -183,7 +188,7 @@ function rowMax (arr) { return rowFun(arr, 'max'); }
 function rowSd (arr) { return rowFun(arr, 'sd'); }
 
 /**
- * Autoscale values in a 2D array 
+ * Autoscale values in a 2D array
  * @param {number[]} arr Numeric 2D array
  * @param {boolean | numbe[]} center Logical value or a vector used to center the data
  * @param {boolean | number[]} scale Logical value or a vector used to scale the data
