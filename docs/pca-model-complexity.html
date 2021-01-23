@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Model complexity | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Model complexity | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-07-23" />
+<meta name="date" content="2021-01-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="pca-distances-and-limits.html"/>
 <link rel="next" href="pca-randomized-algorithm.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,13 +51,15 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -187,6 +190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="pca-model-complexity.html"><a href="pca-model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="pca-randomized-algorithm.html"><a href="pca-randomized-algorithm.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
+<li class="chapter" data-level="" data-path="pca-pcv.html"><a href="pca-pcv.html"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="simca.html"><a href="simca.html"><i class="fa fa-check"></i>SIMCA/DD-SIMCA classification</a>
 <ul>
@@ -202,12 +206,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="pls-models-and-results.html"><a href="pls-models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
-<li class="chapter" data-level="" data-path="pca-models-and-results.html"><a href="pca-models-and-results.html#model-calibration"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pca-models-and-results.html"><a href="pca-models-and-results.html#model-validation"><i class="fa fa-check"></i>Model validation</a></li>
+<li class="chapter" data-level="" data-path="pls-models-and-results.html"><a href="pls-models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
+<li class="chapter" data-level="" data-path="pls-models-and-results.html"><a href="pls-models-and-results.html#model-validation-1"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls-plotting-methods.html"><a href="pls-plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
-<li class="chapter" data-level="" data-path="pca-plots.html"><a href="pca-plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+<li class="chapter" data-level="" data-path="pls-plotting-methods.html"><a href="pls-plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls-variable-selection.html"><a href="pls-variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
 <li class="chapter" data-level="" data-path="pls-distances-and-outliers.html"><a href="pls-distances-and-outliers.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
@@ -263,44 +267,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pca--model-complexity" class="section level2">
+<div id="pca--model-complexity" class="section level2 unnumbered">
 <h2>Model complexity</h2>
-<p>Complexity of PCA model is first of all associated with selection of proper (optimal) number of components. The optimal number should explain the systematic variation of the data points and keep the random variation uncaptured. Traditionally, number of components is selected by investigation of eigenvalues or looking at plot with residual or explained variance. However, this is quite complicated issue and result of selection depends very much on quality of data and purpose PCA model is built for. More details can be found in <a href="">this paper</a>.</p>
+<p>Complexity of PCA model is first of all associated with selection of proper (optimal) number of components. The optimal number should explain the systematic variation of the data points and keep the random variation uncaptured. Traditionally, number of components is selected by investigation of eigenvalues or looking at plot with residual or explained variance. However, this is quite complicated issue and result of selection depends very much on quality of data and purpose PCA model is built for. More details can be found in <a href="https://chemrxiv.org/articles/preprint/Efficient_PCA-Exploration_of_High-Dimensional_Datasets/13340711">this paper</a>.</p>
 <p>In <em>mdatools</em> there are several additional instruments both to select proper number of components as well as to see if, for example, new data (test set or new set of measurements) are well fitted by the model.</p>
 <p>The first tool is the use of degrees of freedom for orthogonal and score distances, we mentioned earlier. A simple plot, where number of the degrees of freedom is plotted against number of components in PCA model can often reveal the presence of overfitting very clearly — the DoF value for the orthogonal distance, <span class="math inline">\(N_q\)</span> jumps up significantly.</p>
 <p>The code and its outcome below show how to make such plot separately for each distance and for both. The first plot in the figure is conventional plot with variance explained by each component. The model is made for <em>Simdata</em>, where it is known that the optimal number of components is two.</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="pca-model-complexity.html#cb96-1"></a><span class="kw">data</span>(simdata)</span>
-<span id="cb96-2"><a href="pca-model-complexity.html#cb96-2"></a>Xc =<span class="st"> </span>simdata<span class="op">$</span>spectra.c</span>
-<span id="cb96-3"><a href="pca-model-complexity.html#cb96-3"></a>Xt =<span class="st"> </span>simdata<span class="op">$</span>spectra.t</span>
-<span id="cb96-4"><a href="pca-model-complexity.html#cb96-4"></a>m =<span class="st"> </span><span class="kw">pca</span>(Xc, <span class="dv">6</span>)</span>
-<span id="cb96-5"><a href="pca-model-complexity.html#cb96-5"></a></span>
-<span id="cb96-6"><a href="pca-model-complexity.html#cb96-6"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb96-7"><a href="pca-model-complexity.html#cb96-7"></a><span class="kw">plotVariance</span>(m, <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">show.labels =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb96-8"><a href="pca-model-complexity.html#cb96-8"></a><span class="kw">plotQDoF</span>(m)</span>
-<span id="cb96-9"><a href="pca-model-complexity.html#cb96-9"></a><span class="kw">plotT2DoF</span>(m)</span>
-<span id="cb96-10"><a href="pca-model-complexity.html#cb96-10"></a><span class="kw">plotDistDoF</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="pca-model-complexity.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
+<span id="cb96-2"><a href="pca-model-complexity.html#cb96-2" aria-hidden="true" tabindex="-1"></a>Xc <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
+<span id="cb96-3"><a href="pca-model-complexity.html#cb96-3" aria-hidden="true" tabindex="-1"></a>Xt <span class="ot">=</span> simdata<span class="sc">$</span>spectra.t</span>
+<span id="cb96-4"><a href="pca-model-complexity.html#cb96-4" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(Xc, <span class="dv">6</span>)</span>
+<span id="cb96-5"><a href="pca-model-complexity.html#cb96-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-6"><a href="pca-model-complexity.html#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb96-7"><a href="pca-model-complexity.html#cb96-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVariance</span>(m, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb96-8"><a href="pca-model-complexity.html#cb96-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQDoF</span>(m)</span>
+<span id="cb96-9"><a href="pca-model-complexity.html#cb96-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plotT2DoF</span>(m)</span>
+<span id="cb96-10"><a href="pca-model-complexity.html#cb96-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plotDistDoF</span>(m)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-75-1.png" width="864" /></p>
 <p>As you can see from the plots, second component explains less than 1% of variance and can be considered as non significant. However, plot for <span class="math inline">\(N_q\)</span> shows a clear break at <span class="math inline">\(A = 3\)</span>, indicating that both first and second PCs are important. The <span class="math inline">\(N_h\)</span> values in this case do not provide any useful information.</p>
 <p>In case if outliers present it can be useful to investigate the plot for <span class="math inline">\(N_q\)</span> using classical and robust methods for estimation as shown in example below.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="pca-model-complexity.html#cb97-1"></a>m =<span class="st"> </span><span class="kw">pca</span>(Xc, <span class="dv">6</span>)</span>
-<span id="cb97-2"><a href="pca-model-complexity.html#cb97-2"></a></span>
-<span id="cb97-3"><a href="pca-model-complexity.html#cb97-3"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb97-4"><a href="pca-model-complexity.html#cb97-4"></a><span class="kw">plotQDoF</span>(m, <span class="dt">main =</span> <span class="st">&quot;DoF plot (classic)&quot;</span>)</span>
-<span id="cb97-5"><a href="pca-model-complexity.html#cb97-5"></a></span>
-<span id="cb97-6"><a href="pca-model-complexity.html#cb97-6"></a>m =<span class="st"> </span><span class="kw">setDistanceLimits</span>(m, <span class="dt">lim.type =</span> <span class="st">&quot;ddrobust&quot;</span>)</span>
-<span id="cb97-7"><a href="pca-model-complexity.html#cb97-7"></a><span class="kw">plotQDoF</span>(m, <span class="dt">main =</span> <span class="st">&quot;DoF plot (robust)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="pca-model-complexity.html#cb97-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(Xc, <span class="dv">6</span>)</span>
+<span id="cb97-2"><a href="pca-model-complexity.html#cb97-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-3"><a href="pca-model-complexity.html#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb97-4"><a href="pca-model-complexity.html#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQDoF</span>(m, <span class="at">main =</span> <span class="st">&quot;DoF plot (classic)&quot;</span>)</span>
+<span id="cb97-5"><a href="pca-model-complexity.html#cb97-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-6"><a href="pca-model-complexity.html#cb97-6" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">setDistanceLimits</span>(m, <span class="at">lim.type =</span> <span class="st">&quot;ddrobust&quot;</span>)</span>
+<span id="cb97-7"><a href="pca-model-complexity.html#cb97-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotQDoF</span>(m, <span class="at">main =</span> <span class="st">&quot;DoF plot (robust)&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
 <p>In this case both plots demonstrate quite similar behavior, however if they look differently it can be an indicator for a presence of outliers. The DoF plots work only if data driven method is used for computing of critical limits.</p>
 <p>Another way to see how many components are optimal in the model, in case if you have a test set or just a new set of measurements you want to use the model with, is to employ the Extreme plot. The plot shows a number of extreme values for different <span class="math inline">\(\alpha\)</span>. Imaging that you make several distance plots with different <span class="math inline">\(\alpha\)</span> values and count how many objects model found as extremes. On the other hand you know that the expected value is <span class="math inline">\(\alpha I\)</span>. If you plot the number of extreme values vs. the expected number — this is the Extreme plot.</p>
 <p>If model captures systematic variation both for calibration and test set the points on this plot will lie within a confidence ellipse shown using light blue color. However, if model is overfitted, the points are getting outside it.</p>
 <p>Below you can see two Extreme plots made for the same data as the previous example. The left plot show results for calibration set for number of components in the PCA model equal to 2 and 3. The right plot show the results for the test set.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="pca-model-complexity.html#cb98-1"></a>Xc =<span class="st"> </span>simdata<span class="op">$</span>spectra.c</span>
-<span id="cb98-2"><a href="pca-model-complexity.html#cb98-2"></a>Xt =<span class="st"> </span>simdata<span class="op">$</span>spectra.t</span>
-<span id="cb98-3"><a href="pca-model-complexity.html#cb98-3"></a>m =<span class="st"> </span><span class="kw">pca</span>(Xc, <span class="dv">6</span>, <span class="dt">x.test =</span> Xt)</span>
-<span id="cb98-4"><a href="pca-model-complexity.html#cb98-4"></a></span>
-<span id="cb98-5"><a href="pca-model-complexity.html#cb98-5"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb98-6"><a href="pca-model-complexity.html#cb98-6"></a><span class="kw">plotExtreme</span>(m, <span class="dt">comp =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">main =</span> <span class="st">&quot;Extreme plot (cal)&quot;</span>)</span>
-<span id="cb98-7"><a href="pca-model-complexity.html#cb98-7"></a><span class="kw">plotExtreme</span>(m, <span class="dt">comp =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">res =</span> m<span class="op">$</span>res<span class="op">$</span>test, <span class="dt">main =</span> <span class="st">&quot;Extreme plot (test)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="pca-model-complexity.html#cb98-1" aria-hidden="true" tabindex="-1"></a>Xc <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
+<span id="cb98-2"><a href="pca-model-complexity.html#cb98-2" aria-hidden="true" tabindex="-1"></a>Xt <span class="ot">=</span> simdata<span class="sc">$</span>spectra.t</span>
+<span id="cb98-3"><a href="pca-model-complexity.html#cb98-3" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(Xc, <span class="dv">6</span>, <span class="at">x.test =</span> Xt)</span>
+<span id="cb98-4"><a href="pca-model-complexity.html#cb98-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb98-5"><a href="pca-model-complexity.html#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb98-6"><a href="pca-model-complexity.html#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotExtreme</span>(m, <span class="at">comp =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">main =</span> <span class="st">&quot;Extreme plot (cal)&quot;</span>)</span>
+<span id="cb98-7"><a href="pca-model-complexity.html#cb98-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotExtreme</span>(m, <span class="at">comp =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">res =</span> m<span class="sc">$</span>res<span class="sc">$</span>test, <span class="at">main =</span> <span class="st">&quot;Extreme plot (test)&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-77-1.png" width="864" /></p>
 <p>As you can see, in case of calibration set, the points are lying withing confidence ellipse for both <span class="math inline">\(A = 2\)</span> and <span class="math inline">\(A = 3\)</span>. However for the test set, the picture is quite different. In case of <span class="math inline">\(A = 2\)</span> most of the points are inside the interval, but for <span class="math inline">\(A = 3\)</span> all of them are clearly outside.</p>
 <p>We hope these new tools will make the use of PCA more efficient.</p>

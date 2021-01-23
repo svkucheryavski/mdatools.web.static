@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-07-23" />
+<meta name="date" content="2021-01-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 
 <link rel="next" href="news.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,13 +51,15 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -187,6 +190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="pca-model-complexity.html"><a href="pca-model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="pca-randomized-algorithm.html"><a href="pca-randomized-algorithm.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
+<li class="chapter" data-level="" data-path="pca-pcv.html"><a href="pca-pcv.html"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="simca.html"><a href="simca.html"><i class="fa fa-check"></i>SIMCA/DD-SIMCA classification</a>
 <ul>
@@ -202,12 +206,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="pls-models-and-results.html"><a href="pls-models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
-<li class="chapter" data-level="" data-path="pca-models-and-results.html"><a href="pca-models-and-results.html#model-calibration"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pca-models-and-results.html"><a href="pca-models-and-results.html#model-validation"><i class="fa fa-check"></i>Model validation</a></li>
+<li class="chapter" data-level="" data-path="pls-models-and-results.html"><a href="pls-models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
+<li class="chapter" data-level="" data-path="pls-models-and-results.html"><a href="pls-models-and-results.html#model-validation-1"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls-plotting-methods.html"><a href="pls-plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
-<li class="chapter" data-level="" data-path="pca-plots.html"><a href="pca-plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+<li class="chapter" data-level="" data-path="pls-plotting-methods.html"><a href="pls-plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls-variable-selection.html"><a href="pls-variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
 <li class="chapter" data-level="" data-path="pls-distances-and-outliers.html"><a href="pls-distances-and-outliers.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
@@ -266,12 +270,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Getting started with mdatools for R</h1>
 <p class="author"><em>Sergey Kucheryavskiy</em></p>
-<p class="date"><em>July 23, 2020</em></p>
+<p class="date"><em>January 23, 2021</em></p>
 </div>
-<div id="introduction" class="section level1">
+<div id="introduction" class="section level1 unnumbered">
 <h1>Introduction</h1>
 <p>This is a user guide for <em>mdatools</em> — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for <a href="http://en.wikipedia.org/wiki/Chemometrics">Chemometrics</a>. The general idea of the package is to collect the popular chemometric methods and give a similar “user interface” for applying the methods to different datasets. So, if a user knows how to make a model and visualize results for one method, he or she can easily do this for the other methods as well. Usually I update the tutorial when a new version of the package is released, you can track main changes <a href="news.html#news">here</a>.</p>
-<p>The current version of tutorial is compatible with version 0.11.1 of the package.</p>
+<p>The current version of tutorial is compatible with version 0.11.3 of the package.</p>
 <p>All methods implemented in the package were tested using well-known datasets. However, there still could be some bugs, in this case please report to <a href="mailto:svkucheryavski@gmail.com">svkucheryavski@gmail.com</a> or use <a href="https://github.com/svkucheryavski/mdatools/issues">Issues tool</a> at GitHub. You are also very welcome to share your comments and suggestions about the package functionality.</p>
 <p>If you want to cite the package, please use the following:</p>
 <p>Sergey Kucheryavskiy, <em>mdatools – R package for chemometrics</em>, Chemometrics and Intelligent Laboratory Systems, Volume 198, 2020 (DOI: <a href="https://dx.doi.org/10.1016/j.chemolab.2020.103937">10.1016/j.chemolab.2020.103937</a>).</p>

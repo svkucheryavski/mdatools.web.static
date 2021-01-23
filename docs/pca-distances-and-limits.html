@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Distances and critical limits | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Distances and critical limits | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-07-23" />
+<meta name="date" content="2021-01-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="pca-plots.html"/>
 <link rel="next" href="pca-model-complexity.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,13 +51,15 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -187,6 +190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="pca-model-complexity.html"><a href="pca-model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="pca-randomized-algorithm.html"><a href="pca-randomized-algorithm.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
+<li class="chapter" data-level="" data-path="pca-pcv.html"><a href="pca-pcv.html"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="simca.html"><a href="simca.html"><i class="fa fa-check"></i>SIMCA/DD-SIMCA classification</a>
 <ul>
@@ -202,12 +206,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="pls-models-and-results.html"><a href="pls-models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
-<li class="chapter" data-level="" data-path="pca-models-and-results.html"><a href="pca-models-and-results.html#model-calibration"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pca-models-and-results.html"><a href="pca-models-and-results.html#model-validation"><i class="fa fa-check"></i>Model validation</a></li>
+<li class="chapter" data-level="" data-path="pls-models-and-results.html"><a href="pls-models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
+<li class="chapter" data-level="" data-path="pls-models-and-results.html"><a href="pls-models-and-results.html#model-validation-1"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls-plotting-methods.html"><a href="pls-plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
-<li class="chapter" data-level="" data-path="pca-plots.html"><a href="pca-plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+<li class="chapter" data-level="" data-path="pls-plotting-methods.html"><a href="pls-plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls-variable-selection.html"><a href="pls-variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
 <li class="chapter" data-level="" data-path="pls-distances-and-outliers.html"><a href="pls-distances-and-outliers.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
@@ -263,9 +267,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pca--distances-and-limits" class="section level2">
+<div id="pca--distances-and-limits" class="section level2 unnumbered">
 <h2>Distances and critical limits</h2>
-<div id="distance-to-model-and-score-distance" class="section level3">
+<div id="distance-to-model-and-score-distance" class="section level3 unnumbered">
 <h3>Distance to model and score distance</h3>
 <p>As it was written in the brief theoretical section about PCA, when data objects are being projected to a principal component space, two distances are calculated and stored as a part of PCA results (<code>pcares</code> object). The first is a squared orthogonal Euclidean distance from original position of an object to the PC space, also known as <em>orthogonal distance</em> and denoted as <em>Q</em> or <em>q</em>. The distance shows how well the object is fitted by the PCA model and allows to detect objects that do not follow a common trend, captured by the PCs.</p>
 <p>The second distance shows how far a projection of an object to the PC space is from the origin. This distance is also known as Hotelling T<sup>2</sup> distance or a <em>score distance</em>. To compute T<sup>2</sup> distance scores should be first normalized by dividing them to corresponding singular values (or eigenvalues if we deal with squared scores). The T<sup>2</sup> distance allows to see extreme objects — which are far from the origin. In the package as well as in this tutorial we will also use letter <span class="math inline">\(h\)</span> to denote this distance, so <span class="math inline">\(Q\)</span> and <span class="math inline">\(q\)</span> are for orthogonal distance and <span class="math inline">\(T^2\)</span> and <span class="math inline">\(h\)</span> stand for the score distance.</p>
@@ -276,38 +280,38 @@ Historically, the distances are called in this package and also in some other so
 </div>
 <p>In <em>mdatools</em> both distances are calculated for all objects in dataset and all possible components. So every distance is represented by <span class="math inline">\(I \times A\)</span> matrix (will remind here that <span class="math inline">\(I\)</span> is number of objects or rows in data matrix and <span class="math inline">\(A\)</span> is number of components in PCA model), the first column contains distances for a model with only one component, second — for model with two components, and so on. The distances can be visualized using method <code>plotResiduals()</code> which is available both for PCA results as well as for PCA model. In the case of model the plot shows distances both for calibration set and test set (if available).</p>
 <p>Here is an example, where I split People data to calibration and test set as in one of the examples in previous sections and show distance plot for model and result objects.</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="pca-distances-and-limits.html#cb88-1"></a><span class="kw">data</span>(people)</span>
-<span id="cb88-2"><a href="pca-distances-and-limits.html#cb88-2"></a>idx =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">32</span>, <span class="dv">4</span>)</span>
-<span id="cb88-3"><a href="pca-distances-and-limits.html#cb88-3"></a>Xc =<span class="st"> </span>people[<span class="op">-</span>idx, ]</span>
-<span id="cb88-4"><a href="pca-distances-and-limits.html#cb88-4"></a>Xt =<span class="st"> </span>people[idx, ]</span>
-<span id="cb88-5"><a href="pca-distances-and-limits.html#cb88-5"></a></span>
-<span id="cb88-6"><a href="pca-distances-and-limits.html#cb88-6"></a>m =<span class="st"> </span><span class="kw">pca</span>(Xc, <span class="dv">4</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">x.test =</span> Xt)</span>
-<span id="cb88-7"><a href="pca-distances-and-limits.html#cb88-7"></a></span>
-<span id="cb88-8"><a href="pca-distances-and-limits.html#cb88-8"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb88-9"><a href="pca-distances-and-limits.html#cb88-9"></a><span class="kw">plotResiduals</span>(m, <span class="dt">main =</span> <span class="st">&quot;Distances for model&quot;</span>)</span>
-<span id="cb88-10"><a href="pca-distances-and-limits.html#cb88-10"></a><span class="kw">plotResiduals</span>(m, <span class="dt">ncomp =</span> <span class="dv">2</span>, <span class="dt">main =</span> <span class="st">&quot;Distances for model (2 Comp)&quot;</span>)</span>
-<span id="cb88-11"><a href="pca-distances-and-limits.html#cb88-11"></a><span class="kw">plotResiduals</span>(m<span class="op">$</span>res<span class="op">$</span>cal, <span class="dt">main =</span> <span class="st">&quot;Distances for calibration set&quot;</span>)</span>
-<span id="cb88-12"><a href="pca-distances-and-limits.html#cb88-12"></a><span class="kw">plotResiduals</span>(m<span class="op">$</span>res<span class="op">$</span>test, <span class="dt">main =</span> <span class="st">&quot;Distances for test set&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="pca-distances-and-limits.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(people)</span>
+<span id="cb88-2"><a href="pca-distances-and-limits.html#cb88-2" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">4</span>, <span class="dv">32</span>, <span class="dv">4</span>)</span>
+<span id="cb88-3"><a href="pca-distances-and-limits.html#cb88-3" aria-hidden="true" tabindex="-1"></a>Xc <span class="ot">=</span> people[<span class="sc">-</span>idx, ]</span>
+<span id="cb88-4"><a href="pca-distances-and-limits.html#cb88-4" aria-hidden="true" tabindex="-1"></a>Xt <span class="ot">=</span> people[idx, ]</span>
+<span id="cb88-5"><a href="pca-distances-and-limits.html#cb88-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-6"><a href="pca-distances-and-limits.html#cb88-6" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(Xc, <span class="dv">4</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">x.test =</span> Xt)</span>
+<span id="cb88-7"><a href="pca-distances-and-limits.html#cb88-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-8"><a href="pca-distances-and-limits.html#cb88-8" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb88-9"><a href="pca-distances-and-limits.html#cb88-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">main =</span> <span class="st">&quot;Distances for model&quot;</span>)</span>
+<span id="cb88-10"><a href="pca-distances-and-limits.html#cb88-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">&quot;Distances for model (2 Comp)&quot;</span>)</span>
+<span id="cb88-11"><a href="pca-distances-and-limits.html#cb88-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">main =</span> <span class="st">&quot;Distances for calibration set&quot;</span>)</span>
+<span id="cb88-12"><a href="pca-distances-and-limits.html#cb88-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m<span class="sc">$</span>res<span class="sc">$</span>test, <span class="at">main =</span> <span class="st">&quot;Distances for test set&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-68-1.png" width="864" /></p>
 <p>As it was briefly mentioned before, if residual/distance plot is made for a model, it also shows two critical limits: the dashed line is a limit for extreme objects and the dotted line is a limit for outliers. How they are computed is explained later in this section. If you want to hide them, just use additional parameter <code>show.limits = FALSE</code>. You can also change the color, line type and width for the lines by using options <code>lim.col</code>, <code>lim.lty</code> and <code>lim.lwd</code> as it is shown below.</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="pca-distances-and-limits.html#cb89-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb89-2"><a href="pca-distances-and-limits.html#cb89-2"></a><span class="kw">plotResiduals</span>(m, <span class="dt">show.limits =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb89-3"><a href="pca-distances-and-limits.html#cb89-3"></a><span class="kw">plotResiduals</span>(m, <span class="dt">lim.col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>), <span class="dt">lim.lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">lim.lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="pca-distances-and-limits.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb89-2"><a href="pca-distances-and-limits.html#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">show.limits =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb89-3"><a href="pca-distances-and-limits.html#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">lim.col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>), <span class="at">lim.lwd =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">lim.lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-69-1.png" width="864" /></p>
 <p>It is necessary to provide a vector with two values for each of the argument (first for extreme objects and second for outliers border).</p>
 <p>Finally, you can also notice that for model plot the distance values are normalized (<span class="math inline">\(h/h_0\)</span> and <span class="math inline">\(q/q_0\)</span> instead of just <span class="math inline">\(h\)</span> and <span class="math inline">\(q\)</span>). This is needed to show the limits correctly and, again, will be explained in detail below. You can switch this option by using logical parameter <code>norm</code>. Sometimes, it is also make sense to use log transform for the values, which can be switched by using parameter <code>log</code>. Code below shows example for using these parameters.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="pca-distances-and-limits.html#cb90-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb90-2"><a href="pca-distances-and-limits.html#cb90-2"></a><span class="kw">plotResiduals</span>(m, <span class="dt">norm =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb90-3"><a href="pca-distances-and-limits.html#cb90-3"></a><span class="kw">plotResiduals</span>(m, <span class="dt">norm =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb90-4"><a href="pca-distances-and-limits.html#cb90-4"></a><span class="kw">plotResiduals</span>(m, <span class="dt">norm =</span> <span class="ot">TRUE</span>, <span class="dt">log =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb90-5"><a href="pca-distances-and-limits.html#cb90-5"></a><span class="kw">plotResiduals</span>(m, <span class="dt">norm =</span> <span class="ot">FALSE</span>, <span class="dt">log =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="pca-distances-and-limits.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb90-2"><a href="pca-distances-and-limits.html#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">norm =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb90-3"><a href="pca-distances-and-limits.html#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">norm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb90-4"><a href="pca-distances-and-limits.html#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">norm =</span> <span class="cn">TRUE</span>, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb90-5"><a href="pca-distances-and-limits.html#cb90-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">norm =</span> <span class="cn">FALSE</span>, <span class="at">log =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="864" /></p>
 </div>
-<div id="critical-limits" class="section level3">
+<div id="critical-limits" class="section level3 unnumbered">
 <h3>Critical limits</h3>
 <p>If PCA model is made for dataset taken from the same population, the orthogonal and score distances can be used to find outliers and extreme objects. One of the ways to do this is to compute critical limits for the distances assuming that they follow certain theoretical distribution.</p>
 <p>Critical limits are also important for SIMCA classification as they are directly used for making decision on class belongings. This package implements several methods to compute the limits, which are explained in this section.</p>
-<div id="data-driven-approach" class="section level4">
+<div id="data-driven-approach" class="section level4 unnumbered">
 <h4>Data driven approach</h4>
 <p>Starting from version 0.10.0, by default the limits are computed using data driven approach <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/cem.1147">proposed</a> and then <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/cem.2506">extended</a> by Pomerantsev and Rodionova.</p>
 <p>It was known before, that both distances are well described by chi-square distribution. The distribution in general describes behavior of sum of squared random values taken from standardized normal distribution, which means, that the distances has to be standardized first. The scaling factor as well as number of degrees of freedom (DoF) can be estimated from the distance values — hence the name (data driven).</p>
@@ -324,51 +328,50 @@ Historically, the distances are called in this package and also in some other so
 <p><span class="math display">\[f_{crit} = \chi^{-2}((1 - \gamma)^{1/I}, N_f)\]</span></p>
 <p>Here <span class="math inline">\(\gamma\)</span> is a significance level for outliers, so if it is <span class="math inline">\(0.01\)</span> every object has <span class="math inline">\(1\%\)</span> chance to be detected as outlier. The test for outliers should treat every object independently, so it requires Bonferroni correction, as one can see from the formula.</p>
 <p>You can change the significance level both for extreme objects and outliers either when you calibrate the model, by providing parameters <code>alpha</code> and <code>gamma</code>, or for existent model, by using function <code>setDistanceLimits()</code> as shown in the example below.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="pca-distances-and-limits.html#cb91-1"></a><span class="co"># calibrate a model with alpha = 5% and gamma = 5%</span></span>
-<span id="cb91-2"><a href="pca-distances-and-limits.html#cb91-2"></a>m =<span class="st"> </span><span class="kw">pca</span>(people, <span class="dv">4</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">gamma =</span> <span class="fl">0.05</span>)</span>
-<span id="cb91-3"><a href="pca-distances-and-limits.html#cb91-3"></a></span>
-<span id="cb91-4"><a href="pca-distances-and-limits.html#cb91-4"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb91-5"><a href="pca-distances-and-limits.html#cb91-5"></a><span class="kw">plotResiduals</span>(m)</span>
-<span id="cb91-6"><a href="pca-distances-and-limits.html#cb91-6"></a></span>
-<span id="cb91-7"><a href="pca-distances-and-limits.html#cb91-7"></a><span class="co"># change both levels to 1%</span></span>
-<span id="cb91-8"><a href="pca-distances-and-limits.html#cb91-8"></a>m =<span class="st"> </span><span class="kw">setDistanceLimits</span>(m, <span class="dt">alpha =</span> <span class="fl">0.01</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>)</span>
-<span id="cb91-9"><a href="pca-distances-and-limits.html#cb91-9"></a><span class="kw">plotResiduals</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="pca-distances-and-limits.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calibrate a model with alpha = 5% and gamma = 5%</span></span>
+<span id="cb91-2"><a href="pca-distances-and-limits.html#cb91-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(people, <span class="dv">4</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">gamma =</span> <span class="fl">0.05</span>)</span>
+<span id="cb91-3"><a href="pca-distances-and-limits.html#cb91-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-4"><a href="pca-distances-and-limits.html#cb91-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb91-5"><a href="pca-distances-and-limits.html#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m)</span>
+<span id="cb91-6"><a href="pca-distances-and-limits.html#cb91-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-7"><a href="pca-distances-and-limits.html#cb91-7" aria-hidden="true" tabindex="-1"></a><span class="co"># change both levels to 1%</span></span>
+<span id="cb91-8"><a href="pca-distances-and-limits.html#cb91-8" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">setDistanceLimits</span>(m, <span class="at">alpha =</span> <span class="fl">0.01</span>, <span class="at">gamma =</span> <span class="fl">0.01</span>)</span>
+<span id="cb91-9"><a href="pca-distances-and-limits.html#cb91-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-71-1.png" width="864" /></p>
 <p>This function also allows to change method for computing the limits, which is discussed in next subsection.</p>
 </div>
-<div id="other-methods-for-computing-critical-limits" class="section level4">
+<div id="other-methods-for-computing-critical-limits" class="section level4 unnumbered">
 <h4>Other methods for computing critical limits</h4>
 <p>The package implements several other methods for computing critical limits for residuals distances. The needed method can be selected by providing additional argument, <code>lim.type</code>, both when calibrate PCA model or when adjust the limits for existent model with <code>setDistanceLimits()</code> function. By default, <code>lim.type = "ddmoments"</code>, which corresponds to the method described above — data driven approach based on classical estimators (statistical moments).</p>
 <p>When data is contaminated with outliers, using statistical moments may lead to wrong estimators, in this case it is recommended to use robust version instead by specifying <code>lim.type = "ddrobust"</code>. The robust approach utilizes median and inter-quartile range instead of mean and standard deviation (see <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/cem.2506">the paper</a> for details). The use of robust and classical data driven approaches also helps to identify a proper model complexity, which will be discussed in the next section.</p>
 <p>In addition to the data driven method, <em>mdatools</em>, also allows to use state-of-art approach, where limits for each distance are computed independently giving rectangular acceptance area on the distance plot. In this case, two methods are available for the orthogonal distance: either based on chi-square distribution but only for <span class="math inline">\(q\)</span> values (<code>lim.type="chisq"</code>) or using Jackson-Mudholkar method (<code>lim.type="jm"</code>). If one of the two methods is selected, critical limits for the score distances, <span class="math inline">\(h\)</span>, will be computed using <a href="https://en.wikipedia.org/wiki/Hotelling%27s_T-squared_distribution">Hotelling’s T<sup>2</sup> distribution</a>. This way of computing critical limits can be found in many popular chemometric software, for example, PLS_Toolbox.</p>
 </div>
-<div id="pca-distances-categorize" class="section level4">
+<div id="pca-distances-categorize" class="section level4 unnumbered">
 <h4>Categorization of data rows based on critical limits</h4>
 <p>It is possible to categorize every row (object, measurement) in a dataset based on the two distances and critical limits computed for given model and limit parameters (method and significance limit). Function <code>categorize()</code> is made for that. An example below shows how to categorize new predictions using this function.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="pca-distances-and-limits.html#cb92-1"></a><span class="kw">data</span>(people)</span>
-<span id="cb92-2"><a href="pca-distances-and-limits.html#cb92-2"></a></span>
-<span id="cb92-3"><a href="pca-distances-and-limits.html#cb92-3"></a>idx =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">32</span>, <span class="dv">4</span>)</span>
-<span id="cb92-4"><a href="pca-distances-and-limits.html#cb92-4"></a>Xc =<span class="st"> </span>people[<span class="op">-</span>idx, ]</span>
-<span id="cb92-5"><a href="pca-distances-and-limits.html#cb92-5"></a>Xt =<span class="st"> </span>people[idx, ]</span>
-<span id="cb92-6"><a href="pca-distances-and-limits.html#cb92-6"></a></span>
-<span id="cb92-7"><a href="pca-distances-and-limits.html#cb92-7"></a>m =<span class="st"> </span><span class="kw">pca</span>(Xc, <span class="dv">4</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb92-8"><a href="pca-distances-and-limits.html#cb92-8"></a>r =<span class="st"> </span><span class="kw">predict</span>(m, Xt)</span>
-<span id="cb92-9"><a href="pca-distances-and-limits.html#cb92-9"></a></span>
-<span id="cb92-10"><a href="pca-distances-and-limits.html#cb92-10"></a>c =<span class="st"> </span><span class="kw">categorize</span>(m, r)</span>
-<span id="cb92-11"><a href="pca-distances-and-limits.html#cb92-11"></a><span class="kw">print</span>(c)</span></code></pre></div>
-<pre><code>## [1] outlier regular regular regular extreme regular
-## [7] outlier regular
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="pca-distances-and-limits.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(people)</span>
+<span id="cb92-2"><a href="pca-distances-and-limits.html#cb92-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-3"><a href="pca-distances-and-limits.html#cb92-3" aria-hidden="true" tabindex="-1"></a>idx <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">4</span>, <span class="dv">32</span>, <span class="dv">4</span>)</span>
+<span id="cb92-4"><a href="pca-distances-and-limits.html#cb92-4" aria-hidden="true" tabindex="-1"></a>Xc <span class="ot">=</span> people[<span class="sc">-</span>idx, ]</span>
+<span id="cb92-5"><a href="pca-distances-and-limits.html#cb92-5" aria-hidden="true" tabindex="-1"></a>Xt <span class="ot">=</span> people[idx, ]</span>
+<span id="cb92-6"><a href="pca-distances-and-limits.html#cb92-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-7"><a href="pca-distances-and-limits.html#cb92-7" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(Xc, <span class="dv">4</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb92-8"><a href="pca-distances-and-limits.html#cb92-8" aria-hidden="true" tabindex="-1"></a>r <span class="ot">=</span> <span class="fu">predict</span>(m, Xt)</span>
+<span id="cb92-9"><a href="pca-distances-and-limits.html#cb92-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-10"><a href="pca-distances-and-limits.html#cb92-10" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">categorize</span>(m, r)</span>
+<span id="cb92-11"><a href="pca-distances-and-limits.html#cb92-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(c)</span></code></pre></div>
+<pre><code>## [1] outlier regular regular regular extreme regular outlier regular
 ## Levels: regular extreme outlier</code></pre>
 <p>As one can see, there are two outliers, one extreme and five regular objects. This can be visualized on distance plot:</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="pca-distances-and-limits.html#cb94-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb94-2"><a href="pca-distances-and-limits.html#cb94-2"></a><span class="kw">plotResiduals</span>(r, <span class="dt">cgroup =</span> c)</span>
-<span id="cb94-3"><a href="pca-distances-and-limits.html#cb94-3"></a><span class="kw">plotResiduals</span>(m, <span class="dt">res =</span> <span class="kw">list</span>(<span class="st">&quot;new&quot;</span> =<span class="st"> </span>r), <span class="dt">cgroup =</span> c)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="pca-distances-and-limits.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb94-2"><a href="pca-distances-and-limits.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(r, <span class="at">cgroup =</span> c)</span>
+<span id="cb94-3"><a href="pca-distances-and-limits.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;new&quot;</span> <span class="ot">=</span> r), <span class="at">cgroup =</span> c)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-73-1.png" width="864" /></p>
 <p>The first plot is a normal distance/residuals plot for results, while the second plot is made for model with manually specified result list. The last has possibility to show critical limits and see why actually the objects have been categorized like this.</p>
 <p>When the plot is made for calibration set, this option can be simplified by providing specific value for parameter <code>cgroup</code> as shown below.</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="pca-distances-and-limits.html#cb95-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb95-2"><a href="pca-distances-and-limits.html#cb95-2"></a><span class="kw">plotResiduals</span>(m)</span>
-<span id="cb95-3"><a href="pca-distances-and-limits.html#cb95-3"></a><span class="kw">plotResiduals</span>(m, <span class="dt">cgroup =</span> <span class="st">&quot;categories&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="pca-distances-and-limits.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb95-2"><a href="pca-distances-and-limits.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m)</span>
+<span id="cb95-3"><a href="pca-distances-and-limits.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">cgroup =</span> <span class="st">&quot;categories&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-74-1.png" width="864" /></p>
 <p>This option will work only if plot is made for one result object.</p>
 </div>

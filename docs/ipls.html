@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Interval PLS | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Interval PLS | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2020-07-23" />
+<meta name="date" content="2021-01-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="plsda-predictions.html"/>
 <link rel="next" href="mcr.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,13 +51,15 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -187,6 +190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="pca-model-complexity.html"><a href="pca-model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="pca-randomized-algorithm.html"><a href="pca-randomized-algorithm.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
+<li class="chapter" data-level="" data-path="pca-pcv.html"><a href="pca-pcv.html"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="simca.html"><a href="simca.html"><i class="fa fa-check"></i>SIMCA/DD-SIMCA classification</a>
 <ul>
@@ -202,12 +206,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="pls-models-and-results.html"><a href="pls-models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
-<li class="chapter" data-level="" data-path="pca-models-and-results.html"><a href="pca-models-and-results.html#model-calibration"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pca-models-and-results.html"><a href="pca-models-and-results.html#model-validation"><i class="fa fa-check"></i>Model validation</a></li>
+<li class="chapter" data-level="" data-path="pls-models-and-results.html"><a href="pls-models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
+<li class="chapter" data-level="" data-path="pls-models-and-results.html"><a href="pls-models-and-results.html#model-validation-1"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls-plotting-methods.html"><a href="pls-plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
-<li class="chapter" data-level="" data-path="pca-plots.html"><a href="pca-plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+<li class="chapter" data-level="" data-path="pls-plotting-methods.html"><a href="pls-plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls-variable-selection.html"><a href="pls-variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
 <li class="chapter" data-level="" data-path="pls-distances-and-outliers.html"><a href="pls-distances-and-outliers.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
@@ -263,10 +267,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="ipls" class="section level1">
+<div id="ipls" class="section level1 unnumbered">
 <h1>Interval PLS</h1>
 <p>Interval PLS (iPLS) is a variable selection method used mostly for spectroscopic data <a href="https://doi.org/10.1366/0003702001949500">proposed</a> by Lars Noergaard <em>at al</em> in 2000. The main idea is try different parts (or intervals — hence the name) of spectra and their combinations to find the most relevant for prediction of a response variable. There are two algorithms — forward and backward.</p>
-<div id="forward-ipls" class="section level3">
+<div id="forward-ipls" class="section level3 unnumbered">
 <h3>Forward iPLS</h3>
 <p>The forward approach works as follows</p>
 <ol style="list-style-type: decimal">
@@ -279,11 +283,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In <em>mdatools</em>, you can run iPLS selection by using function <code>ipls()</code>. You have to specify matrix with predictors (<code>x</code>) and responses (<code>y</code>), number of components in global model (<code>glob.ncomp</code>), and define the intervals. In addition to that, you can also specify parameters of cross-validation (<code>cv</code>) as well as criterion for selection of optimal number of components (<code>ncomp.selcrit</code>) for local models similar to PLS. Forward iPLS is used as a default algorithm.</p>
 <p>Intervals can be defined using one of the following three parameters: number of intervals (<code>int.num</code>), width of an interval (<code>int.width</code>) or specify start and end of each interval as a two-column matrix with variable indices (<code>int.limits</code>). In addition to that, you can specify maximum number of component for local models (<code>int.ncomp</code>) and maximum number of iterations — so method will stop regardless if you have improvements or not (<code>int.niter</code>). By default the maximum number of iterations is limited to 30.</p>
 <p>Here is an example of applying iPLS for Simdata (for concentration of second chemical component, C2) using 15 intervals.</p>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="ipls.html#cb252-1"></a><span class="kw">data</span>(simdata)</span>
-<span id="cb252-2"><a href="ipls.html#cb252-2"></a>X =<span class="st"> </span>simdata<span class="op">$</span>spectra.c</span>
-<span id="cb252-3"><a href="ipls.html#cb252-3"></a>y =<span class="st"> </span>simdata<span class="op">$</span>conc.c[, <span class="dv">2</span>, drop =<span class="st"> </span><span class="ot">FALSE</span>]</span>
-<span id="cb252-4"><a href="ipls.html#cb252-4"></a></span>
-<span id="cb252-5"><a href="ipls.html#cb252-5"></a>m =<span class="st"> </span><span class="kw">ipls</span>(X, y, <span class="dt">glob.ncomp =</span> <span class="dv">4</span>, <span class="dt">int.num =</span> <span class="dv">15</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="ipls.html#cb255-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
+<span id="cb255-2"><a href="ipls.html#cb255-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
+<span id="cb255-3"><a href="ipls.html#cb255-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> simdata<span class="sc">$</span>conc.c[, <span class="dv">2</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb255-4"><a href="ipls.html#cb255-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb255-5"><a href="ipls.html#cb255-5" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">ipls</span>(X, y, <span class="at">glob.ncomp =</span> <span class="dv">4</span>, <span class="at">int.num =</span> <span class="dv">15</span>)</span></code></pre></div>
 <pre><code>## 
 ## Model with all intervals: RMSECV = 0.027572, nLV = 3
 ## Iteration   1/ 15... selected interval   6 (RMSECV = 0.030405, nLV = 1)
@@ -295,7 +299,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Iteration   7/ 15... no improvements, stop.</code></pre>
 <p>As you can see, by default method shows information for every step in the console. Use parameter <code>silent = TRUE</code> to change this behaviour. From the example above we can see that the global model had RMSECV = 0.027572 with 3 components. Creating local models with individual intervals gave the best performance with RMSECV = 0.030405 (interval #6). Combination of the interval #6 with interval #11 (next step) gave RMSECV = 0.0027882. The small improvement was obtained for adding 4 more intervals giving final result with RMSECV = 0.027201.</p>
 <p>There are several ways to explore the iPLS results both graphically and numerically. First of all, summary will show full information about the selected interval, including number of variables on both ends:</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="ipls.html#cb254-1"></a><span class="kw">summary</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="ipls.html#cb257-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## iPLS variable selection results
 ##   Method: forward
@@ -315,29 +319,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6 13   121 130     TRUE     2 0.02720961 0.966
 ## 7 12   111 120     TRUE     2 0.02720089 0.966</code></pre>
 <p>Also you can see the first step (performance of individual models) and the selected interval by using function <code>plot()</code> for the whole model:</p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="ipls.html#cb256-1"></a><span class="kw">plot</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-163-1.png" width="864" /></p>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="ipls.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-166-1.png" width="864" /></p>
 <p>The red curve here is an average spectrum. Bars are intervals, height of each bar corresponds to RMSECV value for local model made using variables from this interval as predictors (first iteration). Number inside each bar is number of PLS components used in the local model. Green color shows intervals which have been selected at the end and dashed line shows error for the global model</p>
 <p>You can also see the improvements of RMSECV graphically:</p>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="ipls.html#cb257-1"></a><span class="kw">plotRMSE</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-164-1.png" width="864" /></p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="ipls.html#cb260-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-167-1.png" width="864" /></p>
 <p>Dashed line in this case shows RMSECV value for the global model with all intervals included.</p>
 <p>Fnally, you can get both seleced intervals and corresponding indices of variables (all of them not just interval limits) as follows:</p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="ipls.html#cb258-1"></a><span class="kw">show</span>(m<span class="op">$</span>int.selected)</span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="ipls.html#cb261-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m<span class="sc">$</span>int.selected)</span></code></pre></div>
 <pre><code>## [1]  6 11  1  2 13 12</code></pre>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="ipls.html#cb260-1"></a><span class="kw">show</span>(m<span class="op">$</span>var.selected)</span></code></pre></div>
-<pre><code>##  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13
-## [14]  14  15  16  17  18  19  20  51  52  53  54  55  56
-## [27]  57  58  59  60 101 102 103 104 105 106 107 108 109
-## [40] 110 111 112 113 114 115 116 117 118 119 120 121 122
-## [53] 123 124 125 126 127 128 129 130</code></pre>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="ipls.html#cb263-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m<span class="sc">$</span>var.selected)</span></code></pre></div>
+<pre><code>##  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  51  52  53  54  55  56  57  58
+## [29]  59  60 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126
+## [57] 127 128 129 130</code></pre>
 <p>Also the model object contains the initial global model for full data (<code>m$gm</code>) and final PLS model made for the all selected data, <code>m$om</code>. In the following example I compare RMSE plots for both:</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="ipls.html#cb262-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb262-2"><a href="ipls.html#cb262-2"></a><span class="kw">plotRMSE</span>(m<span class="op">$</span>gm)</span>
-<span id="cb262-3"><a href="ipls.html#cb262-3"></a><span class="kw">plotRMSE</span>(m<span class="op">$</span>om)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-166-1.png" width="864" /></p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="ipls.html#cb265-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb265-2"><a href="ipls.html#cb265-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m<span class="sc">$</span>gm)</span>
+<span id="cb265-3"><a href="ipls.html#cb265-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m<span class="sc">$</span>om)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-169-1.png" width="864" /></p>
 </div>
-<div id="backward-ipls" class="section level3">
+<div id="backward-ipls" class="section level3 unnumbered">
 <h3>Backward iPLS</h3>
 <p>In backward iPLS, instead of selecting best intervals we do the opposite — get rid of the worst. So, at the first step, we try to remove every interval from the data to see if it gives any improvement. If it does, we keep it as exluded and then try to remove another one. The process continues until no improvement is observed.</p>
 <p>To use the backward method simply specify parameter <code>method = "backward"</code> when call <code>ipls()</code>. The rest, including plots and statistics, is the same.</p>
