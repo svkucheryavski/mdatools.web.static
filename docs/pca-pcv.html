@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-01-23" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,8 +51,6 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -231,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
@@ -241,12 +240,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
 </ul></li>
 </ul></li>
@@ -297,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb122-8"><a href="pca-pcv.html#cb122-8" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
 <span id="cb122-9"><a href="pca-pcv.html#cb122-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Original&quot;</span>)</span>
 <span id="cb122-10"><a href="pca-pcv.html#cb122-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra_pv, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Pseudo-validation&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-81-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-82-1.png" width="864" /></p>
 <p>On one hand, the plots seem very similar, almost identical. However this is not true. Let’s use the generated pseudo-validation set as a test set. For example, we can make an Extreme plot and find out that fourth component leads to overfited model. Note, that if we make this plot for the calibration set (left), we do not see any signs of overfitting.</p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="pca-pcv.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make PCA model for calibration set</span></span>
 <span id="cb123-2"><a href="pca-pcv.html#cb123-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(spectra, <span class="dv">6</span>)</span>
@@ -309,7 +310,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb123-8"><a href="pca-pcv.html#cb123-8" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb123-9"><a href="pca-pcv.html#cb123-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plotExtreme</span>(m, <span class="at">res =</span> m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">comp =</span> <span class="dv">4</span>, <span class="at">main =</span> <span class="st">&quot;Extreme (cal)&quot;</span>)</span>
 <span id="cb123-10"><a href="pca-pcv.html#cb123-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plotExtreme</span>(m, <span class="at">res =</span> res_pv, <span class="at">comp =</span> <span class="dv">4</span>, <span class="at">main =</span> <span class="st">&quot;Extreme (pv)&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-82-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-83-1.png" width="864" /></p>
 
 </div>
 <!-- </div> -->
@@ -347,7 +348,7 @@ gitbook.start({
 "fontsettings": {
 "theme": "white",
 "family": "sans",
-"size": 1
+"size": 2
 },
 "edit": {
 "link": null,

@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-01-23" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,8 +51,6 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -231,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
@@ -241,12 +240,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
 </ul></li>
 </ul></li>
@@ -280,7 +281,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb210-5"><a href="pls-distances-and-outliers.html#cb210-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb210-6"><a href="pls-distances-and-outliers.html#cb210-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;cal&quot;</span> <span class="ot">=</span> m<span class="sc">$</span>res<span class="sc">$</span>cal))</span>
 <span id="cb210-7"><a href="pls-distances-and-outliers.html#cb210-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-135-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-136-1.png" width="864" /></p>
 <p>PLS also has function <code>categorize()</code> which allows to identify extreme objects and outliers. However, it works in a different way and takes into account not only total distances for X-decomposition but also similar measure for decomposition of Y. This is explained in following sections.</p>
 </div>
 <div id="distance-plot-for-y-decomposition-and-total-distance" class="section level3 unnumbered">
@@ -291,7 +292,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb211-3"><a href="pls-distances-and-outliers.html#cb211-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
 <span id="cb211-4"><a href="pls-distances-and-outliers.html#cb211-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;cal&quot;</span> <span class="ot">=</span> m<span class="sc">$</span>res<span class="sc">$</span>cal))</span>
 <span id="cb211-5"><a href="pls-distances-and-outliers.html#cb211-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYResiduals</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-136-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-137-1.png" width="864" /></p>
 <p>Since predictions are also computed for cross-validation, the plot shows the distance values for cross-validated results.</p>
 <p>The distance between reference and predicted values can be used to compute orthogonal squared distance, similar to how it is done for X-decomposition, as it is shown below:</p>
 <p><span class="math display">\[ z_i = \sum_{k = 1}^K (y_{ik} - \hat{y}_{ik})^2 \]</span></p>
@@ -319,16 +320,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb212-15"><a href="pls-distances-and-outliers.html#cb212-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb212-16"><a href="pls-distances-and-outliers.html#cb212-16" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">setDistanceLimits</span>(m, <span class="at">lim.type =</span> <span class="st">&quot;ddrobust&quot;</span>)</span>
 <span id="cb212-17"><a href="pls-distances-and-outliers.html#cb212-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;indices&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-137-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-138-1.png" width="864" /></p>
 <p>As one can see, both classic and robust approach detect sample number 9 (with wrong y-value) as a clear outlier. Using robust approach helps to identify the second outlier as well. However, you can see that the location of the two samples is different — sample #9 has large Y-distance (<span class="math inline">\(z/z_0\)</span>), while sample #1 has large full X-distance (<span class="math inline">\(f/f_0\)</span>). Which is in agreement with the way we created the outliers.</p>
 <p>The limits shown on the plot are made for the total distance, <span class="math inline">\(g\)</span>. For example, to detect outliers we need to compare the total distance, <span class="math inline">\(g\)</span>, with critical limit computed for predefined significance level, <span class="math inline">\(\gamma\)</span> (shown as dotted line on the plots):</p>
 <p><span class="math display">\[g &gt; \chi^{-2} \big( (1 - \gamma)^{1/I}, N_g \big) \]</span></p>
 <p>The proper procedure for detection and removing outliers can be found in the <a href="https://pubs.acs.org/doi/10.1021/acs.analchem.9b04611">paper</a> and will be very briefly touched upon here. The detection can be done using function <code>categorize()</code> which works similar to the same function for PCA decomposition — returns vector with categories for each measurement, as shown in an example below:</p>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="pls-distances-and-outliers.html#cb213-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">categorize</span>(m, m<span class="sc">$</span>res<span class="sc">$</span>cal)</span>
 <span id="cb213-2"><a href="pls-distances-and-outliers.html#cb213-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(c)</span></code></pre></div>
-<pre><code>##  [1] outlier regular regular regular regular regular extreme regular outlier regular regular regular regular regular
-## [15] regular regular regular extreme regular regular regular regular regular regular regular regular extreme regular
-## [29] regular regular regular regular
+<pre><code>##  [1] outlier regular regular regular regular regular
+##  [7] extreme regular outlier regular regular regular
+## [13] regular regular regular regular regular extreme
+## [19] regular regular regular regular regular regular
+## [25] regular regular extreme regular regular regular
+## [31] regular regular
 ## Levels: regular extreme outlier</code></pre>
 <p>A simplified description of the recommended procedure proposed in the <a href="https://pubs.acs.org/doi/10.1021/acs.analchem.9b04611">mentioned paper</a> is following:</p>
 <ol style="list-style-type: decimal">
@@ -358,7 +362,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb215-14"><a href="pls-distances-and-outliers.html#cb215-14" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb215-15"><a href="pls-distances-and-outliers.html#cb215-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m)</span>
 <span id="cb215-16"><a href="pls-distances-and-outliers.html#cb215-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-139-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-140-1.png" width="864" /></p>
 <p>Apparently four components selected automatically is indeed a proper value. The XY-distance plot shows that we have two outliers, let’s find and remove them:</p>
 <div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="pls-distances-and-outliers.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get row indices for outliers in calibration set</span></span>
 <span id="cb216-2"><a href="pls-distances-and-outliers.html#cb216-2" aria-hidden="true" tabindex="-1"></a>outliers <span class="ot">=</span> <span class="fu">which</span>(<span class="fu">categorize</span>(m, m<span class="sc">$</span>res<span class="sc">$</span>cal) <span class="sc">==</span> <span class="st">&quot;outlier&quot;</span>)</span>
@@ -378,11 +382,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb216-16"><a href="pls-distances-and-outliers.html#cb216-16" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb216-17"><a href="pls-distances-and-outliers.html#cb216-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m)</span>
 <span id="cb216-18"><a href="pls-distances-and-outliers.html#cb216-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-140-1.png" width="864" />
+<p><img src="_main_files/figure-html/unnamed-chunk-141-1.png" width="864" />
 Again, four or three components seem to be optimal and this time no extra outliers are detected. Let’s now apply the model to the two outliers found previously and see their status.</p>
 <div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="pls-distances-and-outliers.html#cb217-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">predict</span>(m, Xo, yo)</span>
 <span id="cb217-2"><a href="pls-distances-and-outliers.html#cb217-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;cal&quot;</span> <span class="ot">=</span> m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="st">&quot;out&quot;</span> <span class="ot">=</span> res))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-141-1.png" width="432" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-142-1.png" width="432" /></p>
 <p>The two objects seem now even more extreme for the model built using the outliers free data, no need to have them back. So we just need to make a final model and look at it:</p>
 <div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="pls-distances-and-outliers.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a new model for oulier free data and explore it</span></span>
 <span id="cb218-2"><a href="pls-distances-and-outliers.html#cb218-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(X, y, <span class="dv">10</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">lim.type =</span> <span class="st">&quot;ddmoments&quot;</span>)</span>
@@ -402,7 +406,7 @@ Again, four or three components seem to be optimal and this time no extra outlie
 <span id="cb220-3"><a href="pls-distances-and-outliers.html#cb220-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb220-4"><a href="pls-distances-and-outliers.html#cb220-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m)</span>
 <span id="cb220-5"><a href="pls-distances-and-outliers.html#cb220-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-142-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-143-1.png" width="864" /></p>
 </div>
 </div>
             </section>
@@ -439,7 +443,7 @@ gitbook.start({
 "fontsettings": {
 "theme": "white",
 "family": "sans",
-"size": 1
+"size": 2
 },
 "edit": {
 "link": null,

@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-01-23" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,8 +51,6 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -231,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
@@ -241,12 +240,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
 </ul></li>
 </ul></li>
@@ -283,7 +284,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb156-8"><a href="pls-models-and-results.html#cb156-8" aria-hidden="true" tabindex="-1"></a>yt <span class="ot">=</span> people[idx, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code></pre></div>
 <p>So <code>Xc</code> and <code>yc</code> are predictors and response values for calibration subset. Now let’s calibrate the model and show an information about the model object:</p>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="pls-models-and-results.html#cb157-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">info =</span> <span class="st">&quot;Shoesize prediction model&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning in selectCompNum.pls(model, selcrit = ncomp.selcrit): No validation results were found.</code></pre>
+<pre><code>## Warning in selectCompNum.pls(model, selcrit =
+## ncomp.selcrit): No validation results were found.</code></pre>
 <p>You can notice that the calibration succeeded but there is also a warning about lack of validation. For supervised models, which have complexity parameter (in this case — number of components), doing proper validation is important as it helps to find the optimal complexity. When you calibrate PLS model the calibration also tries to find the optimal number (details will be discussed later in this chapter) and this needs some validation. The easiest thing to do is to use cross-validation, we start with its simplest form — the full cross-validation (<code>cv = 1</code>):</p>
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="pls-models-and-results.html#cb159-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">info =</span> <span class="st">&quot;Shoesize prediction model&quot;</span>)</span>
 <span id="cb159-2"><a href="pls-models-and-results.html#cb159-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">selectCompNum</span>(m, <span class="dv">3</span>)</span></code></pre></div>
@@ -316,11 +318,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb162-3"><a href="pls-models-and-results.html#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
 <span id="cb162-4"><a href="pls-models-and-results.html#cb162-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m<span class="sc">$</span>coeffs, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb162-5"><a href="pls-models-and-results.html#cb162-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m<span class="sc">$</span>coeffs, <span class="at">ncomp =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-111-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-112-1.png" width="864" /></p>
 <p>The model keeps regression coefficients, calculated for centered and standardized data, without intercept, etc. Here are the values for three PLS components.</p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="pls-models-and-results.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m<span class="sc">$</span>coeffs<span class="sc">$</span>values[, <span class="dv">3</span>, <span class="dv">1</span>])</span></code></pre></div>
-<pre><code>##       Height       Weight     Hairleng          Age       Income         Beer         Wine          Sex 
-##  0.210411676  0.197646483 -0.138824482  0.026613035 -0.000590693  0.148917913  0.138138095 -0.138824482 
+<pre><code>##       Height       Weight     Hairleng          Age 
+##  0.210411676  0.197646483 -0.138824482  0.026613035 
+##       Income         Beer         Wine          Sex 
+## -0.000590693  0.148917913  0.138138095 -0.138824482 
 ##         Swim       Region           IQ 
 ##  0.223962000  0.010392542 -0.088658626</code></pre>
 <p>You can see a summary for the regression coefficients object by calling function <code>summary()</code> for the object <code>m$coeffs</code> like it is show below. By default it shows only estimated regression coefficients for the selected y-variable and number of components. However, if you use cross-validation, <a href="https://en.wikipedia.org/wiki/Jackknife_resampling">Jack-Knifing</a> method will be used to compute some statistics, including standard error, p-value (for test if the coefficient is equal to zero in population) and confidence interval. All statistics in this case will be shown automatically with <code>summary()</code> as you can see below.</p>
@@ -328,18 +332,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## 
 ## Regression coefficients for Shoesize (ncomp = 1)
 ## ------------------------------------------------
-##                Coeffs  Std. err. t-value p-value        2.5%       97.5%
-## Height    0.176077659 0.01594024   11.03   0.000  0.14310275  0.20905257
-## Weight    0.175803980 0.01598815   10.98   0.000  0.14272997  0.20887799
-## Hairleng -0.164627444 0.01638528  -10.04   0.000 -0.19852297 -0.13073192
-## Age       0.046606027 0.03718827    1.25   0.225 -0.03032377  0.12353583
-## Income    0.059998121 0.04047132    1.47   0.155 -0.02372318  0.14371942
-## Beer      0.133136867 0.01116749   11.89   0.000  0.11003515  0.15623859
-## Wine      0.002751573 0.03542518    0.08   0.936 -0.07053100  0.07603415
-## Sex      -0.164627444 0.01638528  -10.04   0.000 -0.19852297 -0.13073192
-## Swim      0.173739533 0.01516461   11.44   0.000  0.14236915  0.20510992
-## Region   -0.031357608 0.03590576   -0.87   0.395 -0.10563433  0.04291911
-## IQ       -0.003353428 0.03841171   -0.08   0.934 -0.08281410  0.07610725
+##                Coeffs  Std. err. t-value p-value
+## Height    0.176077659 0.01594024   11.03   0.000
+## Weight    0.175803980 0.01598815   10.98   0.000
+## Hairleng -0.164627444 0.01638528  -10.04   0.000
+## Age       0.046606027 0.03718827    1.25   0.225
+## Income    0.059998121 0.04047132    1.47   0.155
+## Beer      0.133136867 0.01116749   11.89   0.000
+## Wine      0.002751573 0.03542518    0.08   0.936
+## Sex      -0.164627444 0.01638528  -10.04   0.000
+## Swim      0.173739533 0.01516461   11.44   0.000
+## Region   -0.031357608 0.03590576   -0.87   0.395
+## IQ       -0.003353428 0.03841171   -0.08   0.934
+##                 2.5%       97.5%
+## Height    0.14310275  0.20905257
+## Weight    0.14272997  0.20887799
+## Hairleng -0.19852297 -0.13073192
+## Age      -0.03032377  0.12353583
+## Income   -0.02372318  0.14371942
+## Beer      0.11003515  0.15623859
+## Wine     -0.07053100  0.07603415
+## Sex      -0.19852297 -0.13073192
+## Swim      0.14236915  0.20510992
+## Region   -0.10563433  0.04291911
+## IQ       -0.08281410  0.07610725
 ## 
 ## Degrees of freedom (Jack-Knifing): 23</code></pre>
 <p>You can also get the corrected coefficients, which can be applied directly to the raw data (without centering and standardization), by using method <code>getRegcoeffs()</code>:</p>
@@ -422,7 +438,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Validation is implemented similar to SIMCA or PCA, the only difference is that you need to provide two datasets for a test set — one for predictors (<code>x.test</code>) and one for response (<code>y.test</code>) values. Cross-validation is very important for PLS as it helps to find optimal number of PLS components (so test set performance is more fair as in this case you do not use test set for optimization). Therefore, it is always recommended to use cross-validation for this purpose.</p>
 <p>You probably have noticed a small warning we got when created the first PLS model in this chapter:</p>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="pls-models-and-results.html#cb175-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">info =</span> <span class="st">&quot;Shoesize prediction model&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning in selectCompNum.pls(model, selcrit = ncomp.selcrit): No validation results were found.</code></pre>
+<pre><code>## Warning in selectCompNum.pls(model, selcrit =
+## ncomp.selcrit): No validation results were found.</code></pre>
 <p>When you create a model, it tries to select optimal number of components automatically (which, of course, you can always change later). To do that, the method uses RMSE values, calculated for different number of components and cross-validation predictions. So, if we do not use cross-validation, it warns user about this.</p>
 <p>There are two different ways/criteria for automatic selection. One is using first local minimum on the RMSE plot and second is so called Wold criterion, based on a ratio between PRESS values for current and next component. You can select which criterion to use by specifying parameter <code>ncomp.selcrit</code> (either <code>'min'</code> or <code>'wold'</code>) as it is shown below.</p>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="pls-models-and-results.html#cb177-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">ncomp.selcrit =</span> <span class="st">&quot;min&quot;</span>)</span>
@@ -435,7 +452,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="pls-models-and-results.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb181-2"><a href="pls-models-and-results.html#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m1)</span>
 <span id="cb181-3"><a href="pls-models-and-results.html#cb181-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m2)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-120-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-121-1.png" width="864" /></p>
 <p>Parameter <code>cv</code> has the same format as for SIMCA. If it is a number, it will be used as number of segments for random cross-validation, e.g. if <code>cv = 2</code> cross-validation with two segments will be carried out. For full cross-validation use <code>cv = 1</code> like we did in the example above. For more advanced option you can provide a list with name of cross-validation method, number of segments and number of iterations, e.g. <code>cv = list("rand", 4, 4)</code> for running random cross-validation with four segments and four repetitions or <code>cv = list("ven", 8)</code> for systematic split into eight segments (<em>venetian blinds</em>).</p>
 <p>Method <code>summary()</code> for model shows performance statistics calculated using optimal number of components for each of the results.</p>
 <div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="pls-models-and-results.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
@@ -459,14 +476,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Number of selected components: 5
 ## 
 ## Response variable Shoesize:
-##        X expvar X cumexpvar Y expvar Y cumexpvar    R2  RMSE Slope Bias  RPD
-## Comp 1   50.505      50.505   93.779      93.779 0.938 0.966 0.938    0 4.10
-## Comp 2   20.979      71.484    2.926      96.705 0.967 0.703 0.967    0 5.63
-## Comp 3    8.667      80.151    0.917      97.622 0.976 0.597 0.976    0 6.62
-## Comp 4    5.847      85.998    0.479      98.101 0.981 0.534 0.981    0 7.41
-## Comp 5   11.642      97.640    0.088      98.189 0.982 0.521 0.982    0 7.59
-## Comp 6    0.495      98.135    0.347      98.536 0.985 0.468 0.985    0 8.44
-## Comp 7    0.442      98.577    0.202      98.738 0.987 0.435 0.987    0 9.09</code></pre>
+##        X expvar X cumexpvar Y expvar Y cumexpvar    R2
+## Comp 1   50.505      50.505   93.779      93.779 0.938
+## Comp 2   20.979      71.484    2.926      96.705 0.967
+## Comp 3    8.667      80.151    0.917      97.622 0.976
+## Comp 4    5.847      85.998    0.479      98.101 0.981
+## Comp 5   11.642      97.640    0.088      98.189 0.982
+## Comp 6    0.495      98.135    0.347      98.536 0.985
+## Comp 7    0.442      98.577    0.202      98.738 0.987
+##         RMSE Slope Bias  RPD
+## Comp 1 0.966 0.938    0 4.10
+## Comp 2 0.703 0.967    0 5.63
+## Comp 3 0.597 0.976    0 6.62
+## Comp 4 0.534 0.981    0 7.41
+## Comp 5 0.521 0.982    0 7.59
+## Comp 6 0.468 0.985    0 8.44
+## Comp 7 0.435 0.987    0 9.09</code></pre>
 <p>In this case, the statistics are shown for all available components and explained variance for individual components is added.</p>
 </div>
 </div>
@@ -504,7 +529,7 @@ gitbook.start({
 "fontsettings": {
 "theme": "white",
 "family": "sans",
-"size": 1
+"size": 2
 },
 "edit": {
 "link": null,

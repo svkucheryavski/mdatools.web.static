@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-01-23" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,8 +51,6 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -231,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
@@ -241,12 +240,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
 </ul></li>
 </ul></li>
@@ -289,21 +290,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb33-7"><a href="datasets-group-plots.html#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(p, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">xticks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
 <span id="cb33-8"><a href="datasets-group-plots.html#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(p, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="at">pch =</span> <span class="dv">1</span>,</span>
 <span id="cb33-9"><a href="datasets-group-plots.html#cb33-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">xticks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">xticklabels =</span> <span class="fu">colnames</span>(p))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="864" /></p>
 <p>As you can see, <code>mdaplotg()</code> automatically created the legend and set colors, line parameters, etc. correctly. You can change position of the legend using same names as for basic <code>legend()</code> command from R, or hide it using parameter <code>show.legend = FALSE</code>, as it is shown below.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="datasets-group-plots.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb34-2"><a href="datasets-group-plots.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(p, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>)</span>
 <span id="cb34-3"><a href="datasets-group-plots.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(p, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">legend.position =</span> <span class="st">&quot;bottomleft&quot;</span>)</span>
 <span id="cb34-4"><a href="datasets-group-plots.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(p, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
 <span id="cb34-5"><a href="datasets-group-plots.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(p, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="864" /></p>
 <p>Group plot also allow to show labels, in this case they can be either values, names or indices of the columns.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="datasets-group-plots.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb35-2"><a href="datasets-group-plots.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(p, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb35-3"><a href="datasets-group-plots.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(p, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;indices&quot;</span>)</span>
 <span id="cb35-4"><a href="datasets-group-plots.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(p, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;values&quot;</span>)</span>
 <span id="cb35-5"><a href="datasets-group-plots.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(p, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;values&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="864" /></p>
 </div>
 <div id="list-with-matrices-or-data-frames" class="section level3 unnumbered">
 <h3>List with matrices or data frames</h3>
@@ -319,7 +320,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb36-8"><a href="datasets-group-plots.html#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(d, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span>
 <span id="cb36-9"><a href="datasets-group-plots.html#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(d, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>)</span>
 <span id="cb36-10"><a href="datasets-group-plots.html#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(d, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="at">pch =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="864" /></p>
 <p>Most of the things described in the previous subsection will work similarly for this case. We will just add a bit more details on how labels and excluded rows are processed for the scatter plots. By default labels are row names or indices. In <code>mdaplotg()</code> you can not provide vector with manual values, so the best way to change them is to assign them as the row names. Indices are unique within each group, so if you have, e.g. three groups of points, there will be three points with index “1”, three with “2”, etc.</p>
 </div>
 <div id="use-factors-to-split-a-dataset-into-groups" class="section level3 unnumbered">
@@ -334,7 +335,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb37-7"><a href="datasets-group-plots.html#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(people, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">groupby =</span> groups)</span>
 <span id="cb37-8"><a href="datasets-group-plots.html#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(people, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">groupby =</span> groups)</span>
 <span id="cb37-9"><a href="datasets-group-plots.html#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplotg</span>(people, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">groupby =</span> groups)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="864" /></p>
 <p>All parameters, described before, will work the same way in this case.</p>
 </div>
 </div>
@@ -372,7 +373,7 @@ gitbook.start({
 "fontsettings": {
 "theme": "white",
 "family": "sans",
-"size": 1
+"size": 2
 },
 "edit": {
 "link": null,

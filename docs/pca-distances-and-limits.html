@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-01-23" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,8 +51,6 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -231,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
@@ -241,12 +240,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
 </ul></li>
 </ul></li>
@@ -292,12 +293,12 @@ Historically, the distances are called in this package and also in some other so
 <span id="cb88-10"><a href="pca-distances-and-limits.html#cb88-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">&quot;Distances for model (2 Comp)&quot;</span>)</span>
 <span id="cb88-11"><a href="pca-distances-and-limits.html#cb88-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">main =</span> <span class="st">&quot;Distances for calibration set&quot;</span>)</span>
 <span id="cb88-12"><a href="pca-distances-and-limits.html#cb88-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m<span class="sc">$</span>res<span class="sc">$</span>test, <span class="at">main =</span> <span class="st">&quot;Distances for test set&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-68-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-69-1.png" width="864" /></p>
 <p>As it was briefly mentioned before, if residual/distance plot is made for a model, it also shows two critical limits: the dashed line is a limit for extreme objects and the dotted line is a limit for outliers. How they are computed is explained later in this section. If you want to hide them, just use additional parameter <code>show.limits = FALSE</code>. You can also change the color, line type and width for the lines by using options <code>lim.col</code>, <code>lim.lty</code> and <code>lim.lwd</code> as it is shown below.</p>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="pca-distances-and-limits.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb89-2"><a href="pca-distances-and-limits.html#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">show.limits =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb89-3"><a href="pca-distances-and-limits.html#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">lim.col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>), <span class="at">lim.lwd =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">lim.lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-69-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="864" /></p>
 <p>It is necessary to provide a vector with two values for each of the argument (first for extreme objects and second for outliers border).</p>
 <p>Finally, you can also notice that for model plot the distance values are normalized (<span class="math inline">\(h/h_0\)</span> and <span class="math inline">\(q/q_0\)</span> instead of just <span class="math inline">\(h\)</span> and <span class="math inline">\(q\)</span>). This is needed to show the limits correctly and, again, will be explained in detail below. You can switch this option by using logical parameter <code>norm</code>. Sometimes, it is also make sense to use log transform for the values, which can be switched by using parameter <code>log</code>. Code below shows example for using these parameters.</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="pca-distances-and-limits.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
@@ -305,7 +306,7 @@ Historically, the distances are called in this package and also in some other so
 <span id="cb90-3"><a href="pca-distances-and-limits.html#cb90-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">norm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb90-4"><a href="pca-distances-and-limits.html#cb90-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">norm =</span> <span class="cn">TRUE</span>, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb90-5"><a href="pca-distances-and-limits.html#cb90-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">norm =</span> <span class="cn">FALSE</span>, <span class="at">log =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-71-1.png" width="864" /></p>
 </div>
 <div id="critical-limits" class="section level3 unnumbered">
 <h3>Critical limits</h3>
@@ -337,7 +338,7 @@ Historically, the distances are called in this package and also in some other so
 <span id="cb91-7"><a href="pca-distances-and-limits.html#cb91-7" aria-hidden="true" tabindex="-1"></a><span class="co"># change both levels to 1%</span></span>
 <span id="cb91-8"><a href="pca-distances-and-limits.html#cb91-8" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">setDistanceLimits</span>(m, <span class="at">alpha =</span> <span class="fl">0.01</span>, <span class="at">gamma =</span> <span class="fl">0.01</span>)</span>
 <span id="cb91-9"><a href="pca-distances-and-limits.html#cb91-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-71-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-72-1.png" width="864" /></p>
 <p>This function also allows to change method for computing the limits, which is discussed in next subsection.</p>
 </div>
 <div id="other-methods-for-computing-critical-limits" class="section level4 unnumbered">
@@ -360,19 +361,20 @@ Historically, the distances are called in this package and also in some other so
 <span id="cb92-9"><a href="pca-distances-and-limits.html#cb92-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb92-10"><a href="pca-distances-and-limits.html#cb92-10" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">categorize</span>(m, r)</span>
 <span id="cb92-11"><a href="pca-distances-and-limits.html#cb92-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(c)</span></code></pre></div>
-<pre><code>## [1] outlier regular regular regular extreme regular outlier regular
+<pre><code>## [1] outlier regular regular regular extreme regular outlier
+## [8] regular
 ## Levels: regular extreme outlier</code></pre>
 <p>As one can see, there are two outliers, one extreme and five regular objects. This can be visualized on distance plot:</p>
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="pca-distances-and-limits.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb94-2"><a href="pca-distances-and-limits.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(r, <span class="at">cgroup =</span> c)</span>
 <span id="cb94-3"><a href="pca-distances-and-limits.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;new&quot;</span> <span class="ot">=</span> r), <span class="at">cgroup =</span> c)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-73-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-74-1.png" width="864" /></p>
 <p>The first plot is a normal distance/residuals plot for results, while the second plot is made for model with manually specified result list. The last has possibility to show critical limits and see why actually the objects have been categorized like this.</p>
 <p>When the plot is made for calibration set, this option can be simplified by providing specific value for parameter <code>cgroup</code> as shown below.</p>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="pca-distances-and-limits.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb95-2"><a href="pca-distances-and-limits.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m)</span>
 <span id="cb95-3"><a href="pca-distances-and-limits.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">cgroup =</span> <span class="st">&quot;categories&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-74-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-75-1.png" width="864" /></p>
 <p>This option will work only if plot is made for one result object.</p>
 </div>
 </div>
@@ -411,7 +413,7 @@ gitbook.start({
 "fontsettings": {
 "theme": "white",
 "family": "sans",
-"size": 1
+"size": 2
 },
 "edit": {
 "link": null,

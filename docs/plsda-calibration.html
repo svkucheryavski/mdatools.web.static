@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-01-23" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,8 +51,6 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -231,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
@@ -241,12 +240,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
 </ul></li>
 </ul></li>
@@ -284,23 +285,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb224-10"><a href="plsda-calibration.html#cb224-10" aria-hidden="true" tabindex="-1"></a>cv.all <span class="ot">=</span> iris[val.ind, <span class="dv">5</span>]</span></code></pre></div>
 <p>In this case, the fifth column of dataset <em>Iris</em> is already factor, otherwise we have to make it as a factor explicitely. Lets check if it is indeed correct.</p>
 <div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="plsda-calibration.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(cc.all)</span></code></pre></div>
-<pre><code>##  [1] setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa    
-## [11] setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa    
-## [21] setosa     setosa     setosa     setosa     setosa     versicolor versicolor versicolor versicolor versicolor
-## [31] versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor
-## [41] versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor
-## [51] virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica 
-## [61] virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica 
+<pre><code>##  [1] setosa     setosa     setosa     setosa     setosa    
+##  [6] setosa     setosa     setosa     setosa     setosa    
+## [11] setosa     setosa     setosa     setosa     setosa    
+## [16] setosa     setosa     setosa     setosa     setosa    
+## [21] setosa     setosa     setosa     setosa     setosa    
+## [26] versicolor versicolor versicolor versicolor versicolor
+## [31] versicolor versicolor versicolor versicolor versicolor
+## [36] versicolor versicolor versicolor versicolor versicolor
+## [41] versicolor versicolor versicolor versicolor versicolor
+## [46] versicolor versicolor versicolor versicolor versicolor
+## [51] virginica  virginica  virginica  virginica  virginica 
+## [56] virginica  virginica  virginica  virginica  virginica 
+## [61] virginica  virginica  virginica  virginica  virginica 
+## [66] virginica  virginica  virginica  virginica  virginica 
 ## [71] virginica  virginica  virginica  virginica  virginica 
 ## Levels: setosa versicolor virginica</code></pre>
 <p>However, for the model with just one class, <em>virginica</em>, we need to prepare the class variable in a different way. In this case it is enought to provide a vector with logical values, where <code>TRUE</code> will correspond to a member and <code>FALSE</code> to a non-member of the class. Here is an example how to do it (we will make two — one for calibration and one for validation subsets).</p>
 <div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="plsda-calibration.html#cb227-1" aria-hidden="true" tabindex="-1"></a>cc.vir <span class="ot">=</span> cc.all <span class="sc">==</span> <span class="st">&quot;virginica&quot;</span></span>
 <span id="cb227-2"><a href="plsda-calibration.html#cb227-2" aria-hidden="true" tabindex="-1"></a>cv.vir <span class="ot">=</span> cv.all <span class="sc">==</span> <span class="st">&quot;virginica&quot;</span></span>
 <span id="cb227-3"><a href="plsda-calibration.html#cb227-3" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(cc.vir)</span></code></pre></div>
-<pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [19] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE
-## [55]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+<pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [10] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [19] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [28] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [46] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE
+## [55]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [64]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
 ## [73]  TRUE  TRUE  TRUE</code></pre>
 <p>Now we can calibrate the models:</p>
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="plsda-calibration.html#cb229-1" aria-hidden="true" tabindex="-1"></a>m.all <span class="ot">=</span> <span class="fu">plsda</span>(Xc, cc.all, <span class="dv">3</span>, <span class="at">cv =</span> <span class="dv">1</span>)</span>
@@ -316,19 +328,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Cross-validation: full (leave one out)
 ## 
 ## Class #1 (setosa)
-##     X cumexpvar Y cumexpvar TP FP TN FN Spec. Sens. Accuracy
-## Cal       91.97       46.36 25  0 50  0     1     1        1
-## Cv           NA          NA 25  0 50  0     1     1        1
+##     X cumexpvar Y cumexpvar TP FP TN FN Spec. Sens.
+## Cal       91.97       46.36 25  0 50  0     1     1
+## Cv           NA          NA 25  0 50  0     1     1
+##     Accuracy
+## Cal        1
+## Cv         1
 ## 
 ## Class #2 (versicolor)
-##     X cumexpvar Y cumexpvar TP FP TN FN Spec. Sens. Accuracy
-## Cal       91.97       46.36  0  0 50 25  1.00     0    0.667
-## Cv           NA          NA  0  3 47 25  0.94     0    0.627
+##     X cumexpvar Y cumexpvar TP FP TN FN Spec. Sens.
+## Cal       91.97       46.36  0  0 50 25  1.00     0
+## Cv           NA          NA  0  3 47 25  0.94     0
+##     Accuracy
+## Cal    0.667
+## Cv     0.627
 ## 
 ## Class #3 (virginica)
-##     X cumexpvar Y cumexpvar TP FP TN FN Spec. Sens. Accuracy
-## Cal       91.97       46.36 24  5 45  1  0.90  0.96    0.920
-## Cv           NA          NA 24  6 44  1  0.88  0.96    0.907</code></pre>
+##     X cumexpvar Y cumexpvar TP FP TN FN Spec. Sens.
+## Cal       91.97       46.36 24  5 45  1  0.90  0.96
+## Cv           NA          NA 24  6 44  1  0.88  0.96
+##     Accuracy
+## Cal    0.920
+## Cv     0.907</code></pre>
 <p>Dealing with the multi-class PLS-DA model is similar to dealing with PLS2 models, when you have several y-variables. Every time you want to show a plot or results for a particular class, just provide the class number using parameter <code>nc</code>. For example this is how to show summary only for the third class (<em>virginica</em>).</p>
 <div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="plsda-calibration.html#cb232-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">summary</span>(m.all, <span class="at">nc =</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## 
@@ -339,9 +360,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Cross-validation: full (leave one out)
 ## 
 ## Class #3 (virginica)
-##     X cumexpvar Y cumexpvar TP FP TN FN Spec. Sens. Accuracy
-## Cal       91.97       46.36 24  5 45  1  0.90  0.96    0.920
-## Cv           NA          NA 24  6 44  1  0.88  0.96    0.907</code></pre>
+##     X cumexpvar Y cumexpvar TP FP TN FN Spec. Sens.
+## Cal       91.97       46.36 24  5 45  1  0.90  0.96
+## Cv           NA          NA 24  6 44  1  0.88  0.96
+##     Accuracy
+## Cal    0.920
+## Cv     0.907</code></pre>
 <p>You can also show statistics only for calibration or only for cross-validation parts, in this case you will see details about contribution of every component to the model.</p>
 <div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="plsda-calibration.html#cb234-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">summary</span>(m.all<span class="sc">$</span>calres, <span class="at">nc =</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## 
@@ -349,10 +373,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Number of selected components: 1
 ## 
 ## Class #3 (virginica):
-##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN FN Spec. Sens. Accuracy
-## Comp 1   91.969      91.969   46.356      46.356 24  5 45  1  0.90  0.96    0.920
-## Comp 2    5.500      97.468    6.878      53.233 21  5 45  4  0.90  0.84    0.880
-## Comp 3    2.186      99.654    4.816      58.049 24  3 47  1  0.94  0.96    0.947</code></pre>
+##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN
+## Comp 1   91.969      91.969   46.356      46.356 24  5 45
+## Comp 2    5.500      97.468    6.878      53.233 21  5 45
+## Comp 3    2.186      99.654    4.816      58.049 24  3 47
+##        FN Spec. Sens. Accuracy
+## Comp 1  1  0.90  0.96    0.920
+## Comp 2  4  0.90  0.84    0.880
+## Comp 3  1  0.94  0.96    0.947</code></pre>
 <p>For one class models, the behaviour is actually similar, but there will be always one set of results — for the corresponding class. Here is the summary.</p>
 <div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="plsda-calibration.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m.vir)</span></code></pre></div>
 <pre><code>## 
@@ -363,9 +391,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Cross-validation: full (leave one out)
 ## 
 ## Class #1 (virginica)
-##     X cumexpvar Y cumexpvar TP FP TN FN Spec. Sens. Accuracy
-## Cal       98.53       61.31 24  3 47  1  0.94  0.96    0.947
-## Cv           NA          NA 24  3 47  1  0.94  0.96    0.947</code></pre>
+##     X cumexpvar Y cumexpvar TP FP TN FN Spec. Sens.
+## Cal       98.53       61.31 24  3 47  1  0.94  0.96
+## Cv           NA          NA 24  3 47  1  0.94  0.96
+##     Accuracy
+## Cal    0.947
+## Cv     0.947</code></pre>
 <p>Like in SIMCA you can also get a confusion matrix for particular result. Here is an example for multiple classes model.</p>
 <div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="plsda-calibration.html#cb238-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getConfusionMatrix</span>(m.all<span class="sc">$</span>calres)</span></code></pre></div>
 <pre><code>##            setosa versicolor virginica None
@@ -412,7 +443,7 @@ gitbook.start({
 "fontsettings": {
 "theme": "white",
 "family": "sans",
-"size": 1
+"size": 2
 },
 "edit": {
 "link": null,

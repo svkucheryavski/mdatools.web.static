@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-01-23" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,8 +51,6 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -231,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
@@ -241,12 +240,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
 </ul></li>
 </ul></li>
@@ -278,28 +279,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Number of selected components: 1
 ## 
 ## Class #1 (setosa):
-##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN FN Spec. Sens. Accuracy
-## Comp 1   92.924      92.924   42.703      42.703 25  1 49  0  0.98     1    0.987
-## Comp 2    4.560      97.484   11.216      53.920 25  0 50  0  1.00     1    1.000
-## Comp 3    1.790      99.274    1.717      55.637 25  0 50  0  1.00     1    1.000
+##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN
+## Comp 1   92.924      92.924   42.703      42.703 25  1 49
+## Comp 2    4.560      97.484   11.216      53.920 25  0 50
+## Comp 3    1.790      99.274    1.717      55.637 25  0 50
+##        FN Spec. Sens. Accuracy
+## Comp 1  0  0.98     1    0.987
+## Comp 2  0  1.00     1    1.000
+## Comp 3  0  1.00     1    1.000
 ## 
 ## 
 ## Class #2 (versicolor):
-##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN FN Spec. Sens. Accuracy
-## Comp 1   92.924      92.924   42.703      42.703  0  0 50 25  1.00   0.0    0.667
-## Comp 2    4.560      97.484   11.216      53.920 10  4 46 15  0.92   0.4    0.747
-## Comp 3    1.790      99.274    1.717      55.637 10  6 44 15  0.88   0.4    0.720
+##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN
+## Comp 1   92.924      92.924   42.703      42.703  0  0 50
+## Comp 2    4.560      97.484   11.216      53.920 10  4 46
+## Comp 3    1.790      99.274    1.717      55.637 10  6 44
+##        FN Spec. Sens. Accuracy
+## Comp 1 25  1.00   0.0    0.667
+## Comp 2 15  0.92   0.4    0.747
+## Comp 3 15  0.88   0.4    0.720
 ## 
 ## 
 ## Class #3 (virginica):
-##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN FN Spec. Sens. Accuracy
-## Comp 1   92.924      92.924   42.703      42.703 25  4 46  0  0.92  1.00    0.947
-## Comp 2    4.560      97.484   11.216      53.920 25  4 46  0  0.92  1.00    0.947
-## Comp 3    1.790      99.274    1.717      55.637 24  4 46  1  0.92  0.96    0.933</code></pre>
+##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN
+## Comp 1   92.924      92.924   42.703      42.703 25  4 46
+## Comp 2    4.560      97.484   11.216      53.920 25  4 46
+## Comp 3    1.790      99.274    1.717      55.637 24  4 46
+##        FN Spec. Sens. Accuracy
+## Comp 1  0  0.92  1.00    0.947
+## Comp 2  0  0.92  1.00    0.947
+## Comp 3  1  0.92  0.96    0.933</code></pre>
 <p>And the corresponding plot with predictions.</p>
 <div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="plsda-predictions.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
 <span id="cb248-2"><a href="plsda-predictions.html#cb248-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(res)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-160-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-162-1.png" width="864" /></p>
 <p>If vector with reference class values contains names of classes model knows nothing about, they will simply be considered as members of non of the known clases (“None”).</p>
 <p>In case of one-class model, the reference values can be either factor/vector with names or logical values, like the ones used for calibration of the model. Here is an example for each of the cases.</p>
 <div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="plsda-predictions.html#cb249-1" aria-hidden="true" tabindex="-1"></a>res21 <span class="ot">=</span> <span class="fu">predict</span>(m.vir, Xv, cv.all)</span>
@@ -309,10 +322,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Number of selected components: 3
 ## 
 ## Class #1 (virginica):
-##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN FN Spec. Sens. Accuracy
-## Comp 1   93.107      93.107   54.394      54.394 25  4 46  0  0.92  1.00    0.947
-## Comp 2    1.588      94.695    6.039      60.433 24  4 46  1  0.92  0.96    0.933
-## Comp 3    2.641      97.336   -0.149      60.284 22  4 46  3  0.92  0.88    0.907</code></pre>
+##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN
+## Comp 1   93.107      93.107   54.394      54.394 25  4 46
+## Comp 2    1.588      94.695    6.039      60.433 24  4 46
+## Comp 3    2.641      97.336   -0.149      60.284 22  4 46
+##        FN Spec. Sens. Accuracy
+## Comp 1  0  0.92  1.00    0.947
+## Comp 2  1  0.92  0.96    0.933
+## Comp 3  3  0.92  0.88    0.907</code></pre>
 <div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="plsda-predictions.html#cb251-1" aria-hidden="true" tabindex="-1"></a>res22 <span class="ot">=</span> <span class="fu">predict</span>(m.vir, Xv, cv.vir)</span>
 <span id="cb251-2"><a href="plsda-predictions.html#cb251-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res22)</span></code></pre></div>
 <pre><code>## 
@@ -320,20 +337,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Number of selected components: 3
 ## 
 ## Class #1 (virginica):
-##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN FN Spec. Sens. Accuracy
-## Comp 1   93.107      93.107   54.394      54.394 25  4 46  0  0.92  1.00    0.947
-## Comp 2    1.588      94.695    6.039      60.433 24  4 46  1  0.92  0.96    0.933
-## Comp 3    2.641      97.336   -0.149      60.284 22  4 46  3  0.92  0.88    0.907</code></pre>
+##        X expvar X cumexpvar Y expvar Y cumexpvar TP FP TN
+## Comp 1   93.107      93.107   54.394      54.394 25  4 46
+## Comp 2    1.588      94.695    6.039      60.433 24  4 46
+## Comp 3    2.641      97.336   -0.149      60.284 22  4 46
+##        FN Spec. Sens. Accuracy
+## Comp 1  0  0.92  1.00    0.947
+## Comp 2  1  0.92  0.96    0.933
+## Comp 3  3  0.92  0.88    0.907</code></pre>
 <p>As you can see, statistically results are identical. However, predictions plot will look a bit different for these two cases, as you can see below.</p>
 <div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="plsda-predictions.html#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
 <span id="cb253-2"><a href="plsda-predictions.html#cb253-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(res21)</span>
 <span id="cb253-3"><a href="plsda-predictions.html#cb253-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(res22)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-162-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-164-1.png" width="864" /></p>
 <p>And because <code>predict()</code> returns an object with results you can also use most of the plots available for PLS regression results. In the last example below you will find plots for X-distance and Y-variance.</p>
 <div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="plsda-predictions.html#cb254-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb254-2"><a href="plsda-predictions.html#cb254-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(res21)</span>
 <span id="cb254-3"><a href="plsda-predictions.html#cb254-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYVariance</span>(res22)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-163-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-165-1.png" width="864" /></p>
 
 </div>
 <!-- </div> -->
@@ -371,7 +392,7 @@ gitbook.start({
 "fontsettings": {
 "theme": "white",
 "family": "sans",
-"size": 1
+"size": 2
 },
 "edit": {
 "link": null,

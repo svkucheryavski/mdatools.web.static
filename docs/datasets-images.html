@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-01-23" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,8 +51,6 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -231,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
@@ -241,12 +240,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
 </ul></li>
 </ul></li>
@@ -300,24 +301,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb40-4"><a href="datasets-images.html#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">2</span>)</span>
 <span id="cb40-5"><a href="datasets-images.html#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">3</span>)</span>
 <span id="cb40-6"><a href="datasets-images.html#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="864" /></p>
 <p>By default image for one channels is shown using jet color palette for intensities, but you can also use gray colors, palette from <em>colorbrewer2</em> as well as your own.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="datasets-images.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb41-2"><a href="datasets-images.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>)</span>
 <span id="cb41-3"><a href="datasets-images.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>, <span class="at">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span>
 <span id="cb41-4"><a href="datasets-images.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>, <span class="at">colmap =</span> <span class="fu">heat.colors</span>(<span class="dv">256</span>))</span>
 <span id="cb41-5"><a href="datasets-images.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>, <span class="at">colmap =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>))(<span class="dv">256</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="864" /></p>
 <p>You can work with the image values as normal dataset and show scatter, line plots, calculate statistics, etc.</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="datasets-images.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb42-2"><a href="datasets-images.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>)</span>
 <span id="cb42-3"><a href="datasets-images.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="864" /></p>
 <p>However, it will take some time to show these plots as this image has several hundreds of thousands pixels, a faster alternative can be the use density plot based on hexagonal binning. Use <code>type = "d"</code> for this as shown below. Number of bins can be adjusted by using parameter <code>nbins</code>.</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="datasets-images.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb43-2"><a href="datasets-images.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>)</span>
 <span id="cb43-3"><a href="datasets-images.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(<span class="fu">mda.subset</span>(d, <span class="at">select =</span> <span class="fu">c</span>(<span class="st">&quot;Red&quot;</span>, <span class="st">&quot;Blue&quot;</span>)), <span class="at">type =</span> <span class="st">&quot;d&quot;</span>, <span class="at">nbins =</span> <span class="dv">40</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="864" /></p>
 <p>Another useful thing is to set some of the pixels as background. The background pixels are removed from the image dataset physically, there is no way to get them back (in cotrast to excluded rows/pixels). It can be particularly useful when working with e.g. geocorrected hyperspectral images, where, often, many pixels have NA values and there is no need to keep them in memory. To set pixels as background you need to use method <code>mda.setimbg()</code> with either pixel indices or vector with logical values as it is shown below.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="datasets-images.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original size</span></span>
 <span id="cb44-2"><a href="datasets-images.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">dim</span>(d))</span></code></pre></div>
@@ -330,7 +331,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb48-2"><a href="datasets-images.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb48-3"><a href="datasets-images.html#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>)</span>
 <span id="cb48-4"><a href="datasets-images.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-40-1.png" width="864" /></p>
 <p>All image related attributes are inherited by all object/rows related results, e.g. scores, residuals, predicted values and classes, etc. This means if you provide an image to any modelling method, you can visualise the corresponding results also as an image. Some examples will be shown in
 <a href="pca.html#pca">chapter about PCA</a>.</p>
 </div>
@@ -368,7 +369,7 @@ gitbook.start({
 "fontsettings": {
 "theme": "white",
 "family": "sans",
-"size": 1
+"size": 2
 },
 "edit": {
 "link": null,

@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-01-23" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,8 +51,6 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -231,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
@@ -241,12 +240,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
 </ul></li>
 </ul></li>
@@ -300,7 +301,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb49-24"><a href="datasets-preprocessing.html#cb49-24" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(data2, <span class="at">main =</span> <span class="st">&quot;Standardized&quot;</span>)</span>
 <span id="cb49-25"><a href="datasets-preprocessing.html#cb49-25" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(data3, <span class="at">main =</span> <span class="st">&quot;Mean centered and standardized&quot;</span>)</span>
 <span id="cb49-26"><a href="datasets-preprocessing.html#cb49-26" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(data4, <span class="at">main =</span> <span class="st">&quot;Median centered and standardized&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-40-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-41-1.png" width="864" /></p>
 <p>Starting form v. 0.9.0, the method has additional parameter <code>max.cov</code> which allows to avoid scaling of variables with zero or very low variation. The parameter defines a limit for coefficient of variation in percent <code>sd(x) / m(x) * 100</code> and the method will not scale variables with coefficient of variation betlow this limit. Default value for the parameter is 0 which will prevent scaling of constant variables (which is leading to <code>Inf</code> values).</p>
 </div>
 <div id="correction-of-spectral-baseline" class="section level3 unnumbered">
@@ -319,7 +320,7 @@ Correction (MSC). You can find more methods in the package <a href="https://cran
 <span id="cb50-10"><a href="datasets-preprocessing.html#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
 <span id="cb50-11"><a href="datasets-preprocessing.html#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(ospectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Original&quot;</span>)</span>
 <span id="cb50-12"><a href="datasets-preprocessing.html#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(pspectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;after SNV&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-41-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-42-1.png" width="864" /></p>
 <p>Multiplicative Scatter Correction does the same as SNV but in a different way. First it calculates a mean spectrum for the whole set (mean spectrum can be also provided as an extra argument). Then, for each individual spectrum, it makes a line fit for the spectral values and the mean spectrum. The coefficients of the line, intercept and slope, are used to correct the additive and multiplicative effects correspondingly.</p>
 <p>The <code>prep.msc()</code> function adds the mean spectrum calculated for the original spectral data, to the attributes of the results, so it can be reused later.</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="datasets-preprocessing.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apply MSC and and get the preprocessed spectra</span></span>
@@ -329,7 +330,7 @@ Correction (MSC). You can find more methods in the package <a href="https://cran
 <span id="cb51-5"><a href="datasets-preprocessing.html#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
 <span id="cb51-6"><a href="datasets-preprocessing.html#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(ospectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Original&quot;</span>)</span>
 <span id="cb51-7"><a href="datasets-preprocessing.html#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(pspectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;after MSC&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-42-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="864" /></p>
 </div>
 <div id="smoothing-and-derivatives" class="section level3 unnumbered">
 <h3>Smoothing and derivatives</h3>
@@ -349,7 +350,7 @@ Correction (MSC). You can find more methods in the package <a href="https://cran
 <span id="cb52-13"><a href="datasets-preprocessing.html#cb52-13" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(nspectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Noise added&quot;</span>)</span>
 <span id="cb52-14"><a href="datasets-preprocessing.html#cb52-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(pspectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Smoothing&quot;</span>)</span>
 <span id="cb52-15"><a href="datasets-preprocessing.html#cb52-15" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(dpspectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>,<span class="at">main =</span> <span class="st">&quot;First derivative&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="864" /></p>
 </div>
 <div id="prep--alsbasecorr" class="section level3 unnumbered">
 <h3>Baseline correction with asymmetric least squares</h3>
@@ -382,7 +383,7 @@ Correction (MSC). You can find more methods in the package <a href="https://cran
 <span id="cb53-23"><a href="datasets-preprocessing.html#cb53-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">preprocessed =</span> y.new[i, , <span class="at">drop =</span> <span class="cn">FALSE</span>]</span>
 <span id="cb53-24"><a href="datasets-preprocessing.html#cb53-24" aria-hidden="true" tabindex="-1"></a>      ), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>))</span>
 <span id="cb53-25"><a href="datasets-preprocessing.html#cb53-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-45-1.png" width="864" /></p>
 
 </div>
 </div>
@@ -421,7 +422,7 @@ gitbook.start({
 "fontsettings": {
 "theme": "white",
 "family": "sans",
-"size": 1
+"size": 2
 },
 "edit": {
 "link": null,

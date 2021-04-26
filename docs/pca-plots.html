@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-01-23" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,8 +51,6 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -231,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
@@ -241,12 +240,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
 </ul></li>
 </ul></li>
@@ -273,7 +274,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="pca-plots.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb77-2"><a href="pca-plots.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>scores, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.lines =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span>
 <span id="cb77-3"><a href="pca-plots.html#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(m<span class="sc">$</span>loadings, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.lines =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-57-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-58-1.png" width="864" /></p>
 <p>To simplify this routine, every model and result class also has a number of functions for visualization. Thus for PCA the function list includes scores and loadings plots, explained variance and cumulative explained variance plots, distance/reduals plots, and many others.</p>
 <p>A function that does the same for different models and results has always the same name. For example, <code>plotPredictions</code> will show predicted vs. measured plot for PLS model and PLS result, MLR model and MLR result, SIMCA model and SIMCA result, and so on, although the plot itself will be quite different. The first argument must always be either a model or a result object.</p>
 <p>The major difference between plots for model and plots for result is following. A plot for result always shows one set of data objects — one set of points, lines or bars. For example, predicted vs. measured values for calibration set or scores values for test set and so on. For such plots method <code>mdaplot()</code> is used and you can provide any arguments, available for this method (e.g. color group scores for calibration results, add confidence ellipses for scores, etc.).</p>
@@ -297,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb78-16"><a href="pca-plots.html#cb78-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb78-17"><a href="pca-plots.html#cb78-17" aria-hidden="true" tabindex="-1"></a><span class="co"># variance plot for calibration results with values as labels</span></span>
 <span id="cb78-18"><a href="pca-plots.html#cb78-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVariance</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;values&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-58-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-59-1.png" width="864" /></p>
 <p>Scores plot can be also used together with <code>plotHotellingEllipse()</code> function. It works similar to <code>plotConfidenceEllipse()</code> or <code>plotConvexHull()</code> however does not require grouping of the values. You can add the ellipse both to score plot for results and score plot for model. In case of model, if you have e.g. both calibration and test set results you need to specify which one you want to use for the creating the ellipse. Code below shows several examples.</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="pca-plots.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb79-2"><a href="pca-plots.html#cb79-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -318,7 +319,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb79-17"><a href="pca-plots.html#cb79-17" aria-hidden="true" tabindex="-1"></a><span class="co"># same but with specific settings for color and line</span></span>
 <span id="cb79-18"><a href="pca-plots.html#cb79-18" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">plotScores</span>(m, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>))</span>
 <span id="cb79-19"><a href="pca-plots.html#cb79-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plotHotellingEllipse</span>(p[[<span class="dv">1</span>]], <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-59-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-60-1.png" width="864" /></p>
 <p>The color grouping option is not available for the group (model) plots as colors are used there to underline the groups.</p>
 <p>Now let’s look at similar plots (plus loadings) for a model.</p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="pca-plots.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
@@ -326,16 +327,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb80-3"><a href="pca-plots.html#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotLoadings</span>(m, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb80-4"><a href="pca-plots.html#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>))</span>
 <span id="cb80-5"><a href="pca-plots.html#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVariance</span>(m, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;values&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-60-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="864" /></p>
 <p>As you can see, for in case of model, the distance plot also shows some lines. These are critical limits, all details about them as well as how to use the distance/residuals plot will be given in the next section.</p>
 <p>If model plot show values from calibration and validation objects (e.g. scores, distances, etc), you can specify which result to show. In the example below left plot is made using default settings, for the right plot we specified list with results explicitly. Note, that the results should be specified as a named list.</p>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="pca-plots.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb81-2"><a href="pca-plots.html#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m)</span>
 <span id="cb81-3"><a href="pca-plots.html#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;train&quot;</span> <span class="ot">=</span> m<span class="sc">$</span>res<span class="sc">$</span>cal))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="864" /></p>
 <p>Finally, method <code>plot()</code> shows the main four PCA plots as a model (or results) overview.</p>
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="pca-plots.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-63-1.png" width="864" /></p>
 <p>You do not have to care about labels, names, legend and so on, however if necessary you can always change almost anything. See full list of methods available for PCA by <code>?pca</code> and <code>?pcares</code>.</p>
 <div id="support-for-images" class="section level3 unnumbered">
 <h3>Support for images</h3>
@@ -349,7 +350,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb83-7"><a href="pca-plots.html#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>Q)</span>
 <span id="cb83-8"><a href="pca-plots.html#cb83-8" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>scores, <span class="dv">2</span>)</span>
 <span id="cb83-9"><a href="pca-plots.html#cb83-9" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>Q, <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-63-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-64-1.png" width="864" /></p>
 </div>
 <div id="manual-x-values-for-loading-line-plot" class="section level3 unnumbered">
 <h3>Manual x-values for loading line plot</h3>
@@ -363,7 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb84-6"><a href="pca-plots.html#cb84-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb84-7"><a href="pca-plots.html#cb84-7" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(X, <span class="dv">3</span>)</span>
 <span id="cb84-8"><a href="pca-plots.html#cb84-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plotLoadings</span>(m, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-64-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-65-1.png" width="864" /></p>
 </div>
 <div id="excluding-rows-and-columns" class="section level3 unnumbered">
 <h3>Excluding rows and columns</h3>
@@ -379,24 +380,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb85-7"><a href="pca-plots.html#cb85-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotScores</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.excluded =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb85-8"><a href="pca-plots.html#cb85-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.excluded =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb85-9"><a href="pca-plots.html#cb85-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plotLoadings</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.excluded =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-65-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-66-1.png" width="864" /></p>
 <p>As you can see, the excluded values (or variables in case of loadings plot) are either hidden completely or shown as gray points if <code>show.excluded</code> parameter is set to <code>TRUE</code>.</p>
 <p>Here is the matrix with loadings, note that variable <code>Income</code> has zeros for loadings and the matrix has attribute <code>exclrows</code> set to 6 (which is a position of the variable):</p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="pca-plots.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show matrix with loadings (look at row Income and attribute &quot;exclrows&quot;)</span></span>
 <span id="cb86-2"><a href="pca-plots.html#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m<span class="sc">$</span>loadings)</span></code></pre></div>
-<pre><code>##                Comp 1      Comp 2       Comp 3      Comp 4      Comp 5
-## Height   -0.386393327  0.10697019 -0.004829174  0.12693029 -0.13128331
-## Weight   -0.391013398  0.07820097  0.051916032  0.04049593 -0.14757465
-## Hairleng  0.350435073 -0.11623295 -0.103852349 -0.04969503 -0.73669997
-## Shoesize -0.385424793  0.13805817 -0.069172117  0.01049098 -0.17075488
-## Age      -0.103466285  0.18964288 -0.337243182 -0.89254403 -0.02998028
-## Income    0.000000000  0.00000000  0.000000000  0.00000000  0.00000000
-## Beer     -0.317356319 -0.38259695  0.044338872 -0.03908064 -0.21419831
-## Wine      0.140711271  0.57861817 -0.059833970  0.12347379 -0.41488773
-## Sex       0.364537185 -0.23838610  0.010818891  0.04025631 -0.18263577
-## Swim     -0.377470722  0.04330411  0.008151288  0.18149268 -0.30163601
-## Region    0.140581701  0.60435183  0.040969200  0.15147464  0.17857614
-## IQ        0.009849911  0.09372132  0.927669306 -0.32978247 -0.11815762
+<pre><code>##                Comp 1      Comp 2       Comp 3      Comp 4
+## Height   -0.386393327  0.10697019 -0.004829174  0.12693029
+## Weight   -0.391013398  0.07820097  0.051916032  0.04049593
+## Hairleng  0.350435073 -0.11623295 -0.103852349 -0.04969503
+## Shoesize -0.385424793  0.13805817 -0.069172117  0.01049098
+## Age      -0.103466285  0.18964288 -0.337243182 -0.89254403
+## Income    0.000000000  0.00000000  0.000000000  0.00000000
+## Beer     -0.317356319 -0.38259695  0.044338872 -0.03908064
+## Wine      0.140711271  0.57861817 -0.059833970  0.12347379
+## Sex       0.364537185 -0.23838610  0.010818891  0.04025631
+## Swim     -0.377470722  0.04330411  0.008151288  0.18149268
+## Region    0.140581701  0.60435183  0.040969200  0.15147464
+## IQ        0.009849911  0.09372132  0.927669306 -0.32978247
+##               Comp 5
+## Height   -0.13128331
+## Weight   -0.14757465
+## Hairleng -0.73669997
+## Shoesize -0.17075488
+## Age      -0.02998028
+## Income    0.00000000
+## Beer     -0.21419831
+## Wine     -0.41488773
+## Sex      -0.18263577
+## Swim     -0.30163601
+## Region    0.17857614
+## IQ       -0.11815762
 ## attr(,&quot;exclrows&quot;)
 ## [1] 6
 ## attr(,&quot;name&quot;)
@@ -442,7 +456,7 @@ gitbook.start({
 "fontsettings": {
 "theme": "white",
 "family": "sans",
-"size": 1
+"size": 2
 },
 "edit": {
 "link": null,

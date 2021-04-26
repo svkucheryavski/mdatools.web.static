@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-01-23" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,8 +51,6 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -231,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
@@ -241,12 +240,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
 </ul></li>
 </ul></li>
@@ -269,6 +270,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="news" class="section level1 unnumbered">
 <h1>What is new</h1>
+<p><strong>23.04.2021</strong></p>
+<p>Added description of new features added in v. 0.11.4:</p>
+<ul>
+<li>using test set validation in <a href="ipls.html#ipls">iPLS</a>.</li>
+<li>possibility to force selected contribution and spectral values in <a href="mcr-als.html#mcr--als">MCR-ALS</a>.</li>
+<li>added information about how to provide user defined indices for pure variables in <a href="mcr-purity.html#mcr--purity">Purity method</a></li>
+<li>added link to relevant paper in the <a href="pca-model-complexity.html#pca--model-complexity">PCA model complexity</a> section</li>
+</ul>
 <p><strong>22.01.2021</strong></p>
 <ul>
 <li>added section about <a href="pca-pcv.html#pca--pcv">Procrustes cross-validation</a> for PCA, which was recently added to the package (v. 0.11.3).</li>
@@ -296,60 +305,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>29.01.2020</strong></p>
 <p>The new version of the package (0.10.0) has a lot of changes and improvements, so it was decided
 to update the book to a large degree. In addition to that, chapters about <a href="ipls.html#ipls">iPLS</a> and <a href="pls-randomization-test.html#pls--randomization-test">randomization tests</a> have been added as well as information on new tools. See <a href="https://github.com/svkucheryavski/mdatools/blob/master/NEWS.md">list of changes</a> in the package for more details.</p>
-<p><strong>9.11.2018</strong></p>
-<ul>
-<li>new minor version (0.9.2) of package is available via GitHub with several bug fixes</li>
-<li>added text about <code>max.cov</code> parameter in <a href="datasets-preprocessing.html#datasets--preprocessing">Preprocessing</a> chapter.</li>
-</ul>
-<p><strong>5.07.2018</strong></p>
-<ul>
-<li>new chapter about <a href="plsda.html#plsda">PLS-DA</a></li>
-<li>small improvements and corrections to text of other chapters</li>
-<li>added a short description if new <code>opacity</code> parameter for <code>mdaplot()</code> method</li>
-</ul>
-<p><strong>3.04.2018</strong></p>
-<ul>
-<li>new chapter about <a href="pca-randomized-algorithm.html#pca--randomized-algorithm">randomized PCA algorithms</a></li>
-<li>new chapter about <a href="pca-distances-and-limits.html#pca--distances-and-limits">critical limits for distances in PCA/SIMCA</a></li>
-<li>chapter for SIMCA has been updated with description of new methods</li>
-<li>added a short text about new properties for <code>plotPredictions()</code> method in PLS</li>
-<li>small corrections and improvements</li>
-</ul>
-<p><strong>23.11.2017</strong></p>
-<ul>
-<li>corrections in SIMCA part of documentation about using test set</li>
-</ul>
-<p><strong>03.08.2017</strong></p>
-<ul>
-<li>several minor versions has been released since the last book update (0.8.1-0.8.4)</li>
-<li>new text describes how to use <code>summary()</code> for regression coefficients</li>
-<li>text about <code>getRegcoeffs().pls</code> has been updated</li>
-<li>some updates in plans (see section above)</li>
-</ul>
-<p><strong>30.10.2016</strong></p>
-<ul>
-<li>fixed a bug in PCA when explained variance was calculated incorrectly for data with excluded rows</li>
-<li>fixed several issues with SIMCA (cross-validation) and SIMCAM (Cooman’s plot)</li>
-<li>added a chapter about SIMCA to the tutorial</li>
-</ul>
-<p><strong>14.10.2016</strong></p>
-<p>The new version (0.8.0) brings a lot of new features, therefore it was decided to rewrite this tutorial
-completely and start this log from the scratch. Most of the things available in the previous version
-of the package will work without any changes. But if you have been using functions <code>mdaplot()</code>
-and <code>mdaplotg()</code> it makes sense to read how the new implementation works and rewrite your code.
-The use of plotting tools became much simpler and more efficient. The main changes in the package are:</p>
-<ul>
-<li>added a possibility to assign specific attributes to datasets, which makes plotting easier.</li>
-<li>added a possibility to exclude (hide) selected rows and columns when create a model.</li>
-<li>if a data frame has factor columns they will be automatically converted to a set of dummy variables.</li>
-<li>added several functions to make the operations with datasets containing specific attributes easier.</li>
-<li>plotting tools (<code>mdaplot()</code>, <code>mdaplotg()</code>) were rewritten to make the use of them easier and more efficient</li>
-<li>scores and loadings plots now show a percent of explained variance</li>
-<li>biplot is now available for PCA models (<code>plotBiplot</code>)</li>
-<li>added support for images, see a <a href="datasets-images.html#datasets--images">specific chapter</a> for details</li>
-<li>cross-validation procedures were optimized for most of the methods and now takes less time</li>
-<li>several bug fixes and small improvements</li>
-</ul>
 
 </div>
             </section>
@@ -386,7 +341,7 @@ gitbook.start({
 "fontsettings": {
 "theme": "white",
 "family": "sans",
-"size": 1
+"size": 2
 },
 "edit": {
 "link": null,

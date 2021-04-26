@@ -24,7 +24,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-01-23" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,8 +51,6 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -231,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
@@ -241,12 +240,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
 <li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr-purity.html"><a href="mcr-purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html"><i class="fa fa-check"></i>Alternating least squares</a>
 <ul>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
 <li class="chapter" data-level="" data-path="mcr-als.html"><a href="mcr-als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
 </ul></li>
 </ul></li>
@@ -355,14 +356,14 @@ for, while parameter <code>ncomp</code> assumes that only one number is expected
 <div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="pls-plotting-methods.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb186-2"><a href="pls-plotting-methods.html#cb186-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m1)</span>
 <span id="cb186-3"><a href="pls-plotting-methods.html#cb186-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m1, <span class="at">ncomp =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-123-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-124-1.png" width="864" /></p>
 <p>By the way, when <code>plotPredictions()</code> is made for results object, you can show performance statistics on the plot:</p>
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="pls-plotting-methods.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb187-2"><a href="pls-plotting-methods.html#cb187-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m1<span class="sc">$</span>res<span class="sc">$</span>cal)</span>
 <span id="cb187-3"><a href="pls-plotting-methods.html#cb187-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m1<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
 <span id="cb187-4"><a href="pls-plotting-methods.html#cb187-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m1<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">show.stat =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb187-5"><a href="pls-plotting-methods.html#cb187-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m1<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">show.stat =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-124-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-125-1.png" width="864" /></p>
 <p>The plots for variables are available only for a model object and include:</p>
 <table>
 <colgroup>
@@ -404,7 +405,7 @@ for, while parameter <code>ncomp</code> assumes that only one number is expected
 </table>
 <p>And, of course, both model and result objects have method <code>plot()</code> for giving an overview.</p>
 <div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="pls-plotting-methods.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m1)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-125-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-126-1.png" width="864" /></p>
 <div id="excluding-rows-and-columns-1" class="section level3 unnumbered">
 <h3>Excluding rows and columns</h3>
 <p>PLS, like PCA, also can exclude rows and columns from calculations. The implementation works similar to what was <a href="pls-plotting-methods.html#excluding-rows-and-columns-1">described</a> for PCA. For example, it can be useful if you have some candidates for outliers or do variable selection and do not want to remove rows and columns physically from the data matrix. In this case you can just specify two additional parameters, <code>exclcols</code> and <code>exclrows</code>, using either numbers or names of rows/columns to be excluded. You can also specify a vector with logical values (all <code>TRUE</code>s will be excluded).</p>
@@ -446,7 +447,7 @@ gitbook.start({
 "fontsettings": {
 "theme": "white",
 "family": "sans",
-"size": 1
+"size": 2
 },
 "edit": {
 "link": null,
