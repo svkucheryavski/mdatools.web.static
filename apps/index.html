@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>mdatools: interactive web applications</title>
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:regular,bold,italic" rel="stylesheet">
+   <style>
+
+
+      /* app section styles */
+      .page-section_main {
+         grid-template-areas: ". header ."
+                              ". info ."
+                              "navl main navr";
+         grid-template-columns: 24px 1fr 24px;
+         grid-template-rows: auto auto auto;
+         justify-content: center;
+         align-items: center;
+         scroll-behavior: smooth;
+         max-width: 1024px;
+         margin: 0 auto;
+         padding-left: 0;
+         padding-right: 0;
+      }
+
+
+      .page-section__header {
+         grid-area: header;
+         padding-left: 0;
+         padding-right: 0;
+      }
+
+      .page-section__info {
+         grid-area: info;
+         padding-left: 0;
+         padding-right: 0;
+      }
+
+      .page-section__nav-left {
+         grid-area: navl;
+         justify-self: start;
+      }
+
+      .page-section__nav-right {
+         grid-area: navr;
+         justify-self: end;
+      }
+
+      .page-section__main {
+         grid-area: main;
+         padding-left: 0;
+         padding-right: 0;
+      }
+
+      .apps-group::-webkit-scrollbar {
+         display: none;
+      }
+
+      .page-section__nav {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+
+         font-size: 1em;
+         line-height: 1em;
+
+         width: 20px;
+         height: 20px;
+         overflow: visible;
+         border-radius: 50%;
+         margin: 0;
+         padding: 0;
+         box-shadow: none;
+         border: none;
+         background: transparent;
+
+         color: #a0a0a0;
+      }
+
+      .page-section__nav.disabled {
+         color: #f0f0f0;
+      }
+
+      .page-section__nav:not(.disabled):hover {
+         background: #606060;
+         color: #fefefe;
+      }
+
+      .apps-group {
+         display: flex;
+         flex-direction: row;
+         overflow-x: scroll;
+         padding: 1em 0 0 10px;
+         margin: 0;
+         -ms-overflow-style: none;  /* IE and Edge */
+         scrollbar-width: none;  /* Firefox */
+
+      }
+
+      .apps-group-block {
+         flex: 1 0 50%;
+         padding: 1em 0 0 0;
+         height: 100%;
+      }
+
+      .apps-group-block__title {
+         font-size: 1em;
+         color: #504030;
+         margin: 0;
+         padding: 0;
+         text-indent: 0;
+      }
+
+      .apps-group-block__list {
+         list-style: none;
+         margin: 0;
+         padding: 0;
+         text-indent: 0;
+      }
+
+      .apps-group-block__list  .list-item{
+         list-style: none;
+         margin: 0;
+         padding: 1em 0 0.25em 0;
+         text-indent: 0;
+      }
+
+      .apps-group-block__list  .list-item__description {
+         display: block;
+         font-size: 0.85em;
+      }
+
+      .apps-group-block__list  .list-item__button {
+         font-size: 1em;
+         font-weight: 500;
+         color: #705030;
+         margin: 0 0.25em 0 0;
+         padding: 0.25em 0.5em;
+         border: none;
+         box-shadow: none;
+         background: #faf4f0;
+         border-radius: 5px;
+      }
+
+      .apps-group-block__list  .list-item__button:hover {
+         color: #f94d00;
+         background: #ffefe0;
+      }
+
+      .list-item {
+         background-repeat: no-repeat;
+         background-position: left top;
+         background-size: auto 16px;
+         background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"></svg>');
+
+         color: #202020;
+         display: block;
+         font-size: 0.85em;
+         line-height: 1.25em;
+         padding: 0 0.5em 1em 24px;
+      }
+
+
+      /* modal dialog styles */
+      .appdemo-dialog {
+         display: none;
+         position: absolute;
+         top: 0;
+         left: 0;
+         background: #30303090;
+         width: 100%;
+         height: 100%;
+         flex-direction: column;
+         justify-content: center;
+         align-content: center;
+      }
+
+      .appdemo-dialog__window {
+         width: 100%;
+         height: 100%;
+         max-width: 1024px;
+         max-height: 576px;
+         min-width: 640px;
+         min-height: 375px;
+         margin: 0 auto;
+         padding: 0;
+
+         background: transparent;
+         display: flex;
+         flex-direction: column;
+      }
+
+      .appdemo-dialog__frame{
+         border: none;
+         outline: none;
+         background: #f0f0f0;
+         margin: 0;
+         padding: 0;
+         flex: 1 1;
+      }
+
+      .appdemo-dialog__header{
+         flex: 0 0 30px;
+         display: flex;
+         background: #e8e8e8;
+         flex-direction: row;
+         justify-content: center;
+         align-items: center;
+         border-radius: 8px 8px 0 0;
+      }
+
+      .appdemo-dialog__header > p{
+         font-size: 1em;
+         line-height: 1em;
+         font-weight: bold;
+         color: #a0a0a0;
+      }
+
+
+      .appdemo-dialog__navigation{
+         flex: 0 0 30px;
+         display: flex;
+         background: #e8e8e8;
+         flex-direction: row;
+         justify-content: center;
+         align-items: center;
+         border-radius: 0 0 8px 8px;
+      }
+
+      .appdemo-dialog__button {
+         border: none;
+         box-shadow: none;
+         outline: none;
+         padding: 0;
+         margin: 5px;
+         width: 20px;
+         height: 20px;
+         border-radius: 50%;
+
+         font-size: 1em;
+         line-height: 1em;
+         font-weight: bold;
+         background: transparent;
+         color: #a0a0a0;
+
+         position: relative;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+      }
+
+      .appdemo-dialog__button::before {
+         position: absolute;
+         top: 0;
+         left: 0;
+         bottom: 0;
+         right: 0;
+      }
+
+      .appdemo-dialog__button-close::before {
+         content: "\00d7";
+      }
+
+      .appdemo-dialog__button-next::before {
+         content: "\00bb";
+      }
+
+      .appdemo-dialog__button-prev::before {
+         content: "\00ab";
+      }
+
+      .appdemo-dialog__button:hover {
+         background: #606060;
+         color: #fefefe;
+      }
+
+      @media(max-width: 640px) {
+         .appdemo-dialog__window {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+         }
+      }
+</style>
+</head>
+
+<body>
+   <section class="page-top">
+      Back to <a class="" href="/">mda.tools</a> home page.
+   </section>
+
+   <header class="page-header">
+      <h1 class="page-header__title"><a title="back to mda.tools home page" href="/">mda<span>.tools</span></a><span class="page-header__section">|apps</span></h1>
+      <p class="page-header__subtitle">learn by playing</p>
+   </header>
+
+   <section class="page-section page-section_main">
+
+      <header class="page-section__header">
+         <h2>Applications for applied statistics</h2>
+      </header>
+
+      <p class="page-section__info">
+         Apps to be used for learning and teaching the basics of Applied statistics. The apps are split into several categories
+         corresponding to a course topics. Click on the app name to run demo. Use <kbd>h</kbd> key or <kbd>?</kbd> button
+         when running the app demo to see details. All technical information is available on <a href="">GitHub page</a> of the project.
+      </p>
+
+      <button class="page-section__nav page-section__nav-left disabled">&laquo;</button>
+      <section class="page-section__main apps-group">
+
+         <!-- Descriptive statistics -->
+         <article class="apps-group-block">
+            <h3 class="apps-group-block__title">Descriptive statistics and plots</h3>
+            <ul class="apps-group-block__list">
+               <li data-appid="asta-b101" class="list-item list-item_app">
+                  <button title="run demo" class="list-item__button">asta-b101</button>Quantiles, quartiles, percentiles
+                  <span class="list-item__description">How to compute and visualize simple statistics for a sample.</span>
+               </li>
+               <li data-appid="asta-b102" class="list-item list-item_app">
+                  <button title="run demo" class="list-item__button">asta-b102</button> Samples and populations
+                  <span class="list-item__description">How random sample taken from different populations looks like.</span>
+               </li>
+            </ul>
+         </article>
+
+         <!-- Confidence intervals -->
+         <article class="apps-group-block">
+            <h3 class="apps-group-block__title">Confidence intervals</h3>
+            <ul class="apps-group-block__list">
+               <li data-appid="asta-b101" class="list-item list-item_app">
+                  <button title="run demo" class="list-item__button">asta-b201</button>Confidence intervals for proportion #1
+                  <span class="list-item__description">How far proportion of sample can go from population.</span>
+               </li>
+               <li data-appid="asta-b102" class="list-item list-item_app">
+                  <button title="run demo" class="list-item__button">asta-b202</button>Confidence intervals for proportion #2
+                  <span class="list-item__description">How often population proportion will be within confindence interval.</span>
+               </li>
+            </ul>
+         </article>
+
+         <!-- Hypothesis testing -->
+         <article class="apps-group-block">
+            <h3 class="apps-group-block__title">Hypothesis testing</h3>
+            <ul class="apps-group-block__list">
+               <li data-appid="asta-b202" class="list-item list-item_app">
+                  <button class="list-item__button">asta-b205</button>Confidence intervals for proportion #1
+                  <span class="list-item__description">How far proportion of sample can go from population.</span>
+               </li>
+               <li data-appid="asta-b102" class="list-item list-item_app">
+                  <button class="list-item__button">asta-b206</button>Errors and power of test
+                  <span class="list-item__description">How often population proportion will be within confindence interval.</span>
+               </li>
+            </ul>
+         </article>
+
+ <!--
+         <article class="apps-group-block">
+            <h3 class="apps-group-block__title">!Block title!</h3>
+            <ul class="apps-group-block__list">
+               <li data-appid="!appid!" class="list-item list-item_app">
+                  <button class="list-item__button">!appid!</button>!App title!
+                  <span class="list-item__description">!App descrition!.</span>
+               </li>
+            </ul>
+         </article>
+ -->
+      </section>
+      <button class="page-section__nav page-section__nav-right">&raquo;</button>
+   </section>
+
+
+
+
+   <section class="page-section page-section_cards">
+      <header class="page-section__header">
+         <h2>Check also</h2>
+      </header>
+      <ul class="cards">
+         <li class="card card_app">
+            <h3><a href="pca3D.html">PCA 3D app</a></h3>
+            <p>interactive web-application for understanding how Principal Component Analysis works. Press <key>h</key> for help when app is open.</p>
+         </li>
+         <li class="card card_app">
+            <h3><a href="mlr3D.html">MLR 3D app</a></h3>
+            <p>interactive web-application for understanding MLR and cross-validation. Press <key>h</key> for help when app is open.</p>
+         </li>
+
+      </ul>
+   </section>
+
+   <footer class="page-footer">
+      <!--<img src="https://avatars3.githubusercontent.com/u/2104704">-->
+      <p>
+         <img src="https://avatars2.githubusercontent.com/u/2104704?s=460&u=e2d4e1dcddab90c96bd0b6b28fdce2544e2e7590" />
+         <span>
+            Sergey Kucheryavskiy<br>
+            <a href="https://github.com/svkucheryavski">github.com/svkucheryavski</a>
+         </span>
+      </p>
+   </footer>
+
+   <dialog class="appdemo-dialog" id="appdemo-modal">
+      <section class="appdemo-dialog__window">
+         <header id="appdemo-header" class="appdemo-dialog__header"><p>xxx</p></header>
+         <iframe class="appdemo-dialog__frame" id="appdemo-frame" src="" width="100%" height="100%">Loading</iframe>
+         <nav class="appdemo-dialog__navigation">
+            <button id="appdemo-btn-prev" title="next app" class="appdemo-dialog__button appdemo-dialog__button-prev"></button>
+            <button id="appdemo-btn-close" title="close demo" class="appdemo-dialog__button appdemo-dialog__button-close"></button>
+            <button id="appdemo-btn-next" title="previous app" class="appdemo-dialog__button appdemo-dialog__button-next"></button>
+         </nav>
+      </section>
+   </dialog>
+
+   <script>
+      // selected app list and current app showing in the modal
+      let appList = [];
+      let currentAppNum = -1;
+
+      // elements of the modal dialog
+      const frame = document.getElementById("appdemo-frame");
+      const modal = document.getElementById("appdemo-modal");
+      const header = document.getElementById("appdemo-header");
+
+      // buttons inside the modal dialog
+      const btnNext = document.getElementById("appdemo-btn-next");
+      const btnClose = document.getElementById("appdemo-btn-close");
+      const btnPrev = document.getElementById("appdemo-btn-prev");
+
+      // function which changes apps in the modal
+      const switchApp = function() {
+         if (appList.length === 0) return;
+         btnPrev.style.visibility = "visible";
+         btnNext.style.visibility = "visible";
+
+         if (currentAppNum === appList.length) {
+            btnNext.style.visibility = "hidden";
+         }
+
+         if (currentAppNum === 1) {
+            btnPrev.style.visibility = "hidden";
+         }
+
+         // check that url to app demo exists
+         const appName = appList[currentAppNum - 1];
+         const appUrl = appName + "/index.html";
+         const  request = new XMLHttpRequest();
+
+         request.open("GET", appUrl, true);
+         request.onreadystatechange = function(){
+            if (request.readyState === 4){
+               if (request.status === 404) {
+                  header.innerHTML = `<p>Error: can not load the app</p>`;
+                  frame.src = "";
+               } else {
+                  header.innerHTML = `<p class="error">${appName}</p>`;
+                  frame.src = appUrl;
+               }
+            }
+         };
+         request.send();
+      }
+
+      /* scrolling */
+      function smoothScroll(element, direction, step, n) {
+         var slideTimer = setInterval(scroll, 100);
+         step = (direction === "right") ? step : -step;
+         function scroll() {
+            const list = element.closest('.apps-group');
+            if (n <= 0) {
+               clearInterval(slideTimer);
+            } else {
+               list.scrollLeft += step * 0.2;
+               n = n - 1;
+            }
+         }
+      }
+
+      /* event handlers */
+      document.querySelector('body').addEventListener('click', e => {
+         if (e.target.classList.contains('disabled')) return;
+
+         console.log(e.target)
+
+         // close modal dialog
+         if (e.target === btnClose) {
+            modal.style.display = "none";
+            frame.src = "";
+            appList = [];
+            return;
+         }
+
+         // show next app in modal
+         if (e.target === btnNext) {
+            if (currentAppNum === appList.length) return;
+            currentAppNum = currentAppNum + 1;
+            switchApp();
+            return;
+         }
+
+         // show previous app in modal
+         if (e.target === btnPrev) {
+            if (currentAppNum === 0) return;
+            currentAppNum = currentAppNum - 1;
+            switchApp();
+            return;
+         }
+
+         // show modal with app demo
+         if (e.target.classList.contains('list-item__button')) {
+            const listEl = e.srcElement.closest("ul");
+            if (listEl === null) return;
+
+            appList = [...listEl.children].map(v => v.dataset.appid);
+            if (appList.length === 0) return;
+
+            currentAppNum = 1;
+            switchApp()
+            modal.style.display = "flex";
+            return;
+         }
+
+         // scrolling of the app blocks
+         const section = e.target.closest('.page-section');
+         if (section === null) return;
+         console.log(section)
+
+         const list = section.querySelector('.apps-group');
+         if (list === null) return;
+
+         if (e.target.classList.contains('page-section__nav-left')) {
+            smoothScroll(list, 'left', list.children[0].offsetWidth, 10)
+            return;
+         }
+
+         if (e.target.classList.contains('page-section__nav-right')) {
+            smoothScroll(list, 'right', list.children[0].offsetWidth, 10)
+            return;
+         }
+      });
+
+      document.querySelector('.apps-group').addEventListener('scroll', e => {
+
+         e.preventDefault();
+         const show_left = e.target.scrollLeft > 10;
+         const show_right = e.target.scrollWidth - e.target.offsetWidth - e.target.scrollLeft > 10;
+         const left_arrow = e.target.parentNode.querySelector('.page-section__nav-left');
+         const right_arrow = e.target.parentNode.querySelector('.page-section__nav-right');
+
+         if (show_left && left_arrow.classList.contains("disabled")) left_arrow.classList.remove("disabled");
+         if (!show_left && !left_arrow.classList.contains("disabled")) left_arrow.classList.add("disabled");
+         if (show_right && right_arrow.classList.contains("disabled")) right_arrow.classList.remove("disabled");
+         if (!show_right && !right_arrow.classList.contains("disabled")) right_arrow.classList.add("disabled");
+      });
+
+
+   </script>
+</body>
+</html>

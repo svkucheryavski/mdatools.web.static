@@ -1,23 +1,23 @@
+/* generic styles */
 * {
    box-sizing: border-box;
- }
-
-html {
-   font-size: 18px;
-   height: 100%;
-   margin: 0;
    padding: 0;
- }
+   margin: 0;
+}
 
- body {
-   font-family: 'Open Sans', sans-serif;
+body, html {
    font-size: 18px;
+   width: 100%;
+   height: 100%;
+   padding: 0;
+   margin: 0;
+}
+
+body {
+   font-family: 'Open Sans', sans-serif;
    line-height: 1.5em;
    color: #404040;
-   height: 100%;
-   margin: 0;
-   padding: 0;
- }
+}
 
 a {
    color: #1564b2;
@@ -27,12 +27,11 @@ a:active, a:hover, a:focus {
    color: #1e90ff;
 }
 
+/* top page elements */
 .page-section,
 .page-header,
 .page-footer {
-   margin: 0;
    min-width: 325px;
-   padding: 0;
    width: 100%;
 }
 
@@ -64,17 +63,18 @@ a:active, a:hover, a:focus {
 
 .page-header__title,
 .page-header__subtitle {
-   max-width: 980px;
+   max-width: 1024px;
    margin: 0 auto;
    width: auto;
 }
+
 
 .page-header__title {
    height: 100px;
    font-weight: extra-bold;
    font-size: 3em;
    color: #1e90ff;
-   padding: 20px 10px 20px 0.5em;
+   padding: 20px 10px 20px 20px;
 
    background-image: url(../images/logo.svg);
    background-size: 90px 90px;
@@ -83,15 +83,26 @@ a:active, a:hover, a:focus {
    background-origin: content-box, padding-box;
 }
 
-.page-header__title > span{
+.page-header__title a,
+.page-header__title a:hover,
+.page-header__title a:focus {
+   color: #1e90ff;
+   text-decoration: none;
+}
+
+.page-header__title span{
    padding-left: 1px;
    color: #1564b2;
  }
 
+.page-header__title > span.page-header__section {
+   color: #f94d00;
+}
+
  .page-header__subtitle {
    font-size: 1.5em;
    color: #a0a0a0;
-   padding: 0 0 0 1em;
+   padding: 0 0 0 22px;
    margin-top: -35px;
 }
 
@@ -99,7 +110,7 @@ a:active, a:hover, a:focus {
    display: grid;
    grid-template-areas: "header list"
                         "info list";
-   grid-template-columns: 490px 490px;
+   grid-template-columns: 512px 512px;
    grid-template-rows: auto 1fr;
    justify-content: center;
 
@@ -323,7 +334,8 @@ a:active, a:hover, a:focus {
       justify-content: center;
 
       padding: 2em 0;
-    }
+   }
+
     .page-section__header {
       padding: 0 20px 0 20px;
    }
@@ -415,6 +427,19 @@ a:active, a:hover, a:focus {
    }
 
    .page-header__subtitle {
+      margin-top: -35px;
+   }
+
+   .page-header__title {
+      height: 90px;
+      font-weight: extra-bold;
+      font-size: 2.25em;
+      color: #1e90ff;
+      padding: 20px 10px 20px 20px;
+   }
+
+   .page-header__subtitle {
+      padding: 0 0 0 22px;
       margin-top: -35px;
    }
 }
