@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <title>PCA 3D app</title>
+
+   <!-- external JS libraries -->
+   <script type="text/javascript" src="js/dat.gui.min.js"></script>
+   <script type="text/javascript" src="js/numeric.min.js"></script>
+   <script type="text/javascript" src="js/split.min.js"></script>
+   <script type="text/javascript" src="js/plotly.min.js"></script>
+
+   <!-- mdaweb components -->
+   <script type="text/javascript" src="src/misc.js"></script>
+   <script type="text/javascript" src="src/dataset.js"></script>
+   <script type="text/javascript" src="src/app.js"></script>
+   <script type="text/javascript" src="src/pca.js"></script>
+
+   <!-- styles -->
+   <link rel="stylesheet" type="text/css" href="css/mdatools.css">
+   <link rel="stylesheet" type="text/css" href="css/mdatools3d.css">
+
+   <style>
+      /* more tables, smaller width */
+      .tableContent>div~div {
+         float: left;
+         height: 100%;
+         width: 12%;
+         margin-right: 1%;
+      }
+   </style>
+</head>
+
+<body>
+   <div id="loadingDialog" class="modalDialog">
+      <div>Loading...</div>
+   </div>
+   <div id="helpDialog" class="modalDialog">
+      <div>
+         <h2>PCA 3D app</h2>
+         <p>
+            The application demonstrates how Principal Component Analysis (PCA) works for selected variables of People
+            dataset. You can change variables, select number of components and type of autoscaling, vary variable values
+            for a selected object and see how all these changes influence the main PCA outcomes: loadings, scores and
+            residuals.
+         </p>
+         <h3>Main controls and gestures</h2>
+         <h4>3D plot</h4>
+         <ul>
+            <li>Mouse scroll &mdash; zoom in and out</li>
+            <li>Drag and drop &mdash; rotate plot</li>
+            <li>Mouse cursor over a point or a line to show names and tips.</li>
+         </ul>
+         <h4>2D plots</h4>
+         <ul>
+            <li>Mouse click on a point selects corresponding object (on scores and residuals plots).</li>
+            <li>Drag and drop &mdash; select area and zoom in</li>
+            <li>Double click &mdash; reset zoom</li>
+         </ul>
+         <h4>Keyboard shortcuts</h4>
+         <ul>
+            <li><kbd>h</kbd> &mdash; show/hide this help dialog</li>
+            <li><kbd>t</kbd> &mdash; switch between 3D plot and table view</li>
+            <li><kbd>&uarr;</kbd> <kbd>&darr;</kbd> &mdash; select next and previous object in table</li>
+         </ul>
+      </div>
+   </div>
+   <div id="leftPane" class="split split-horizontal">
+      <div id="tablePane"><div class="tableContent"></div></div>
+      <div id="mainPlotPane"></div>
+      <div id="optionsPane">
+         <div id="dataSettingsPane"></div>
+         <div id="varsetSettingsPane"></div>
+         <div id="selectedObjectSettingsPane"></div>
+         <div id="infoPane"></div>
+      </div>
+      </div>
+   </div>
+   <div id="rightPane" class="split split-horizontal">
+      <div id="scoresPlot"></div>
+      <div id="residualsPlot"></div>
+      <div id="loadingsPlot"></div>
+   </div>
+
+   <script>
+      // create an object for MLR 3D
+      let app = new PCA3DApp();
+
+
+      // prepare the layout (split, etc)
+      Split(['#leftPane', '#rightPane'], {
+         sizes: [65, 35],
+         minSize: [900, 300],
+         direction: 'horizontal',
+         gutterSize: 3,
+         cursor: 'col-resize',
+         onDragEnd: function () { app.resizePlots(); return; }
+      });
+
+      Split(['#scoresPlot', '#residualsPlot', '#loadingsPlot'], {
+         sizes: [33, 33, 33],
+         minSize: [200, 200, 200],
+         direction: 'vertical',
+         gutterSize: 3,
+         cursor: 'row-resize',
+         onDragEnd: function () { app.resizePlots(); return; }
+      });
+
+      // resize the plots so the fit the new layout
+      app.resizePlots();
+
+   </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111552877-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-111552877-1');
+  </script>
+</body>
+
+</html>

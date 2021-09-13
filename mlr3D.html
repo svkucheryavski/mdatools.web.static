@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <title>MLR 3D app</title>
+   
+   <!-- external JS libraries -->
+   <script type="text/javascript" src="js/dat.gui.min.js"></script>
+   <script type="text/javascript" src="js/split.min.js"></script>
+   <script type="text/javascript" src="js/numeric.min.js"></script>
+   <script type="text/javascript" src="js/plotly.min.js"></script>
+
+   <!-- mdaweb components -->
+   <script type="text/javascript" src="src/misc.js"></script>
+   <script type="text/javascript" src="src/dataset.js"></script>
+   <script type="text/javascript" src="src/mlr.js"></script>
+   
+   <link rel="stylesheet" type="text/css" href="css/mdatools.css">
+   <link rel="stylesheet" type="text/css" href="css/mdatools3d.css">
+   <style>
+      .tableContent div table tbody tr:last-child td {
+         color: #303030;
+         font-weight: bold;
+         border-top: solid 1px #d0d0d0;         
+      }
+      
+      .tableContent div .coeffs {
+         height: auto;
+      }
+      
+      .tableContent div .coeffs tbody td {
+         color: #303030;
+      }
+
+      .tableContent div .coeffs tbody tr:last-child td {
+         font-weight: normal;
+      }
+      
+   </style>
+</head>
+
+<body>
+   <div id="loadingDialog" class="modalDialog">
+      <div>Loading...</div>
+   </div>
+   <div id="helpDialog" class="modalDialog">
+      <div>
+         <h2>MLR 3D app</h2>
+         <p>
+            The application demonstrates how Multiple Linear Regression (MLR) works for selected variables from the 
+            <i>People</i> dataset. You can choose two predictors (X1, X2) and one response (y). Then you can see the 
+            regression plane, main plots for MLR results, play with autoscaling parameters and learn how cross-validation 
+            is performed using step-by-step procedure (every step will be shown with a couple of seconds delay, so you 
+            can see all details). 
+
+            The following cross-validation options are available: <i>full</i> &mdash; full (leave one out), 
+            <i>rand 8 seg</i> and <i>rand 4 seg</i> &mdash; random splits with 8 and 4 segments, <i>ven 8 seg</i>
+            and <i>ven 4 seg</i> &mdash; venetian blinds splits with 8 and 4 segments. Try these options in table 
+            view for better understanding.
+         </p>
+         <p>      
+            The MLR model computed in this app does not have an intercept term (<i>b0</i>), therefore centering is 
+            important for making good predictions. If you do not center the data the predicted y-values will have a 
+            bias. The data rows are automatically sorted according to values of selected y-variable.
+         </p>
+         <h3>Main controls and gestures</h2>
+         <h4>3D plot</h4>
+         <ul>
+            <li>Mouse scroll &mdash; zoom in and out</li>
+            <li>Drag and drop &mdash; rotate plot</li>
+            <li>Mouse cursor over a point or a line shows names and tips.</li>
+         </ul>
+         <h4>2D plots</h4>
+         <ul>
+            <li>Mouse click on a point selects corresponding object (on predictions and residuals plots).</li>
+            <li>Drag and drop &mdash; select area and zoom in</li>
+            <li>Double click &mdash; reset zoom</li>
+         </ul>
+         <h4>Keyboard shortcuts</h4>
+         <ul>
+            <li><kbd>h</kbd> &mdash; show/hide this help dialog</li>
+            <li><kbd>t</kbd> &mdash; switch between 3D plot and table view</li>
+            <li><kbd>&uarr;</kbd> <kbd>&darr;</kbd> &mdash; select next and previous object in table</li>
+         </ul>
+      </div>
+   </div>
+
+   <div id="leftPane" class="split split-horizontal">
+      <div id="tablePane"><div class="tableContent"></div></div>
+      <div id="mainPlotPane"></div>
+      <div id="cvInfoPane">
+         <div class="title">
+            <h2>Step by step cross-validation</h2>
+            <p>Blue points on 3D plot show calibration subset, red points show validation subset for each step.</p>      
+         </div>
+         <div class="info">
+            <p>Number of segments: <span id="cvNumSeg"></span></p>
+            <p>Number of objects: <span id="cvNumObj"></span></p>
+            <p>Current segment: <span id="cvCurSeg"></span></p>      
+         </div>
+      </div>
+      <div id="optionsPane">
+         <div id="dataSettingsPane"></div>
+         <div id="varsetSettingsPane"></div>
+         <div id="selectedObjectSettingsPane"></div>
+         <div id="infoPane"></div>
+      </div>
+      </div>
+   </div>
+   <div id="rightPane" class="split split-horizontal">
+      <div id="regcoeffsPlot"></div>
+      <div id="predictionsPlot"></div>
+      <div id="residualsPlot"></div>
+   </div>
+
+   <script>
+      // create an object for MLR 3D
+      let app = new MLR3DApp();
+
+      // prepare the layout (split, etc)
+      Split(['#leftPane', '#rightPane'], {
+         sizes: [65, 35],
+         minSize: [900, 300],
+         direction: 'horizontal',
+         gutterSize: 3,
+         cursor: 'col-resize',
+         onDragEnd: function () { app.resizePlots(); return; }
+      });
+      
+      Split(['#regcoeffsPlot', '#predictionsPlot', '#residualsPlot'], {
+         sizes: [33, 33, 33],
+         minSize: [200, 200, 200],
+         direction: 'vertical',
+         gutterSize: 3,
+         cursor: 'row-resize',
+         onDragEnd: function () { app.resizePlots(); return; }
+      });
+
+      // resize the plots so the fit the new layout
+      app.resizePlots();
+
+   </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111552877-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-111552877-1');
+  </script>   
+</body>
+
+</html>
