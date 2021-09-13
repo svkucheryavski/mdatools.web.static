@@ -27,6 +27,15 @@ a:active, a:hover, a:focus {
    color: #1e90ff;
 }
 
+kbd {
+   background-color: #f0f0f0;
+   border: 1px solid #e0e0e0;
+   padding: 0.1em 0.2em;
+   margin: 0 0.1em;
+   border-radius: 3px;
+   color: #606060;
+}
+
 /* top page elements */
 .page-section,
 .page-header,
@@ -213,8 +222,10 @@ a:active, a:hover, a:focus {
 .cards {
    display: flex;
    list-style: none;
+   flex-wrap: wrap;
    padding: 0.75em 0 2em 20px;
-   justify-content: center;
+   justify-content: flex-start;
+   align-items: flex-start;
    max-width: 980px;
    margin: 0 auto;
 }
@@ -224,11 +235,12 @@ a:active, a:hover, a:focus {
    border-radius: 10px;
    box-shadow: 0 4px 8px 0 rgba(100, 140, 150, 0.2), 0 -4px 8px 0 rgba(100, 140, 150, 0.19);
 
-   flex: 33%;
-   margin: 10px;
+   flex-grow: 1;
+   flex-shrink: 1;
+   flex-basis: 40%;
    padding: 1em 1em 1em 60px;
-   margin: 0 20px 0 0;
-   max-width: 300px;
+   margin: 0 10px 10px 0;
+   min-width: 300px;
 
    background-repeat: no-repeat;
    background-position: 15px 1em;
