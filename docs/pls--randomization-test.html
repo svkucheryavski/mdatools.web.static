@@ -33,7 +33,7 @@
   
 <link rel="prev" href="pls--distances-and-outliers.html"/>
 <link rel="next" href="plsda.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -295,9 +295,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Suggested number of components: 4
 ## 
 ## Statistics and alpha values:
-##              Comp 1    Comp 2    Comp 3    Comp 4     Comp 5
-## Alpha     0.0560000 0.0000000 0.0000000 0.0000000 0.11900000
-## Statistic 0.2403837 0.4349094 0.3571243 0.2678767 0.03603819</code></pre>
+##              Comp 1    Comp 2    Comp 3    Comp 4
+## Alpha     0.0440000 0.0000000 0.0000000 0.0000000
+## Statistic 0.2403837 0.4349094 0.3571243 0.2678767
+##               Comp 5
+## Alpha     0.11500000
+## Statistic 0.03603819</code></pre>
 <p>As you can see, <code>alpha</code> is very small for components 2–4 and then jumps up.</p>
 <div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="pls--randomization-test.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>( <span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb200-2"><a href="pls--randomization-test.html#cb200-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotHist</span>(r, <span class="at">ncomp =</span> <span class="dv">3</span>)</span>

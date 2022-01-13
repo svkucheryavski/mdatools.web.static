@@ -33,7 +33,7 @@
   
 <link rel="prev" href="pca--plots.html"/>
 <link rel="next" href="pca--model-complexity.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -369,7 +369,8 @@ Historically, the distances are called in this package and also in some other so
 <span id="cb101-9"><a href="pca--distances-and-limits.html#cb101-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb101-10"><a href="pca--distances-and-limits.html#cb101-10" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">categorize</span>(m, r)</span>
 <span id="cb101-11"><a href="pca--distances-and-limits.html#cb101-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(c)</span></code></pre></div>
-<pre><code>## [1] outlier regular regular regular extreme regular outlier regular
+<pre><code>## [1] outlier regular regular regular extreme regular
+## [7] outlier regular
 ## Levels: regular extreme outlier</code></pre>
 <p>As one can see, there are two outliers, one extreme and five regular objects. This can be visualized on distance plot:</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="pca--distances-and-limits.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>

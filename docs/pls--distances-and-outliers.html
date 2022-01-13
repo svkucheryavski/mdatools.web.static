@@ -33,7 +33,7 @@
   
 <link rel="prev" href="pls--variable-selection.html"/>
 <link rel="next" href="pls--randomization-test.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -335,9 +335,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The proper procedure for detection and removing outliers can be found in the <a href="https://pubs.acs.org/doi/10.1021/acs.analchem.9b04611">paper</a> and will be very briefly touched upon here. The detection can be done using function <code>categorize()</code> which works similar to the same function for PCA decomposition — returns vector with categories for each measurement, as shown in an example below:</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="pls--distances-and-outliers.html#cb190-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">categorize</span>(m, m<span class="sc">$</span>res<span class="sc">$</span>cal)</span>
 <span id="cb190-2"><a href="pls--distances-and-outliers.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(c)</span></code></pre></div>
-<pre><code>##  [1] outlier regular regular regular regular regular extreme regular outlier regular
-## [11] regular regular regular regular regular regular regular extreme regular regular
-## [21] regular regular regular regular regular regular extreme regular regular regular
+<pre><code>##  [1] outlier regular regular regular regular regular
+##  [7] extreme regular outlier regular regular regular
+## [13] regular regular regular regular regular extreme
+## [19] regular regular regular regular regular regular
+## [25] regular regular extreme regular regular regular
 ## [31] regular regular
 ## Levels: regular extreme outlier</code></pre>
 <p>A simplified description of the recommended procedure proposed in the <a href="https://pubs.acs.org/doi/10.1021/acs.analchem.9b04611">mentioned paper</a> is following:</p>
@@ -405,9 +407,12 @@ Again, four or three components seem to be optimal and this time no extra outlie
 ## Cross-validation: full (leave one out)
 ## 
 ## Response variable: Shoesize
-##     X cumexpvar Y cumexpvar    R2  RMSE Slope    Bias  RPD
-## Cal     85.9168    97.03856 0.970 0.620 0.970  0.0000 5.91
-## Cv           NA          NA 0.945 0.843 0.953 -0.0261 4.35</code></pre>
+##     X cumexpvar Y cumexpvar    R2  RMSE Slope    Bias
+## Cal     85.9168    97.03856 0.970 0.620 0.970  0.0000
+## Cv           NA          NA 0.945 0.843 0.953 -0.0261
+##      RPD
+## Cal 5.91
+## Cv  4.35</code></pre>
 <div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="pls--distances-and-outliers.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb197-2"><a href="pls--distances-and-outliers.html#cb197-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m)</span>
 <span id="cb197-3"><a href="pls--distances-and-outliers.html#cb197-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>)</span>
