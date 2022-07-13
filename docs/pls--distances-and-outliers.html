@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Distances and outlier detection | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Distances and outlier detection | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
   <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-09-12" />
+<meta name="date" content="2022-07-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="pls--variable-selection.html"/>
 <link rel="next" href="pls--randomization-test.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -203,8 +202,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-validation-1"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a></li>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
@@ -276,31 +275,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pls--distances-and-outliers" class="section level2 unnumbered">
-<h2>Distances and outlier detection</h2>
-<div id="distance-plot-for-x-decomposition" class="section level3 unnumbered">
-<h3>Distance plot for X-decomposition</h3>
+<div id="pls--distances-and-outliers" class="section level2 unnumbered hasAnchor">
+<h2>Distances and outlier detection<a href="pls--distances-and-outliers.html#pls--distances-and-outliers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="distance-plot-for-x-decomposition" class="section level3 unnumbered hasAnchor">
+<h3>Distance plot for X-decomposition<a href="pls--distances-and-outliers.html#distance-plot-for-x-decomposition" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For decomposition of X-values the orthogonal and score distances are computed and treated in the same way as in PCA. The <code>pls()</code> constructor takes the three arguments for computing the critical limits, similar to PCA (<code>lim.type</code>, <code>alpha</code>, <code>gamma</code>). The default value for <code>lim.type</code> is the same as for PCA (<code>"ddmoments"</code>). Distance plot can be made using <code>plotXResiduals()</code>, it works identical to <code>plotResiduals()</code> for PCA.</p>
 <p>Below is example on how to use the plot.</p>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="pls--distances-and-outliers.html#cb187-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">4</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>)</span>
-<span id="cb187-2"><a href="pls--distances-and-outliers.html#cb187-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb187-3"><a href="pls--distances-and-outliers.html#cb187-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb187-4"><a href="pls--distances-and-outliers.html#cb187-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(m)</span>
-<span id="cb187-5"><a href="pls--distances-and-outliers.html#cb187-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb187-6"><a href="pls--distances-and-outliers.html#cb187-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;cal&quot;</span> <span class="ot">=</span> m<span class="sc">$</span>res<span class="sc">$</span>cal))</span>
-<span id="cb187-7"><a href="pls--distances-and-outliers.html#cb187-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-118-1.png" width="864" /></p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="pls--distances-and-outliers.html#cb188-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">4</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>)</span>
+<span id="cb188-2"><a href="pls--distances-and-outliers.html#cb188-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-3"><a href="pls--distances-and-outliers.html#cb188-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb188-4"><a href="pls--distances-and-outliers.html#cb188-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(m)</span>
+<span id="cb188-5"><a href="pls--distances-and-outliers.html#cb188-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb188-6"><a href="pls--distances-and-outliers.html#cb188-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;cal&quot;</span> <span class="ot">=</span> m<span class="sc">$</span>res<span class="sc">$</span>cal))</span>
+<span id="cb188-7"><a href="pls--distances-and-outliers.html#cb188-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-119-1.png" width="864" /></p>
 <p>PLS also has function <code>categorize()</code> which allows to identify extreme objects and outliers. However, it works in a different way and takes into account not only total distances for X-decomposition but also similar measure for decomposition of Y. This is explained in following sections.</p>
 </div>
-<div id="distance-plot-for-y-decomposition-and-total-distance" class="section level3 unnumbered">
-<h3>Distance plot for Y-decomposition and total distance</h3>
+<div id="distance-plot-for-y-decomposition-and-total-distance" class="section level3 unnumbered hasAnchor">
+<h3>Distance plot for Y-decomposition and total distance<a href="pls--distances-and-outliers.html#distance-plot-for-y-decomposition-and-total-distance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The distance for Y-decomposition is calculated in a different way — as a difference between predicted and reference y-values. The difference for selected y-variable is expected to be random and normally distributed. It can be checked visually by using function <code>plotYResiduals()</code> as shown in example below. In this plot the difference is plotted against the reference value.</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="pls--distances-and-outliers.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb188-2"><a href="pls--distances-and-outliers.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYResiduals</span>(m)</span>
-<span id="cb188-3"><a href="pls--distances-and-outliers.html#cb188-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
-<span id="cb188-4"><a href="pls--distances-and-outliers.html#cb188-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;cal&quot;</span> <span class="ot">=</span> m<span class="sc">$</span>res<span class="sc">$</span>cal))</span>
-<span id="cb188-5"><a href="pls--distances-and-outliers.html#cb188-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYResiduals</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-119-1.png" width="864" /></p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="pls--distances-and-outliers.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb189-2"><a href="pls--distances-and-outliers.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYResiduals</span>(m)</span>
+<span id="cb189-3"><a href="pls--distances-and-outliers.html#cb189-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
+<span id="cb189-4"><a href="pls--distances-and-outliers.html#cb189-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYResiduals</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;cal&quot;</span> <span class="ot">=</span> m<span class="sc">$</span>res<span class="sc">$</span>cal))</span>
+<span id="cb189-5"><a href="pls--distances-and-outliers.html#cb189-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYResiduals</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-120-1.png" width="864" /></p>
 <p>Since predictions are also computed for cross-validation, the plot shows the distance values for cross-validated results.</p>
 <p>The distance between reference and predicted values can be used to compute orthogonal squared distance, similar to how it is done for X-decomposition, as it is shown below:</p>
 <p><span class="math display">\[ z_i = \sum_{k = 1}^K (y_{ik} - \hat{y}_{ik})^2 \]</span></p>
@@ -311,36 +310,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[g = N_f\frac{f}{f_0} + N_z\frac{z}{z_0} \propto \chi^2(N_g)\]</span></p>
 <p>Here <span class="math inline">\(N_g = N_f + N_z\)</span>. This approach was proposed by Rodionova and Pomerantsev and described in <a href="https://pubs.acs.org/doi/10.1021/acs.analchem.9b04611">this paper</a>. The distances and the critical limits can be visualized using function <code>plotXYResiduals()</code> as illustrated in the next example.</p>
 <p>The example is based on People data (prediction of shoesize), however we will first introduce two outliers. We will change response value for row #9 to 25, which is apparently too small value for shoesize of an adult person. The predictor values will be the same. Then we will change height of first person (row #1) to 125 cm, which is again quite small value. And keep the response value unchanged. After that, we create a PLS model with classic data driven approach for computing critical limits and show the XY-distance plot. Finally, that we change the method for limits to robust and show the plot again:</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="pls--distances-and-outliers.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare data</span></span>
-<span id="cb189-2"><a href="pls--distances-and-outliers.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(people)</span>
-<span id="cb189-3"><a href="pls--distances-and-outliers.html#cb189-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> people[, <span class="sc">-</span><span class="dv">4</span>]</span>
-<span id="cb189-4"><a href="pls--distances-and-outliers.html#cb189-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> people[, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb189-5"><a href="pls--distances-and-outliers.html#cb189-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-6"><a href="pls--distances-and-outliers.html#cb189-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add outliers</span></span>
-<span id="cb189-7"><a href="pls--distances-and-outliers.html#cb189-7" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">9</span>] <span class="ot">=</span> <span class="dv">25</span></span>
-<span id="cb189-8"><a href="pls--distances-and-outliers.html#cb189-8" aria-hidden="true" tabindex="-1"></a>X[<span class="dv">1</span>, <span class="dv">1</span>] <span class="ot">=</span> <span class="dv">125</span></span>
-<span id="cb189-9"><a href="pls--distances-and-outliers.html#cb189-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-10"><a href="pls--distances-and-outliers.html#cb189-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create model and show plots</span></span>
-<span id="cb189-11"><a href="pls--distances-and-outliers.html#cb189-11" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(X, y, <span class="dv">4</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">lim.type =</span> <span class="st">&quot;ddmoments&quot;</span>)</span>
-<span id="cb189-12"><a href="pls--distances-and-outliers.html#cb189-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-13"><a href="pls--distances-and-outliers.html#cb189-13" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb189-14"><a href="pls--distances-and-outliers.html#cb189-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;indices&quot;</span>)</span>
-<span id="cb189-15"><a href="pls--distances-and-outliers.html#cb189-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-16"><a href="pls--distances-and-outliers.html#cb189-16" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">setDistanceLimits</span>(m, <span class="at">lim.type =</span> <span class="st">&quot;ddrobust&quot;</span>)</span>
-<span id="cb189-17"><a href="pls--distances-and-outliers.html#cb189-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;indices&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-120-1.png" width="864" /></p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="pls--distances-and-outliers.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare data</span></span>
+<span id="cb190-2"><a href="pls--distances-and-outliers.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(people)</span>
+<span id="cb190-3"><a href="pls--distances-and-outliers.html#cb190-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> people[, <span class="sc">-</span><span class="dv">4</span>]</span>
+<span id="cb190-4"><a href="pls--distances-and-outliers.html#cb190-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> people[, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb190-5"><a href="pls--distances-and-outliers.html#cb190-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-6"><a href="pls--distances-and-outliers.html#cb190-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add outliers</span></span>
+<span id="cb190-7"><a href="pls--distances-and-outliers.html#cb190-7" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">9</span>] <span class="ot">=</span> <span class="dv">25</span></span>
+<span id="cb190-8"><a href="pls--distances-and-outliers.html#cb190-8" aria-hidden="true" tabindex="-1"></a>X[<span class="dv">1</span>, <span class="dv">1</span>] <span class="ot">=</span> <span class="dv">125</span></span>
+<span id="cb190-9"><a href="pls--distances-and-outliers.html#cb190-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-10"><a href="pls--distances-and-outliers.html#cb190-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create model and show plots</span></span>
+<span id="cb190-11"><a href="pls--distances-and-outliers.html#cb190-11" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(X, y, <span class="dv">4</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">lim.type =</span> <span class="st">&quot;ddmoments&quot;</span>)</span>
+<span id="cb190-12"><a href="pls--distances-and-outliers.html#cb190-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-13"><a href="pls--distances-and-outliers.html#cb190-13" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb190-14"><a href="pls--distances-and-outliers.html#cb190-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;indices&quot;</span>)</span>
+<span id="cb190-15"><a href="pls--distances-and-outliers.html#cb190-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-16"><a href="pls--distances-and-outliers.html#cb190-16" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">setDistanceLimits</span>(m, <span class="at">lim.type =</span> <span class="st">&quot;ddrobust&quot;</span>)</span>
+<span id="cb190-17"><a href="pls--distances-and-outliers.html#cb190-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;indices&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-121-1.png" width="864" /></p>
 <p>As one can see, both classic and robust approach detect sample number 9 (with wrong y-value) as a clear outlier. Using robust approach helps to identify the second outlier as well. However, you can see that the location of the two samples is different — sample #9 has large Y-distance (<span class="math inline">\(z/z_0\)</span>), while sample #1 has large full X-distance (<span class="math inline">\(f/f_0\)</span>). Which is in agreement with the way we created the outliers.</p>
 <p>The limits shown on the plot are made for the total distance, <span class="math inline">\(g\)</span>. For example, to detect outliers we need to compare the total distance, <span class="math inline">\(g\)</span>, with critical limit computed for predefined significance level, <span class="math inline">\(\gamma\)</span> (shown as dotted line on the plots):</p>
 <p><span class="math display">\[g &gt; \chi^{-2} \big( (1 - \gamma)^{1/I}, N_g \big) \]</span></p>
 <p>The proper procedure for detection and removing outliers can be found in the <a href="https://pubs.acs.org/doi/10.1021/acs.analchem.9b04611">paper</a> and will be very briefly touched upon here. The detection can be done using function <code>categorize()</code> which works similar to the same function for PCA decomposition — returns vector with categories for each measurement, as shown in an example below:</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="pls--distances-and-outliers.html#cb190-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">categorize</span>(m, m<span class="sc">$</span>res<span class="sc">$</span>cal)</span>
-<span id="cb190-2"><a href="pls--distances-and-outliers.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(c)</span></code></pre></div>
-<pre><code>##  [1] outlier regular regular regular regular regular
-##  [7] extreme regular outlier regular regular regular
-## [13] regular regular regular regular regular extreme
-## [19] regular regular regular regular regular regular
-## [25] regular regular extreme regular regular regular
-## [31] regular regular
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="pls--distances-and-outliers.html#cb191-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">categorize</span>(m, m<span class="sc">$</span>res<span class="sc">$</span>cal)</span>
+<span id="cb191-2"><a href="pls--distances-and-outliers.html#cb191-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(c)</span></code></pre></div>
+<pre><code>##  [1] outlier regular regular regular regular regular extreme regular outlier regular regular regular regular regular regular regular regular extreme regular
+## [20] regular regular regular regular regular regular regular extreme regular regular regular regular regular
 ## Levels: regular extreme outlier</code></pre>
 <p>A simplified description of the recommended procedure proposed in the <a href="https://pubs.acs.org/doi/10.1021/acs.analchem.9b04611">mentioned paper</a> is following:</p>
 <ol style="list-style-type: decimal">
@@ -354,51 +349,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>If test set validation is used, the outlier detection should be done for both sets. And it is of course important to use optimal number of components, which can be identified using RMSE plot and plot for explained Y-variance.</p>
 <p>The code chunks below show the steps for detection of outliers in the People data used in an example earlier. We start with creating PLS model for the whole data.</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="pls--distances-and-outliers.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare data</span></span>
-<span id="cb192-2"><a href="pls--distances-and-outliers.html#cb192-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(people)</span>
-<span id="cb192-3"><a href="pls--distances-and-outliers.html#cb192-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> people[, <span class="sc">-</span><span class="dv">4</span>]</span>
-<span id="cb192-4"><a href="pls--distances-and-outliers.html#cb192-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> people[, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb192-5"><a href="pls--distances-and-outliers.html#cb192-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb192-6"><a href="pls--distances-and-outliers.html#cb192-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add outliers</span></span>
-<span id="cb192-7"><a href="pls--distances-and-outliers.html#cb192-7" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">9</span>] <span class="ot">=</span> <span class="dv">25</span></span>
-<span id="cb192-8"><a href="pls--distances-and-outliers.html#cb192-8" aria-hidden="true" tabindex="-1"></a>X[<span class="dv">1</span>, <span class="dv">1</span>] <span class="ot">=</span> <span class="dv">125</span></span>
-<span id="cb192-9"><a href="pls--distances-and-outliers.html#cb192-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb192-10"><a href="pls--distances-and-outliers.html#cb192-10" aria-hidden="true" tabindex="-1"></a><span class="co"># compute initial PLS model with all data</span></span>
-<span id="cb192-11"><a href="pls--distances-and-outliers.html#cb192-11" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(X, y, <span class="dv">10</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">lim.type =</span> <span class="st">&quot;ddrobust&quot;</span>)</span>
-<span id="cb192-12"><a href="pls--distances-and-outliers.html#cb192-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb192-13"><a href="pls--distances-and-outliers.html#cb192-13" aria-hidden="true" tabindex="-1"></a><span class="co"># look at RMSE and XY-residuals plot</span></span>
-<span id="cb192-14"><a href="pls--distances-and-outliers.html#cb192-14" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb192-15"><a href="pls--distances-and-outliers.html#cb192-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m)</span>
-<span id="cb192-16"><a href="pls--distances-and-outliers.html#cb192-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-122-1.png" width="864" /></p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="pls--distances-and-outliers.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare data</span></span>
+<span id="cb193-2"><a href="pls--distances-and-outliers.html#cb193-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(people)</span>
+<span id="cb193-3"><a href="pls--distances-and-outliers.html#cb193-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> people[, <span class="sc">-</span><span class="dv">4</span>]</span>
+<span id="cb193-4"><a href="pls--distances-and-outliers.html#cb193-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> people[, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb193-5"><a href="pls--distances-and-outliers.html#cb193-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-6"><a href="pls--distances-and-outliers.html#cb193-6" aria-hidden="true" tabindex="-1"></a><span class="co"># add outliers</span></span>
+<span id="cb193-7"><a href="pls--distances-and-outliers.html#cb193-7" aria-hidden="true" tabindex="-1"></a>y[<span class="dv">9</span>] <span class="ot">=</span> <span class="dv">25</span></span>
+<span id="cb193-8"><a href="pls--distances-and-outliers.html#cb193-8" aria-hidden="true" tabindex="-1"></a>X[<span class="dv">1</span>, <span class="dv">1</span>] <span class="ot">=</span> <span class="dv">125</span></span>
+<span id="cb193-9"><a href="pls--distances-and-outliers.html#cb193-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-10"><a href="pls--distances-and-outliers.html#cb193-10" aria-hidden="true" tabindex="-1"></a><span class="co"># compute initial PLS model with all data</span></span>
+<span id="cb193-11"><a href="pls--distances-and-outliers.html#cb193-11" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(X, y, <span class="dv">10</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">lim.type =</span> <span class="st">&quot;ddrobust&quot;</span>)</span>
+<span id="cb193-12"><a href="pls--distances-and-outliers.html#cb193-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-13"><a href="pls--distances-and-outliers.html#cb193-13" aria-hidden="true" tabindex="-1"></a><span class="co"># look at RMSE and XY-residuals plot</span></span>
+<span id="cb193-14"><a href="pls--distances-and-outliers.html#cb193-14" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb193-15"><a href="pls--distances-and-outliers.html#cb193-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m)</span>
+<span id="cb193-16"><a href="pls--distances-and-outliers.html#cb193-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-123-1.png" width="864" /></p>
 <p>Apparently four components selected automatically is indeed a proper value. The XY-distance plot shows that we have two outliers, let’s find and remove them:</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="pls--distances-and-outliers.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get row indices for outliers in calibration set</span></span>
-<span id="cb193-2"><a href="pls--distances-and-outliers.html#cb193-2" aria-hidden="true" tabindex="-1"></a>outliers <span class="ot">=</span> <span class="fu">which</span>(<span class="fu">categorize</span>(m, m<span class="sc">$</span>res<span class="sc">$</span>cal) <span class="sc">==</span> <span class="st">&quot;outlier&quot;</span>)</span>
-<span id="cb193-3"><a href="pls--distances-and-outliers.html#cb193-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb193-4"><a href="pls--distances-and-outliers.html#cb193-4" aria-hidden="true" tabindex="-1"></a><span class="co"># keep data for outliers in separate matrices</span></span>
-<span id="cb193-5"><a href="pls--distances-and-outliers.html#cb193-5" aria-hidden="true" tabindex="-1"></a>Xo <span class="ot">=</span> X[outliers, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb193-6"><a href="pls--distances-and-outliers.html#cb193-6" aria-hidden="true" tabindex="-1"></a>yo <span class="ot">=</span> y[outliers, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb193-7"><a href="pls--distances-and-outliers.html#cb193-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb193-8"><a href="pls--distances-and-outliers.html#cb193-8" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the rows with outliers from the data</span></span>
-<span id="cb193-9"><a href="pls--distances-and-outliers.html#cb193-9" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> X[<span class="sc">-</span>outliers, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb193-10"><a href="pls--distances-and-outliers.html#cb193-10" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> y[<span class="sc">-</span>outliers, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb193-11"><a href="pls--distances-and-outliers.html#cb193-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb193-12"><a href="pls--distances-and-outliers.html#cb193-12" aria-hidden="true" tabindex="-1"></a><span class="co"># make a new model for oulier free data</span></span>
-<span id="cb193-13"><a href="pls--distances-and-outliers.html#cb193-13" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(X, y, <span class="dv">10</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">lim.type =</span> <span class="st">&quot;ddrobust&quot;</span>)</span>
-<span id="cb193-14"><a href="pls--distances-and-outliers.html#cb193-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb193-15"><a href="pls--distances-and-outliers.html#cb193-15" aria-hidden="true" tabindex="-1"></a><span class="co"># look at RMSE and XY-distance plot</span></span>
-<span id="cb193-16"><a href="pls--distances-and-outliers.html#cb193-16" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb193-17"><a href="pls--distances-and-outliers.html#cb193-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m)</span>
-<span id="cb193-18"><a href="pls--distances-and-outliers.html#cb193-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-123-1.png" width="864" />
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="pls--distances-and-outliers.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get row indices for outliers in calibration set</span></span>
+<span id="cb194-2"><a href="pls--distances-and-outliers.html#cb194-2" aria-hidden="true" tabindex="-1"></a>outliers <span class="ot">=</span> <span class="fu">which</span>(<span class="fu">categorize</span>(m, m<span class="sc">$</span>res<span class="sc">$</span>cal) <span class="sc">==</span> <span class="st">&quot;outlier&quot;</span>)</span>
+<span id="cb194-3"><a href="pls--distances-and-outliers.html#cb194-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb194-4"><a href="pls--distances-and-outliers.html#cb194-4" aria-hidden="true" tabindex="-1"></a><span class="co"># keep data for outliers in separate matrices</span></span>
+<span id="cb194-5"><a href="pls--distances-and-outliers.html#cb194-5" aria-hidden="true" tabindex="-1"></a>Xo <span class="ot">=</span> X[outliers, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb194-6"><a href="pls--distances-and-outliers.html#cb194-6" aria-hidden="true" tabindex="-1"></a>yo <span class="ot">=</span> y[outliers, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb194-7"><a href="pls--distances-and-outliers.html#cb194-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb194-8"><a href="pls--distances-and-outliers.html#cb194-8" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the rows with outliers from the data</span></span>
+<span id="cb194-9"><a href="pls--distances-and-outliers.html#cb194-9" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> X[<span class="sc">-</span>outliers, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb194-10"><a href="pls--distances-and-outliers.html#cb194-10" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> y[<span class="sc">-</span>outliers, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb194-11"><a href="pls--distances-and-outliers.html#cb194-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb194-12"><a href="pls--distances-and-outliers.html#cb194-12" aria-hidden="true" tabindex="-1"></a><span class="co"># make a new model for oulier free data</span></span>
+<span id="cb194-13"><a href="pls--distances-and-outliers.html#cb194-13" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(X, y, <span class="dv">10</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">lim.type =</span> <span class="st">&quot;ddrobust&quot;</span>)</span>
+<span id="cb194-14"><a href="pls--distances-and-outliers.html#cb194-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb194-15"><a href="pls--distances-and-outliers.html#cb194-15" aria-hidden="true" tabindex="-1"></a><span class="co"># look at RMSE and XY-distance plot</span></span>
+<span id="cb194-16"><a href="pls--distances-and-outliers.html#cb194-16" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb194-17"><a href="pls--distances-and-outliers.html#cb194-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m)</span>
+<span id="cb194-18"><a href="pls--distances-and-outliers.html#cb194-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-124-1.png" width="864" />
 Again, four or three components seem to be optimal and this time no extra outliers are detected. Let’s now apply the model to the two outliers found previously and see their status.</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="pls--distances-and-outliers.html#cb194-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">predict</span>(m, Xo, yo)</span>
-<span id="cb194-2"><a href="pls--distances-and-outliers.html#cb194-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;cal&quot;</span> <span class="ot">=</span> m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="st">&quot;out&quot;</span> <span class="ot">=</span> res))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-124-1.png" width="432" /></p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="pls--distances-and-outliers.html#cb195-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">predict</span>(m, Xo, yo)</span>
+<span id="cb195-2"><a href="pls--distances-and-outliers.html#cb195-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;cal&quot;</span> <span class="ot">=</span> m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="st">&quot;out&quot;</span> <span class="ot">=</span> res))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-125-1.png" width="432" /></p>
 <p>The two objects seem now even more extreme for the model built using the outliers free data, no need to have them back. So we just need to make a final model and look at it:</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="pls--distances-and-outliers.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a new model for outlier free data and explore it</span></span>
-<span id="cb195-2"><a href="pls--distances-and-outliers.html#cb195-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(X, y, <span class="dv">10</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">lim.type =</span> <span class="st">&quot;ddmoments&quot;</span>)</span>
-<span id="cb195-3"><a href="pls--distances-and-outliers.html#cb195-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="pls--distances-and-outliers.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a new model for outlier free data and explore it</span></span>
+<span id="cb196-2"><a href="pls--distances-and-outliers.html#cb196-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(X, y, <span class="dv">10</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">lim.type =</span> <span class="st">&quot;ddmoments&quot;</span>)</span>
+<span id="cb196-3"><a href="pls--distances-and-outliers.html#cb196-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## PLS model (class pls) summary
 ## -------------------------------
@@ -407,18 +402,15 @@ Again, four or three components seem to be optimal and this time no extra outlie
 ## Cross-validation: full (leave one out)
 ## 
 ## Response variable: Shoesize
-##     X cumexpvar Y cumexpvar    R2  RMSE Slope    Bias
-## Cal     85.9168    97.03856 0.970 0.620 0.970  0.0000
-## Cv           NA          NA 0.945 0.843 0.953 -0.0261
-##      RPD
-## Cal 5.91
-## Cv  4.35</code></pre>
-<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="pls--distances-and-outliers.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb197-2"><a href="pls--distances-and-outliers.html#cb197-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m)</span>
-<span id="cb197-3"><a href="pls--distances-and-outliers.html#cb197-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb197-4"><a href="pls--distances-and-outliers.html#cb197-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m)</span>
-<span id="cb197-5"><a href="pls--distances-and-outliers.html#cb197-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-125-1.png" width="864" /></p>
+##     X cumexpvar Y cumexpvar    R2  RMSE Slope    Bias  RPD
+## Cal     85.9168    97.03856 0.970 0.620 0.970  0.0000 5.91
+## Cv           NA          NA 0.945 0.843 0.953 -0.0261 4.35</code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="pls--distances-and-outliers.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb198-2"><a href="pls--distances-and-outliers.html#cb198-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXYResiduals</span>(m)</span>
+<span id="cb198-3"><a href="pls--distances-and-outliers.html#cb198-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb198-4"><a href="pls--distances-and-outliers.html#cb198-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRMSE</span>(m)</span>
+<span id="cb198-5"><a href="pls--distances-and-outliers.html#cb198-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-126-1.png" width="864" /></p>
 </div>
 </div>
             </section>

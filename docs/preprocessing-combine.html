@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Combining methods together | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Combining methods together | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
   <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-09-12" />
+<meta name="date" content="2022-07-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="preprocessing--varsel.html"/>
 <link rel="next" href="pca.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -203,8 +202,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-validation-1"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a></li>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
@@ -276,8 +275,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="preprocessing-combine" class="section level2 unnumbered">
-<h2>Combining methods together</h2>
+<div id="preprocessing-combine" class="section level2 unnumbered hasAnchor">
+<h2>Combining methods together<a href="preprocessing-combine.html#preprocessing-combine" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>From <em>v.0.12.0</em> it is possible to combine several preprocessing methods and their parameters into one R object (list) and then apply them all at once in a correct order. This is particularly useful when you create a model based on a preprocessed calibration set and then want to apply the model to a new data. Which means the new data must be preprocessed in the same way as the data you used to create the model. The new functionality makes this easier.</p>
 <p>First of all, you can see the list of preprocessing methods available for this feature as well as all necessary information about them if you run <code>prep.list()</code> as shown below:</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="preprocessing-combine.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prep.list</span>()</span></code></pre></div>
@@ -323,7 +322,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  ---------------
 ##  name: &#39;norm&#39;
 ##  parameters:
-##   &#39;type&#39;: type of normalization (&#39;area&#39;, &#39;sum&#39;, &#39;length&#39;, &#39;is&#39;, &#39;snv&#39;).
+##   &#39;type&#39;: type of normalization (&#39;area&#39;, &#39;sum&#39;, &#39;length&#39;, &#39;is&#39;, &#39;snv&#39;, &#39;pqn&#39;).
 ##   &#39;col.ind&#39;: indices of columns (variables) for normalization to internal standard peak.
 ## 
 ## 

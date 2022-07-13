@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Purity based | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Purity based | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
   <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-09-12" />
+<meta name="date" content="2022-07-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="mcr.html"/>
 <link rel="next" href="mcr--als.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -203,8 +202,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-validation-1"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a></li>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
@@ -276,8 +275,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="mcr--purity" class="section level2 unnumbered">
-<h2>Purity based</h2>
+<div id="mcr--purity" class="section level2 unnumbered hasAnchor">
+<h2>Purity based<a href="mcr--purity.html#mcr--purity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The purity based approach implemented in <em>mdatools</em> was <a href="https://www.sciencedirect.com/science/article/abs/pii/S0169743904002011">proposed</a> by Willem Windig and co-authors in 2005 as an alternative to classical SIMPLISMA method. The general idea of the approach is to find variables (wavelength, wavenumbers, etc.) in <span class="math inline">\(\mathbf{D}\)</span>, which are influenced mostly by one chemical component. Such variables are called as <em>pure variables</em>. If we identify pure variable for each of the components, then we can solve the MCR problem by using ordinary least squares method:</p>
 <p><span class="math display">\[\mathbf{\hat{S}} = \mathbf{D}^T \mathbf{D}_R (\mathbf{D}^T_R \mathbf{D})^{-1}\]</span>
 <span class="math display">\[\mathbf{\hat{C}} = \mathbf{D} \mathbf{\hat{S}} (\mathbf{\hat{S}}^T \mathbf{\hat{S}})^{-1}\]</span></p>
@@ -286,13 +285,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>To reduce the influence of noisy variables, correction factor, is computed for each variable as follows:</p>
 <p><span class="math display">\[\mathbf{n} = \frac{\mathbf{m}}{\mathbf{m} + offset \times \mathrm{max}(\mathbf{m})}\]</span></p>
 <p>Here <span class="math inline">\(\mathbf{m}\)</span> is a mean spectrum computed for the original data, <span class="math inline">\(\mathbf{D}\)</span>, and the <span class="math inline">\(offset\)</span> is a tuning parameter defined by a user. Usually a value between 0.001 and 0.05 is a good choice for the offset. More details about the method can be found in the above mentioned paper.</p>
-<div id="an-example" class="section level3 unnumbered">
-<h3>An example</h3>
+<div id="an-example" class="section level3 unnumbered hasAnchor">
+<h3>An example<a href="mcr--purity.html#an-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Function <code>mcrpure()</code> implements the purity based method in <em>mdatools</em>. It has two mandatory arguments — matrix with the original spectra and number of pure components — as well as several extra parameters. The most important one is the offset, which by default is 0.05.</p>
 <p>The code below shows how to resolve the spectra from the <code>carbs</code> dataset and show summary information:</p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="mcr--purity.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(carbs)</span>
-<span id="cb278-2"><a href="mcr--purity.html#cb278-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">mcrpure</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>)</span>
-<span id="cb278-3"><a href="mcr--purity.html#cb278-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="mcr--purity.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(carbs)</span>
+<span id="cb279-2"><a href="mcr--purity.html#cb279-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">mcrpure</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>)</span>
+<span id="cb279-3"><a href="mcr--purity.html#cb279-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## Summary for MCR Purity case (class mcrpure)
 ##        Expvar Cumexpvar Varindex Purity
@@ -301,7 +300,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Comp 3  12.65     99.56     1059 46.941</code></pre>
 <p>The summary shows explained variance, cumulative explained variance, index of pure variable and its purity value for each of the three components. For example, in case of the first component, the purest variable is located in column 782 and its purity (in this case an angle between this variable and a vector of ones) is equal to 36.038 degrees. As one can see, current solution explains 99.6% of the total variance.</p>
 <p>Any MCR method in <em>mdatools</em> contains the resolved spectra (as <code>m$resspec</code>) and contributions (as <code>m$rescont</code>) as well as some extra data, e.g. purity spectra for each component, etc. You can see a list of all objects available by simply printing the object with <em>mcrpure</em> results:</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="mcr--purity.html#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="mcr--purity.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## MCR Purity unmixing case (class mcrpure)
 ## 
@@ -322,110 +321,110 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $info - case info provided by user</code></pre>
 <p>The reason we use word <em>contributions</em> instead of <em>concentrations</em> is that the method does not give the real concentrations, measured in the units of interest. The resolved values are rather in arbitrary units and can be later scaled/re-scaled accordingly.</p>
 <p>The result object also has several graphical methods, which let user to plot the resolved spectra (<code>plotSpectra()</code>) and the resolved contributions (<code>plotContributions()</code>). The example below demonstrates how to show the plots for all three components as well as for a selected one.</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="mcr--purity.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb282-2"><a href="mcr--purity.html#cb282-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(m)</span>
-<span id="cb282-3"><a href="mcr--purity.html#cb282-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotContributions</span>(m)</span>
-<span id="cb282-4"><a href="mcr--purity.html#cb282-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb282-5"><a href="mcr--purity.html#cb282-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(m, <span class="at">comp =</span> <span class="dv">2</span>)</span>
-<span id="cb282-6"><a href="mcr--purity.html#cb282-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotContributions</span>(m, <span class="at">comp =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-184-1.png" width="864" /></p>
-<p>As you can see, when you select particular components the plot preserves their color. One can also create the explained variance plot (both individual as well as cumulative) as it is shown below.</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="mcr--purity.html#cb283-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb283-2"><a href="mcr--purity.html#cb283-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVariance</span>(m)</span>
-<span id="cb283-3"><a href="mcr--purity.html#cb283-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCumVariance</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="mcr--purity.html#cb283-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb283-2"><a href="mcr--purity.html#cb283-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(m)</span>
+<span id="cb283-3"><a href="mcr--purity.html#cb283-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotContributions</span>(m)</span>
+<span id="cb283-4"><a href="mcr--purity.html#cb283-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb283-5"><a href="mcr--purity.html#cb283-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(m, <span class="at">comp =</span> <span class="dv">2</span>)</span>
+<span id="cb283-6"><a href="mcr--purity.html#cb283-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotContributions</span>(m, <span class="at">comp =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-185-1.png" width="864" /></p>
+<p>As you can see, when you select particular components the plot preserves their color. One can also create the explained variance plot (both individual as well as cumulative) as it is shown below.</p>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="mcr--purity.html#cb284-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb284-2"><a href="mcr--purity.html#cb284-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVariance</span>(m)</span>
+<span id="cb284-3"><a href="mcr--purity.html#cb284-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCumVariance</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-186-1.png" width="864" /></p>
 <p>All plot parameters are similar to what you have used for other methods (e.g. PCA, PLS, etc), so you can change type of plot, colors, etc. in a similar way.</p>
 </div>
-<div id="purity-values-and-spectra" class="section level3 unnumbered">
-<h3>Purity values and spectra</h3>
+<div id="purity-values-and-spectra" class="section level3 unnumbered hasAnchor">
+<h3>Purity values and spectra<a href="mcr--purity.html#purity-values-and-spectra" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The purity spectra and the purity values for each component are quite important and investigation of the spectra can be very useful. For example, the code below creates two solutions using different offset values and shows purity spectra for each solution. The plots on the left side shows purity spectra for all three components, while the plots on the right side show purity only for the first component.</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="mcr--purity.html#cb284-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">mcrpure</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">offset =</span> <span class="fl">0.01</span>)</span>
-<span id="cb284-2"><a href="mcr--purity.html#cb284-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">mcrpure</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">offset =</span> <span class="fl">0.10</span>)</span>
-<span id="cb284-3"><a href="mcr--purity.html#cb284-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb284-4"><a href="mcr--purity.html#cb284-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb284-5"><a href="mcr--purity.html#cb284-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPuritySpectra</span>(m1)</span>
-<span id="cb284-6"><a href="mcr--purity.html#cb284-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPuritySpectra</span>(m1, <span class="at">comp =</span> <span class="dv">1</span>)</span>
-<span id="cb284-7"><a href="mcr--purity.html#cb284-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPuritySpectra</span>(m2)</span>
-<span id="cb284-8"><a href="mcr--purity.html#cb284-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPuritySpectra</span>(m2, <span class="at">comp =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-186-1.png" width="864" /></p>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="mcr--purity.html#cb285-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">mcrpure</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">offset =</span> <span class="fl">0.01</span>)</span>
+<span id="cb285-2"><a href="mcr--purity.html#cb285-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">mcrpure</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">offset =</span> <span class="fl">0.10</span>)</span>
+<span id="cb285-3"><a href="mcr--purity.html#cb285-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb285-4"><a href="mcr--purity.html#cb285-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb285-5"><a href="mcr--purity.html#cb285-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPuritySpectra</span>(m1)</span>
+<span id="cb285-6"><a href="mcr--purity.html#cb285-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPuritySpectra</span>(m1, <span class="at">comp =</span> <span class="dv">1</span>)</span>
+<span id="cb285-7"><a href="mcr--purity.html#cb285-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPuritySpectra</span>(m2)</span>
+<span id="cb285-8"><a href="mcr--purity.html#cb285-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPuritySpectra</span>(m2, <span class="at">comp =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-187-1.png" width="864" /></p>
 <p>The vertical dashed lines on the purity spectra plot show the selected pure variables. As we can see, indeed they correspond to the largest values in the corresponding purity spectrum (so have the highest purity). We can also notice that when offset is small (top plots, 1%) the purity spectra look quite noisy. On the other hand, using too large offset can lead to a selection of less pure variables, so this parameter should be selected with caution. It is always a good idea to vary the parameter and investigate all plots before the final decision.</p>
 <p>Since dataset <code>carbs</code> contains spectra of pure components as well, we can compare the resolved spectra with the original ones as shown in the example below. To do that we normalize both sets of spectra to a unit length to avoid a scaling problem. The original spectra are shown as red and thick curves while the resolved spectra are black and thin.</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="mcr--purity.html#cb285-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apply purity method</span></span>
-<span id="cb285-2"><a href="mcr--purity.html#cb285-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">mcrpure</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">offset =</span> <span class="fl">0.05</span>)</span>
-<span id="cb285-3"><a href="mcr--purity.html#cb285-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb285-4"><a href="mcr--purity.html#cb285-4" aria-hidden="true" tabindex="-1"></a><span class="co"># get spectra, transpose and normalize to unit area</span></span>
-<span id="cb285-5"><a href="mcr--purity.html#cb285-5" aria-hidden="true" tabindex="-1"></a>S      <span class="ot">=</span> <span class="fu">prep.norm</span>(<span class="fu">mda.t</span>(carbs<span class="sc">$</span>S), <span class="st">&quot;length&quot;</span>)</span>
-<span id="cb285-6"><a href="mcr--purity.html#cb285-6" aria-hidden="true" tabindex="-1"></a>S.hat <span class="ot">=</span> <span class="fu">prep.norm</span>(<span class="fu">mda.t</span>(m1<span class="sc">$</span>resspec), <span class="st">&quot;length&quot;</span>)</span>
-<span id="cb285-7"><a href="mcr--purity.html#cb285-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb285-8"><a href="mcr--purity.html#cb285-8" aria-hidden="true" tabindex="-1"></a><span class="co"># define color and line width for the spectral curves</span></span>
-<span id="cb285-9"><a href="mcr--purity.html#cb285-9" aria-hidden="true" tabindex="-1"></a>col <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)</span>
-<span id="cb285-10"><a href="mcr--purity.html#cb285-10" aria-hidden="true" tabindex="-1"></a>lwd <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>)</span>
-<span id="cb285-11"><a href="mcr--purity.html#cb285-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb285-12"><a href="mcr--purity.html#cb285-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show the plots separately for each component and each result object</span></span>
-<span id="cb285-13"><a href="mcr--purity.html#cb285-13" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span>
-<span id="cb285-14"><a href="mcr--purity.html#cb285-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
-<span id="cb285-15"><a href="mcr--purity.html#cb285-15" aria-hidden="true" tabindex="-1"></a>   s <span class="ot">=</span> <span class="fu">mda.subset</span>(S, a)</span>
-<span id="cb285-16"><a href="mcr--purity.html#cb285-16" aria-hidden="true" tabindex="-1"></a>   s.hat <span class="ot">=</span> <span class="fu">mda.subset</span>(S.hat, a)</span>
-<span id="cb285-17"><a href="mcr--purity.html#cb285-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mdaplotg</span>(<span class="fu">list</span>(<span class="at">orig =</span> s, <span class="at">resolved =</span> s.hat), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> col, <span class="at">lwd =</span> lwd,</span>
-<span id="cb285-18"><a href="mcr--purity.html#cb285-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="fu">paste0</span>(<span class="st">&quot;Component &quot;</span>, a))</span>
-<span id="cb285-19"><a href="mcr--purity.html#cb285-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-187-1.png" width="864" /></p>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="mcr--purity.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="co"># apply purity method</span></span>
+<span id="cb286-2"><a href="mcr--purity.html#cb286-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">mcrpure</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">offset =</span> <span class="fl">0.05</span>)</span>
+<span id="cb286-3"><a href="mcr--purity.html#cb286-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb286-4"><a href="mcr--purity.html#cb286-4" aria-hidden="true" tabindex="-1"></a><span class="co"># get spectra, transpose and normalize to unit area</span></span>
+<span id="cb286-5"><a href="mcr--purity.html#cb286-5" aria-hidden="true" tabindex="-1"></a>S      <span class="ot">=</span> <span class="fu">prep.norm</span>(<span class="fu">mda.t</span>(carbs<span class="sc">$</span>S), <span class="st">&quot;length&quot;</span>)</span>
+<span id="cb286-6"><a href="mcr--purity.html#cb286-6" aria-hidden="true" tabindex="-1"></a>S.hat <span class="ot">=</span> <span class="fu">prep.norm</span>(<span class="fu">mda.t</span>(m1<span class="sc">$</span>resspec), <span class="st">&quot;length&quot;</span>)</span>
+<span id="cb286-7"><a href="mcr--purity.html#cb286-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb286-8"><a href="mcr--purity.html#cb286-8" aria-hidden="true" tabindex="-1"></a><span class="co"># define color and line width for the spectral curves</span></span>
+<span id="cb286-9"><a href="mcr--purity.html#cb286-9" aria-hidden="true" tabindex="-1"></a>col <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb286-10"><a href="mcr--purity.html#cb286-10" aria-hidden="true" tabindex="-1"></a>lwd <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb286-11"><a href="mcr--purity.html#cb286-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb286-12"><a href="mcr--purity.html#cb286-12" aria-hidden="true" tabindex="-1"></a><span class="co"># show the plots separately for each component and each result object</span></span>
+<span id="cb286-13"><a href="mcr--purity.html#cb286-13" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb286-14"><a href="mcr--purity.html#cb286-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb286-15"><a href="mcr--purity.html#cb286-15" aria-hidden="true" tabindex="-1"></a>   s <span class="ot">=</span> <span class="fu">mda.subset</span>(S, a)</span>
+<span id="cb286-16"><a href="mcr--purity.html#cb286-16" aria-hidden="true" tabindex="-1"></a>   s.hat <span class="ot">=</span> <span class="fu">mda.subset</span>(S.hat, a)</span>
+<span id="cb286-17"><a href="mcr--purity.html#cb286-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mdaplotg</span>(<span class="fu">list</span>(<span class="at">orig =</span> s, <span class="at">resolved =</span> s.hat), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> col, <span class="at">lwd =</span> lwd,</span>
+<span id="cb286-18"><a href="mcr--purity.html#cb286-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="fu">paste0</span>(<span class="st">&quot;Component &quot;</span>, a))</span>
+<span id="cb286-19"><a href="mcr--purity.html#cb286-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-188-1.png" width="864" /></p>
 <p>In the code we use <code>mda.t()</code> and <code>mda.subset()</code> instead of just <code>t</code> and <code>subset()</code> to preserve values for Raman shift and axis titles which are defined as attributes of the matrices with spectra, you can read more details in section about <a href="datasets--attributes-and-factors.html#datasets--attributes-and-factors">Attributes and factors</a>.</p>
 <p>As one can see, the quality of resolving is quite good in both cases. However, in case with offset = 10% (right plot), one can also notice large artifacts for example for the third component, which looks like a sort of negative peaks. You can try and play with the offset parameter and see how it influences the quality of the resolution.</p>
 </div>
-<div id="predictions" class="section level3 unnumbered">
-<h3>Predictions</h3>
+<div id="predictions" class="section level3 unnumbered hasAnchor">
+<h3>Predictions<a href="mcr--purity.html#predictions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>It is also possible to predict concentration for one or several spectra based on already resolved data. In the code chunk below we predict the concentration values using the matrix with spectra of the pure components. Then we scale the predicted values, so they sum up to one and show the results.</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="mcr--purity.html#cb286-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">predict</span>(m, <span class="fu">mda.t</span>(carbs<span class="sc">$</span>S))</span>
-<span id="cb286-2"><a href="mcr--purity.html#cb286-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> c <span class="sc">/</span> <span class="fu">apply</span>(c, <span class="dv">2</span>, sum)</span>
-<span id="cb286-3"><a href="mcr--purity.html#cb286-3" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(c)</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="mcr--purity.html#cb287-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">predict</span>(m, <span class="fu">mda.t</span>(carbs<span class="sc">$</span>S))</span>
+<span id="cb287-2"><a href="mcr--purity.html#cb287-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> c <span class="sc">/</span> <span class="fu">apply</span>(c, <span class="dv">2</span>, sum)</span>
+<span id="cb287-3"><a href="mcr--purity.html#cb287-3" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(c)</span></code></pre></div>
 <pre><code>##              Comp 1     Comp 2      Comp 3
 ## fructose 0.94329239 0.03701313 0.094968338
 ## lactose  0.02396884 0.86686908 0.003781956
 ## ribose   0.06152230 0.09344879 0.847020106</code></pre>
 <p>In ideal case we should see an identity matrix. However in this case, we got, for example, <span class="math inline">\([0.943, 0.024, 0.062]\)</span> for the first component instead of expected <span class="math inline">\([1, 0, 0]\)</span>. The result is a bit worse for the second and the third components.</p>
 </div>
-<div id="tuning-the-offset-parameter" class="section level3 unnumbered">
-<h3>Tuning the offset parameter</h3>
+<div id="tuning-the-offset-parameter" class="section level3 unnumbered hasAnchor">
+<h3>Tuning the offset parameter<a href="mcr--purity.html#tuning-the-offset-parameter" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>One of the ways to improve the result of resolution based on the purity approach is to tune the offset. The code below shows the result of applying <code>mcrpure()</code> to the <em>Simdata</em>, which consists of 150 UV/Vis spectra with very broad peaks.</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="mcr--purity.html#cb288-1" aria-hidden="true" tabindex="-1"></a>   <span class="fu">data</span>(simdata)</span>
-<span id="cb288-2"><a href="mcr--purity.html#cb288-2" aria-hidden="true" tabindex="-1"></a>   D <span class="ot">&lt;-</span> simdata<span class="sc">$</span>spectra.c</span>
-<span id="cb288-3"><a href="mcr--purity.html#cb288-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb288-4"><a href="mcr--purity.html#cb288-4" aria-hidden="true" tabindex="-1"></a>   m1 <span class="ot">&lt;-</span> <span class="fu">mcrpure</span>(D, <span class="at">ncomp =</span> <span class="dv">3</span>)</span>
-<span id="cb288-5"><a href="mcr--purity.html#cb288-5" aria-hidden="true" tabindex="-1"></a>   m2 <span class="ot">&lt;-</span> <span class="fu">mcrpure</span>(D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">offset =</span> <span class="fl">0.001</span>)</span>
-<span id="cb288-6"><a href="mcr--purity.html#cb288-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb288-7"><a href="mcr--purity.html#cb288-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb288-8"><a href="mcr--purity.html#cb288-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb288-9"><a href="mcr--purity.html#cb288-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">plotPuritySpectra</span>(m1)</span>
-<span id="cb288-10"><a href="mcr--purity.html#cb288-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">plotPuritySpectra</span>(m2)</span>
-<span id="cb288-11"><a href="mcr--purity.html#cb288-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb288-12"><a href="mcr--purity.html#cb288-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">plotSpectra</span>(m1)</span>
-<span id="cb288-13"><a href="mcr--purity.html#cb288-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">plotSpectra</span>(m2)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-189-1.png" width="864" /></p>
-<p>Using the default settings (left plots) does not allow to get any meaningful solutions (you can notice, for example, negative peaks). However, tuning the offset value results in a very good outcome — the resolved spectra are very similar to the original ones (original spectra are not shown on the plots).</p>
-</div>
-<div id="providing-indices-of-pure-variables" class="section level3 unnumbered">
-<h3>Providing indices of pure variables</h3>
-<p>Finally you can provide the indices of pure variables if you know them a priory. In this case the method will skip the first step and try to resolve the spectra based on the provided values, as shown in the example below.</p>
 <div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="mcr--purity.html#cb289-1" aria-hidden="true" tabindex="-1"></a>   <span class="fu">data</span>(simdata)</span>
 <span id="cb289-2"><a href="mcr--purity.html#cb289-2" aria-hidden="true" tabindex="-1"></a>   D <span class="ot">&lt;-</span> simdata<span class="sc">$</span>spectra.c</span>
 <span id="cb289-3"><a href="mcr--purity.html#cb289-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb289-4"><a href="mcr--purity.html#cb289-4" aria-hidden="true" tabindex="-1"></a>   m1 <span class="ot">&lt;-</span> <span class="fu">mcrpure</span>(D, <span class="at">ncomp =</span> <span class="dv">3</span>)</span>
-<span id="cb289-5"><a href="mcr--purity.html#cb289-5" aria-hidden="true" tabindex="-1"></a>   m2 <span class="ot">&lt;-</span> <span class="fu">mcrpure</span>(D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">purevars =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">130</span>, <span class="dv">140</span>))</span>
+<span id="cb289-5"><a href="mcr--purity.html#cb289-5" aria-hidden="true" tabindex="-1"></a>   m2 <span class="ot">&lt;-</span> <span class="fu">mcrpure</span>(D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">offset =</span> <span class="fl">0.001</span>)</span>
 <span id="cb289-6"><a href="mcr--purity.html#cb289-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb289-7"><a href="mcr--purity.html#cb289-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb289-8"><a href="mcr--purity.html#cb289-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb289-9"><a href="mcr--purity.html#cb289-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">plotSpectra</span>(m1)</span>
-<span id="cb289-10"><a href="mcr--purity.html#cb289-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">plotSpectra</span>(m2)</span></code></pre></div>
+<span id="cb289-8"><a href="mcr--purity.html#cb289-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb289-9"><a href="mcr--purity.html#cb289-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">plotPuritySpectra</span>(m1)</span>
+<span id="cb289-10"><a href="mcr--purity.html#cb289-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">plotPuritySpectra</span>(m2)</span>
+<span id="cb289-11"><a href="mcr--purity.html#cb289-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb289-12"><a href="mcr--purity.html#cb289-12" aria-hidden="true" tabindex="-1"></a>   <span class="fu">plotSpectra</span>(m1)</span>
+<span id="cb289-13"><a href="mcr--purity.html#cb289-13" aria-hidden="true" tabindex="-1"></a>   <span class="fu">plotSpectra</span>(m2)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-190-1.png" width="864" /></p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="mcr--purity.html#cb290-1" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summary</span>(m1)</span></code></pre></div>
+<p>Using the default settings (left plots) does not allow to get any meaningful solutions (you can notice, for example, negative peaks). However, tuning the offset value results in a very good outcome — the resolved spectra are very similar to the original ones (original spectra are not shown on the plots).</p>
+</div>
+<div id="providing-indices-of-pure-variables" class="section level3 unnumbered hasAnchor">
+<h3>Providing indices of pure variables<a href="mcr--purity.html#providing-indices-of-pure-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Finally you can provide the indices of pure variables if you know them a priory. In this case the method will skip the first step and try to resolve the spectra based on the provided values, as shown in the example below.</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="mcr--purity.html#cb290-1" aria-hidden="true" tabindex="-1"></a>   <span class="fu">data</span>(simdata)</span>
+<span id="cb290-2"><a href="mcr--purity.html#cb290-2" aria-hidden="true" tabindex="-1"></a>   D <span class="ot">&lt;-</span> simdata<span class="sc">$</span>spectra.c</span>
+<span id="cb290-3"><a href="mcr--purity.html#cb290-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb290-4"><a href="mcr--purity.html#cb290-4" aria-hidden="true" tabindex="-1"></a>   m1 <span class="ot">&lt;-</span> <span class="fu">mcrpure</span>(D, <span class="at">ncomp =</span> <span class="dv">3</span>)</span>
+<span id="cb290-5"><a href="mcr--purity.html#cb290-5" aria-hidden="true" tabindex="-1"></a>   m2 <span class="ot">&lt;-</span> <span class="fu">mcrpure</span>(D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">purevars =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">130</span>, <span class="dv">140</span>))</span>
+<span id="cb290-6"><a href="mcr--purity.html#cb290-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb290-7"><a href="mcr--purity.html#cb290-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb290-8"><a href="mcr--purity.html#cb290-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb290-9"><a href="mcr--purity.html#cb290-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">plotSpectra</span>(m1)</span>
+<span id="cb290-10"><a href="mcr--purity.html#cb290-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">plotSpectra</span>(m2)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-191-1.png" width="864" /></p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="mcr--purity.html#cb291-1" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summary</span>(m1)</span></code></pre></div>
 <pre><code>## 
 ## Summary for MCR Purity case (class mcrpure)
 ##        Expvar Cumexpvar Varindex Purity
 ## Comp 1  94.75     94.75       57 21.687
 ## Comp 2  -0.36     94.39      103  6.857
 ## Comp 3   5.61    100.00       31  6.073</code></pre>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="mcr--purity.html#cb292-1" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summary</span>(m2)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="mcr--purity.html#cb293-1" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summary</span>(m2)</span></code></pre></div>
 <pre><code>## 
 ## Summary for MCR Purity case (class mcrpure)
 ##        Expvar Cumexpvar Varindex Purity

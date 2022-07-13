@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Alternating least squares | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Alternating least squares | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
   <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-09-12" />
+<meta name="date" content="2022-07-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="mcr--purity.html"/>
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -203,8 +202,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-validation-1"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a></li>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
@@ -276,8 +275,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="mcr--als" class="section level2 unnumbered">
-<h2>Alternating least squares</h2>
+<div id="mcr--als" class="section level2 unnumbered hasAnchor">
+<h2>Alternating least squares<a href="mcr--als.html#mcr--als" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The alternating least squares allows to get <span class="math inline">\(\mathbf{\hat{C}}\)</span> and <span class="math inline">\(\mathbf{\hat{S}}\)</span> by using iterative algorithm, when the ordinary least squares is applied consequently, first to resolve the concentrations by knowing spectra and then to resolve the spectra by using the resolved concentrations:</p>
 <p><span class="math display">\[\mathbf{\hat{C}} = \mathbf{D} \mathbf{\hat{S}} (\mathbf{\hat{S}}^T \mathbf{\hat{S}})^{-1}\]</span>
 <span class="math display">\[\mathbf{\hat{S}} = \mathbf{D}^T \mathbf{\hat{C}} (\mathbf{\hat{C}}^T \mathbf{\hat{C}})^{-1}\]</span></p>
@@ -286,8 +285,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The second issue is that using ordinary least squares (OLS) method for the iterations will result in a solution with negative values, which is not physically meaningful. To tackle this problem we either need to constrain the solution, for example by setting all negative values to zero, after each iteration, or by using non-negative least squares for solving the equations. In <em>mdatools</em> both options are available.</p>
 <p>Finally, as we mentioned before, curve resolution problem does not have a unique solution. To narrow the range of feasible solutions down, and also to move them towards the right one, we can apply different constraints. Some of the constraints are implemented and available for user, some will be implemented later. However, user can easily provide a manual constraint function as it will be shown below.</p>
 <p>We will take all these issues gradually and let’s start with non-negativity and constraints.</p>
-<div id="non-negativity" class="section level3 unnumbered">
-<h3>Non-negativity</h3>
+<div id="non-negativity" class="section level3 unnumbered hasAnchor">
+<h3>Non-negativity<a href="mcr--als.html#non-negativity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To tackle the non-negativity problem, in <em>mdatools</em> you can chose one of the following options:</p>
 <ol style="list-style-type: decimal">
 <li>Use standard OLS solver and apply non-negativity constraint by setting all negative values to zero.</li>
@@ -296,62 +295,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Use your own solver</li>
 </ol>
 <p>The default option is nr. 3 and this is what we would recommend to use. It gives a solution identical to nr. 2 however is much faster in case of multivariate data. You can also provide a function, which implements your own solver. The solver can be changed both for spectra and for contributions, you can even use different solvers for each. The code below shows how to apply MCR-ALS using OLS and FC-NNLS solvers without any constraints.</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="mcr--als.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(carbs)</span>
-<span id="cb294-2"><a href="mcr--als.html#cb294-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb294-3"><a href="mcr--als.html#cb294-3" aria-hidden="true" tabindex="-1"></a><span class="co"># apply MCR-ALS with default solver (FC-NNLS)</span></span>
-<span id="cb294-4"><a href="mcr--als.html#cb294-4" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>)</span>
-<span id="cb294-5"><a href="mcr--als.html#cb294-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb294-6"><a href="mcr--als.html#cb294-6" aria-hidden="true" tabindex="-1"></a><span class="co"># apply MCR-ALS with OLS solver</span></span>
-<span id="cb294-7"><a href="mcr--als.html#cb294-7" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">spec.solver =</span> mcrals.ols, <span class="at">cont.solver =</span> mcrals.ols)</span>
-<span id="cb294-8"><a href="mcr--als.html#cb294-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb294-9"><a href="mcr--als.html#cb294-9" aria-hidden="true" tabindex="-1"></a><span class="co"># show the resolved spectra</span></span>
-<span id="cb294-10"><a href="mcr--als.html#cb294-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb294-11"><a href="mcr--als.html#cb294-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(m1, <span class="at">main =</span> <span class="st">&quot;FC-NNLS solution&quot;</span>)</span>
-<span id="cb294-12"><a href="mcr--als.html#cb294-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(m2, <span class="at">main =</span> <span class="st">&quot;OLS solution&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-191-1.png" width="864" /></p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="mcr--als.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(carbs)</span>
+<span id="cb295-2"><a href="mcr--als.html#cb295-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb295-3"><a href="mcr--als.html#cb295-3" aria-hidden="true" tabindex="-1"></a><span class="co"># apply MCR-ALS with default solver (FC-NNLS)</span></span>
+<span id="cb295-4"><a href="mcr--als.html#cb295-4" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>)</span>
+<span id="cb295-5"><a href="mcr--als.html#cb295-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb295-6"><a href="mcr--als.html#cb295-6" aria-hidden="true" tabindex="-1"></a><span class="co"># apply MCR-ALS with OLS solver</span></span>
+<span id="cb295-7"><a href="mcr--als.html#cb295-7" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">spec.solver =</span> mcrals.ols, <span class="at">cont.solver =</span> mcrals.ols)</span>
+<span id="cb295-8"><a href="mcr--als.html#cb295-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb295-9"><a href="mcr--als.html#cb295-9" aria-hidden="true" tabindex="-1"></a><span class="co"># show the resolved spectra</span></span>
+<span id="cb295-10"><a href="mcr--als.html#cb295-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb295-11"><a href="mcr--als.html#cb295-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(m1, <span class="at">main =</span> <span class="st">&quot;FC-NNLS solution&quot;</span>)</span>
+<span id="cb295-12"><a href="mcr--als.html#cb295-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(m2, <span class="at">main =</span> <span class="st">&quot;OLS solution&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-192-1.png" width="864" /></p>
 <p>As you can see, the OLS solution without non-negativity constraint contains negative values. Once again, if you do not experiment with negative values, using the default option (FCNNLS) will be the best.</p>
 </div>
-<div id="constraints" class="section level3 unnumbered">
-<h3>Constraints</h3>
+<div id="constraints" class="section level3 unnumbered hasAnchor">
+<h3>Constraints<a href="mcr--als.html#constraints" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Constraints are small functions that can be applied separately to current estimates of spectra or contributions on every step of the algorithm in order to improve the solution. A constraint function takes the matrix with spectra or contributions as an input, does something with the values and returns the matrix of the same size as an output. For example, the simplest constraint is non-negativity, which sets all negative values in the matrix to zeros.</p>
 <p>In <em>mdatools</em> constraints can be combined together using lists. Spectra and contributions should have separate sets of constrains. In the example below we show how to use some of the built in constraints:</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="mcr--als.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define constraints for contributions</span></span>
-<span id="cb295-2"><a href="mcr--als.html#cb295-2" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">=</span> <span class="fu">list</span>(</span>
-<span id="cb295-3"><a href="mcr--als.html#cb295-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;norm&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;sum&quot;</span>))</span>
-<span id="cb295-4"><a href="mcr--als.html#cb295-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb295-5"><a href="mcr--als.html#cb295-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb295-6"><a href="mcr--als.html#cb295-6" aria-hidden="true" tabindex="-1"></a><span class="co"># define constraints for spectra</span></span>
-<span id="cb295-7"><a href="mcr--als.html#cb295-7" aria-hidden="true" tabindex="-1"></a>sc <span class="ot">=</span> <span class="fu">list</span>(</span>
-<span id="cb295-8"><a href="mcr--als.html#cb295-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;angle&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">weight =</span> <span class="fl">0.05</span>)),</span>
-<span id="cb295-9"><a href="mcr--als.html#cb295-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;norm&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;length&quot;</span>))</span>
-<span id="cb295-10"><a href="mcr--als.html#cb295-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb295-11"><a href="mcr--als.html#cb295-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb295-12"><a href="mcr--als.html#cb295-12" aria-hidden="true" tabindex="-1"></a><span class="co"># run MCR-ALS with the constraints</span></span>
-<span id="cb295-13"><a href="mcr--als.html#cb295-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
-<span id="cb295-14"><a href="mcr--als.html#cb295-14" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">spec.constraints =</span> sc, <span class="at">cont.constraints =</span> cc)</span>
-<span id="cb295-15"><a href="mcr--als.html#cb295-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb295-16"><a href="mcr--als.html#cb295-16" aria-hidden="true" tabindex="-1"></a><span class="co"># normalzie the original spectra to unit length</span></span>
-<span id="cb295-17"><a href="mcr--als.html#cb295-17" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">prep.norm</span>(<span class="fu">mda.t</span>(carbs<span class="sc">$</span>S), <span class="st">&quot;length&quot;</span>)</span>
-<span id="cb295-18"><a href="mcr--als.html#cb295-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb295-19"><a href="mcr--als.html#cb295-19" aria-hidden="true" tabindex="-1"></a><span class="co"># get resolved spectra and transpose them</span></span>
-<span id="cb295-20"><a href="mcr--als.html#cb295-20" aria-hidden="true" tabindex="-1"></a>S.hat <span class="ot">=</span> <span class="fu">mda.t</span>(m<span class="sc">$</span>resspec)</span>
-<span id="cb295-21"><a href="mcr--als.html#cb295-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb295-22"><a href="mcr--als.html#cb295-22" aria-hidden="true" tabindex="-1"></a><span class="co"># define color and line width for the spectral curves</span></span>
-<span id="cb295-23"><a href="mcr--als.html#cb295-23" aria-hidden="true" tabindex="-1"></a>col <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)</span>
-<span id="cb295-24"><a href="mcr--als.html#cb295-24" aria-hidden="true" tabindex="-1"></a>lwd <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>)</span>
-<span id="cb295-25"><a href="mcr--als.html#cb295-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb295-26"><a href="mcr--als.html#cb295-26" aria-hidden="true" tabindex="-1"></a><span class="co"># show the plots separately for each component and each result object</span></span>
-<span id="cb295-27"><a href="mcr--als.html#cb295-27" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span>
-<span id="cb295-28"><a href="mcr--als.html#cb295-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
-<span id="cb295-29"><a href="mcr--als.html#cb295-29" aria-hidden="true" tabindex="-1"></a>   s <span class="ot">=</span> <span class="fu">mda.subset</span>(S, a)</span>
-<span id="cb295-30"><a href="mcr--als.html#cb295-30" aria-hidden="true" tabindex="-1"></a>   s.hat <span class="ot">=</span> <span class="fu">mda.subset</span>(S.hat, a)</span>
-<span id="cb295-31"><a href="mcr--als.html#cb295-31" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mdaplotg</span>(<span class="fu">list</span>(<span class="at">orig =</span> s, <span class="at">resolved =</span> s.hat), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> col, <span class="at">lwd =</span> lwd)</span>
-<span id="cb295-32"><a href="mcr--als.html#cb295-32" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-192-1.png" width="864" /></p>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="mcr--als.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define constraints for contributions</span></span>
+<span id="cb296-2"><a href="mcr--als.html#cb296-2" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">=</span> <span class="fu">list</span>(</span>
+<span id="cb296-3"><a href="mcr--als.html#cb296-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;norm&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;sum&quot;</span>))</span>
+<span id="cb296-4"><a href="mcr--als.html#cb296-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb296-5"><a href="mcr--als.html#cb296-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb296-6"><a href="mcr--als.html#cb296-6" aria-hidden="true" tabindex="-1"></a><span class="co"># define constraints for spectra</span></span>
+<span id="cb296-7"><a href="mcr--als.html#cb296-7" aria-hidden="true" tabindex="-1"></a>sc <span class="ot">=</span> <span class="fu">list</span>(</span>
+<span id="cb296-8"><a href="mcr--als.html#cb296-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;angle&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">weight =</span> <span class="fl">0.05</span>)),</span>
+<span id="cb296-9"><a href="mcr--als.html#cb296-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;norm&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;length&quot;</span>))</span>
+<span id="cb296-10"><a href="mcr--als.html#cb296-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb296-11"><a href="mcr--als.html#cb296-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb296-12"><a href="mcr--als.html#cb296-12" aria-hidden="true" tabindex="-1"></a><span class="co"># run MCR-ALS with the constraints</span></span>
+<span id="cb296-13"><a href="mcr--als.html#cb296-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
+<span id="cb296-14"><a href="mcr--als.html#cb296-14" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">spec.constraints =</span> sc, <span class="at">cont.constraints =</span> cc)</span>
+<span id="cb296-15"><a href="mcr--als.html#cb296-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb296-16"><a href="mcr--als.html#cb296-16" aria-hidden="true" tabindex="-1"></a><span class="co"># normalzie the original spectra to unit length</span></span>
+<span id="cb296-17"><a href="mcr--als.html#cb296-17" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">prep.norm</span>(<span class="fu">mda.t</span>(carbs<span class="sc">$</span>S), <span class="st">&quot;length&quot;</span>)</span>
+<span id="cb296-18"><a href="mcr--als.html#cb296-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb296-19"><a href="mcr--als.html#cb296-19" aria-hidden="true" tabindex="-1"></a><span class="co"># get resolved spectra and transpose them</span></span>
+<span id="cb296-20"><a href="mcr--als.html#cb296-20" aria-hidden="true" tabindex="-1"></a>S.hat <span class="ot">=</span> <span class="fu">mda.t</span>(m<span class="sc">$</span>resspec)</span>
+<span id="cb296-21"><a href="mcr--als.html#cb296-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb296-22"><a href="mcr--als.html#cb296-22" aria-hidden="true" tabindex="-1"></a><span class="co"># define color and line width for the spectral curves</span></span>
+<span id="cb296-23"><a href="mcr--als.html#cb296-23" aria-hidden="true" tabindex="-1"></a>col <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb296-24"><a href="mcr--als.html#cb296-24" aria-hidden="true" tabindex="-1"></a>lwd <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb296-25"><a href="mcr--als.html#cb296-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb296-26"><a href="mcr--als.html#cb296-26" aria-hidden="true" tabindex="-1"></a><span class="co"># show the plots separately for each component and each result object</span></span>
+<span id="cb296-27"><a href="mcr--als.html#cb296-27" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb296-28"><a href="mcr--als.html#cb296-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb296-29"><a href="mcr--als.html#cb296-29" aria-hidden="true" tabindex="-1"></a>   s <span class="ot">=</span> <span class="fu">mda.subset</span>(S, a)</span>
+<span id="cb296-30"><a href="mcr--als.html#cb296-30" aria-hidden="true" tabindex="-1"></a>   s.hat <span class="ot">=</span> <span class="fu">mda.subset</span>(S.hat, a)</span>
+<span id="cb296-31"><a href="mcr--als.html#cb296-31" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mdaplotg</span>(<span class="fu">list</span>(<span class="at">orig =</span> s, <span class="at">resolved =</span> s.hat), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> col, <span class="at">lwd =</span> lwd)</span>
+<span id="cb296-32"><a href="mcr--als.html#cb296-32" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-193-1.png" width="864" /></p>
 <p>As you can see, we use one constraint to normalize the contributions, so they sum up to one on every step. And we use two constraints for the spectra — first angle constraint, which makes spectra less contrast and increases contrast among the resolved concentration profiles. Then we normalize the spectra to the unit length. The constraints are applied to the spectra or contributions on every iteration and in the same order as they are defined in the list.</p>
 <p>You may have noticed the following instruction: <code>set.seed(6)</code> in the code block above. This is needed to make results more reproducible. Since the initial estimates for the resolved spectra are obtained using random number generator, the final result can be different from run to run. To avoid this we seed the generator with number 6, so the final result will be the same regardless how many times we run this code.</p>
 <p>The list of available constraints and their parameters can be shown by running <code>constraints.list()</code>:</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="mcr--als.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fu">constraints.list</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="mcr--als.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">constraints.list</span>()</span></code></pre></div>
 <pre><code>## 
 ## List of constraints available for mcrals():
 ## 
@@ -389,136 +388,136 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  parameters:
 ##   &#39;weight&#39;: how much of mean will be added: between 0 and 1</code></pre>
 <p>In the next few subsections you will find a short description of the currently implemented constraints with some illustrations, as well as instructions how to make a user defined constraint.</p>
-<div id="non-negativity-constraint" class="section level4 unnumbered">
-<h4>Non-negativity constraint</h4>
+<div id="non-negativity-constraint" class="section level4 unnumbered hasAnchor">
+<h4>Non-negativity constraint<a href="mcr--als.html#non-negativity-constraint" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The non-negativity constraint simply takes a signal (spectra or contributions for a particular component) and set all negative values to zeros. A plot below demonstrates how the constraint works, the gray line represents the original signal, the blue — signal after applying the constraint.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-194-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-195-1.png" width="864" /></p>
 <p>It does not have any parameters, so to add the constraint to the list simply use <code>constraint("nonneg")</code>, e.g.:</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="mcr--als.html#cb298-1" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb298-2"><a href="mcr--als.html#cb298-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;nonneg&quot;</span>)</span>
-<span id="cb298-3"><a href="mcr--als.html#cb298-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="mcr--als.html#cb299-1" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb299-2"><a href="mcr--als.html#cb299-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;nonneg&quot;</span>)</span>
+<span id="cb299-3"><a href="mcr--als.html#cb299-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 </div>
-<div id="unimodality-constraint" class="section level4 unnumbered">
-<h4>Unimodality constraint</h4>
+<div id="unimodality-constraint" class="section level4 unnumbered hasAnchor">
+<h4>Unimodality constraint<a href="mcr--als.html#unimodality-constraint" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The unimodality constraint is used to force signals having only one peak (maximum). This can be particularly useful for constraining contribution profiles, e.g. when spectra came from a reaction and it is appriory known that concentration developing of components has one peak.</p>
 <p>The constraint works as follows. First it finds a global maximum in the signal. Then it goes along each side from the peak and checks if intensity of next point in the signal does not exceed the value of the previous one. If it does, constraint will replace the current value by the previous one.</p>
 <p>It is also possible to define a tolerance — value between 0 and 1, which allows taking into account small fluctuation of the intensity due to e.g. noise. Thus if tolerance is 0.05, then only when intensity of current point exceeds the intensity of the previous point by more than 5% it will trigger the constraint.</p>
 <p>The figure below shows how the constraint works using three signals — one with small extra peak on the left, one with small extra peak on the right and one unimodal signal. A small amount of noise was added to all signals. There are one original signal (gray) and two constrained signals on the plot. The red one shows the result for 0% tolerance and the blue one shows the result for 20% tolerance.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-196-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-197-1.png" width="864" /></p>
 <p>As we can see, because of the noise, the constrained profiles have negative values. In this case it makes sense to combine the unimodality and non-negativity constrains. The result of this combination is shown below.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-197-1.png" width="864" />
+<p><img src="_main_files/figure-html/unnamed-chunk-198-1.png" width="864" />
 In order to add the constraint use <code>constraint("unimod")</code> for zero tolerance or <code>constraint("unimod", params = list(tol = 0.05))</code> for 5% tolerance. In the code chunck below you see how to create a set of unimodality and non-negativity constrains e.g. for contribution profiles</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="mcr--als.html#cb299-1" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb299-2"><a href="mcr--als.html#cb299-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;unimod&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">tol =</span> <span class="fl">0.05</span>)),</span>
-<span id="cb299-3"><a href="mcr--als.html#cb299-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;nonneg&quot;</span>)</span>
-<span id="cb299-4"><a href="mcr--als.html#cb299-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="mcr--als.html#cb300-1" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb300-2"><a href="mcr--als.html#cb300-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;unimod&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">tol =</span> <span class="fl">0.05</span>)),</span>
+<span id="cb300-3"><a href="mcr--als.html#cb300-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;nonneg&quot;</span>)</span>
+<span id="cb300-4"><a href="mcr--als.html#cb300-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 </div>
-<div id="closure-constraint" class="section level4 unnumbered">
-<h4>Closure constraint</h4>
+<div id="closure-constraint" class="section level4 unnumbered hasAnchor">
+<h4>Closure constraint<a href="mcr--als.html#closure-constraint" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Closure constraint, like unimodality, is mostly applicable to the contribution profiles and aims at preserve the mass balance — so sum of the concetrations of pure components is constant. From that point of view the closure constraint can be thought of normalization made along the observations (or wavelength/wavenumbers in case of spectra) instead of along the components.</p>
 <p>The figure below shows how it works using contribution profiles of three components. The colored lines show the profiles and the black dashed line shows the sum of contributions for a given measurements.</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-199-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-200-1.png" width="864" /></p>
 <p>The top plot shows the original profiles. The middle plot shows the constrained profiles, where the closure constrained which limits sum of the contributions to one was applied. The bottom plot shows results for the constrains limited the sum to 10.</p>
 <p>As you can see in the last two plots, the dashed line show the constant desired value for all measurements. In order to add the constraint use <code>constraint("closure")</code> for unit sum or <code>constraint("closure", params = list(sum = 10))</code> for e.g. 10.</p>
 </div>
-<div id="normalization-constraint" class="section level4 unnumbered">
-<h4>Normalization constraint</h4>
+<div id="normalization-constraint" class="section level4 unnumbered hasAnchor">
+<h4>Normalization constraint<a href="mcr--als.html#normalization-constraint" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Normalization costraint aims at making spectra or contribution profiles of invididual components normalized. The normalization can be made by unit length, area or sum. For example, in case of sum normalization, sum of all values of each spectrum or contribution profile will be equal to one.</p>
 <p>An example below shows two original signals and the result of normalization of the signals to the unit area (so area under each curve is equal to one).</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-200-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-201-1.png" width="864" /></p>
 <p>The constrain can be added using <code>constraint("closure", params = list(type = "area"))</code>. The value for parameter <code>type</code> can be <code>"area"</code>, <code>"length"</code>, or <code>"sum"</code></p>
 </div>
-<div id="angle-constraint" class="section level4 unnumbered">
-<h4>Angle constraint</h4>
+<div id="angle-constraint" class="section level4 unnumbered hasAnchor">
+<h4>Angle constraint<a href="mcr--als.html#angle-constraint" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Angle constraint allows to change a contrast among the contribution profiles or resolved spectra. The idea was proposed by Windig <em>at al</em> and all details can be found in <a href="https://www.sciencedirect.com/science/article/pii/S0169743912000378">this paper</a>.</p>
 <p>The constraint works as follows. First, mean spectrum or mean contribution profile are computed using the original data, <span class="math inline">\(\mathbf{D}\)</span>. Then, on every iteration, a portion of the mean signal (e.g. 5%) is added, for example, to the resolved contributions. This will lead to smaller contrast among the contribution profiles but, at the same time, will increase the contrast for the resolved spectra. And vice versa, to increase the contrast among the resolved contribution profiles, the constraint should be applied to the spectra.</p>
 <p>The constraint can be added using <code>constraint("angle")</code>. By default the portion of mean to be added to the signals is 5% (0.05). To change this value to, e.g. 10%, use <code>constraint("angle", params = list(weight = 0.10))</code>.</p>
 </div>
-<div id="user-defined-constraints" class="section level4 unnumbered">
-<h4>User defined constraints</h4>
+<div id="user-defined-constraints" class="section level4 unnumbered hasAnchor">
+<h4>User defined constraints<a href="mcr--als.html#user-defined-constraints" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>We plan to implement more constraints gradually. However you do not need to wait and can use your own constraints, if necessary. This section shows how to do it step by step and how to combine user defined constraint with the implemented ones.</p>
 <p>Let’s say, we want to add a random noise to our resolved spectra on each iteration (sounds very stupid, but let’s use it just for fun in this example). So, first we need to create the constraint function. It should have two mandatory arguments: <code>x</code> which will take a current estimates of spectra or contributions and <code>d</code> which is original data used for resolving. There can be any number of optional arguments, in our case we will use argument <code>noise.level</code> which will define a level of noise in percent of maximum value in <code>x</code>:</p>
 <p>Here is the function:</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="mcr--als.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="co"># constraint function which adds random noise from normal distribution</span></span>
-<span id="cb300-2"><a href="mcr--als.html#cb300-2" aria-hidden="true" tabindex="-1"></a>myConstraintFunction <span class="ot">&lt;-</span> <span class="cf">function</span>(x, d, <span class="at">noise.level =</span> <span class="fl">0.01</span>) {</span>
-<span id="cb300-3"><a href="mcr--als.html#cb300-3" aria-hidden="true" tabindex="-1"></a>   nr <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
-<span id="cb300-4"><a href="mcr--als.html#cb300-4" aria-hidden="true" tabindex="-1"></a>   nc <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
-<span id="cb300-5"><a href="mcr--als.html#cb300-5" aria-hidden="true" tabindex="-1"></a>   noise <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nr <span class="sc">*</span> nc, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fu">max</span>(x) <span class="sc">*</span> noise.level)</span>
-<span id="cb300-6"><a href="mcr--als.html#cb300-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb300-7"><a href="mcr--als.html#cb300-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">return</span>(x <span class="sc">+</span> <span class="fu">matrix</span>(noise, nr, nc))</span>
-<span id="cb300-8"><a href="mcr--als.html#cb300-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="mcr--als.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="co"># constraint function which adds random noise from normal distribution</span></span>
+<span id="cb301-2"><a href="mcr--als.html#cb301-2" aria-hidden="true" tabindex="-1"></a>myConstraintFunction <span class="ot">&lt;-</span> <span class="cf">function</span>(x, d, <span class="at">noise.level =</span> <span class="fl">0.01</span>) {</span>
+<span id="cb301-3"><a href="mcr--als.html#cb301-3" aria-hidden="true" tabindex="-1"></a>   nr <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb301-4"><a href="mcr--als.html#cb301-4" aria-hidden="true" tabindex="-1"></a>   nc <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
+<span id="cb301-5"><a href="mcr--als.html#cb301-5" aria-hidden="true" tabindex="-1"></a>   noise <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(nr <span class="sc">*</span> nc, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fu">max</span>(x) <span class="sc">*</span> noise.level)</span>
+<span id="cb301-6"><a href="mcr--als.html#cb301-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb301-7"><a href="mcr--als.html#cb301-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">return</span>(x <span class="sc">+</span> <span class="fu">matrix</span>(noise, nr, nc))</span>
+<span id="cb301-8"><a href="mcr--als.html#cb301-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>As you can see we use normal distribution for generating the noise, with zero mean and standard deviation equal to the 1% of maximum value by default. Load this function to the global environment by running this code.</p>
 <p>Next we need to create a constraint object, which will use this function, and set the required level of noise, like it is shown here (we take 2% instead of the default value of 1%):</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="mcr--als.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a constraint with noise level of 2%</span></span>
-<span id="cb301-2"><a href="mcr--als.html#cb301-2" aria-hidden="true" tabindex="-1"></a>myConstraint <span class="ot">=</span> <span class="fu">list</span>(<span class="at">method =</span> myConstraintFunction, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">noise.level =</span> <span class="fl">0.02</span>))</span>
-<span id="cb301-3"><a href="mcr--als.html#cb301-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myConstraint) <span class="ot">=</span> <span class="st">&quot;constraint&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="mcr--als.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a constraint with noise level of 2%</span></span>
+<span id="cb302-2"><a href="mcr--als.html#cb302-2" aria-hidden="true" tabindex="-1"></a>myConstraint <span class="ot">=</span> <span class="fu">list</span>(<span class="at">method =</span> myConstraintFunction, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">noise.level =</span> <span class="fl">0.02</span>))</span>
+<span id="cb302-3"><a href="mcr--als.html#cb302-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myConstraint) <span class="ot">=</span> <span class="st">&quot;constraint&quot;</span></span></code></pre></div>
 <p>Next we need to define sets of constraints for contributions and for spectra by using lists, like we did for built in constraints, and add our manual constraint object to the list:</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="mcr--als.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="co"># constraints for contributions</span></span>
-<span id="cb302-2"><a href="mcr--als.html#cb302-2" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">=</span> <span class="fu">list</span>(</span>
-<span id="cb302-3"><a href="mcr--als.html#cb302-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;norm&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;sum&quot;</span>))</span>
-<span id="cb302-4"><a href="mcr--als.html#cb302-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb302-5"><a href="mcr--als.html#cb302-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb302-6"><a href="mcr--als.html#cb302-6" aria-hidden="true" tabindex="-1"></a><span class="co"># constraints for spectra</span></span>
-<span id="cb302-7"><a href="mcr--als.html#cb302-7" aria-hidden="true" tabindex="-1"></a>sc <span class="ot">=</span> <span class="fu">list</span>(</span>
-<span id="cb302-8"><a href="mcr--als.html#cb302-8" aria-hidden="true" tabindex="-1"></a>   myConstraint,</span>
-<span id="cb302-9"><a href="mcr--als.html#cb302-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;norm&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;length&quot;</span>))</span>
-<span id="cb302-10"><a href="mcr--als.html#cb302-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="mcr--als.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="co"># constraints for contributions</span></span>
+<span id="cb303-2"><a href="mcr--als.html#cb303-2" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">=</span> <span class="fu">list</span>(</span>
+<span id="cb303-3"><a href="mcr--als.html#cb303-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;norm&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;sum&quot;</span>))</span>
+<span id="cb303-4"><a href="mcr--als.html#cb303-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb303-5"><a href="mcr--als.html#cb303-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb303-6"><a href="mcr--als.html#cb303-6" aria-hidden="true" tabindex="-1"></a><span class="co"># constraints for spectra</span></span>
+<span id="cb303-7"><a href="mcr--als.html#cb303-7" aria-hidden="true" tabindex="-1"></a>sc <span class="ot">=</span> <span class="fu">list</span>(</span>
+<span id="cb303-8"><a href="mcr--als.html#cb303-8" aria-hidden="true" tabindex="-1"></a>   myConstraint,</span>
+<span id="cb303-9"><a href="mcr--als.html#cb303-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;norm&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;length&quot;</span>))</span>
+<span id="cb303-10"><a href="mcr--als.html#cb303-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Finally, we just run the MCR-ALS algorithm and check the results. I will again seed the random number generator to make results reproducible.</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="mcr--als.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run mcrals</span></span>
-<span id="cb303-2"><a href="mcr--als.html#cb303-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
-<span id="cb303-3"><a href="mcr--als.html#cb303-3" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">cont.constraints =</span> cc, <span class="at">spec.constraints =</span> sc)</span>
-<span id="cb303-4"><a href="mcr--als.html#cb303-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb303-5"><a href="mcr--als.html#cb303-5" aria-hidden="true" tabindex="-1"></a><span class="co"># normalize the original spectra to unit length</span></span>
-<span id="cb303-6"><a href="mcr--als.html#cb303-6" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">prep.norm</span>(<span class="fu">mda.t</span>(carbs<span class="sc">$</span>S), <span class="st">&quot;length&quot;</span>)</span>
-<span id="cb303-7"><a href="mcr--als.html#cb303-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb303-8"><a href="mcr--als.html#cb303-8" aria-hidden="true" tabindex="-1"></a><span class="co"># get the resolved spectra and transpose them</span></span>
-<span id="cb303-9"><a href="mcr--als.html#cb303-9" aria-hidden="true" tabindex="-1"></a>S.hat <span class="ot">=</span> <span class="fu">mda.t</span>(m<span class="sc">$</span>resspec)</span>
-<span id="cb303-10"><a href="mcr--als.html#cb303-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb303-11"><a href="mcr--als.html#cb303-11" aria-hidden="true" tabindex="-1"></a><span class="co"># define color and line width for the spectral curves</span></span>
-<span id="cb303-12"><a href="mcr--als.html#cb303-12" aria-hidden="true" tabindex="-1"></a>col <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)</span>
-<span id="cb303-13"><a href="mcr--als.html#cb303-13" aria-hidden="true" tabindex="-1"></a>lwd <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>)</span>
-<span id="cb303-14"><a href="mcr--als.html#cb303-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb303-15"><a href="mcr--als.html#cb303-15" aria-hidden="true" tabindex="-1"></a><span class="co"># show the plots separately for each component and each result object</span></span>
-<span id="cb303-16"><a href="mcr--als.html#cb303-16" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span>
-<span id="cb303-17"><a href="mcr--als.html#cb303-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
-<span id="cb303-18"><a href="mcr--als.html#cb303-18" aria-hidden="true" tabindex="-1"></a>   s <span class="ot">=</span> <span class="fu">mda.subset</span>(S, a)</span>
-<span id="cb303-19"><a href="mcr--als.html#cb303-19" aria-hidden="true" tabindex="-1"></a>   s.hat <span class="ot">=</span> <span class="fu">mda.subset</span>(S.hat, a)</span>
-<span id="cb303-20"><a href="mcr--als.html#cb303-20" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mdaplotg</span>(<span class="fu">list</span>(<span class="at">orig =</span> s, <span class="at">resolved =</span> s.hat), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> col, <span class="at">lwd =</span> lwd)</span>
-<span id="cb303-21"><a href="mcr--als.html#cb303-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-204-1.png" width="864" /></p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="mcr--als.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run mcrals</span></span>
+<span id="cb304-2"><a href="mcr--als.html#cb304-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
+<span id="cb304-3"><a href="mcr--als.html#cb304-3" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">cont.constraints =</span> cc, <span class="at">spec.constraints =</span> sc)</span>
+<span id="cb304-4"><a href="mcr--als.html#cb304-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-5"><a href="mcr--als.html#cb304-5" aria-hidden="true" tabindex="-1"></a><span class="co"># normalize the original spectra to unit length</span></span>
+<span id="cb304-6"><a href="mcr--als.html#cb304-6" aria-hidden="true" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">prep.norm</span>(<span class="fu">mda.t</span>(carbs<span class="sc">$</span>S), <span class="st">&quot;length&quot;</span>)</span>
+<span id="cb304-7"><a href="mcr--als.html#cb304-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-8"><a href="mcr--als.html#cb304-8" aria-hidden="true" tabindex="-1"></a><span class="co"># get the resolved spectra and transpose them</span></span>
+<span id="cb304-9"><a href="mcr--als.html#cb304-9" aria-hidden="true" tabindex="-1"></a>S.hat <span class="ot">=</span> <span class="fu">mda.t</span>(m<span class="sc">$</span>resspec)</span>
+<span id="cb304-10"><a href="mcr--als.html#cb304-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-11"><a href="mcr--als.html#cb304-11" aria-hidden="true" tabindex="-1"></a><span class="co"># define color and line width for the spectral curves</span></span>
+<span id="cb304-12"><a href="mcr--als.html#cb304-12" aria-hidden="true" tabindex="-1"></a>col <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb304-13"><a href="mcr--als.html#cb304-13" aria-hidden="true" tabindex="-1"></a>lwd <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb304-14"><a href="mcr--als.html#cb304-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-15"><a href="mcr--als.html#cb304-15" aria-hidden="true" tabindex="-1"></a><span class="co"># show the plots separately for each component and each result object</span></span>
+<span id="cb304-16"><a href="mcr--als.html#cb304-16" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb304-17"><a href="mcr--als.html#cb304-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb304-18"><a href="mcr--als.html#cb304-18" aria-hidden="true" tabindex="-1"></a>   s <span class="ot">=</span> <span class="fu">mda.subset</span>(S, a)</span>
+<span id="cb304-19"><a href="mcr--als.html#cb304-19" aria-hidden="true" tabindex="-1"></a>   s.hat <span class="ot">=</span> <span class="fu">mda.subset</span>(S.hat, a)</span>
+<span id="cb304-20"><a href="mcr--als.html#cb304-20" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mdaplotg</span>(<span class="fu">list</span>(<span class="at">orig =</span> s, <span class="at">resolved =</span> s.hat), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> col, <span class="at">lwd =</span> lwd)</span>
+<span id="cb304-21"><a href="mcr--als.html#cb304-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-205-1.png" width="864" /></p>
 <p>As you can see, even with this rather strange constraint the method works, although the resolved spectra are quite noisy. The presence of negative values in the resolved spectra is because we use normal distribution and the constraint is applied after the solver, which provides non-negative solution.</p>
 </div>
 </div>
-<div id="initial-estimates" class="section level3 unnumbered">
-<h3>Initial estimates</h3>
+<div id="initial-estimates" class="section level3 unnumbered hasAnchor">
+<h3>Initial estimates<a href="mcr--als.html#initial-estimates" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As it was mentioned above, one can provide any initial estimates for the spectra as a matrix with size <span class="math inline">\(J \times A\)</span>, where <span class="math inline">\(A\)</span> is the number of components and <span class="math inline">\(J\)</span> is number of variables (columns) in the original data. However, the matrix with provided values should not be singular, otherwise the algorithm will fail.</p>
 <p>In the example below we provide absolute values of PCA loadings as the initial estimates. No constraints are provided in this case for the sake of simplicity.</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="mcr--als.html#cb304-1" aria-hidden="true" tabindex="-1"></a>m.pca <span class="ot">=</span> <span class="fu">pca</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">center =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb304-2"><a href="mcr--als.html#cb304-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">spec.ini =</span> <span class="fu">abs</span>(m.pca<span class="sc">$</span>loadings))</span>
-<span id="cb304-3"><a href="mcr--als.html#cb304-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb304-4"><a href="mcr--als.html#cb304-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-205-1.png" width="864" /></p>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="mcr--als.html#cb305-1" aria-hidden="true" tabindex="-1"></a>m.pca <span class="ot">=</span> <span class="fu">pca</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">center =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb305-2"><a href="mcr--als.html#cb305-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">spec.ini =</span> <span class="fu">abs</span>(m.pca<span class="sc">$</span>loadings))</span>
+<span id="cb305-3"><a href="mcr--als.html#cb305-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb305-4"><a href="mcr--als.html#cb305-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-206-1.png" width="864" /></p>
 </div>
-<div id="forcing-contribution-and-spectral-values" class="section level3 unnumbered">
-<h3>Forcing contribution and spectral values</h3>
+<div id="forcing-contribution-and-spectral-values" class="section level3 unnumbered hasAnchor">
+<h3>Forcing contribution and spectral values<a href="mcr--als.html#forcing-contribution-and-spectral-values" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Sometimes we know the exact concentration of components or their absence for given measurements. For example we may know the concentration of ingredients at the beginning of a reaction or measure concentration of reaction products at the end. Same for the spectra, e.g. we know wavenumbers or wavelength where no peaks are expected for a particular component. In order to provide this information we can let <code>mcrals()</code> force these values to be equal to zero. Actually it can be any number, but since the resolved contributions and spectral intensities are relative, you need to be careful with providing the non-zero values.</p>
 <p>In order to use this possibility you need to provide values for two parameters: <code>cont.forced</code> for the contributions and <code>spec.forced</code> for the spectra. For example if we resolve spectra and contributions for three component system and we do not expect presence of third component at the beginning of a reaction, we can set the values as follows:</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="mcr--als.html#cb305-1" aria-hidden="true" tabindex="-1"></a>cont.forced <span class="ot">=</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(D), ncomp)</span>
-<span id="cb305-2"><a href="mcr--als.html#cb305-2" aria-hidden="true" tabindex="-1"></a>cont.forced[<span class="dv">1</span>, <span class="dv">3</span>] <span class="ot">=</span> <span class="dv">0</span></span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="mcr--als.html#cb306-1" aria-hidden="true" tabindex="-1"></a>cont.forced <span class="ot">=</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(D), ncomp)</span>
+<span id="cb306-2"><a href="mcr--als.html#cb306-2" aria-hidden="true" tabindex="-1"></a>cont.forced[<span class="dv">1</span>, <span class="dv">3</span>] <span class="ot">=</span> <span class="dv">0</span></span></code></pre></div>
 <p>The first line in this chunk creates a matrix and fill it with missing (<code>NA</code>) values. The matrix has the same dimension as future matrix with resolved contributions — same number of rows as the matrix with mixtures, <code>D</code>, and same number of columns as the expected number of pure components.</p>
 <p>After that, we set a value at the first row and the third column to zero. Which means “force concentration of the third component for the first observation to zero”. Inside the ALS loop, on every iteration the <code>mcrals()</code> method will replace the resolved concentration with the provided value.</p>
 <p>Here is an example, based on the carbs data we used before. In this case I add the pure spectra on top of the matrix with mixtures. And since these are spectra of pure components, I know that the spectrum for the first observation does not contain any of C2 and C3, the second observation does not contain C1 and C3 and, finally, the third observation does not contain C1 and C2. Here is how to do this:</p>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="mcr--als.html#cb306-1" aria-hidden="true" tabindex="-1"></a>ncomp <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb306-2"><a href="mcr--als.html#cb306-2" aria-hidden="true" tabindex="-1"></a>Dplus <span class="ot">&lt;-</span> <span class="fu">mda.rbind</span>(<span class="fu">mda.t</span>(carbs<span class="sc">$</span>S), carbs<span class="sc">$</span>D)</span>
-<span id="cb306-3"><a href="mcr--als.html#cb306-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb306-4"><a href="mcr--als.html#cb306-4" aria-hidden="true" tabindex="-1"></a>cont.forced <span class="ot">=</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(Dplus), ncomp)</span>
-<span id="cb306-5"><a href="mcr--als.html#cb306-5" aria-hidden="true" tabindex="-1"></a>cont.forced[<span class="dv">1</span>, ] <span class="ot">=</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb306-6"><a href="mcr--als.html#cb306-6" aria-hidden="true" tabindex="-1"></a>cont.forced[<span class="dv">2</span>, ] <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>, <span class="dv">0</span>)</span>
-<span id="cb306-7"><a href="mcr--als.html#cb306-7" aria-hidden="true" tabindex="-1"></a>cont.forced[<span class="dv">3</span>, ] <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="cn">NA</span>)</span>
-<span id="cb306-8"><a href="mcr--als.html#cb306-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb306-9"><a href="mcr--als.html#cb306-9" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">mcrals</span>(Dplus, <span class="at">ncomp =</span> ncomp, <span class="at">cont.forced =</span> cont.forced)</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="mcr--als.html#cb307-1" aria-hidden="true" tabindex="-1"></a>ncomp <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb307-2"><a href="mcr--als.html#cb307-2" aria-hidden="true" tabindex="-1"></a>Dplus <span class="ot">&lt;-</span> <span class="fu">mda.rbind</span>(<span class="fu">mda.t</span>(carbs<span class="sc">$</span>S), carbs<span class="sc">$</span>D)</span>
+<span id="cb307-3"><a href="mcr--als.html#cb307-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb307-4"><a href="mcr--als.html#cb307-4" aria-hidden="true" tabindex="-1"></a>cont.forced <span class="ot">=</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(Dplus), ncomp)</span>
+<span id="cb307-5"><a href="mcr--als.html#cb307-5" aria-hidden="true" tabindex="-1"></a>cont.forced[<span class="dv">1</span>, ] <span class="ot">=</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb307-6"><a href="mcr--als.html#cb307-6" aria-hidden="true" tabindex="-1"></a>cont.forced[<span class="dv">2</span>, ] <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>, <span class="dv">0</span>)</span>
+<span id="cb307-7"><a href="mcr--als.html#cb307-7" aria-hidden="true" tabindex="-1"></a>cont.forced[<span class="dv">3</span>, ] <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="cn">NA</span>)</span>
+<span id="cb307-8"><a href="mcr--als.html#cb307-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb307-9"><a href="mcr--als.html#cb307-9" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">mcrals</span>(Dplus, <span class="at">ncomp =</span> ncomp, <span class="at">cont.forced =</span> cont.forced)</span></code></pre></div>
 <p>Here are the resolved contributions:</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="mcr--als.html#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">head</span>(m<span class="sc">$</span>rescont))</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="mcr--als.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">head</span>(m<span class="sc">$</span>rescont))</span></code></pre></div>
 <pre><code>##         Comp 1     Comp 2     Comp 3
 ## [1,] 7.6462723  0.0000000 0.11344608
 ## [2,] 0.1331184 13.1168977 0.09604429
@@ -528,26 +527,26 @@ In order to add the constraint use <code>constraint("unimod")</code> for zero to
 ## [6,] 4.8315353  5.9818678 0.60008529</code></pre>
 <p>As one can see, the ones we forced to be zero, are either zeros or just very small numbers. Forcing the spectral values works in a similar way.</p>
 </div>
-<div id="overview-of-resolving-process-and-results" class="section level3 unnumbered">
-<h3>Overview of resolving process and results</h3>
+<div id="overview-of-resolving-process-and-results" class="section level3 unnumbered hasAnchor">
+<h3>Overview of resolving process and results<a href="mcr--als.html#overview-of-resolving-process-and-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>mcrals()</code> also computes the explained variance, which can be shown using <code>plotVariance()</code> and <code>plotCumVariance()</code> functions. It also has <code>predict()</code> method which works similar to <code>mcrpure</code>. Some examples are shown below:</p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="mcr--als.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define constraints for contributions</span></span>
-<span id="cb309-2"><a href="mcr--als.html#cb309-2" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">=</span> <span class="fu">list</span>(</span>
-<span id="cb309-3"><a href="mcr--als.html#cb309-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;norm&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;sum&quot;</span>))</span>
-<span id="cb309-4"><a href="mcr--als.html#cb309-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb309-5"><a href="mcr--als.html#cb309-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb309-6"><a href="mcr--als.html#cb309-6" aria-hidden="true" tabindex="-1"></a><span class="co"># define constraints for spectra</span></span>
-<span id="cb309-7"><a href="mcr--als.html#cb309-7" aria-hidden="true" tabindex="-1"></a>sc <span class="ot">=</span> <span class="fu">list</span>(</span>
-<span id="cb309-8"><a href="mcr--als.html#cb309-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;angle&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">weight =</span> <span class="fl">0.05</span>)),</span>
-<span id="cb309-9"><a href="mcr--als.html#cb309-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;norm&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;length&quot;</span>))</span>
-<span id="cb309-10"><a href="mcr--als.html#cb309-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb309-11"><a href="mcr--als.html#cb309-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb309-12"><a href="mcr--als.html#cb309-12" aria-hidden="true" tabindex="-1"></a><span class="co"># run MCR-ALS with the constraints</span></span>
-<span id="cb309-13"><a href="mcr--als.html#cb309-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
-<span id="cb309-14"><a href="mcr--als.html#cb309-14" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">spec.constraints =</span> sc, <span class="at">cont.constraints =</span> cc)</span>
-<span id="cb309-15"><a href="mcr--als.html#cb309-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb309-16"><a href="mcr--als.html#cb309-16" aria-hidden="true" tabindex="-1"></a><span class="co"># show summary</span></span>
-<span id="cb309-17"><a href="mcr--als.html#cb309-17" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="mcr--als.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define constraints for contributions</span></span>
+<span id="cb310-2"><a href="mcr--als.html#cb310-2" aria-hidden="true" tabindex="-1"></a>cc <span class="ot">=</span> <span class="fu">list</span>(</span>
+<span id="cb310-3"><a href="mcr--als.html#cb310-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;norm&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;sum&quot;</span>))</span>
+<span id="cb310-4"><a href="mcr--als.html#cb310-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb310-5"><a href="mcr--als.html#cb310-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb310-6"><a href="mcr--als.html#cb310-6" aria-hidden="true" tabindex="-1"></a><span class="co"># define constraints for spectra</span></span>
+<span id="cb310-7"><a href="mcr--als.html#cb310-7" aria-hidden="true" tabindex="-1"></a>sc <span class="ot">=</span> <span class="fu">list</span>(</span>
+<span id="cb310-8"><a href="mcr--als.html#cb310-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;angle&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">weight =</span> <span class="fl">0.05</span>)),</span>
+<span id="cb310-9"><a href="mcr--als.html#cb310-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">constraint</span>(<span class="st">&quot;norm&quot;</span>, <span class="at">params =</span> <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;length&quot;</span>))</span>
+<span id="cb310-10"><a href="mcr--als.html#cb310-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb310-11"><a href="mcr--als.html#cb310-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb310-12"><a href="mcr--als.html#cb310-12" aria-hidden="true" tabindex="-1"></a><span class="co"># run MCR-ALS with the constraints</span></span>
+<span id="cb310-13"><a href="mcr--als.html#cb310-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">6</span>)</span>
+<span id="cb310-14"><a href="mcr--als.html#cb310-14" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">spec.constraints =</span> sc, <span class="at">cont.constraints =</span> cc)</span>
+<span id="cb310-15"><a href="mcr--als.html#cb310-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb310-16"><a href="mcr--als.html#cb310-16" aria-hidden="true" tabindex="-1"></a><span class="co"># show summary</span></span>
+<span id="cb310-17"><a href="mcr--als.html#cb310-17" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## Summary for MCR ALS case (class mcrals)
 ## 
@@ -562,14 +561,14 @@ In order to add the constraint use <code>constraint("unimod")</code> for zero to
 ## Comp 1  62.64     62.64
 ## Comp 2  22.73     85.37
 ## Comp 3  14.19     99.56</code></pre>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="mcr--als.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make variance plots</span></span>
-<span id="cb311-2"><a href="mcr--als.html#cb311-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb311-3"><a href="mcr--als.html#cb311-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVariance</span>(m)</span>
-<span id="cb311-4"><a href="mcr--als.html#cb311-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCumVariance</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-209-1.png" width="864" /></p>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="mcr--als.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make variance plots</span></span>
+<span id="cb312-2"><a href="mcr--als.html#cb312-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb312-3"><a href="mcr--als.html#cb312-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVariance</span>(m)</span>
+<span id="cb312-4"><a href="mcr--als.html#cb312-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotCumVariance</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-210-1.png" width="864" /></p>
 <p>Since MCR-ALS is iterative algorithm, it should stop when convergence criteria is met. There are two ways to stop MCR-ALS iterations in <em>mdatools</em>. First is a tolerance (<code>tol</code>) parameter, which tells a minimum difference in explained variance to make the algorithm continue. For example, if explained variance on previous step is 0.95467 and on the current step it is 0.95468, the difference is 0.00001 and the algorithm will continue if the tolerance is smaller than this value.</p>
 <p>Another way to limit the iterations is to define the maximum number by using parameter <code>max.iter</code>. By default is is set to 100. The <code>mcrals()</code> has a verbose mode which shows improvements in each iteration as it is demonstrated in the example below (we use the same constraint as in the previous chunk of code)</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="mcr--als.html#cb312-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">spec.constraints =</span> sc, <span class="at">cont.constraints =</span> cc, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="mcr--als.html#cb313-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">mcrals</span>(carbs<span class="sc">$</span>D, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">spec.constraints =</span> sc, <span class="at">cont.constraints =</span> cc, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ## Starting iterations (max.niter = 100):
 ## Iteration    1, R2 = 0.000000

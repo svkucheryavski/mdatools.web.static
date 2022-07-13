@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Simple plots | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Simple plots | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
   <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-09-12" />
+<meta name="date" content="2022-07-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="datasets--excluding-rows-and-columns.html"/>
 <link rel="next" href="datasets--group-plots.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -203,8 +202,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-validation-1"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a></li>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
@@ -276,8 +275,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="datasets--simple-plots" class="section level2 unnumbered">
-<h2>Simple plots</h2>
+<div id="datasets--simple-plots" class="section level2 unnumbered hasAnchor">
+<h2>Simple plots<a href="datasets--simple-plots.html#datasets--simple-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>As it was already mentioned, <em>mdatools</em> has its own functions for plotting with several extra options not available in basic plot tools. These functions are used to make all plots in the models and results (e.g. scores, loadings, predictions, etc.) therefore it can be useful to spend some time and learn the new features (e.g. coloring data points with a vector of values or using manual ticks for axes). But if you are going to make all plots manually (e.g. using <em>ggplot2</em>) you can skip this and the next sections.</p>
 <p>In this section we will look at how to make simple plots from your data objects. Simple plots are scatter (<code>type = "p"</code>), density-scatter (<code>type = "d"</code>), line (<code>type = "l"</code>), line-scatter (<code>type = "b"</code>), bar (<code>type = "h"</code>) or errorbar (<code>type = "e"</code>) plots made for a one set of objects. All plots can be created using the same method <code>mdaplot()</code> by providing a whole dataset as a main argument. Depending on a plot type, the method “treats” the data values differently.</p>
 <p>This table below contains a list of parameters for <code>mdaplot()</code>, which are not available for traditional R plots. In this section we will describe most of the details using simple examples.</p>
@@ -378,8 +377,8 @@ adjust the grid look.</td>
 </tr>
 </tbody>
 </table>
-<div id="scatter-plots" class="section level3 unnumbered">
-<h3>Scatter plots</h3>
+<div id="scatter-plots" class="section level3 unnumbered hasAnchor">
+<h3>Scatter plots<a href="datasets--simple-plots.html#scatter-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will use <code>people</code> dataset for illustration how scatter plots work (see <code>?people</code> for details).</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="datasets--simple-plots.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(people)</span>
 <span id="cb16-2"><a href="datasets--simple-plots.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(people, <span class="st">&quot;name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;People&quot;</span></span>
@@ -508,8 +507,8 @@ hull for data points. To do this, points must be color grouped by a factor as sh
 <span id="cb26-9"><a href="datasets--simple-plots.html#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>, <span class="at">nbins =</span> <span class="dv">80</span>, <span class="at">colmap =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="864" /></p>
 </div>
-<div id="line-plots" class="section level3 unnumbered">
-<h3>Line plots</h3>
+<div id="line-plots" class="section level3 unnumbered hasAnchor">
+<h3>Line plots<a href="datasets--simple-plots.html#line-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When line plot is created, the <code>mdatools()</code> shows a line plot for every row of the provided dataset. So if data set has more than one row, the plot will show a bunch of lines having same properties (color, type, etc). This is particularly useful when working with signals and spectroscopic data. In this subsection we will use simulated UV/Vis spectra from <code>simdata</code>. See <code>?simdata</code> for more details about this set.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="datasets--simple-plots.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
 <span id="cb27-2"><a href="datasets--simple-plots.html#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -544,8 +543,8 @@ hull for data points. To do this, points must be color grouped by a factor as sh
 <p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="864" /></p>
 <p>When you provide such data to any model methods (e.g. PCA, PLS, etc), then all variable related results (loadings, regression coefficients, etc.) will inherit this attribute and use it for making line plots.</p>
 </div>
-<div id="bar-and-errorbar-plots" class="section level3 unnumbered">
-<h3>Bar and errorbar plots</h3>
+<div id="bar-and-errorbar-plots" class="section level3 unnumbered hasAnchor">
+<h3>Bar and errorbar plots<a href="datasets--simple-plots.html#bar-and-errorbar-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Bar plot is perhaps the simplest as it shows values for the first row of the data as bars. Let us start with simple dataset, where we have a matrix with explained variance of a data from e.g. PCA decomposition.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="datasets--simple-plots.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make a simple two rows matrix with values</span></span>
 <span id="cb31-2"><a href="datasets--simple-plots.html#cb31-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">rbind</span>(</span>

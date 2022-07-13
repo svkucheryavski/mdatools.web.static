@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Models and results | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Models and results | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
   <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-09-12" />
+<meta name="date" content="2022-07-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="pca.html"/>
 <link rel="next" href="pca--plots.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -203,8 +202,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-validation-1"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a></li>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
@@ -276,12 +275,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pca--models-and-results" class="section level2 unnumbered">
-<h2>Models and results</h2>
+<div id="pca--models-and-results" class="section level2 unnumbered hasAnchor">
+<h2>Models and results<a href="pca--models-and-results.html#pca--models-and-results" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In <em>mdatools</em>, any method for data analysis, such as PCA, PLS regression, SIMCA classification and so on, can create two types of objects — a model and a result. Every time you build a model you get a <em>model object</em>. Every time you apply the model to a dataset you get a <em>result object</em>. Thus for PCA, the objects have classes <code>pca</code> and <code>pcares</code> correspondingly.</p>
 <p>Each object includes a list with object’s properties (e.g. loadings for model, scores and explained variance for result) and provides a number of methods for visualization and exploration.</p>
-<div id="model-calibration" class="section level3 unnumbered">
-<h3>Model calibration</h3>
+<div id="model-calibration" class="section level3 unnumbered hasAnchor">
+<h3>Model calibration<a href="pca--models-and-results.html#model-calibration" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s see how this works using a simple example — <em>People</em> data. We already used this data when was playing with plots, it consists of 32 objects (persons from Scandinavian and Mediterranean countries, 16 male and 16 female) and 12 variables (height, weight, shoesize, annual income, beer and wine consumption and so on.). More information about the data can be found using <code>?people</code>. We will first load the data matrix and split it into two subsets as following:</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="pca--models-and-results.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdatools)</span>
 <span id="cb63-2"><a href="pca--models-and-results.html#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(people)</span>
@@ -358,8 +357,8 @@ list of PCA <em>result objects</em> containing results of applying the model to 
 ## $expvar - explained variance for each component
 ## $cumexpvar - cumulative explained variance</code></pre>
 </div>
-<div id="model-validation" class="section level3 unnumbered">
-<h3>Model validation</h3>
+<div id="model-validation" class="section level3 unnumbered hasAnchor">
+<h3>Model validation<a href="pca--models-and-results.html#model-validation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>PCA model can be validated using only test set validation, while for supervised model, e.g. PLS or SIMCA, you can use cross-validation as well. The validation results are, of course, represented by <em>result objects</em>, which are fields of a <em>model object</em> similar to <code>cal</code>, but with names <code>test</code>.</p>
 <p>Here is how to build a PCA model with test set validation (we will use <code>Xt</code> as test data):</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="pca--models-and-results.html#cb75-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(Xc, <span class="dv">7</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">x.test =</span> Xt, <span class="at">info =</span> <span class="st">&quot;PCA model&quot;</span>)</span>

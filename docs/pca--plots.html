@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Plotting methods | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Plotting methods | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
   <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
@@ -24,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2021-09-12" />
+<meta name="date" content="2022-07-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="pca--models-and-results.html"/>
 <link rel="next" href="pca--distances-and-limits.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -203,8 +202,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-validation-1"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a></li>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
@@ -276,8 +275,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pca--plots" class="section level2 unnumbered">
-<h2>Plotting methods</h2>
+<div id="pca--plots" class="section level2 unnumbered hasAnchor">
+<h2>Plotting methods<a href="pca--plots.html#pca--plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>First of all you can use the methods <code>mdaplot()</code> and <code>mdaplotg()</code> (or any others, e.g. <code>ggplot2</code>) for easy visualisation of the results as they are all available as matrices with proper names, attributes, etc. In the example below I create scores and loadings plots for PC1 vs PC2. Here I assume that the last model you have created was the one with test set validation, however scores are shown only for calibration set.</p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="pca--plots.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb86-2"><a href="pca--plots.html#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>scores, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.lines =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span>
@@ -346,8 +345,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="pca--plots.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-69-1.png" width="864" /></p>
 <p>You do not have to care about labels, names, legend and so on, however if necessary you can always change almost anything. See full list of methods available for PCA by <code>?pca</code> and <code>?pcares</code>.</p>
-<div id="support-for-images" class="section level3 unnumbered">
-<h3>Support for images</h3>
+<div id="support-for-images" class="section level3 unnumbered hasAnchor">
+<h3>Support for images<a href="pca--plots.html#support-for-images" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As it was described before, images can be used as a source of data for any methods. In this case the results, related to objects/pixels will inherit all necessary attributes and can be show as images as well. In the example below we make a PCA model for the image data from the package and show scores and distances.</p>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="pca--plots.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(pellets)</span>
 <span id="cb92-2"><a href="pca--plots.html#cb92-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">mda.im2data</span>(pellets)</span>
@@ -360,8 +359,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb92-9"><a href="pca--plots.html#cb92-9" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>Q, <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="864" /></p>
 </div>
-<div id="manual-x-values-for-loading-line-plot" class="section level3 unnumbered">
-<h3>Manual x-values for loading line plot</h3>
+<div id="manual-x-values-for-loading-line-plot" class="section level3 unnumbered hasAnchor">
+<h3>Manual x-values for loading line plot<a href="pca--plots.html#manual-x-values-for-loading-line-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As it was discussed in the previous chapter, you can specify a special attribute, <code>"xaxis.values"</code> to a dataset, which will be used as manual x-values in bar and line plots. When we create any model and/or results the most important attributes, including this one, are inherited. For example when you make a loading line plot it will be shown using the attribute values.</p>
 <p>Here is an example that demonstrate this feature using PCA decomposition of the <em>Simdata</em> (UV/Vis spectra).</p>
 <div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="pca--plots.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
@@ -374,8 +373,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb93-8"><a href="pca--plots.html#cb93-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plotLoadings</span>(m, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-71-1.png" width="864" /></p>
 </div>
-<div id="excluding-rows-and-columns" class="section level3 unnumbered">
-<h3>Excluding rows and columns</h3>
+<div id="excluding-rows-and-columns" class="section level3 unnumbered hasAnchor">
+<h3>Excluding rows and columns<a href="pca--plots.html#excluding-rows-and-columns" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>PCA as well as any other method in <code>mdatools</code> can exclude rows and columns from calculations. For example, it can be useful if you have some candidates for outliers or do variable selection and do not want to remove rows and columns from the data matrix. In this case you can just specify two additional parameters, <code>exclcols</code> and <code>exclrows</code>, using either numbers or names of rows/columns to be excluded. You can also specify a vector with logical values (all <code>TRUE</code>s will be excluded).</p>
 <p>The excluded rows are not used for creating a model and calculation of model’s and results’ performance (e.g. explained variance). However main results (for PCA — scores and residual distances) are calculated for these rows as well and set hidden, so you will not see them on plots. You can always show values for excluded objects by using parameter <code>show.excluded = TRUE</code>. It is implemented via attributes “known” for plotting methods from <em>mdatools</em> so if you use e.g. <em>ggplot2</em> you will see all points.</p>
 <p>The excluded columns are not used for any calculations either, the corresponding results (e.g. loadings or regression coefficients) will have zero values for such columns and be also hidden on plots. Here is a simple example.</p>
@@ -393,32 +392,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Here is the matrix with loadings, note that variable <code>Income</code> has zeros for loadings and the matrix has attribute <code>exclrows</code> set to 6 (which is a position of the variable):</p>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="pca--plots.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show matrix with loadings (look at row Income and attribute &quot;exclrows&quot;)</span></span>
 <span id="cb95-2"><a href="pca--plots.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(m<span class="sc">$</span>loadings)</span></code></pre></div>
-<pre><code>##                Comp 1      Comp 2       Comp 3
-## Height   -0.386393327  0.10697019 -0.004829174
-## Weight   -0.391013398  0.07820097  0.051916032
-## Hairleng  0.350435073 -0.11623295 -0.103852349
-## Shoesize -0.385424793  0.13805817 -0.069172117
-## Age      -0.103466285  0.18964288 -0.337243182
-## Income    0.000000000  0.00000000  0.000000000
-## Beer     -0.317356319 -0.38259695  0.044338872
-## Wine      0.140711271  0.57861817 -0.059833970
-## Sex       0.364537185 -0.23838610  0.010818891
-## Swim     -0.377470722  0.04330411  0.008151288
-## Region    0.140581701  0.60435183  0.040969200
-## IQ        0.009849911  0.09372132  0.927669306
-##               Comp 4      Comp 5
-## Height    0.12693029 -0.13128331
-## Weight    0.04049593 -0.14757465
-## Hairleng -0.04969503 -0.73669997
-## Shoesize  0.01049098 -0.17075488
-## Age      -0.89254403 -0.02998028
-## Income    0.00000000  0.00000000
-## Beer     -0.03908064 -0.21419831
-## Wine      0.12347379 -0.41488773
-## Sex       0.04025631 -0.18263577
-## Swim      0.18149268 -0.30163601
-## Region    0.15147464  0.17857614
-## IQ       -0.32978247 -0.11815762
+<pre><code>##                Comp 1      Comp 2       Comp 3      Comp 4      Comp 5
+## Height   -0.386393327  0.10697019 -0.004829174  0.12693029 -0.13128331
+## Weight   -0.391013398  0.07820097  0.051916032  0.04049593 -0.14757465
+## Hairleng  0.350435073 -0.11623295 -0.103852349 -0.04969503 -0.73669997
+## Shoesize -0.385424793  0.13805817 -0.069172117  0.01049098 -0.17075488
+## Age      -0.103466285  0.18964288 -0.337243182 -0.89254403 -0.02998028
+## Income    0.000000000  0.00000000  0.000000000  0.00000000  0.00000000
+## Beer     -0.317356319 -0.38259695  0.044338872 -0.03908064 -0.21419831
+## Wine      0.140711271  0.57861817 -0.059833970  0.12347379 -0.41488773
+## Sex       0.364537185 -0.23838610  0.010818891  0.04025631 -0.18263577
+## Swim     -0.377470722  0.04330411  0.008151288  0.18149268 -0.30163601
+## Region    0.140581701  0.60435183  0.040969200  0.15147464  0.17857614
+## IQ        0.009849911  0.09372132  0.927669306 -0.32978247 -0.11815762
 ## attr(,&quot;exclrows&quot;)
 ## [1] 6
 ## attr(,&quot;name&quot;)
