@@ -45,12 +45,15 @@ kbd {
 }
 
 .page-top {
-   background-color: #eaecef;
-   color: #606060;
+   background-color: #f8f0e8;
+   color: #746a51;
    text-align: center;
    font-size: 0.75em;
    padding: 0.25em;
    line-height: 2em;
+}
+.page-top > a{
+   color: #012e56;
 }
 
 .telegram {

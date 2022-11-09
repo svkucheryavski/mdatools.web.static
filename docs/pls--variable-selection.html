@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Variable selection | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Variable selection | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2022-07-14" />
+<meta name="date" content="2022-11-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -92,7 +92,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -236,6 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#running-full-procedure"><i class="fa fa-check"></i>Running full procedure</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
 </ul></li>
@@ -363,36 +364,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Degrees of freedom (Jack-Knifing): 23</code></pre>
 <p>Function <code>getRegcoeffs()</code> in this case may also return corresponding t-value, standard error, p-value, and confidence interval for each of the coefficient (except intercept) if user specifies a parameter <code>full</code>. The standard error and confidence intervals are also computed for raw, non-standardized, variables (similar to coefficients).</p>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="pls--variable-selection.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">getRegcoeffs</span>(mjk, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">full =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<pre><code>##               Estimated    Std. err.     t-value      p-value        2.5%       97.5%
-## Intercept  1.342626e+01           NA          NA           NA          NA          NA
-## Height     7.456695e-02 3.185875e-03  23.3854388 0.000000e+00  0.14310275  0.20905257
-## Weight     4.896328e-02 1.392816e-03  35.1242970 0.000000e+00  0.14272997  0.20887799
-## Hairleng  -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14 -0.19852297 -0.13073192
-## Age        1.081716e-02 1.143995e-02   0.9524214 3.507861e-01 -0.03032377  0.12353583
-## Income     5.642220e-06 1.463158e-05   0.3875343 7.019238e-01 -0.02372318  0.14371942
-## Beer       5.010542e-03 7.817789e-04   6.3971862 1.579903e-06  0.11003515  0.15623859
-## Wine       7.511377e-03 2.809055e-03   2.6802915 1.336266e-02 -0.07053100  0.07603415
-## Sex       -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14 -0.19852297 -0.13073192
-## Swim       1.010496e-01 7.102257e-03  14.2147650 7.018830e-13  0.14236915  0.20510992
-## Region     1.035071e-01 9.288992e-02   1.1174095 2.753561e-01 -0.10563433  0.04291911
-## IQ        -5.277164e-03 1.002285e-02  -0.5285419 6.021868e-01 -0.08281410  0.07610725
+<pre><code>##               Estimated    Std. err.     t-value      p-value          2.5%         97.5%
+## Intercept  1.342626e+01           NA          NA           NA            NA            NA
+## Height     7.456695e-02 3.185875e-03  23.3854388 0.000000e+00  0.0679764667  8.115743e-02
+## Weight     4.896328e-02 1.392816e-03  35.1242970 0.000000e+00  0.0460820210  5.184454e-02
+## Hairleng  -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14 -0.7696047104 -6.034943e-01
+## Age        1.081716e-02 1.143995e-02   0.9524214 3.507861e-01 -0.0128481769  3.448250e-02
+## Income     5.642220e-06 1.463158e-05   0.3875343 7.019238e-01 -0.0000246255  3.590994e-05
+## Beer       5.010542e-03 7.817789e-04   6.3971862 1.579903e-06  0.0033933089  6.627775e-03
+## Wine       7.511377e-03 2.809055e-03   2.6802915 1.336266e-02  0.0017004042  1.332235e-02
+## Sex       -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14 -0.7696047104 -6.034943e-01
+## Swim       1.010496e-01 7.102257e-03  14.2147650 7.018830e-13  0.0863574493  1.157417e-01
+## Region     1.035071e-01 9.288992e-02   1.1174095 2.753561e-01 -0.0886503166  2.956646e-01
+## IQ        -5.277164e-03 1.002285e-02  -0.5285419 6.021868e-01 -0.0260110098  1.545668e-02
 ## attr(,&quot;name&quot;)
 ## [1] &quot;Regression coefficients for  Shoesize&quot;</code></pre>
 <p>It is also possible to change significance level for confidence intervals.</p>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="pls--variable-selection.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">getRegcoeffs</span>(mjk, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">full =</span> <span class="cn">TRUE</span>, <span class="at">alpha =</span> <span class="fl">0.01</span>))</span></code></pre></div>
-<pre><code>##               Estimated    Std. err.     t-value      p-value        0.5%       99.5%
-## Intercept  1.342626e+01           NA          NA           NA          NA          NA
-## Height     7.456695e-02 3.185875e-03  23.3854388 0.000000e+00  0.13132804  0.22082728
-## Weight     4.896328e-02 1.392816e-03  35.1242970 0.000000e+00  0.13091988  0.22068808
-## Hairleng  -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14 -0.21062642 -0.11862847
-## Age        1.081716e-02 1.143995e-02   0.9524214 3.507861e-01 -0.05779394  0.15100599
-## Income     5.642220e-06 1.463158e-05   0.3875343 7.019238e-01 -0.05361845  0.17361469
-## Beer       5.010542e-03 7.817789e-04   6.3971862 1.579903e-06  0.10178596  0.16448777
-## Wine       7.511377e-03 2.809055e-03   2.6802915 1.336266e-02 -0.09669881  0.10220196
-## Sex       -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14 -0.21062642 -0.11862847
-## Swim       1.010496e-01 7.102257e-03  14.2147650 7.018830e-13  0.13116738  0.21631168
-## Region     1.035071e-01 9.288992e-02   1.1174095 2.753561e-01 -0.13215712  0.06944191
-## IQ        -5.277164e-03 1.002285e-02  -0.5285419 6.021868e-01 -0.11118799  0.10448113
+<pre><code>##               Estimated    Std. err.     t-value      p-value          0.5%         99.5%
+## Intercept  1.342626e+01           NA          NA           NA            NA            NA
+## Height     7.456695e-02 3.185875e-03  23.3854388 0.000000e+00  6.562313e-02  8.351077e-02
+## Weight     4.896328e-02 1.392816e-03  35.1242970 0.000000e+00  4.505318e-02  5.287338e-02
+## Hairleng  -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14 -7.992621e-01 -5.738369e-01
+## Age        1.081716e-02 1.143995e-02   0.9524214 3.507861e-01 -2.129862e-02  4.293295e-02
+## Income     5.642220e-06 1.463158e-05   0.3875343 7.019238e-01 -3.543353e-05  4.671797e-05
+## Beer       5.010542e-03 7.817789e-04   6.3971862 1.579903e-06  2.815826e-03  7.205258e-03
+## Wine       7.511377e-03 2.809055e-03   2.6802915 1.336266e-02 -3.745830e-04  1.539734e-02
+## Sex       -6.865495e-01 4.014933e-02 -17.0926429 1.443290e-14 -7.992621e-01 -5.738369e-01
+## Swim       1.010496e-01 7.102257e-03  14.2147650 7.018830e-13  8.111117e-02  1.209880e-01
+## Region     1.035071e-01 9.288992e-02   1.1174095 2.753561e-01 -1.572661e-01  3.642803e-01
+## IQ        -5.277164e-03 1.002285e-02  -0.5285419 6.021868e-01 -3.341467e-02  2.286034e-02
 ## attr(,&quot;name&quot;)
 ## [1] &quot;Regression coefficients for  Shoesize&quot;</code></pre>
 <p>The p-values, t-values and standard errors are stored each as a 3-way array similar to regression coefficients. The selection can be made by comparing e.g. p-values with a threshold similar to what we have done with VIP-scores and selectivity ratio.</p>
@@ -502,7 +503,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
