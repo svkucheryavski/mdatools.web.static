@@ -201,6 +201,10 @@ kbd {
    background-image: url('../images/film-solid.svg');
 }
 
+.list-item_app {
+   background-image: url('../images/browser-solid.svg');
+}
+
 .page-section_cards {
    background: #ebf0f4;
    background-color: #f6faff;

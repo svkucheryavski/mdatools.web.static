@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Combining methods together | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Combining methods together | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2022-11-09" />
+<meta name="date" content="2023-03-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="preprocessing--varsel.html"/>
-<link rel="next" href="pca.html"/>
+<link rel="next" href="preprocessing--mvreplace.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -170,23 +170,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="preprocessing--baseline.html"><a href="preprocessing--baseline.html#baseline-correction-with-asymmetric-least-squares"><i class="fa fa-check"></i>Baseline correction with asymmetric least squares</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="preprocessing--norm.html"><a href="preprocessing--norm.html"><i class="fa fa-check"></i>Normalization</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--savgol.html"><a href="preprocessing--savgol.html"><i class="fa fa-check"></i>Smoothing and derivatives</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--eltransform.html"><a href="preprocessing--eltransform.html"><i class="fa fa-check"></i>Element wise transformations</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--varsel.html"><a href="preprocessing--varsel.html"><i class="fa fa-check"></i>Variable selection as preprocessing method</a></li>
 <li class="chapter" data-level="" data-path="preprocessing-combine.html"><a href="preprocessing-combine.html"><i class="fa fa-check"></i>Combining methods together</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--mvreplace.html"><a href="preprocessing--mvreplace.html"><i class="fa fa-check"></i>Replacing missing values</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i>Principal component analysis</a>
 <ul>
 <li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
 <li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html#model-calibration"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html#model-validation"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
-<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i>Model validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#using-validation-set"><i class="fa fa-check"></i>Using validation set</a></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#procrustes-cross-validation"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
 <ul>
@@ -195,7 +201,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--model-complexity.html"><a href="pca--model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="pca--randomized-algorithm.html"><a href="pca--randomized-algorithm.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
-<li class="chapter" data-level="" data-path="pca--pcv.html"><a href="pca--pcv.html"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -203,7 +208,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-validationtest-set"><i class="fa fa-check"></i>Using validation/test set</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-procrustes-cross-validation"><i class="fa fa-check"></i>Using Procrustes cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-conventional-cross-validation"><i class="fa fa-check"></i>Using conventional cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#selection-of-optimal-number-of-components"><i class="fa fa-check"></i>Selection of optimal number of components</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression-coefficients.html"><a href="regression-coefficients.html"><i class="fa fa-check"></i>Regression coefficients</a></li>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
@@ -227,8 +239,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html"><i class="fa fa-check"></i>Calibration and validation</a>
 <ul>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#cross-validation"><i class="fa fa-check"></i>Cross-validation</a></li>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-validation-with-a-test-set"><i class="fa fa-check"></i>Predictions and validation with a test set</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#validation-1"><i class="fa fa-check"></i>Validation</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-testing-the-model"><i class="fa fa-check"></i>Predictions and testing the model</a></li>
 <li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#class-belonging-probabilities"><i class="fa fa-check"></i>Class belonging probabilities</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="simca--multiclass-classification.html"><a href="simca--multiclass-classification.html"><i class="fa fa-check"></i>Multiclass classification</a></li>
@@ -280,7 +292,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Combining methods together<a href="preprocessing-combine.html#preprocessing-combine" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>From <em>v.0.12.0</em> it is possible to combine several preprocessing methods and their parameters into one R object (list) and then apply them all at once in a correct order. This is particularly useful when you create a model based on a preprocessed calibration set and then want to apply the model to a new data. Which means the new data must be preprocessed in the same way as the data you used to create the model. The new functionality makes this easier.</p>
 <p>First of all, you can see the list of preprocessing methods available for this feature as well as all necessary information about them if you run <code>prep.list()</code> as shown below:</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="preprocessing-combine.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prep.list</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="preprocessing-combine.html#cb59-1" tabindex="-1"></a><span class="fu">prep.list</span>()</span></code></pre></div>
 <pre><code>## 
 ## 
 ## List of available preprocessing methods:
@@ -353,25 +365,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   &#39;max.cov&#39;: columns with coefficient of variation (in percent) below `max.cov` will not be scaled</code></pre>
 <p>What you need to know is the name of the method and which parameters you can or want to provide (if you do not specify any parameters, default values will be used instead).</p>
 <p>Let’s start with a simple example, where we want to take spectra from <em>Simdata</em>, and, first of all, apply Savitzky-Golay with filter width = 5, polynomial degree = 2 and derivative order = 1. Then we want to normalize them using SNV and get rid of all spectral values from 300 nm and above. Here is how to make a preprocessing object for this sequence:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="preprocessing-combine.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
-<span id="cb60-2"><a href="preprocessing-combine.html#cb60-2" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> simdata<span class="sc">$</span>wavelength</span>
-<span id="cb60-3"><a href="preprocessing-combine.html#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-4"><a href="preprocessing-combine.html#cb60-4" aria-hidden="true" tabindex="-1"></a>myprep <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb60-5"><a href="preprocessing-combine.html#cb60-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;savgol&quot;</span>, <span class="fu">list</span>(<span class="at">width =</span> <span class="dv">5</span>, <span class="at">porder =</span> <span class="dv">2</span>, <span class="at">dorder =</span> <span class="dv">1</span>)),</span>
-<span id="cb60-6"><a href="preprocessing-combine.html#cb60-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;snv&quot;</span>),</span>
-<span id="cb60-7"><a href="preprocessing-combine.html#cb60-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;varsel&quot;</span>, <span class="fu">list</span>(<span class="at">var.ind =</span> w <span class="sc">&lt;</span> <span class="dv">300</span>))</span>
-<span id="cb60-8"><a href="preprocessing-combine.html#cb60-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="preprocessing-combine.html#cb61-1" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
+<span id="cb61-2"><a href="preprocessing-combine.html#cb61-2" tabindex="-1"></a>w <span class="ot">&lt;-</span> simdata<span class="sc">$</span>wavelength</span>
+<span id="cb61-3"><a href="preprocessing-combine.html#cb61-3" tabindex="-1"></a></span>
+<span id="cb61-4"><a href="preprocessing-combine.html#cb61-4" tabindex="-1"></a>myprep <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb61-5"><a href="preprocessing-combine.html#cb61-5" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;savgol&quot;</span>, <span class="fu">list</span>(<span class="at">width =</span> <span class="dv">5</span>, <span class="at">porder =</span> <span class="dv">2</span>, <span class="at">dorder =</span> <span class="dv">1</span>)),</span>
+<span id="cb61-6"><a href="preprocessing-combine.html#cb61-6" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;snv&quot;</span>),</span>
+<span id="cb61-7"><a href="preprocessing-combine.html#cb61-7" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;varsel&quot;</span>, <span class="fu">list</span>(<span class="at">var.ind =</span> w <span class="sc">&lt;</span> <span class="dv">300</span>))</span>
+<span id="cb61-8"><a href="preprocessing-combine.html#cb61-8" tabindex="-1"></a>)</span></code></pre></div>
 <p>Now you can apply the whole sequence to any spectral data by using function <code>employ.prep()</code>:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="preprocessing-combine.html#cb61-1" aria-hidden="true" tabindex="-1"></a>Xc <span class="ot">&lt;-</span> simdata<span class="sc">$</span>spectra.c</span>
-<span id="cb61-2"><a href="preprocessing-combine.html#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(Xc, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">&lt;-</span> w</span>
-<span id="cb61-3"><a href="preprocessing-combine.html#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(Xc, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
-<span id="cb61-4"><a href="preprocessing-combine.html#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-5"><a href="preprocessing-combine.html#cb61-5" aria-hidden="true" tabindex="-1"></a>Xcp <span class="ot">&lt;-</span> <span class="fu">employ.prep</span>(myprep, Xc)</span>
-<span id="cb61-6"><a href="preprocessing-combine.html#cb61-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-7"><a href="preprocessing-combine.html#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb61-8"><a href="preprocessing-combine.html#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(Xc, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">350</span>))</span>
-<span id="cb61-9"><a href="preprocessing-combine.html#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(Xcp, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">350</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-50-1.png" width="864" /></p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="preprocessing-combine.html#cb62-1" tabindex="-1"></a>Xc <span class="ot">&lt;-</span> simdata<span class="sc">$</span>spectra.c</span>
+<span id="cb62-2"><a href="preprocessing-combine.html#cb62-2" tabindex="-1"></a><span class="fu">attr</span>(Xc, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">&lt;-</span> w</span>
+<span id="cb62-3"><a href="preprocessing-combine.html#cb62-3" tabindex="-1"></a><span class="fu">attr</span>(Xc, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
+<span id="cb62-4"><a href="preprocessing-combine.html#cb62-4" tabindex="-1"></a></span>
+<span id="cb62-5"><a href="preprocessing-combine.html#cb62-5" tabindex="-1"></a>Xcp <span class="ot">&lt;-</span> <span class="fu">employ.prep</span>(myprep, Xc)</span>
+<span id="cb62-6"><a href="preprocessing-combine.html#cb62-6" tabindex="-1"></a></span>
+<span id="cb62-7"><a href="preprocessing-combine.html#cb62-7" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb62-8"><a href="preprocessing-combine.html#cb62-8" tabindex="-1"></a><span class="fu">mdaplot</span>(Xc, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">350</span>))</span>
+<span id="cb62-9"><a href="preprocessing-combine.html#cb62-9" tabindex="-1"></a><span class="fu">mdaplot</span>(Xcp, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">350</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-51-1.png" width="864" /></p>
 <p>Now let’s consider another example, where we have a calibration set and a test set. We need to create preprocessing sequence for the calibration set and, let’s say, we ended up with the following sequence:</p>
 <ul>
 <li>Reflectance to absorbance transformation</li>
@@ -380,50 +392,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Removing the part with wavelength &gt; 300 nm</li>
 </ul>
 <p>We have two issues here. First of all, there is no implemented method which allows you to convert reflectance spectra to absorbance (log(1/R)). Second is that MSC relies on a mean spectrum, it must be computed for the calibration set and then be re-used when apply the correction to a new data. Here is how to solve both:</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="preprocessing-combine.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define calibration and test sets</span></span>
-<span id="cb62-2"><a href="preprocessing-combine.html#cb62-2" aria-hidden="true" tabindex="-1"></a>Xc <span class="ot">&lt;-</span> simdata<span class="sc">$</span>spectra.c</span>
-<span id="cb62-3"><a href="preprocessing-combine.html#cb62-3" aria-hidden="true" tabindex="-1"></a>Xt <span class="ot">&lt;-</span> simdata<span class="sc">$</span>spectra.t</span>
-<span id="cb62-4"><a href="preprocessing-combine.html#cb62-4" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> simdata<span class="sc">$</span>wavelength</span>
-<span id="cb62-5"><a href="preprocessing-combine.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(Xt, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">attr</span>(Xc, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">&lt;-</span> w</span>
-<span id="cb62-6"><a href="preprocessing-combine.html#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(Xt, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">attr</span>(Xc, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
-<span id="cb62-7"><a href="preprocessing-combine.html#cb62-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-8"><a href="preprocessing-combine.html#cb62-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-9"><a href="preprocessing-combine.html#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create a function for converting R to A</span></span>
-<span id="cb62-10"><a href="preprocessing-combine.html#cb62-10" aria-hidden="true" tabindex="-1"></a>r2a <span class="ot">&lt;-</span> <span class="cf">function</span>(data) <span class="fu">return</span>(<span class="fu">log</span>(<span class="dv">1</span><span class="sc">/</span><span class="fu">abs</span>(data)))</span>
-<span id="cb62-11"><a href="preprocessing-combine.html#cb62-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-12"><a href="preprocessing-combine.html#cb62-12" aria-hidden="true" tabindex="-1"></a><span class="co"># compute mean spectrum for calibration set</span></span>
-<span id="cb62-13"><a href="preprocessing-combine.html#cb62-13" aria-hidden="true" tabindex="-1"></a>ms <span class="ot">&lt;-</span> <span class="fu">apply</span>(Xc, <span class="dv">2</span>, mean)</span>
-<span id="cb62-14"><a href="preprocessing-combine.html#cb62-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-15"><a href="preprocessing-combine.html#cb62-15" aria-hidden="true" tabindex="-1"></a><span class="co"># create a sequence of preprocessing methods</span></span>
-<span id="cb62-16"><a href="preprocessing-combine.html#cb62-16" aria-hidden="true" tabindex="-1"></a>myprep <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb62-17"><a href="preprocessing-combine.html#cb62-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;r2a&quot;</span>, <span class="at">method =</span> r2a),</span>
-<span id="cb62-18"><a href="preprocessing-combine.html#cb62-18" aria-hidden="true" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;msc&quot;</span>, <span class="fu">list</span>(<span class="at">mspectrum =</span> ms)),</span>
-<span id="cb62-19"><a href="preprocessing-combine.html#cb62-19" aria-hidden="true" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;norm&quot;</span>, <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;area&quot;</span>)),</span>
-<span id="cb62-20"><a href="preprocessing-combine.html#cb62-20" aria-hidden="true" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;varsel&quot;</span>, <span class="fu">list</span>(<span class="at">var.ind =</span> w <span class="sc">&lt;</span> <span class="dv">300</span>))</span>
-<span id="cb62-21"><a href="preprocessing-combine.html#cb62-21" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb62-22"><a href="preprocessing-combine.html#cb62-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-23"><a href="preprocessing-combine.html#cb62-23" aria-hidden="true" tabindex="-1"></a>Xcp <span class="ot">&lt;-</span> <span class="fu">employ.prep</span>(myprep, Xc)</span>
-<span id="cb62-24"><a href="preprocessing-combine.html#cb62-24" aria-hidden="true" tabindex="-1"></a>Xtp <span class="ot">&lt;-</span> <span class="fu">employ.prep</span>(myprep, Xt)</span>
-<span id="cb62-25"><a href="preprocessing-combine.html#cb62-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-26"><a href="preprocessing-combine.html#cb62-26" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb62-27"><a href="preprocessing-combine.html#cb62-27" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(Xc, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Calibration set, raw&quot;</span>)</span>
-<span id="cb62-28"><a href="preprocessing-combine.html#cb62-28" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(Xt, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Test set, raw&quot;</span>)</span>
-<span id="cb62-29"><a href="preprocessing-combine.html#cb62-29" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(Xcp, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Calibration set, preprocessed&quot;</span>)</span>
-<span id="cb62-30"><a href="preprocessing-combine.html#cb62-30" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(Xtp, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Test set, preprocessed&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-51-1.png" width="864" /></p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="preprocessing-combine.html#cb63-1" tabindex="-1"></a><span class="co"># define calibration and test sets</span></span>
+<span id="cb63-2"><a href="preprocessing-combine.html#cb63-2" tabindex="-1"></a>Xc <span class="ot">&lt;-</span> simdata<span class="sc">$</span>spectra.c</span>
+<span id="cb63-3"><a href="preprocessing-combine.html#cb63-3" tabindex="-1"></a>Xt <span class="ot">&lt;-</span> simdata<span class="sc">$</span>spectra.t</span>
+<span id="cb63-4"><a href="preprocessing-combine.html#cb63-4" tabindex="-1"></a>w <span class="ot">&lt;-</span> simdata<span class="sc">$</span>wavelength</span>
+<span id="cb63-5"><a href="preprocessing-combine.html#cb63-5" tabindex="-1"></a><span class="fu">attr</span>(Xt, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">attr</span>(Xc, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">&lt;-</span> w</span>
+<span id="cb63-6"><a href="preprocessing-combine.html#cb63-6" tabindex="-1"></a><span class="fu">attr</span>(Xt, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">attr</span>(Xc, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
+<span id="cb63-7"><a href="preprocessing-combine.html#cb63-7" tabindex="-1"></a></span>
+<span id="cb63-8"><a href="preprocessing-combine.html#cb63-8" tabindex="-1"></a></span>
+<span id="cb63-9"><a href="preprocessing-combine.html#cb63-9" tabindex="-1"></a><span class="co"># create a function for converting R to A</span></span>
+<span id="cb63-10"><a href="preprocessing-combine.html#cb63-10" tabindex="-1"></a>r2a <span class="ot">&lt;-</span> <span class="cf">function</span>(data) <span class="fu">return</span>(<span class="fu">log</span>(<span class="dv">1</span><span class="sc">/</span><span class="fu">abs</span>(data)))</span>
+<span id="cb63-11"><a href="preprocessing-combine.html#cb63-11" tabindex="-1"></a></span>
+<span id="cb63-12"><a href="preprocessing-combine.html#cb63-12" tabindex="-1"></a><span class="co"># compute mean spectrum for calibration set</span></span>
+<span id="cb63-13"><a href="preprocessing-combine.html#cb63-13" tabindex="-1"></a>ms <span class="ot">&lt;-</span> <span class="fu">apply</span>(Xc, <span class="dv">2</span>, mean)</span>
+<span id="cb63-14"><a href="preprocessing-combine.html#cb63-14" tabindex="-1"></a></span>
+<span id="cb63-15"><a href="preprocessing-combine.html#cb63-15" tabindex="-1"></a><span class="co"># create a sequence of preprocessing methods</span></span>
+<span id="cb63-16"><a href="preprocessing-combine.html#cb63-16" tabindex="-1"></a>myprep <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb63-17"><a href="preprocessing-combine.html#cb63-17" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;r2a&quot;</span>, <span class="at">method =</span> r2a),</span>
+<span id="cb63-18"><a href="preprocessing-combine.html#cb63-18" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;msc&quot;</span>, <span class="fu">list</span>(<span class="at">mspectrum =</span> ms)),</span>
+<span id="cb63-19"><a href="preprocessing-combine.html#cb63-19" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;norm&quot;</span>, <span class="fu">list</span>(<span class="at">type =</span> <span class="st">&quot;area&quot;</span>)),</span>
+<span id="cb63-20"><a href="preprocessing-combine.html#cb63-20" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;varsel&quot;</span>, <span class="fu">list</span>(<span class="at">var.ind =</span> w <span class="sc">&lt;</span> <span class="dv">300</span>))</span>
+<span id="cb63-21"><a href="preprocessing-combine.html#cb63-21" tabindex="-1"></a>)</span>
+<span id="cb63-22"><a href="preprocessing-combine.html#cb63-22" tabindex="-1"></a></span>
+<span id="cb63-23"><a href="preprocessing-combine.html#cb63-23" tabindex="-1"></a>Xcp <span class="ot">&lt;-</span> <span class="fu">employ.prep</span>(myprep, Xc)</span>
+<span id="cb63-24"><a href="preprocessing-combine.html#cb63-24" tabindex="-1"></a>Xtp <span class="ot">&lt;-</span> <span class="fu">employ.prep</span>(myprep, Xt)</span>
+<span id="cb63-25"><a href="preprocessing-combine.html#cb63-25" tabindex="-1"></a></span>
+<span id="cb63-26"><a href="preprocessing-combine.html#cb63-26" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb63-27"><a href="preprocessing-combine.html#cb63-27" tabindex="-1"></a><span class="fu">mdaplot</span>(Xc, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Calibration set, raw&quot;</span>)</span>
+<span id="cb63-28"><a href="preprocessing-combine.html#cb63-28" tabindex="-1"></a><span class="fu">mdaplot</span>(Xt, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Test set, raw&quot;</span>)</span>
+<span id="cb63-29"><a href="preprocessing-combine.html#cb63-29" tabindex="-1"></a><span class="fu">mdaplot</span>(Xcp, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Calibration set, preprocessed&quot;</span>)</span>
+<span id="cb63-30"><a href="preprocessing-combine.html#cb63-30" tabindex="-1"></a><span class="fu">mdaplot</span>(Xtp, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Test set, preprocessed&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-52-1.png" width="864" /></p>
 <p>In this example I use <code>abs()</code> inside the function <code>r2a</code> to get rid of occasional negative values in the spectra caused by some noise.</p>
 <p>As one can see, you can always define your own method by creating a function, whose first argument should always be <code>data</code> — like I did it with <code>r2a</code>. This function should treat the data as a matrix and return a matrix of the same dimension as the original data. Other parameters are optional. In my example <code>r2a</code> does not have any additional parameters therefore I skipped this argument when calling the <code>prep()</code> function.</p>
 <p>And, as you probably notices, I just provided preliminary computed mean spectrum for the <code>"msc"</code> method. Now the object <code>myprep</code> can be saved together with a model to <code>RData</code> file and be reused when is needed.</p>
-
 </div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
 <a href="preprocessing--varsel.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pca.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="preprocessing--mvreplace.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -465,7 +475,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["_main.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

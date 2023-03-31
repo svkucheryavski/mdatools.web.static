@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Variable selection as preprocessing method | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Variable selection as preprocessing method | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2022-11-09" />
+<meta name="date" content="2023-03-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -170,23 +170,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="preprocessing--baseline.html"><a href="preprocessing--baseline.html#baseline-correction-with-asymmetric-least-squares"><i class="fa fa-check"></i>Baseline correction with asymmetric least squares</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="preprocessing--norm.html"><a href="preprocessing--norm.html"><i class="fa fa-check"></i>Normalization</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--savgol.html"><a href="preprocessing--savgol.html"><i class="fa fa-check"></i>Smoothing and derivatives</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--eltransform.html"><a href="preprocessing--eltransform.html"><i class="fa fa-check"></i>Element wise transformations</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--varsel.html"><a href="preprocessing--varsel.html"><i class="fa fa-check"></i>Variable selection as preprocessing method</a></li>
 <li class="chapter" data-level="" data-path="preprocessing-combine.html"><a href="preprocessing-combine.html"><i class="fa fa-check"></i>Combining methods together</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--mvreplace.html"><a href="preprocessing--mvreplace.html"><i class="fa fa-check"></i>Replacing missing values</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i>Principal component analysis</a>
 <ul>
 <li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
 <li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html#model-calibration"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html#model-validation"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
-<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i>Model validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#using-validation-set"><i class="fa fa-check"></i>Using validation set</a></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#procrustes-cross-validation"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
 <ul>
@@ -195,7 +201,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--model-complexity.html"><a href="pca--model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="pca--randomized-algorithm.html"><a href="pca--randomized-algorithm.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
-<li class="chapter" data-level="" data-path="pca--pcv.html"><a href="pca--pcv.html"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -203,7 +208,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-validationtest-set"><i class="fa fa-check"></i>Using validation/test set</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-procrustes-cross-validation"><i class="fa fa-check"></i>Using Procrustes cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-conventional-cross-validation"><i class="fa fa-check"></i>Using conventional cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#selection-of-optimal-number-of-components"><i class="fa fa-check"></i>Selection of optimal number of components</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression-coefficients.html"><a href="regression-coefficients.html"><i class="fa fa-check"></i>Regression coefficients</a></li>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
@@ -227,8 +239,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html"><i class="fa fa-check"></i>Calibration and validation</a>
 <ul>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#cross-validation"><i class="fa fa-check"></i>Cross-validation</a></li>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-validation-with-a-test-set"><i class="fa fa-check"></i>Predictions and validation with a test set</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#validation-1"><i class="fa fa-check"></i>Validation</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-testing-the-model"><i class="fa fa-check"></i>Predictions and testing the model</a></li>
 <li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#class-belonging-probabilities"><i class="fa fa-check"></i>Class belonging probabilities</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="simca--multiclass-classification.html"><a href="simca--multiclass-classification.html"><i class="fa fa-check"></i>Multiclass classification</a></li>
@@ -280,21 +292,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Variable selection as preprocessing method<a href="preprocessing--varsel.html#preprocessing--varsel" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Variable selection can be done by using <code>mda.exclcols()</code>, which simply hides variables/columns, which must not be taken into account in calculations, or by <code>mda.subset()</code> which selects only desired columns and remove the rest. Both methods preserve all additional attributes assigned to the data.</p>
 <p>The method <code>prep.varsel()</code> is simply a wrapper, which allows selection of only desired variables (similar to <code>mda.subset()</code>) but can be also incorporated into preprocessing workflow (see next section for details). In the example below it is used to select only even columns from the data matrix.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="preprocessing--varsel.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load spectra from the Simdata and add some attributed</span></span>
-<span id="cb57-2"><a href="preprocessing--varsel.html#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
-<span id="cb57-3"><a href="preprocessing--varsel.html#cb57-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> simdata<span class="sc">$</span>spectra.c</span>
-<span id="cb57-4"><a href="preprocessing--varsel.html#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(X, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">&lt;-</span> simdata<span class="sc">$</span>wavelength</span>
-<span id="cb57-5"><a href="preprocessing--varsel.html#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(X, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
-<span id="cb57-6"><a href="preprocessing--varsel.html#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(X, <span class="st">&quot;name&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Simdata&quot;</span></span>
-<span id="cb57-7"><a href="preprocessing--varsel.html#cb57-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-8"><a href="preprocessing--varsel.html#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="co"># apply variable selection as preprocessing</span></span>
-<span id="cb57-9"><a href="preprocessing--varsel.html#cb57-9" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">prep.varsel</span>(X, <span class="fu">seq</span>(<span class="dv">2</span>, <span class="fu">ncol</span>(X), <span class="at">by =</span> <span class="dv">2</span>))</span>
-<span id="cb57-10"><a href="preprocessing--varsel.html#cb57-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-11"><a href="preprocessing--varsel.html#cb57-11" aria-hidden="true" tabindex="-1"></a><span class="co"># show both original and preprocessed spectra</span></span>
-<span id="cb57-12"><a href="preprocessing--varsel.html#cb57-12" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb57-13"><a href="preprocessing--varsel.html#cb57-13" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(X, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
-<span id="cb57-14"><a href="preprocessing--varsel.html#cb57-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(Y, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-47-1.png" width="864" /></p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="preprocessing--varsel.html#cb58-1" tabindex="-1"></a><span class="co"># load spectra from the Simdata and add some attributed</span></span>
+<span id="cb58-2"><a href="preprocessing--varsel.html#cb58-2" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
+<span id="cb58-3"><a href="preprocessing--varsel.html#cb58-3" tabindex="-1"></a>X <span class="ot">&lt;-</span> simdata<span class="sc">$</span>spectra.c</span>
+<span id="cb58-4"><a href="preprocessing--varsel.html#cb58-4" tabindex="-1"></a><span class="fu">attr</span>(X, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">&lt;-</span> simdata<span class="sc">$</span>wavelength</span>
+<span id="cb58-5"><a href="preprocessing--varsel.html#cb58-5" tabindex="-1"></a><span class="fu">attr</span>(X, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
+<span id="cb58-6"><a href="preprocessing--varsel.html#cb58-6" tabindex="-1"></a><span class="fu">attr</span>(X, <span class="st">&quot;name&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;Simdata&quot;</span></span>
+<span id="cb58-7"><a href="preprocessing--varsel.html#cb58-7" tabindex="-1"></a></span>
+<span id="cb58-8"><a href="preprocessing--varsel.html#cb58-8" tabindex="-1"></a><span class="co"># apply variable selection as preprocessing</span></span>
+<span id="cb58-9"><a href="preprocessing--varsel.html#cb58-9" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">prep.varsel</span>(X, <span class="fu">seq</span>(<span class="dv">2</span>, <span class="fu">ncol</span>(X), <span class="at">by =</span> <span class="dv">2</span>))</span>
+<span id="cb58-10"><a href="preprocessing--varsel.html#cb58-10" tabindex="-1"></a></span>
+<span id="cb58-11"><a href="preprocessing--varsel.html#cb58-11" tabindex="-1"></a><span class="co"># show both original and preprocessed spectra</span></span>
+<span id="cb58-12"><a href="preprocessing--varsel.html#cb58-12" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb58-13"><a href="preprocessing--varsel.html#cb58-13" tabindex="-1"></a><span class="fu">mdaplot</span>(X, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb58-14"><a href="preprocessing--varsel.html#cb58-14" tabindex="-1"></a><span class="fu">mdaplot</span>(Y, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-48-1.png" width="864" /></p>
 <p>You can notice that on the second plot the lines are not smooth anymore as the number of points is twice smaller.</p>
 </div>
             </section>
@@ -345,7 +357,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["_main.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

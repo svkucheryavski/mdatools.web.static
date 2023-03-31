@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Autoscaling | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Autoscaling | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2022-11-09" />
+<meta name="date" content="2023-03-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -170,23 +170,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="preprocessing--baseline.html"><a href="preprocessing--baseline.html#baseline-correction-with-asymmetric-least-squares"><i class="fa fa-check"></i>Baseline correction with asymmetric least squares</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="preprocessing--norm.html"><a href="preprocessing--norm.html"><i class="fa fa-check"></i>Normalization</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--savgol.html"><a href="preprocessing--savgol.html"><i class="fa fa-check"></i>Smoothing and derivatives</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--eltransform.html"><a href="preprocessing--eltransform.html"><i class="fa fa-check"></i>Element wise transformations</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--varsel.html"><a href="preprocessing--varsel.html"><i class="fa fa-check"></i>Variable selection as preprocessing method</a></li>
 <li class="chapter" data-level="" data-path="preprocessing-combine.html"><a href="preprocessing-combine.html"><i class="fa fa-check"></i>Combining methods together</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--mvreplace.html"><a href="preprocessing--mvreplace.html"><i class="fa fa-check"></i>Replacing missing values</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i>Principal component analysis</a>
 <ul>
 <li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
 <li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html#model-calibration"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html#model-validation"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
-<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i>Model validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#using-validation-set"><i class="fa fa-check"></i>Using validation set</a></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#procrustes-cross-validation"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
 <ul>
@@ -195,7 +201,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--model-complexity.html"><a href="pca--model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="pca--randomized-algorithm.html"><a href="pca--randomized-algorithm.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
-<li class="chapter" data-level="" data-path="pca--pcv.html"><a href="pca--pcv.html"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -203,7 +208,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-validationtest-set"><i class="fa fa-check"></i>Using validation/test set</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-procrustes-cross-validation"><i class="fa fa-check"></i>Using Procrustes cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-conventional-cross-validation"><i class="fa fa-check"></i>Using conventional cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#selection-of-optimal-number-of-components"><i class="fa fa-check"></i>Selection of optimal number of components</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression-coefficients.html"><a href="regression-coefficients.html"><i class="fa fa-check"></i>Regression coefficients</a></li>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
@@ -227,8 +239,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html"><i class="fa fa-check"></i>Calibration and validation</a>
 <ul>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#cross-validation"><i class="fa fa-check"></i>Cross-validation</a></li>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-validation-with-a-test-set"><i class="fa fa-check"></i>Predictions and validation with a test set</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#validation-1"><i class="fa fa-check"></i>Validation</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-testing-the-model"><i class="fa fa-check"></i>Predictions and testing the model</a></li>
 <li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#class-belonging-probabilities"><i class="fa fa-check"></i>Class belonging probabilities</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="simca--multiclass-classification.html"><a href="simca--multiclass-classification.html"><i class="fa fa-check"></i>Multiclass classification</a></li>
@@ -280,30 +292,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Autoscaling<a href="preprocessing--autoscaling.html#preprocessing--autoscaling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><em>Autoscaling</em> consists of two steps. First step is <em>centering</em> (or, more precise, <em>mean centering</em>) when center of a data cloud in variable space is moved to an origin. Mathematically it is done by subtracting mean from the data values separately for every column/variable. Second step is <em>scaling</em> og <em>standardization</em> when data values are divided to standard deviation so the variables have unit variance. This autoscaling procedure (both steps) is known in statistics simply as <em>standardization</em>. You can also use arbitrary values to center or/and scale the data, in this case use sequence or vector with these values should be provided as an argument for <code>center</code> or <code>scale</code>.</p>
 <p>R has a built-in function for centering and scaling, <code>scale()</code>. The method <code>prep.autoscale()</code> is actually a wrapper for this function, which is mostly needed to set all user defined attributes to the result (all preprocessing methods will keep the attributes). Here are some examples how to use it:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="preprocessing--autoscaling.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdatools)</span>
-<span id="cb50-2"><a href="preprocessing--autoscaling.html#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-3"><a href="preprocessing--autoscaling.html#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load People data</span></span>
-<span id="cb50-4"><a href="preprocessing--autoscaling.html#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(people)</span>
-<span id="cb50-5"><a href="preprocessing--autoscaling.html#cb50-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-6"><a href="preprocessing--autoscaling.html#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="co"># mean centering only</span></span>
-<span id="cb50-7"><a href="preprocessing--autoscaling.html#cb50-7" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">=</span> <span class="fu">prep.autoscale</span>(people, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb50-8"><a href="preprocessing--autoscaling.html#cb50-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-9"><a href="preprocessing--autoscaling.html#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="co"># scaling/standardization only</span></span>
-<span id="cb50-10"><a href="preprocessing--autoscaling.html#cb50-10" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">=</span> <span class="fu">prep.autoscale</span>(people, <span class="at">center =</span> <span class="cn">FALSE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb50-11"><a href="preprocessing--autoscaling.html#cb50-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-12"><a href="preprocessing--autoscaling.html#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="co"># autoscaling (mean centering and standardization)</span></span>
-<span id="cb50-13"><a href="preprocessing--autoscaling.html#cb50-13" aria-hidden="true" tabindex="-1"></a>data3 <span class="ot">=</span> <span class="fu">prep.autoscale</span>(people, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb50-14"><a href="preprocessing--autoscaling.html#cb50-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-15"><a href="preprocessing--autoscaling.html#cb50-15" aria-hidden="true" tabindex="-1"></a><span class="co"># centering with median values and standardization</span></span>
-<span id="cb50-16"><a href="preprocessing--autoscaling.html#cb50-16" aria-hidden="true" tabindex="-1"></a>data4 <span class="ot">=</span> <span class="fu">prep.autoscale</span>(people, <span class="at">center =</span> <span class="fu">apply</span>(people, <span class="dv">2</span>, median), <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb50-17"><a href="preprocessing--autoscaling.html#cb50-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-18"><a href="preprocessing--autoscaling.html#cb50-18" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb50-19"><a href="preprocessing--autoscaling.html#cb50-19" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(data1, <span class="at">main =</span> <span class="st">&quot;Mean centered&quot;</span>)</span>
-<span id="cb50-20"><a href="preprocessing--autoscaling.html#cb50-20" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(data2, <span class="at">main =</span> <span class="st">&quot;Standardized&quot;</span>)</span>
-<span id="cb50-21"><a href="preprocessing--autoscaling.html#cb50-21" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(data3, <span class="at">main =</span> <span class="st">&quot;Mean centered and standardized&quot;</span>)</span>
-<span id="cb50-22"><a href="preprocessing--autoscaling.html#cb50-22" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(data4, <span class="at">main =</span> <span class="st">&quot;Median centered and standardized&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="preprocessing--autoscaling.html#cb50-1" tabindex="-1"></a><span class="fu">library</span>(mdatools)</span>
+<span id="cb50-2"><a href="preprocessing--autoscaling.html#cb50-2" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="preprocessing--autoscaling.html#cb50-3" tabindex="-1"></a><span class="co"># load People data</span></span>
+<span id="cb50-4"><a href="preprocessing--autoscaling.html#cb50-4" tabindex="-1"></a><span class="fu">data</span>(people)</span>
+<span id="cb50-5"><a href="preprocessing--autoscaling.html#cb50-5" tabindex="-1"></a></span>
+<span id="cb50-6"><a href="preprocessing--autoscaling.html#cb50-6" tabindex="-1"></a><span class="co"># mean centering only</span></span>
+<span id="cb50-7"><a href="preprocessing--autoscaling.html#cb50-7" tabindex="-1"></a>data1 <span class="ot">=</span> <span class="fu">prep.autoscale</span>(people, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb50-8"><a href="preprocessing--autoscaling.html#cb50-8" tabindex="-1"></a></span>
+<span id="cb50-9"><a href="preprocessing--autoscaling.html#cb50-9" tabindex="-1"></a><span class="co"># scaling/standardization only</span></span>
+<span id="cb50-10"><a href="preprocessing--autoscaling.html#cb50-10" tabindex="-1"></a>data2 <span class="ot">=</span> <span class="fu">prep.autoscale</span>(people, <span class="at">center =</span> <span class="cn">FALSE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb50-11"><a href="preprocessing--autoscaling.html#cb50-11" tabindex="-1"></a></span>
+<span id="cb50-12"><a href="preprocessing--autoscaling.html#cb50-12" tabindex="-1"></a><span class="co"># autoscaling (mean centering and standardization)</span></span>
+<span id="cb50-13"><a href="preprocessing--autoscaling.html#cb50-13" tabindex="-1"></a>data3 <span class="ot">=</span> <span class="fu">prep.autoscale</span>(people, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb50-14"><a href="preprocessing--autoscaling.html#cb50-14" tabindex="-1"></a></span>
+<span id="cb50-15"><a href="preprocessing--autoscaling.html#cb50-15" tabindex="-1"></a><span class="co"># centering with median values and standardization</span></span>
+<span id="cb50-16"><a href="preprocessing--autoscaling.html#cb50-16" tabindex="-1"></a>data4 <span class="ot">=</span> <span class="fu">prep.autoscale</span>(people, <span class="at">center =</span> <span class="fu">apply</span>(people, <span class="dv">2</span>, median), <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb50-17"><a href="preprocessing--autoscaling.html#cb50-17" tabindex="-1"></a></span>
+<span id="cb50-18"><a href="preprocessing--autoscaling.html#cb50-18" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb50-19"><a href="preprocessing--autoscaling.html#cb50-19" tabindex="-1"></a><span class="fu">boxplot</span>(data1, <span class="at">main =</span> <span class="st">&quot;Mean centered&quot;</span>)</span>
+<span id="cb50-20"><a href="preprocessing--autoscaling.html#cb50-20" tabindex="-1"></a><span class="fu">boxplot</span>(data2, <span class="at">main =</span> <span class="st">&quot;Standardized&quot;</span>)</span>
+<span id="cb50-21"><a href="preprocessing--autoscaling.html#cb50-21" tabindex="-1"></a><span class="fu">boxplot</span>(data3, <span class="at">main =</span> <span class="st">&quot;Mean centered and standardized&quot;</span>)</span>
+<span id="cb50-22"><a href="preprocessing--autoscaling.html#cb50-22" tabindex="-1"></a><span class="fu">boxplot</span>(data4, <span class="at">main =</span> <span class="st">&quot;Median centered and standardized&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-40-1.png" width="864" /></p>
-<p>The method has also an additional parameter <code>max.cov</code> which allows to avoid scaling of variables with zero or very low variation. The parameter defines a limit for coefficient of variation in percent <code>sd(x) / m(x) * 100</code> and the method will not scale variables with coefficient of variation below this limit. Default value for the parameter is 0 which will prevent scaling of constant variables (which is leading to <code>Inf</code> values).</p>
+<p>The method has also an additional parameter <code>max.cov</code> which helps to avoid scaling of variables with zero or very low variation. The parameter defines a limit for coefficient of variation in percent <code>sd(x) / m(x) * 100</code> and the method will not scale variables with coefficient of variation below this limit. Default value for the parameter is 0 which will prevent scaling of constant variables (which is leading to <code>Inf</code> values).</p>
 </div>
             </section>
 
@@ -353,7 +365,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["_main.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

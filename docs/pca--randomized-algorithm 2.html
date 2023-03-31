@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Randomized PCA algorithms | Getting started with mdatools for R</title>
+  <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Randomized PCA algorithms | Getting started with mdatools for R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
+  <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Randomized PCA algorithms | Getting started with mdatools for R" />
+  
+  <meta name="twitter:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
+  
+
+<meta name="author" content="Sergey Kucheryavskiy" />
+
+
+<meta name="date" content="2023-03-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="pca--model-complexity.html"/>
+<link rel="next" href="pls.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html"><i class="fa fa-check"></i>What is new</a></li>
+<li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
+<ul>
+<li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
+<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
+<ul>
+<li class="chapter" data-level="" data-path="datasets--attributes-and-factors.html"><a href="datasets--attributes-and-factors.html"><i class="fa fa-check"></i>Attributes and factors</a>
+<ul>
+<li class="chapter" data-level="" data-path="datasets--attributes-and-factors.html"><a href="datasets--attributes-and-factors.html#attributes-for-plots"><i class="fa fa-check"></i>Attributes for plots</a></li>
+<li class="chapter" data-level="" data-path="datasets--attributes-and-factors.html"><a href="datasets--attributes-and-factors.html#special-methods-for-data-transformations"><i class="fa fa-check"></i>Special methods for data transformations</a></li>
+<li class="chapter" data-level="" data-path="datasets--attributes-and-factors.html"><a href="datasets--attributes-and-factors.html#data-frames-with-factors"><i class="fa fa-check"></i>Data frames with factors</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datasets--excluding-rows-and-columns.html"><a href="datasets--excluding-rows-and-columns.html"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+<li class="chapter" data-level="" data-path="datasets--simple-plots.html"><a href="datasets--simple-plots.html"><i class="fa fa-check"></i>Simple plots</a>
+<ul>
+<li class="chapter" data-level="" data-path="datasets--simple-plots.html"><a href="datasets--simple-plots.html#scatter-plots"><i class="fa fa-check"></i>Scatter plots</a></li>
+<li class="chapter" data-level="" data-path="datasets--simple-plots.html"><a href="datasets--simple-plots.html#line-plots"><i class="fa fa-check"></i>Line plots</a></li>
+<li class="chapter" data-level="" data-path="datasets--simple-plots.html"><a href="datasets--simple-plots.html#bar-and-errorbar-plots"><i class="fa fa-check"></i>Bar and errorbar plots</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datasets--group-plots.html"><a href="datasets--group-plots.html"><i class="fa fa-check"></i>Plots for groups of objects</a>
+<ul>
+<li class="chapter" data-level="" data-path="datasets--group-plots.html"><a href="datasets--group-plots.html#one-matrix-or-data-frame"><i class="fa fa-check"></i>One matrix or data frame</a></li>
+<li class="chapter" data-level="" data-path="datasets--group-plots.html"><a href="datasets--group-plots.html#list-with-matrices-or-data-frames"><i class="fa fa-check"></i>List with matrices or data frames</a></li>
+<li class="chapter" data-level="" data-path="datasets--group-plots.html"><a href="datasets--group-plots.html#use-factors-to-split-a-dataset-into-groups"><i class="fa fa-check"></i>Use factors to split a dataset into groups</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datasets--images.html"><a href="datasets--images.html"><i class="fa fa-check"></i>Working with images</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preprocessing.html"><a href="preprocessing.html"><i class="fa fa-check"></i>Preprocessing</a>
+<ul>
+<li class="chapter" data-level="" data-path="preprocessing--autoscaling.html"><a href="preprocessing--autoscaling.html"><i class="fa fa-check"></i>Autoscaling</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--baseline.html"><a href="preprocessing--baseline.html"><i class="fa fa-check"></i>Correction of spectral baseline</a>
+<ul>
+<li class="chapter" data-level="" data-path="preprocessing--baseline.html"><a href="preprocessing--baseline.html#baseline-correction-with-asymmetric-least-squares"><i class="fa fa-check"></i>Baseline correction with asymmetric least squares</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preprocessing--norm.html"><a href="preprocessing--norm.html"><i class="fa fa-check"></i>Normalization</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--savgol.html"><a href="preprocessing--savgol.html"><i class="fa fa-check"></i>Smoothing and derivatives</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--eltransform.html"><a href="preprocessing--eltransform.html"><i class="fa fa-check"></i>Element wise transformations</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--varsel.html"><a href="preprocessing--varsel.html"><i class="fa fa-check"></i>Variable selection as preprocessing method</a></li>
+<li class="chapter" data-level="" data-path="preprocessing-combine.html"><a href="preprocessing-combine.html"><i class="fa fa-check"></i>Combining methods together</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--mvreplace.html"><a href="preprocessing--mvreplace.html"><i class="fa fa-check"></i>Replacing missing values</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i>Principal component analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html#model-calibration"><i class="fa fa-check"></i>Model calibration</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html"><i class="fa fa-check"></i>Plotting methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
+<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i>Model validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#using-validation-set"><i class="fa fa-check"></i>Using validation set</a></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#procrustes-cross-validation"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
+<li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pca--model-complexity.html"><a href="pca--model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
+<li class="chapter" data-level="" data-path="pca--randomized-algorithm.html"><a href="pca--randomized-algorithm.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-validationtest-set"><i class="fa fa-check"></i>Using validation/test set</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-procrustes-cross-validation"><i class="fa fa-check"></i>Using Procrustes cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-conventional-cross-validation"><i class="fa fa-check"></i>Using conventional cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#selection-of-optimal-number-of-components"><i class="fa fa-check"></i>Selection of optimal number of components</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression-coefficients.html"><a href="regression-coefficients.html"><i class="fa fa-check"></i>Regression coefficients</a></li>
+<li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pls--variable-selection.html"><a href="pls--variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
+<li class="chapter" data-level="" data-path="pls--distances-and-outliers.html"><a href="pls--distances-and-outliers.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls--distances-and-outliers.html"><a href="pls--distances-and-outliers.html#distance-plot-for-x-decomposition"><i class="fa fa-check"></i>Distance plot for X-decomposition</a></li>
+<li class="chapter" data-level="" data-path="pls--distances-and-outliers.html"><a href="pls--distances-and-outliers.html#distance-plot-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Distance plot for Y-decomposition and total distance</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pls--randomization-test.html"><a href="pls--randomization-test.html"><i class="fa fa-check"></i>Randomization test</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="plsda.html"><a href="plsda.html"><i class="fa fa-check"></i>PLS Discriminant Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="plsda--calibration.html"><a href="plsda--calibration.html"><i class="fa fa-check"></i>Calibration of PLS-DA model</a></li>
+<li class="chapter" data-level="" data-path="plsda-classification-plots.html"><a href="plsda-classification-plots.html"><i class="fa fa-check"></i>Classification plots</a></li>
+<li class="chapter" data-level="" data-path="plsda--performance-plots.html"><a href="plsda--performance-plots.html"><i class="fa fa-check"></i>Performance plots</a></li>
+<li class="chapter" data-level="" data-path="plsda--predictions.html"><a href="plsda--predictions.html"><i class="fa fa-check"></i>Predictions for a new data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="simca.html"><a href="simca.html"><i class="fa fa-check"></i>SIMCA/DD-SIMCA classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html"><i class="fa fa-check"></i>Calibration and validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#validation-1"><i class="fa fa-check"></i>Validation</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-testing-the-model"><i class="fa fa-check"></i>Predictions and testing the model</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#class-belonging-probabilities"><i class="fa fa-check"></i>Class belonging probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="simca--multiclass-classification.html"><a href="simca--multiclass-classification.html"><i class="fa fa-check"></i>Multiclass classification</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
+<ul>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#running-full-procedure"><i class="fa fa-check"></i>Running full procedure</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
+<ul>
+<li class="chapter" data-level="" data-path="mcr--purity.html"><a href="mcr--purity.html"><i class="fa fa-check"></i>Purity based</a>
+<ul>
+<li class="chapter" data-level="" data-path="mcr--purity.html"><a href="mcr--purity.html#an-example"><i class="fa fa-check"></i>An example</a></li>
+<li class="chapter" data-level="" data-path="mcr--purity.html"><a href="mcr--purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
+<li class="chapter" data-level="" data-path="mcr--purity.html"><a href="mcr--purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
+<li class="chapter" data-level="" data-path="mcr--purity.html"><a href="mcr--purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr--purity.html"><a href="mcr--purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="mcr--als.html"><a href="mcr--als.html"><i class="fa fa-check"></i>Alternating least squares</a>
+<ul>
+<li class="chapter" data-level="" data-path="mcr--als.html"><a href="mcr--als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
+<li class="chapter" data-level="" data-path="mcr--als.html"><a href="mcr--als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
+<li class="chapter" data-level="" data-path="mcr--als.html"><a href="mcr--als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr--als.html"><a href="mcr--als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
+<li class="chapter" data-level="" data-path="mcr--als.html"><a href="mcr--als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Getting started with mdatools for R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pca--randomized-algorithm" class="section level2 unnumbered hasAnchor">
+<h2>Randomized PCA algorithms<a href="pca--randomized-algorithm.html#pca--randomized-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Both SVD and NIPALS are not very efficient when number of rows in dataset is very large (e.g. hundreds of thousands values or even more). Such datasets can be easily obtained in case of for example hyperspectral images. Direct use of the traditional algorithms with such datasets often leads to a lack of memory and long computational time.</p>
+<p>One of the solution here is to use probabilistic algorithms, which allow to reduce the number of values needed for estimation of principal components. Starting from <em>0.9.0</em> one of the probabilistic approach is also implemented in <em>mdatools</em>. The original idea can be found in <a href="https://epubs.siam.org/doi/10.1137/090771806">this paper</a> and some examples on using the approach for PCA analysis of hyperspectral images are described <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/cem.2966">here</a>.</p>
+<p>The approach is based on calculation of matrix <span class="math inline">\(B\)</span>, which has much smaller number of rows comparing to the original data, but captures the action of the data. To produce proper values for <span class="math inline">\(B\)</span>, several parameters are used. First of all it is a rank of original data, <span class="math inline">\(k\)</span>, if it is known. Second, it is oversampling parameter, <span class="math inline">\(p\)</span>, which is important if rank is underestimated. The idea is to use <span class="math inline">\(p\)</span> to overestimate the rank thus making solution more stable. The third parameter, <span class="math inline">\(q\)</span>, is a number of iterations needed to make <span class="math inline">\(B\)</span> more robust. Usually using <span class="math inline">\(p = 5\)</span> and <span class="math inline">\(q = 1\)</span> will work well on most of the datasets and, at the same time, will take less time for finding a solution comparing with conventional methods. By default, <span class="math inline">\(k\)</span> is set to number of components, used for PCA decomposition.</p>
+<p>The example below uses two methods (classic SVD and randomized SVD) for PCA decomposition of 100 000 x 300 dataset and compares time and main outcomes (loadings and explained variance).</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="pca--randomized-algorithm.html#cb121-1" tabindex="-1"></a><span class="co"># create a dataset as a linear combination of three sin curves with random &quot;concentrations&quot;</span></span>
+<span id="cb121-2"><a href="pca--randomized-algorithm.html#cb121-2" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100000</span></span>
+<span id="cb121-3"><a href="pca--randomized-algorithm.html#cb121-3" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">29.9</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb121-4"><a href="pca--randomized-algorithm.html#cb121-4" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">sin</span>(X), <span class="fu">sin</span>(<span class="dv">10</span> <span class="sc">*</span> X), <span class="fu">sin</span>(<span class="dv">5</span> <span class="sc">*</span> X))</span>
+<span id="cb121-5"><a href="pca--randomized-algorithm.html#cb121-5" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">2</span>), <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">3</span>))</span>
+<span id="cb121-6"><a href="pca--randomized-algorithm.html#cb121-6" tabindex="-1"></a>D <span class="ot">=</span> C <span class="sc">%*%</span> <span class="fu">t</span>(S)</span>
+<span id="cb121-7"><a href="pca--randomized-algorithm.html#cb121-7" tabindex="-1"></a>D <span class="ot">=</span> D <span class="sc">+</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">300</span> <span class="sc">*</span> n, <span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">ncol =</span> <span class="dv">300</span>)</span>
+<span id="cb121-8"><a href="pca--randomized-algorithm.html#cb121-8" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">dim</span>(D))</span></code></pre></div>
+<pre><code>## [1] 100000    300</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="pca--randomized-algorithm.html#cb123-1" tabindex="-1"></a><span class="co"># conventional SVD</span></span>
+<span id="cb123-2"><a href="pca--randomized-algorithm.html#cb123-2" tabindex="-1"></a>t1 <span class="ot">=</span> <span class="fu">system.time</span>({m1 <span class="ot">=</span> <span class="fu">pca</span>(D, <span class="at">ncomp =</span> <span class="dv">2</span>)})</span>
+<span id="cb123-3"><a href="pca--randomized-algorithm.html#cb123-3" tabindex="-1"></a><span class="fu">show</span>(t1)</span></code></pre></div>
+<pre><code>##    user  system elapsed 
+##  19.251   0.387  19.649</code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="pca--randomized-algorithm.html#cb125-1" tabindex="-1"></a><span class="co"># randomized SVD with p = 5 and q = 1</span></span>
+<span id="cb125-2"><a href="pca--randomized-algorithm.html#cb125-2" tabindex="-1"></a>t2 <span class="ot">=</span> <span class="fu">system.time</span>({m2 <span class="ot">=</span> <span class="fu">pca</span>(D, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">rand =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>))})</span>
+<span id="cb125-3"><a href="pca--randomized-algorithm.html#cb125-3" tabindex="-1"></a><span class="fu">show</span>(t2)</span></code></pre></div>
+<pre><code>##    user  system elapsed 
+##   2.828   0.243   3.070</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="pca--randomized-algorithm.html#cb127-1" tabindex="-1"></a><span class="co"># compare variances</span></span>
+<span id="cb127-2"><a href="pca--randomized-algorithm.html#cb127-2" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
+<pre><code>## 
+## Summary for PCA model (class pca)
+## Type of limits: ddmoments
+## Alpha: 0.05
+## Gamma: 0.01
+## 
+##        Eigenvals Expvar Cumexpvar Nq Nh
+## Comp 1   112.539  62.07     62.07  4  3
+## Comp 2    49.978  27.56     89.63  6  5</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="pca--randomized-algorithm.html#cb129-1" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
+<pre><code>## 
+## Summary for PCA model (class pca)
+## 
+## Parameters for randomized algorithm: q = 5, p = 1
+## Type of limits: ddmoments
+## Alpha: 0.05
+## Gamma: 0.01
+## 
+##        Eigenvals Expvar Cumexpvar Nq Nh
+## Comp 1   112.539  62.07     62.07  4  3
+## Comp 2    49.978  27.56     89.63  6  5</code></pre>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="pca--randomized-algorithm.html#cb131-1" tabindex="-1"></a><span class="co"># compare loadings</span></span>
+<span id="cb131-2"><a href="pca--randomized-algorithm.html#cb131-2" tabindex="-1"></a><span class="fu">show</span>(m1<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
+<pre><code>##              Comp 1        Comp 2
+##  [1,]  7.973072e-05  1.775574e-05
+##  [2,]  3.865753e-02  6.927834e-02
+##  [3,]  6.826246e-02  7.516323e-02
+##  [4,]  8.135736e-02  1.241170e-02
+##  [5,]  7.459189e-02 -6.123400e-02
+##  [6,]  4.932195e-02 -7.792343e-02
+##  [7,]  1.167070e-02 -2.290599e-02
+##  [8,] -2.892920e-02  5.313597e-02
+##  [9,] -6.217601e-02  7.988179e-02
+## [10,] -7.993952e-02  3.244552e-02</code></pre>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="pca--randomized-algorithm.html#cb133-1" tabindex="-1"></a><span class="fu">show</span>(m2<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
+<pre><code>##              Comp 1        Comp 2
+##  [1,] -7.973072e-05 -1.775574e-05
+##  [2,] -3.865753e-02 -6.927834e-02
+##  [3,] -6.826246e-02 -7.516323e-02
+##  [4,] -8.135736e-02 -1.241170e-02
+##  [5,] -7.459189e-02  6.123400e-02
+##  [6,] -4.932195e-02  7.792343e-02
+##  [7,] -1.167070e-02  2.290599e-02
+##  [8,]  2.892920e-02 -5.313597e-02
+##  [9,]  6.217601e-02 -7.988179e-02
+## [10,]  7.993952e-02 -3.244552e-02</code></pre>
+<p>As you can see the explained variance values, eigenvalues and loadings are identical in the two models and the second method is several times faster.</p>
+<p>It is possible to make PCA decomposition even faster if only loadings and scores are needed. In this case you can use method <code>pca.run()</code> and skip other steps, like calculation of distances, variances, critical limits and so on. But in this case data matrix must be centered (and scaled if necessary) manually prior to the decomposition. Here is an example using the data generated in previous code.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="pca--randomized-algorithm.html#cb135-1" tabindex="-1"></a>D <span class="ot">=</span> <span class="fu">scale</span>(D, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb135-2"><a href="pca--randomized-algorithm.html#cb135-2" tabindex="-1"></a></span>
+<span id="cb135-3"><a href="pca--randomized-algorithm.html#cb135-3" tabindex="-1"></a><span class="co"># conventional SVD</span></span>
+<span id="cb135-4"><a href="pca--randomized-algorithm.html#cb135-4" tabindex="-1"></a>t1 <span class="ot">=</span> <span class="fu">system.time</span>({m1 <span class="ot">=</span> <span class="fu">pca.run</span>(D, <span class="at">method =</span> <span class="st">&quot;svd&quot;</span>, <span class="at">ncomp =</span> <span class="dv">2</span>)})</span>
+<span id="cb135-5"><a href="pca--randomized-algorithm.html#cb135-5" tabindex="-1"></a><span class="fu">show</span>(t1)</span></code></pre></div>
+<pre><code>##    user  system elapsed 
+##  18.041   0.107  18.147</code></pre>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="pca--randomized-algorithm.html#cb137-1" tabindex="-1"></a><span class="co"># randomized SVD with p = 5 and q = 1</span></span>
+<span id="cb137-2"><a href="pca--randomized-algorithm.html#cb137-2" tabindex="-1"></a>t2 <span class="ot">=</span> <span class="fu">system.time</span>({m2 <span class="ot">=</span> <span class="fu">pca.run</span>(D, <span class="at">method =</span> <span class="st">&quot;svd&quot;</span>, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">rand =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>))})</span>
+<span id="cb137-3"><a href="pca--randomized-algorithm.html#cb137-3" tabindex="-1"></a><span class="fu">show</span>(t2)</span></code></pre></div>
+<pre><code>##    user  system elapsed 
+##   1.609   0.022   1.630</code></pre>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="pca--randomized-algorithm.html#cb139-1" tabindex="-1"></a><span class="co"># compare loadings</span></span>
+<span id="cb139-2"><a href="pca--randomized-algorithm.html#cb139-2" tabindex="-1"></a><span class="fu">show</span>(m1<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
+<pre><code>##                [,1]          [,2]
+##  [1,]  7.973072e-05  1.775574e-05
+##  [2,]  3.865753e-02  6.927834e-02
+##  [3,]  6.826246e-02  7.516323e-02
+##  [4,]  8.135736e-02  1.241170e-02
+##  [5,]  7.459189e-02 -6.123400e-02
+##  [6,]  4.932195e-02 -7.792343e-02
+##  [7,]  1.167070e-02 -2.290599e-02
+##  [8,] -2.892920e-02  5.313597e-02
+##  [9,] -6.217601e-02  7.988179e-02
+## [10,] -7.993952e-02  3.244552e-02</code></pre>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="pca--randomized-algorithm.html#cb141-1" tabindex="-1"></a><span class="fu">show</span>(m2<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
+<pre><code>##                [,1]          [,2]
+##  [1,] -7.973072e-05 -1.775574e-05
+##  [2,] -3.865753e-02 -6.927834e-02
+##  [3,] -6.826246e-02 -7.516323e-02
+##  [4,] -8.135736e-02 -1.241170e-02
+##  [5,] -7.459189e-02  6.123400e-02
+##  [6,] -4.932195e-02  7.792343e-02
+##  [7,] -1.167070e-02  2.290599e-02
+##  [8,]  2.892920e-02 -5.313597e-02
+##  [9,]  6.217601e-02 -7.988179e-02
+## [10,]  7.993952e-02 -3.244552e-02</code></pre>
+<p>As you can see the loadings are still the same but the probabilistic algorithm is about 10 times faster. The exact difference depends on computer of course so if you run these examples on your compute you will get a bit different results, however the randomized algorithm will always be a clear winner.</p>
+
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="pca--model-complexity.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pls.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>SIMCA/DD-SIMCA classification | Getting started with mdatools for R</title>
+  <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="SIMCA/DD-SIMCA classification | Getting started with mdatools for R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
+  <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="SIMCA/DD-SIMCA classification | Getting started with mdatools for R" />
+  
+  <meta name="twitter:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
+  
+
+<meta name="author" content="Sergey Kucheryavskiy" />
+
+
+<meta name="date" content="2023-03-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="plsda--predictions.html"/>
+<link rel="next" href="simca--calibration-and-validation.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html"><i class="fa fa-check"></i>What is new</a></li>
+<li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
+<ul>
+<li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
+<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
+<ul>
+<li class="chapter" data-level="" data-path="datasets--attributes-and-factors.html"><a href="datasets--attributes-and-factors.html"><i class="fa fa-check"></i>Attributes and factors</a>
+<ul>
+<li class="chapter" data-level="" data-path="datasets--attributes-and-factors.html"><a href="datasets--attributes-and-factors.html#attributes-for-plots"><i class="fa fa-check"></i>Attributes for plots</a></li>
+<li class="chapter" data-level="" data-path="datasets--attributes-and-factors.html"><a href="datasets--attributes-and-factors.html#special-methods-for-data-transformations"><i class="fa fa-check"></i>Special methods for data transformations</a></li>
+<li class="chapter" data-level="" data-path="datasets--attributes-and-factors.html"><a href="datasets--attributes-and-factors.html#data-frames-with-factors"><i class="fa fa-check"></i>Data frames with factors</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datasets--excluding-rows-and-columns.html"><a href="datasets--excluding-rows-and-columns.html"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+<li class="chapter" data-level="" data-path="datasets--simple-plots.html"><a href="datasets--simple-plots.html"><i class="fa fa-check"></i>Simple plots</a>
+<ul>
+<li class="chapter" data-level="" data-path="datasets--simple-plots.html"><a href="datasets--simple-plots.html#scatter-plots"><i class="fa fa-check"></i>Scatter plots</a></li>
+<li class="chapter" data-level="" data-path="datasets--simple-plots.html"><a href="datasets--simple-plots.html#line-plots"><i class="fa fa-check"></i>Line plots</a></li>
+<li class="chapter" data-level="" data-path="datasets--simple-plots.html"><a href="datasets--simple-plots.html#bar-and-errorbar-plots"><i class="fa fa-check"></i>Bar and errorbar plots</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datasets--group-plots.html"><a href="datasets--group-plots.html"><i class="fa fa-check"></i>Plots for groups of objects</a>
+<ul>
+<li class="chapter" data-level="" data-path="datasets--group-plots.html"><a href="datasets--group-plots.html#one-matrix-or-data-frame"><i class="fa fa-check"></i>One matrix or data frame</a></li>
+<li class="chapter" data-level="" data-path="datasets--group-plots.html"><a href="datasets--group-plots.html#list-with-matrices-or-data-frames"><i class="fa fa-check"></i>List with matrices or data frames</a></li>
+<li class="chapter" data-level="" data-path="datasets--group-plots.html"><a href="datasets--group-plots.html#use-factors-to-split-a-dataset-into-groups"><i class="fa fa-check"></i>Use factors to split a dataset into groups</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datasets--images.html"><a href="datasets--images.html"><i class="fa fa-check"></i>Working with images</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preprocessing.html"><a href="preprocessing.html"><i class="fa fa-check"></i>Preprocessing</a>
+<ul>
+<li class="chapter" data-level="" data-path="preprocessing--autoscaling.html"><a href="preprocessing--autoscaling.html"><i class="fa fa-check"></i>Autoscaling</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--baseline.html"><a href="preprocessing--baseline.html"><i class="fa fa-check"></i>Correction of spectral baseline</a>
+<ul>
+<li class="chapter" data-level="" data-path="preprocessing--baseline.html"><a href="preprocessing--baseline.html#baseline-correction-with-asymmetric-least-squares"><i class="fa fa-check"></i>Baseline correction with asymmetric least squares</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preprocessing--norm.html"><a href="preprocessing--norm.html"><i class="fa fa-check"></i>Normalization</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--savgol.html"><a href="preprocessing--savgol.html"><i class="fa fa-check"></i>Smoothing and derivatives</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--eltransform.html"><a href="preprocessing--eltransform.html"><i class="fa fa-check"></i>Element wise transformations</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--varsel.html"><a href="preprocessing--varsel.html"><i class="fa fa-check"></i>Variable selection as preprocessing method</a></li>
+<li class="chapter" data-level="" data-path="preprocessing-combine.html"><a href="preprocessing-combine.html"><i class="fa fa-check"></i>Combining methods together</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--mvreplace.html"><a href="preprocessing--mvreplace.html"><i class="fa fa-check"></i>Replacing missing values</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i>Principal component analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html#model-calibration"><i class="fa fa-check"></i>Model calibration</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html"><i class="fa fa-check"></i>Plotting methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
+<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i>Model validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#using-validation-set"><i class="fa fa-check"></i>Using validation set</a></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#procrustes-cross-validation"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
+<ul>
+<li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
+<li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pca--model-complexity.html"><a href="pca--model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
+<li class="chapter" data-level="" data-path="pca--randomized-algorithm.html"><a href="pca--randomized-algorithm.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-validationtest-set"><i class="fa fa-check"></i>Using validation/test set</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-procrustes-cross-validation"><i class="fa fa-check"></i>Using Procrustes cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-conventional-cross-validation"><i class="fa fa-check"></i>Using conventional cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#selection-of-optimal-number-of-components"><i class="fa fa-check"></i>Selection of optimal number of components</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression-coefficients.html"><a href="regression-coefficients.html"><i class="fa fa-check"></i>Regression coefficients</a></li>
+<li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pls--variable-selection.html"><a href="pls--variable-selection.html"><i class="fa fa-check"></i>Variable selection</a></li>
+<li class="chapter" data-level="" data-path="pls--distances-and-outliers.html"><a href="pls--distances-and-outliers.html"><i class="fa fa-check"></i>Distances and outlier detection</a>
+<ul>
+<li class="chapter" data-level="" data-path="pls--distances-and-outliers.html"><a href="pls--distances-and-outliers.html#distance-plot-for-x-decomposition"><i class="fa fa-check"></i>Distance plot for X-decomposition</a></li>
+<li class="chapter" data-level="" data-path="pls--distances-and-outliers.html"><a href="pls--distances-and-outliers.html#distance-plot-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Distance plot for Y-decomposition and total distance</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="pls--randomization-test.html"><a href="pls--randomization-test.html"><i class="fa fa-check"></i>Randomization test</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="plsda.html"><a href="plsda.html"><i class="fa fa-check"></i>PLS Discriminant Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="plsda--calibration.html"><a href="plsda--calibration.html"><i class="fa fa-check"></i>Calibration of PLS-DA model</a></li>
+<li class="chapter" data-level="" data-path="plsda-classification-plots.html"><a href="plsda-classification-plots.html"><i class="fa fa-check"></i>Classification plots</a></li>
+<li class="chapter" data-level="" data-path="plsda--performance-plots.html"><a href="plsda--performance-plots.html"><i class="fa fa-check"></i>Performance plots</a></li>
+<li class="chapter" data-level="" data-path="plsda--predictions.html"><a href="plsda--predictions.html"><i class="fa fa-check"></i>Predictions for a new data</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="simca.html"><a href="simca.html"><i class="fa fa-check"></i>SIMCA/DD-SIMCA classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html"><i class="fa fa-check"></i>Calibration and validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#validation-1"><i class="fa fa-check"></i>Validation</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-testing-the-model"><i class="fa fa-check"></i>Predictions and testing the model</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#class-belonging-probabilities"><i class="fa fa-check"></i>Class belonging probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="simca--multiclass-classification.html"><a href="simca--multiclass-classification.html"><i class="fa fa-check"></i>Multiclass classification</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
+<ul>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#forward-ipls"><i class="fa fa-check"></i>Forward iPLS</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#running-full-procedure"><i class="fa fa-check"></i>Running full procedure</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#using-test-set-for-validation"><i class="fa fa-check"></i>Using test set for validation</a></li>
+<li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html#backward-ipls"><i class="fa fa-check"></i>Backward iPLS</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="mcr.html"><a href="mcr.html"><i class="fa fa-check"></i>Multivariate Curve Resolution</a>
+<ul>
+<li class="chapter" data-level="" data-path="mcr--purity.html"><a href="mcr--purity.html"><i class="fa fa-check"></i>Purity based</a>
+<ul>
+<li class="chapter" data-level="" data-path="mcr--purity.html"><a href="mcr--purity.html#an-example"><i class="fa fa-check"></i>An example</a></li>
+<li class="chapter" data-level="" data-path="mcr--purity.html"><a href="mcr--purity.html#purity-values-and-spectra"><i class="fa fa-check"></i>Purity values and spectra</a></li>
+<li class="chapter" data-level="" data-path="mcr--purity.html"><a href="mcr--purity.html#predictions"><i class="fa fa-check"></i>Predictions</a></li>
+<li class="chapter" data-level="" data-path="mcr--purity.html"><a href="mcr--purity.html#tuning-the-offset-parameter"><i class="fa fa-check"></i>Tuning the offset parameter</a></li>
+<li class="chapter" data-level="" data-path="mcr--purity.html"><a href="mcr--purity.html#providing-indices-of-pure-variables"><i class="fa fa-check"></i>Providing indices of pure variables</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="mcr--als.html"><a href="mcr--als.html"><i class="fa fa-check"></i>Alternating least squares</a>
+<ul>
+<li class="chapter" data-level="" data-path="mcr--als.html"><a href="mcr--als.html#non-negativity"><i class="fa fa-check"></i>Non-negativity</a></li>
+<li class="chapter" data-level="" data-path="mcr--als.html"><a href="mcr--als.html#constraints"><i class="fa fa-check"></i>Constraints</a></li>
+<li class="chapter" data-level="" data-path="mcr--als.html"><a href="mcr--als.html#initial-estimates"><i class="fa fa-check"></i>Initial estimates</a></li>
+<li class="chapter" data-level="" data-path="mcr--als.html"><a href="mcr--als.html#forcing-contribution-and-spectral-values"><i class="fa fa-check"></i>Forcing contribution and spectral values</a></li>
+<li class="chapter" data-level="" data-path="mcr--als.html"><a href="mcr--als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Getting started with mdatools for R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="simca" class="section level1 unnumbered hasAnchor">
+<h1>SIMCA/DD-SIMCA classification<a href="simca.html#simca" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>SIMCA (Soft Independent Modelling of Class Analogy) is a simple but efficient one-class classification method mainly based on PCA. The general idea is to create a PCA model using only samples/objects belonging to a class and classify new objects based on how good the model can fit them. The decision is made using the two distances we discussed in detail in the <a href="pca--distances-and-limits.html#pca--distances-and-limits">corresponding PCA chapter</a> — orthogonal and score distances and corresponding critical limits.</p>
+<p>Critical limits computed for both distances (or their combination) are used to cut-off the strangers (extreme objects) and accept class members with a pre-define expected ratio of false negatives (<span class="math inline">\(\alpha\)</span>). If data driven approach (either classic/moments or robust) are used to compute the critical limits, then the method is called <strong>DD-SIMCA</strong> (Data Driven SIMCA). You can find more details about the method in this <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/cem.2506">paper</a>.</p>
+<p>The classification performance can be assessed using number of true/false positives and negatives and statistics, showing the ability of a classification model to recognize class members (<em>sensitivity</em> or true positive rate) and how good the model is for identifying strangers (<em>specificity</em> or true negative rate). In addition to that, model also calculates a percent of misclassified objects. All statistics are calculated for calibration and validation (if any) results, but one must be aware that specificity can not be computed without objects not belonging to the class and, therefore, calibration and cross-validation results in SIMCA do not have specificity values.</p>
+<div class="caution">
+<p>
+You can think that SIMCA is actually a PCA model where function <a
+href="#pca-distances-categorize"><code>categorize()</code></a> is used
+to make a decision: if object is categorized as regular, it will be
+considered as member of the class, otherwise — it is a stranger.
+Therefore read carefully how PCA <a href="pca.html#pca">works in general</a> and
+how critical limits for distances <a
+href="#pca--distances-and-limits">are computed</a> in particular, to
+understand how SIMCA works.
+</p>
+</div>
+<p>It must be also noted that any SIMCA model is also a PCA model object and any SIMCA result is also a PCA result object, therefore all plots, methods, statistics, available for PCA, can be used for SIMCA model and result objects as well.</p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="plsda--predictions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="simca--calibration-and-validation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

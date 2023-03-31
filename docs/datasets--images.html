@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Working with images | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Working with images | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2022-11-09" />
+<meta name="date" content="2023-03-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -170,23 +170,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="preprocessing--baseline.html"><a href="preprocessing--baseline.html#baseline-correction-with-asymmetric-least-squares"><i class="fa fa-check"></i>Baseline correction with asymmetric least squares</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="preprocessing--norm.html"><a href="preprocessing--norm.html"><i class="fa fa-check"></i>Normalization</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--savgol.html"><a href="preprocessing--savgol.html"><i class="fa fa-check"></i>Smoothing and derivatives</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--eltransform.html"><a href="preprocessing--eltransform.html"><i class="fa fa-check"></i>Element wise transformations</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--varsel.html"><a href="preprocessing--varsel.html"><i class="fa fa-check"></i>Variable selection as preprocessing method</a></li>
 <li class="chapter" data-level="" data-path="preprocessing-combine.html"><a href="preprocessing-combine.html"><i class="fa fa-check"></i>Combining methods together</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--mvreplace.html"><a href="preprocessing--mvreplace.html"><i class="fa fa-check"></i>Replacing missing values</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i>Principal component analysis</a>
 <ul>
 <li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
 <li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html#model-calibration"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html#model-validation"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
-<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i>Model validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#using-validation-set"><i class="fa fa-check"></i>Using validation set</a></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#procrustes-cross-validation"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
 <ul>
@@ -195,7 +201,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--model-complexity.html"><a href="pca--model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="pca--randomized-algorithm.html"><a href="pca--randomized-algorithm.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
-<li class="chapter" data-level="" data-path="pca--pcv.html"><a href="pca--pcv.html"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -203,7 +208,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-validationtest-set"><i class="fa fa-check"></i>Using validation/test set</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-procrustes-cross-validation"><i class="fa fa-check"></i>Using Procrustes cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-conventional-cross-validation"><i class="fa fa-check"></i>Using conventional cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#selection-of-optimal-number-of-components"><i class="fa fa-check"></i>Selection of optimal number of components</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression-coefficients.html"><a href="regression-coefficients.html"><i class="fa fa-check"></i>Regression coefficients</a></li>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
@@ -227,8 +239,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html"><i class="fa fa-check"></i>Calibration and validation</a>
 <ul>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#cross-validation"><i class="fa fa-check"></i>Cross-validation</a></li>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-validation-with-a-test-set"><i class="fa fa-check"></i>Predictions and validation with a test set</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#validation-1"><i class="fa fa-check"></i>Validation</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-testing-the-model"><i class="fa fa-check"></i>Predictions and testing the model</a></li>
 <li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#class-belonging-probabilities"><i class="fa fa-check"></i>Class belonging probabilities</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="simca--multiclass-classification.html"><a href="simca--multiclass-classification.html"><i class="fa fa-check"></i>Multiclass classification</a></li>
@@ -282,15 +294,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>There are three methods that make this procedure easier: <code>mda.im2data()</code>, <code>mda.data2im()</code> and <code>imshow()</code>. The first converts an image (represented as 3-way array) to a data set, second does the opposite and the third takes dataset and shows it as an image. In the code chunk below you will see several examples how the methods work.</p>
 <p>We will use a dataset <code>image</code> available in the package. It is a 3-way array of numbers, if you want to work with e.g. JPEG, PNG or other standard image files you can load them using specific packages (<a href="https://cran.r-project.org/web/packages/jpeg/index.html">jpeg</a>,
 <a href="https://cran.r-project.org/web/packages/png/index.html">png</a>).</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="datasets--images.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(pellets)</span>
-<span id="cb39-2"><a href="datasets--images.html#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-3"><a href="datasets--images.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># convert image to a data matrix and add some attributed</span></span>
-<span id="cb39-4"><a href="datasets--images.html#cb39-4" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">mda.im2data</span>(pellets)</span>
-<span id="cb39-5"><a href="datasets--images.html#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(d) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Red&quot;</span>, <span class="st">&quot;Green&quot;</span>, <span class="st">&quot;Blue&quot;</span>)</span>
-<span id="cb39-6"><a href="datasets--images.html#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&quot;name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Image&quot;</span></span>
-<span id="cb39-7"><a href="datasets--images.html#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-8"><a href="datasets--images.html#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co"># show data values</span></span>
-<span id="cb39-9"><a href="datasets--images.html#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mda.show</span>(d, <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="datasets--images.html#cb39-1" tabindex="-1"></a><span class="fu">data</span>(pellets)</span>
+<span id="cb39-2"><a href="datasets--images.html#cb39-2" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="datasets--images.html#cb39-3" tabindex="-1"></a><span class="co"># convert image to a data matrix and add some attributed</span></span>
+<span id="cb39-4"><a href="datasets--images.html#cb39-4" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">mda.im2data</span>(pellets)</span>
+<span id="cb39-5"><a href="datasets--images.html#cb39-5" tabindex="-1"></a><span class="fu">colnames</span>(d) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Red&quot;</span>, <span class="st">&quot;Green&quot;</span>, <span class="st">&quot;Blue&quot;</span>)</span>
+<span id="cb39-6"><a href="datasets--images.html#cb39-6" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&quot;name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Image&quot;</span></span>
+<span id="cb39-7"><a href="datasets--images.html#cb39-7" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="datasets--images.html#cb39-8" tabindex="-1"></a><span class="co"># show data values</span></span>
+<span id="cb39-9"><a href="datasets--images.html#cb39-9" tabindex="-1"></a><span class="fu">mda.show</span>(d, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## Image
 ## -----
 ##       Red Green Blue
@@ -304,42 +316,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  [8,] 193    83  110
 ##  [9,] 188    83  114
 ## [10,] 172    86  115</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="datasets--images.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show separate channels and the whole image in plots</span></span>
-<span id="cb41-2"><a href="datasets--images.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb41-3"><a href="datasets--images.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>)</span>
-<span id="cb41-4"><a href="datasets--images.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">2</span>)</span>
-<span id="cb41-5"><a href="datasets--images.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">3</span>)</span>
-<span id="cb41-6"><a href="datasets--images.html#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="datasets--images.html#cb41-1" tabindex="-1"></a><span class="co"># show separate channels and the whole image in plots</span></span>
+<span id="cb41-2"><a href="datasets--images.html#cb41-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb41-3"><a href="datasets--images.html#cb41-3" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>)</span>
+<span id="cb41-4"><a href="datasets--images.html#cb41-4" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">2</span>)</span>
+<span id="cb41-5"><a href="datasets--images.html#cb41-5" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">3</span>)</span>
+<span id="cb41-6"><a href="datasets--images.html#cb41-6" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="864" /></p>
 <p>By default image for one channels is shown using jet color palette for intensities, but you can also use gray colors, palette from <em>colorbrewer2</em> as well as your own.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="datasets--images.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb42-2"><a href="datasets--images.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>)</span>
-<span id="cb42-3"><a href="datasets--images.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>, <span class="at">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span>
-<span id="cb42-4"><a href="datasets--images.html#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>, <span class="at">colmap =</span> <span class="fu">heat.colors</span>(<span class="dv">256</span>))</span>
-<span id="cb42-5"><a href="datasets--images.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>, <span class="at">colmap =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>))(<span class="dv">256</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="datasets--images.html#cb42-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb42-2"><a href="datasets--images.html#cb42-2" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>)</span>
+<span id="cb42-3"><a href="datasets--images.html#cb42-3" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>, <span class="at">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span>
+<span id="cb42-4"><a href="datasets--images.html#cb42-4" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>, <span class="at">colmap =</span> <span class="fu">heat.colors</span>(<span class="dv">256</span>))</span>
+<span id="cb42-5"><a href="datasets--images.html#cb42-5" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>, <span class="at">colmap =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>))(<span class="dv">256</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="864" /></p>
 <p>You can work with the image values as normal dataset and show scatter, line plots, calculate statistics, etc.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="datasets--images.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb43-2"><a href="datasets--images.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>)</span>
-<span id="cb43-3"><a href="datasets--images.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="datasets--images.html#cb43-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb43-2"><a href="datasets--images.html#cb43-2" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>)</span>
+<span id="cb43-3"><a href="datasets--images.html#cb43-3" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="864" /></p>
 <p>However, it will take some time to show these plots as this image has several hundreds of thousands pixels, a faster alternative can be the use density plot based on hexagonal binning. Use <code>type = "d"</code> for this as shown below. Number of bins can be adjusted by using parameter <code>nbins</code>.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="datasets--images.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb44-2"><a href="datasets--images.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>)</span>
-<span id="cb44-3"><a href="datasets--images.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mdaplot</span>(<span class="fu">mda.subset</span>(d, <span class="at">select =</span> <span class="fu">c</span>(<span class="st">&quot;Red&quot;</span>, <span class="st">&quot;Blue&quot;</span>)), <span class="at">type =</span> <span class="st">&quot;d&quot;</span>, <span class="at">nbins =</span> <span class="dv">40</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="datasets--images.html#cb44-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb44-2"><a href="datasets--images.html#cb44-2" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>)</span>
+<span id="cb44-3"><a href="datasets--images.html#cb44-3" tabindex="-1"></a><span class="fu">mdaplot</span>(<span class="fu">mda.subset</span>(d, <span class="at">select =</span> <span class="fu">c</span>(<span class="st">&quot;Red&quot;</span>, <span class="st">&quot;Blue&quot;</span>)), <span class="at">type =</span> <span class="st">&quot;d&quot;</span>, <span class="at">nbins =</span> <span class="dv">40</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="864" /></p>
 <p>Another useful thing is to set some of the pixels as background. The background pixels are removed from the image dataset physically, there is no way to get them back (in cotrast to excluded rows/pixels). It can be particularly useful when working with e.g. geocorrected hyperspectral images, where, often, many pixels have NA values and there is no need to keep them in memory. To set pixels as background you need to use method <code>mda.setimbg()</code> with either pixel indices or vector with logical values as it is shown below.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="datasets--images.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original size</span></span>
-<span id="cb45-2"><a href="datasets--images.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">dim</span>(d))</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="datasets--images.html#cb45-1" tabindex="-1"></a><span class="co"># original size</span></span>
+<span id="cb45-2"><a href="datasets--images.html#cb45-2" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">dim</span>(d))</span></code></pre></div>
 <pre><code>## [1] 114000      3</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="datasets--images.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set red epixels as background and show new size</span></span>
-<span id="cb47-2"><a href="datasets--images.html#cb47-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">mda.setimbg</span>(d, d[, <span class="st">&quot;Red&quot;</span>] <span class="sc">&gt;</span> <span class="dv">100</span>)</span>
-<span id="cb47-3"><a href="datasets--images.html#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">dim</span>(d))</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="datasets--images.html#cb47-1" tabindex="-1"></a><span class="co"># set red epixels as background and show new size</span></span>
+<span id="cb47-2"><a href="datasets--images.html#cb47-2" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">mda.setimbg</span>(d, d[, <span class="st">&quot;Red&quot;</span>] <span class="sc">&gt;</span> <span class="dv">100</span>)</span>
+<span id="cb47-3"><a href="datasets--images.html#cb47-3" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">dim</span>(d))</span></code></pre></div>
 <pre><code>## [1] 66471     3</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="datasets--images.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show image with background pixels</span></span>
-<span id="cb49-2"><a href="datasets--images.html#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb49-3"><a href="datasets--images.html#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>)</span>
-<span id="cb49-4"><a href="datasets--images.html#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="datasets--images.html#cb49-1" tabindex="-1"></a><span class="co"># show image with background pixels</span></span>
+<span id="cb49-2"><a href="datasets--images.html#cb49-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb49-3"><a href="datasets--images.html#cb49-3" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span>)</span>
+<span id="cb49-4"><a href="datasets--images.html#cb49-4" tabindex="-1"></a><span class="fu">imshow</span>(d, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="864" /></p>
 <p>All image related attributes are inherited by all object/rows related results, e.g. scores, residuals, predicted values and classes, etc. This means if you provide an image to any modelling method, you can visualise the corresponding results also as an image. Some examples will be shown in
 <a href="pca.html#pca">chapter about PCA</a>.</p>
@@ -394,7 +406,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["_main.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

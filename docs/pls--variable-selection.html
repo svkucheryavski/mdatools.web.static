@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Variable selection | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Variable selection | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2022-11-09" />
+<meta name="date" content="2023-03-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -170,23 +170,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="preprocessing--baseline.html"><a href="preprocessing--baseline.html#baseline-correction-with-asymmetric-least-squares"><i class="fa fa-check"></i>Baseline correction with asymmetric least squares</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="preprocessing--norm.html"><a href="preprocessing--norm.html"><i class="fa fa-check"></i>Normalization</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--savgol.html"><a href="preprocessing--savgol.html"><i class="fa fa-check"></i>Smoothing and derivatives</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--eltransform.html"><a href="preprocessing--eltransform.html"><i class="fa fa-check"></i>Element wise transformations</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--varsel.html"><a href="preprocessing--varsel.html"><i class="fa fa-check"></i>Variable selection as preprocessing method</a></li>
 <li class="chapter" data-level="" data-path="preprocessing-combine.html"><a href="preprocessing-combine.html"><i class="fa fa-check"></i>Combining methods together</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--mvreplace.html"><a href="preprocessing--mvreplace.html"><i class="fa fa-check"></i>Replacing missing values</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i>Principal component analysis</a>
 <ul>
 <li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html"><i class="fa fa-check"></i>Models and results</a>
 <ul>
 <li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html#model-calibration"><i class="fa fa-check"></i>Model calibration</a></li>
-<li class="chapter" data-level="" data-path="pca--models-and-results.html"><a href="pca--models-and-results.html#model-validation"><i class="fa fa-check"></i>Model validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
-<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#manual-x-values-for-loading-line-plot"><i class="fa fa-check"></i>Manual x-values for loading line plot</a></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
+<li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i>Model validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#using-validation-set"><i class="fa fa-check"></i>Using validation set</a></li>
+<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#procrustes-cross-validation"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
 <ul>
@@ -195,7 +201,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="pca--model-complexity.html"><a href="pca--model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="pca--randomized-algorithm.html"><a href="pca--randomized-algorithm.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
-<li class="chapter" data-level="" data-path="pca--pcv.html"><a href="pca--pcv.html"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -203,7 +208,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="pls--models-and-results.html"><a href="pls--models-and-results.html#model-calibration-1"><i class="fa fa-check"></i>Model calibration</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html"><i class="fa fa-check"></i>Validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-validationtest-set"><i class="fa fa-check"></i>Using validation/test set</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-procrustes-cross-validation"><i class="fa fa-check"></i>Using Procrustes cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#using-conventional-cross-validation"><i class="fa fa-check"></i>Using conventional cross-validation</a></li>
+<li class="chapter" data-level="" data-path="validation.html"><a href="validation.html#selection-of-optimal-number-of-components"><i class="fa fa-check"></i>Selection of optimal number of components</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regression-coefficients.html"><a href="regression-coefficients.html"><i class="fa fa-check"></i>Regression coefficients</a></li>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html"><i class="fa fa-check"></i>Plotting methods</a>
 <ul>
 <li class="chapter" data-level="" data-path="pls--plotting-methods.html"><a href="pls--plotting-methods.html#excluding-rows-and-columns-1"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
@@ -227,8 +239,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html"><i class="fa fa-check"></i>Calibration and validation</a>
 <ul>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#cross-validation"><i class="fa fa-check"></i>Cross-validation</a></li>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-validation-with-a-test-set"><i class="fa fa-check"></i>Predictions and validation with a test set</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#validation-1"><i class="fa fa-check"></i>Validation</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-testing-the-model"><i class="fa fa-check"></i>Predictions and testing the model</a></li>
 <li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#class-belonging-probabilities"><i class="fa fa-check"></i>Class belonging probabilities</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="simca--multiclass-classification.html"><a href="simca--multiclass-classification.html"><i class="fa fa-check"></i>Multiclass classification</a></li>
@@ -281,16 +293,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>PLS allows to calculate several statistics, which can be used to select most important (or remove least important) variables in order to improve performance and make model simpler. The first two are VIP-scores (variables important for projection) and Selectivity ratio. All details and theory can be found e.g. <a href="https://doi.org/10.1002/cem.1360">here</a>.</p>
 <p>Both parameters can be shown as plots and as vector of values for a selected y-variable. Take into account that when you make a plot for VIP scores or Selectivity ratio, the corresponding values should be computed first, which can take some time for large datasets.</p>
 <p>Here is an example of corresponding plots.</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="pls--variable-selection.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb167-2"><a href="pls--variable-selection.html#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVIPScores</span>(m1)</span>
-<span id="cb167-3"><a href="pls--variable-selection.html#cb167-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVIPScores</span>(m1, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb167-4"><a href="pls--variable-selection.html#cb167-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSelectivityRatio</span>(m1)</span>
-<span id="cb167-5"><a href="pls--variable-selection.html#cb167-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSelectivityRatio</span>(m1, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-110-1.png" width="864" /></p>
-<p>To compute the values without plotting use <code>vipscores()</code> and <code>selratio()</code> functions. In the example below, I create two other PLS models by excluding variables with VIP score or selectivity ratio below a threshold (I use 1 and 3 correspondingly) and show the performance for both.</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="pls--variable-selection.html#cb168-1" aria-hidden="true" tabindex="-1"></a>vip <span class="ot">=</span> <span class="fu">vipscores</span>(m1, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
-<span id="cb168-2"><a href="pls--variable-selection.html#cb168-2" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">4</span>, <span class="at">scale =</span> T, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">exclcols =</span> (vip <span class="sc">&lt;</span> <span class="fl">0.5</span>))</span>
-<span id="cb168-3"><a href="pls--variable-selection.html#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m3)</span></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="pls--variable-selection.html#cb184-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb184-2"><a href="pls--variable-selection.html#cb184-2" tabindex="-1"></a><span class="fu">plotVIPScores</span>(m)</span>
+<span id="cb184-3"><a href="pls--variable-selection.html#cb184-3" tabindex="-1"></a><span class="fu">plotVIPScores</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb184-4"><a href="pls--variable-selection.html#cb184-4" tabindex="-1"></a><span class="fu">plotSelectivityRatio</span>(m)</span>
+<span id="cb184-5"><a href="pls--variable-selection.html#cb184-5" tabindex="-1"></a><span class="fu">plotSelectivityRatio</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-121-1.png" width="864" /></p>
+<p>To compute the values without plotting use <code>vipscores()</code> and <code>selratio()</code> functions. In the example below, I create two other PLS models by excluding variables with VIP score or selectivity ratio below a threshold (I use 0.5 and 2 correspondingly) and show the performance for both.</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="pls--variable-selection.html#cb185-1" tabindex="-1"></a>vip <span class="ot">=</span> <span class="fu">vipscores</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
+<span id="cb185-2"><a href="pls--variable-selection.html#cb185-2" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">4</span>, <span class="at">scale =</span> T, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">exclcols =</span> (vip <span class="sc">&lt;</span> <span class="fl">0.5</span>))</span>
+<span id="cb185-3"><a href="pls--variable-selection.html#cb185-3" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
 <pre><code>## 
 ## PLS model (class pls) summary
 ## -------------------------------
@@ -302,9 +314,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     X cumexpvar Y cumexpvar    R2  RMSE Slope   Bias  RPD
 ## Cal    93.51369    95.27241 0.953 0.842 0.953 0.0000 4.70
 ## Cv           NA          NA 0.933 1.005 0.935 0.0254 3.94</code></pre>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="pls--variable-selection.html#cb170-1" aria-hidden="true" tabindex="-1"></a>sr <span class="ot">=</span> <span class="fu">selratio</span>(m1, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
-<span id="cb170-2"><a href="pls--variable-selection.html#cb170-2" aria-hidden="true" tabindex="-1"></a>m4 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">4</span>, <span class="at">scale =</span> T, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">exclcols =</span> (sr <span class="sc">&lt;</span> <span class="dv">2</span>))</span>
-<span id="cb170-3"><a href="pls--variable-selection.html#cb170-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m4)</span></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="pls--variable-selection.html#cb187-1" tabindex="-1"></a>sr <span class="ot">=</span> <span class="fu">selratio</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
+<span id="cb187-2"><a href="pls--variable-selection.html#cb187-2" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">4</span>, <span class="at">scale =</span> T, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">exclcols =</span> (sr <span class="sc">&lt;</span> <span class="dv">2</span>))</span>
+<span id="cb187-3"><a href="pls--variable-selection.html#cb187-3" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
 <pre><code>## 
 ## PLS model (class pls) summary
 ## -------------------------------
@@ -317,16 +329,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Cal    99.44331    95.79889 0.958 0.794 0.958 0.000 4.98
 ## Cv           NA          NA 0.946 0.903 0.944 0.014 4.38</code></pre>
 <p>Another way is to make an inference about regression coefficients and calculate confidence intervals and p-values for each variable. This can be done using Jack-Knife approach, when model is cross-validated using efficient number of segments (at least ten) and statistics are calculated using the distribution of regression coefficient values obtained for each step. The statistics are automatically computed when you use full cross-validation.</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="pls--variable-selection.html#cb172-1" aria-hidden="true" tabindex="-1"></a>mjk <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="pls--variable-selection.html#cb189-1" tabindex="-1"></a>mjk <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p>The statistics are calculated for each y-variable and each available number of components. When you show a plot for regression coefficients, you can show the confidence intervals by using parameter <code>show.ci = TRUE</code> as shown in examples below.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="pls--variable-selection.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb173-2"><a href="pls--variable-selection.html#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(mjk, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb173-3"><a href="pls--variable-selection.html#cb173-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(mjk, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb173-4"><a href="pls--variable-selection.html#cb173-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(mjk, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb173-5"><a href="pls--variable-selection.html#cb173-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(mjk, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-113-1.png" width="864" /></p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="pls--variable-selection.html#cb190-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb190-2"><a href="pls--variable-selection.html#cb190-2" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(mjk, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb190-3"><a href="pls--variable-selection.html#cb190-3" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(mjk, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb190-4"><a href="pls--variable-selection.html#cb190-4" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(mjk, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb190-5"><a href="pls--variable-selection.html#cb190-5" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(mjk, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-124-1.png" width="864" /></p>
 <p>Calling function <code>summary()</code> for regression coefficients allows to get all calculated statistics.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="pls--variable-selection.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mjk<span class="sc">$</span>coeffs, <span class="at">ncomp =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="pls--variable-selection.html#cb191-1" tabindex="-1"></a><span class="fu">summary</span>(mjk<span class="sc">$</span>coeffs, <span class="at">ncomp =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## 
 ## Regression coefficients for Shoesize (ncomp = 2)
 ## ------------------------------------------------
@@ -344,7 +356,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## IQ       -0.01705852 0.032399035   -0.53   0.602 -0.08408103  0.04996399
 ## 
 ## Degrees of freedom (Jack-Knifing): 23</code></pre>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="pls--variable-selection.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mjk<span class="sc">$</span>coeffs, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.01</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="pls--variable-selection.html#cb193-1" tabindex="-1"></a><span class="fu">summary</span>(mjk<span class="sc">$</span>coeffs, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.01</span>)</span></code></pre></div>
 <pre><code>## 
 ## Regression coefficients for Shoesize (ncomp = 2)
 ## ------------------------------------------------
@@ -363,7 +375,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Degrees of freedom (Jack-Knifing): 23</code></pre>
 <p>Function <code>getRegcoeffs()</code> in this case may also return corresponding t-value, standard error, p-value, and confidence interval for each of the coefficient (except intercept) if user specifies a parameter <code>full</code>. The standard error and confidence intervals are also computed for raw, non-standardized, variables (similar to coefficients).</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="pls--variable-selection.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">getRegcoeffs</span>(mjk, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">full =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="pls--variable-selection.html#cb195-1" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">getRegcoeffs</span>(mjk, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">full =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>##               Estimated    Std. err.     t-value      p-value          2.5%         97.5%
 ## Intercept  1.342626e+01           NA          NA           NA            NA            NA
 ## Height     7.456695e-02 3.185875e-03  23.3854388 0.000000e+00  0.0679764667  8.115743e-02
@@ -380,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## attr(,&quot;name&quot;)
 ## [1] &quot;Regression coefficients for  Shoesize&quot;</code></pre>
 <p>It is also possible to change significance level for confidence intervals.</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="pls--variable-selection.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">getRegcoeffs</span>(mjk, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">full =</span> <span class="cn">TRUE</span>, <span class="at">alpha =</span> <span class="fl">0.01</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="pls--variable-selection.html#cb197-1" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">getRegcoeffs</span>(mjk, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">full =</span> <span class="cn">TRUE</span>, <span class="at">alpha =</span> <span class="fl">0.01</span>))</span></code></pre></div>
 <pre><code>##               Estimated    Std. err.     t-value      p-value          0.5%         99.5%
 ## Intercept  1.342626e+01           NA          NA           NA            NA            NA
 ## Height     7.456695e-02 3.185875e-03  23.3854388 0.000000e+00  6.562313e-02  8.351077e-02
@@ -397,13 +409,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## attr(,&quot;name&quot;)
 ## [1] &quot;Regression coefficients for  Shoesize&quot;</code></pre>
 <p>The p-values, t-values and standard errors are stored each as a 3-way array similar to regression coefficients. The selection can be made by comparing e.g. p-values with a threshold similar to what we have done with VIP-scores and selectivity ratio.</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="pls--variable-selection.html#cb182-1" aria-hidden="true" tabindex="-1"></a>exclcols <span class="ot">=</span> mjk<span class="sc">$</span>coeffs<span class="sc">$</span>p.values[, <span class="dv">2</span>, <span class="dv">1</span>] <span class="sc">&gt;</span> <span class="fl">0.05</span></span>
-<span id="cb182-2"><a href="pls--variable-selection.html#cb182-2" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(exclcols)</span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="pls--variable-selection.html#cb199-1" tabindex="-1"></a>exclcols <span class="ot">=</span> mjk<span class="sc">$</span>coeffs<span class="sc">$</span>p.values[, <span class="dv">2</span>, <span class="dv">1</span>] <span class="sc">&gt;</span> <span class="fl">0.05</span></span>
+<span id="cb199-2"><a href="pls--variable-selection.html#cb199-2" tabindex="-1"></a><span class="fu">show</span>(exclcols)</span></code></pre></div>
 <pre><code>##   Height   Weight Hairleng      Age   Income     Beer     Wine      Sex     Swim   Region       IQ 
 ##    FALSE    FALSE    FALSE     TRUE     TRUE    FALSE    FALSE    FALSE    FALSE     TRUE     TRUE</code></pre>
 <p>Here <code>p.values[, 2, 1]</code> means values for all predictors, model with two components, first y-variable.</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="pls--variable-selection.html#cb184-1" aria-hidden="true" tabindex="-1"></a>newm <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">3</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">exclcols =</span> exclcols)</span>
-<span id="cb184-2"><a href="pls--variable-selection.html#cb184-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(newm)</span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="pls--variable-selection.html#cb201-1" tabindex="-1"></a>newm <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">3</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">exclcols =</span> exclcols)</span>
+<span id="cb201-2"><a href="pls--variable-selection.html#cb201-2" tabindex="-1"></a><span class="fu">summary</span>(newm)</span></code></pre></div>
 <pre><code>## 
 ## PLS model (class pls) summary
 ## -------------------------------
@@ -415,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     X cumexpvar Y cumexpvar    R2  RMSE Slope    Bias  RPD
 ## Cal    98.63485    97.79127 0.978 0.575 0.978  0.0000 6.87
 ## Cv           NA          NA 0.965 0.727 0.972 -0.0161 5.44</code></pre>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="pls--variable-selection.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">getRegcoeffs</span>(newm))</span></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="pls--variable-selection.html#cb203-1" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">getRegcoeffs</span>(newm))</span></code></pre></div>
 <pre><code>##              Estimated
 ## Intercept  4.952691046
 ## Height     0.091079963
@@ -485,7 +497,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["_main.pdf"],
 "search": {
 "engine": "fuse",
 "options": null
