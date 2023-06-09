@@ -486,6 +486,7 @@ kbd {
 
    .page-header__subtitle {
       margin-top: -35px;
+      font-size: 1.35em;
    }
 
    .page-header__title {
