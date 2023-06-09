@@ -122,21 +122,22 @@ kbd {
    display: grid;
    grid-template-areas: "header list"
                         "info list";
-   grid-template-columns: 512px 512px;
+   grid-template-columns: 1.1fr 0.9fr;
    grid-template-rows: auto 1fr;
    justify-content: center;
-
+   max-width: 1000px;
+   margin: 0 auto;
    padding: 2em 0 1em 0;
- }
+}
 
- .page-section_small {
+.page-section_small {
    font-size: 0.9em;
 }
 
- .page-section__header {
+.page-section__header {
    display: block;
    grid-area: header;
-   padding: 0 10px 0 20px;
+   padding: 0 10px 0 10px;
    margin: 0;
 }
 
@@ -150,7 +151,7 @@ kbd {
    color: #606060;
    display: block;
    grid-area: info;
-   padding: 0 10px 0 20px;
+   padding: 0 10px 0 10px;
    line-height: 1.65em;
    margin: 0;
 }
@@ -159,7 +160,7 @@ kbd {
    display: block;
    list-style: none;
    grid-area: list;
-   padding: 1em 20px 0 20px;
+   padding: 1em 10px 0 10px;
    margin: 0;
 }
 
@@ -205,6 +206,7 @@ kbd {
    background-image: url('../images/browser-solid.svg');
 }
 
+
 .page-section_cards {
    background: #ebf0f4;
    background-color: #f6faff;
@@ -216,7 +218,7 @@ kbd {
 .page-section_cards > header {
    max-width: 980px;
    margin: 0 auto;
-   padding: 0.75em 0 0 20px;
+   padding: 0.75em 0 0 0px;
 }
 
 .page-section_cards > header > h2 {
@@ -230,7 +232,8 @@ kbd {
    display: flex;
    list-style: none;
    flex-wrap: wrap;
-   padding: 0.75em 0 2em 20px;
+   padding: 0.75em 20px 2em 0px;
+
    justify-content: flex-start;
    align-items: flex-start;
    max-width: 980px;
@@ -266,6 +269,32 @@ kbd {
 .card_app {
    background-size: auto 28px;
    background-image: url('../images/browser-light.svg');
+}
+
+.card_graasta {
+   background-color: #fff8f0;
+   padding: 1em 1em 1em 60px;
+   background-size: 36px 36px;
+   margin: 10px 10px 10px 0;
+   flex-basis: 100%;
+   background-image: url('https://graasta.com/img/logo.svg');
+   box-shadow: 0 4px 8px 0 rgba(240, 200, 180, 0.4), 0 -4px 8px 0 rgba(240, 200, 180, 0.4);
+}
+
+.card_graasta a{
+   color: #336688;
+}
+
+.card_graasta a:hover{
+   color: #5588aa;
+}
+
+.card_graasta p{
+   color: #554422;
+}
+
+.card_graasta:hover {
+   background-color: #fff8f0;
 }
 
 .card > h3 {
@@ -318,14 +347,24 @@ kbd {
    font-weight: normal;
 }
 
-@media(max-width: 979px) {
-   .page-section_main {
-      grid-template-columns: 1fr 1fr;
-    }
+@media(max-width: 1020px) {
 
-    .page-header__title {
+   .page-header__title {
       padding-right: 20px;
-    }
+   }
+
+   .page-section__info,
+   .page-section__list,
+   .page-section_cards > header,
+   .page-section__header {
+      padding-left: 20px;
+      padding-right: 20px;
+   }
+
+   .cards {
+      padding-left: 20px;
+      padding-right: 10px;
+   }
 
 }
 
@@ -369,16 +408,16 @@ kbd {
 
     .cards {
       margin: 0;
-      padding: 0 20px 1em 20px 1em;
+      padding: 10px 1em 20px 1em;
       display: block;
     }
 
     .card {
       display: block;
+      box-sizing: border-box;
       margin: 10px 0 auto;
       width: 100%;
       min-width: 300px;
-      max-width: 400px;
 
    }
 
