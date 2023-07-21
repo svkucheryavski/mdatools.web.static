@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Validation | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Validation | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2023-07-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -119,6 +119,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
@@ -138,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
 <li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
-<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install and update</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
 <ul>
@@ -301,14 +305,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3>Using validation/test set<a href="validation.html#using-validationtest-set" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In case if you have a dedicated validation/test set, you need to provide it as two separate matrices — one for predictors (parameter <code>x.test</code>) and one for response (<code>y.test</code>) values. The rest will be done automatically and you will see the results for test set in all plots and summary tables.</p>
 <p>The example below shows how to create such model for <em>Simdata</em> (here we will make PLS1 model for prediction of concentration of the first mixture component — first column of the concentration matrix):</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="validation.html#cb154-1" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
-<span id="cb154-2"><a href="validation.html#cb154-2" tabindex="-1"></a>Xc <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
-<span id="cb154-3"><a href="validation.html#cb154-3" tabindex="-1"></a>yc <span class="ot">=</span> simdata<span class="sc">$</span>conc.c[, <span class="dv">1</span>]</span>
-<span id="cb154-4"><a href="validation.html#cb154-4" tabindex="-1"></a>Xt <span class="ot">=</span> simdata<span class="sc">$</span>spectra.t</span>
-<span id="cb154-5"><a href="validation.html#cb154-5" tabindex="-1"></a>yt <span class="ot">=</span> simdata<span class="sc">$</span>conc.t[, <span class="dv">1</span>]</span>
-<span id="cb154-6"><a href="validation.html#cb154-6" tabindex="-1"></a></span>
-<span id="cb154-7"><a href="validation.html#cb154-7" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">10</span>, <span class="at">x.test =</span> Xt, <span class="at">y.test =</span> yt)</span>
-<span id="cb154-8"><a href="validation.html#cb154-8" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="validation.html#cb155-1" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
+<span id="cb155-2"><a href="validation.html#cb155-2" tabindex="-1"></a>Xc <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
+<span id="cb155-3"><a href="validation.html#cb155-3" tabindex="-1"></a>yc <span class="ot">=</span> simdata<span class="sc">$</span>conc.c[, <span class="dv">1</span>]</span>
+<span id="cb155-4"><a href="validation.html#cb155-4" tabindex="-1"></a>Xt <span class="ot">=</span> simdata<span class="sc">$</span>spectra.t</span>
+<span id="cb155-5"><a href="validation.html#cb155-5" tabindex="-1"></a>yt <span class="ot">=</span> simdata<span class="sc">$</span>conc.t[, <span class="dv">1</span>]</span>
+<span id="cb155-6"><a href="validation.html#cb155-6" tabindex="-1"></a></span>
+<span id="cb155-7"><a href="validation.html#cb155-7" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">10</span>, <span class="at">x.test =</span> Xt, <span class="at">y.test =</span> yt)</span>
+<span id="cb155-8"><a href="validation.html#cb155-8" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## PLS model (class pls) summary
 ## -------------------------------
@@ -320,12 +324,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Cal       99.977      96.960 0.970 0.050 0.970 0.000 5.76
 ## Test      99.983      98.153 0.979 0.046 0.971 0.003 6.93</code></pre>
 <p>As you can see, in this case we do not have a warning about absence of validation results as we have seen in the example above. Summary information is avaiable for optimal number of components for both calibration and test set. Model was able to detect that 3 components is optimal despite the provided number of 10 components. How this selection is done is described later in this chapter, meanwhile let’s look at the plot overview:</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="validation.html#cb156-1" tabindex="-1"></a><span class="fu">plot</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="validation.html#cb157-1" tabindex="-1"></a><span class="fu">plot</span>(m)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-102-1.png" width="864" /></p>
 <p>Distance plot, RMSE and plot with predicted and measured y-values have points for both calibration and test set. The RMSE plot shows clearly that after third component the model becomes overfitted as error for the test set is increasing.</p>
 <p>As mentioned, method <code>summary()</code> for validated model shows performance statistics calculated using optimal number of components for each of the results (calibration and test set validation in our case).</p>
 <p>If you want more details run <code>summary()</code> for one of the result objects.</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="validation.html#cb157-1" tabindex="-1"></a><span class="fu">summary</span>(m<span class="sc">$</span>res<span class="sc">$</span>test)</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="validation.html#cb158-1" tabindex="-1"></a><span class="fu">summary</span>(m<span class="sc">$</span>res<span class="sc">$</span>test)</span></code></pre></div>
 <pre><code>## 
 ## PLS regression results (class plsres) summary
 ## Info: test set validation results
@@ -347,11 +351,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3>Using Procrustes cross-validation<a href="validation.html#using-procrustes-cross-validation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As in case of PCA, you can also generate the validation set using Procrustes cross-validation. Here I assume that you already have package <code>pcv</code> instealled and read about the method (or at least tried it with PCA examples).</p>
 <p>Let’s create the PV-set first:</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="validation.html#cb159-1" tabindex="-1"></a><span class="fu">library</span>(pcv)</span>
-<span id="cb159-2"><a href="validation.html#cb159-2" tabindex="-1"></a>Xpv <span class="ot">=</span> <span class="fu">pcvpls</span>(Xc, yc, <span class="dv">20</span>, <span class="at">cv =</span> <span class="fu">list</span>(<span class="st">&quot;ven&quot;</span>, <span class="dv">4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="validation.html#cb160-1" tabindex="-1"></a><span class="fu">library</span>(pcv)</span>
+<span id="cb160-2"><a href="validation.html#cb160-2" tabindex="-1"></a>Xpv <span class="ot">=</span> <span class="fu">pcvpls</span>(Xc, yc, <span class="dv">20</span>, <span class="at">cv =</span> <span class="fu">list</span>(<span class="st">&quot;ven&quot;</span>, <span class="dv">4</span>))</span></code></pre></div>
 <p>In this case we generate only predictors, the response values will be the same as for the calibration set. Now we can create a model similar to what we did for dedicated validation set (note that we provide <code>yc</code> as values for the <code>y.test</code> argument in this case):</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="validation.html#cb160-1" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">10</span>, <span class="at">x.test =</span> Xpv, <span class="at">y.test =</span> yc)</span>
-<span id="cb160-2"><a href="validation.html#cb160-2" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="validation.html#cb161-1" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">10</span>, <span class="at">x.test =</span> Xpv, <span class="at">y.test =</span> yc)</span>
+<span id="cb161-2"><a href="validation.html#cb161-2" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
 <pre><code>## 
 ## PLS model (class pls) summary
 ## -------------------------------
@@ -363,7 +367,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Cal       99.977      96.960 0.970 0.050 0.970  0e+00 5.76
 ## Test      99.977      96.988 0.968 0.052 0.967 -4e-04 5.61</code></pre>
 <p>As you can see in this case PLS also selected 3 components as optimal. Here is the overview of the model.</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="validation.html#cb162-1" tabindex="-1"></a><span class="fu">plot</span>(m2)</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="validation.html#cb163-1" tabindex="-1"></a><span class="fu">plot</span>(m2)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-106-1.png" width="864" /></p>
 <p>The behaviour of RMSE values is quite similar to the one we got for the test set.</p>
 </div>
@@ -371,8 +375,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3>Using conventional cross-validation<a href="validation.html#using-conventional-cross-validation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Alternatively you can use conventional cross-validation as well. But in this case only figures of merit (e.g. RMSE and R2 values) will be computed, as computing variances and distances can not be done correctly. This is enough though to optimize the parameters of your model (number of components, preprocessing, variable selection) and then apply the final optimized model to the test set.</p>
 <p>In this case you do not need to provide any extra data, but just set cross-validation parameter <code>cv</code> similar to what you do when generate PV-set:</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="validation.html#cb163-1" tabindex="-1"></a>m3 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">10</span>, <span class="at">cv =</span> <span class="fu">list</span>(<span class="st">&quot;ven&quot;</span>, <span class="dv">4</span>))</span>
-<span id="cb163-2"><a href="validation.html#cb163-2" tabindex="-1"></a><span class="fu">summary</span>(m3)</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="validation.html#cb164-1" tabindex="-1"></a>m3 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">10</span>, <span class="at">cv =</span> <span class="fu">list</span>(<span class="st">&quot;ven&quot;</span>, <span class="dv">4</span>))</span>
+<span id="cb164-2"><a href="validation.html#cb164-2" tabindex="-1"></a><span class="fu">summary</span>(m3)</span></code></pre></div>
 <pre><code>## 
 ## PLS model (class pls) summary
 ## -------------------------------
@@ -383,36 +387,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     X cumexpvar Y cumexpvar    R2  RMSE Slope   Bias  RPD
 ## Cal    99.97681    96.96024 0.970 0.050 0.970  0e+00 5.76
 ## Cv           NA          NA 0.968 0.052 0.967 -5e-04 5.58</code></pre>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="validation.html#cb165-1" tabindex="-1"></a><span class="fu">plot</span>(m3)</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="validation.html#cb166-1" tabindex="-1"></a><span class="fu">plot</span>(m3)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-108-1.png" width="864" /></p>
 <p>As you can see, all results are very similar to what you got with PV-set, however some of the outcomes (e.g. distances, explained variance, etc) are not available.</p>
 <p>In the examples above we set arameter <code>cv</code> to <code>list("ven", 4)</code>. But in fact it can be a number, a list or a vector with segment values manually assigned for each measurement.</p>
 <p>If it is a number, it will be used as number of segments for random cross-validation, e.g. if <code>cv = 2</code> cross-validation with two segments will be carried out with measurements being randomly split into the segments. For full cross-validation use <code>cv = 1</code> like in the example above. This option is a bit confusing, logically we have to set <code>cv</code> equal to number of measurements in the calibration set. But this option was used many years ago when the package was created and it is kept for backward compatibility.</p>
 <p>For more advanced selection you can provide a list with name of cross-validation method, number of segments and number of iterations, e.g. <code>cv = list("rand", 4, 4)</code> for running random cross-validation with four segments and four repetitions or <code>cv = list("ven", 8)</code> for systematic split into eight segments (<em>venetian blinds</em>). In case of venetian splits, the measurements will be automatically ordered from smallest to largest response (y) values.</p>
-<p>Finally, from version <em>0.13.0</em>, you can also provide a vector with manual slits. For example, if you create a model with the following value for <code>cv</code> parameter: <code>cv = rep(1:4, length.out = nrow(Xc))</code> the vector of values you provide will look as <code>1 2 3 4 1 2 3 4 1 2 ...</code>, which corresponds to systematic splits but without ordering y-values, so it will use the current order of measurements (rows) in the data. Use this option if you have specific requirements for cross-validation and the implemented methods do not meet them.</p>
+<p>Finally, you can also provide a vector with manual slits. For example, if you create a model with the following value for <code>cv</code> parameter: <code>cv = rep(1:4, length.out = nrow(Xc))</code> the vector of values you provide will look as <code>1 2 3 4 1 2 3 4 1 2 ...</code>, which corresponds to systematic splits but without ordering y-values, so it will use the current order of measurements (rows) in the data. Use this option if you have specific requirements for cross-validation and the implemented methods do not meet them.</p>
+<div id="local-and-global-cv-scope" class="section level4 unnumbered hasAnchor">
+<h4>Local and global CV scope<a href="validation.html#local-and-global-cv-scope" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>From <em>0.14.1</em> it is possible to set how cross-validation subsets are centred and scaled inside the cross-validation loop. This is regulated by a new parameter <code>cv.scope</code> in methods <code>pls()</code>, <code>plsda()</code>and <code>ipls()</code>.</p>
+<p>Cross-validation splits the original training set into local calibration and validation sets inside the loop. For example, if you have dataset with 100 objects/observations and use cross-validation with four segments (with random or systematic splits), in each iteration 25 objects will be taken as local validation set and remaining 75 objects will for a local calibration set.</p>
+<p>If <code>cv.scope</code> parameter is set to <code>"local"</code>, then mean values for centreing and standard deviation values for scaling (if this option is selected) will be computed based on the local set with 75 objects in the example below. So, every local model will have its own center in the variable space.</p>
+<p>If <code>cv.scope</code> parameter is set to <code>"global"</code>, then the mean values and standard deviation values will be computed for the original (global) training set hence all local models will have the same center as the global model.</p>
+<p>The default value is <code>"local"</code> and this was also the way <code>mdatools</code> worked before this option was introduced in <em>0.14.1</em>. The small example below shows how both options work (it is assumed that you already have <code>Xc</code> and <code>yc</code> variables from the previos examples):</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="validation.html#cb167-1" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">cv =</span> <span class="fu">list</span>(<span class="st">&quot;ven&quot;</span>, <span class="dv">4</span>), <span class="at">cv.scope =</span> <span class="st">&quot;local&quot;</span>)</span>
+<span id="cb167-2"><a href="validation.html#cb167-2" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">cv =</span> <span class="fu">list</span>(<span class="st">&quot;ven&quot;</span>, <span class="dv">4</span>), <span class="at">cv.scope =</span> <span class="st">&quot;global&quot;</span>)</span>
+<span id="cb167-3"><a href="validation.html#cb167-3" tabindex="-1"></a></span>
+<span id="cb167-4"><a href="validation.html#cb167-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb167-5"><a href="validation.html#cb167-5" tabindex="-1"></a><span class="fu">plotRMSE</span>(m1<span class="sc">$</span>res<span class="sc">$</span>cv, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">&quot;Local cv-scope&quot;</span>)</span>
+<span id="cb167-6"><a href="validation.html#cb167-6" tabindex="-1"></a><span class="fu">plotRMSE</span>(m2<span class="sc">$</span>res<span class="sc">$</span>cv, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">&quot;Global cv-scope&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-109-1.png" width="864" />
+As you can see the cross-validation results are very similar, however RMSE values for locally autoscaled models tend to be a bit higher as expected.</p>
+</div>
 </div>
 <div id="selection-of-optimal-number-of-components" class="section level3 unnumbered hasAnchor">
 <h3>Selection of optimal number of components<a href="validation.html#selection-of-optimal-number-of-components" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When you create a PLS model, it tries to select optimal number of components automatically (which, of course, you can always change later). To do that, the method uses RMSE values, calculated for different number of components and validation predictions. So, if we do not use any validation, it warns us about this as it was mentioned in the beginning of this chapter.</p>
 <p>If validation (any of the three methods described above) was used, there are two different ways/criteria for automatic selection of the components best on validation results. One is using first local minimum on the RMSE plot and second is so called Wold criterion, based on a ratio between PRESS values for current and next component.</p>
 <p>You can select which criterion to use by specifying parameter <code>ncomp.selcrit</code> (either <code>'min'</code> or <code>'wold'</code>) as it is shown below (here we use cross-validation).</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="validation.html#cb166-1" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">cv =</span> <span class="fu">list</span>(<span class="st">&quot;ven&quot;</span>, <span class="dv">4</span>), <span class="at">ncomp.selcrit =</span> <span class="st">&quot;min&quot;</span>)</span>
-<span id="cb166-2"><a href="validation.html#cb166-2" tabindex="-1"></a><span class="fu">show</span>(m1<span class="sc">$</span>ncomp.selected)</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="validation.html#cb168-1" tabindex="-1"></a>m1 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">cv =</span> <span class="fu">list</span>(<span class="st">&quot;ven&quot;</span>, <span class="dv">4</span>), <span class="at">ncomp.selcrit =</span> <span class="st">&quot;min&quot;</span>)</span>
+<span id="cb168-2"><a href="validation.html#cb168-2" tabindex="-1"></a><span class="fu">show</span>(m1<span class="sc">$</span>ncomp.selected)</span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="validation.html#cb168-1" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">cv =</span> <span class="fu">list</span>(<span class="st">&quot;ven&quot;</span>, <span class="dv">4</span>), <span class="at">ncomp.selcrit =</span> <span class="st">&quot;wold&quot;</span>)</span>
-<span id="cb168-2"><a href="validation.html#cb168-2" tabindex="-1"></a><span class="fu">show</span>(m2<span class="sc">$</span>ncomp.selected)</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="validation.html#cb170-1" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">cv =</span> <span class="fu">list</span>(<span class="st">&quot;ven&quot;</span>, <span class="dv">4</span>), <span class="at">ncomp.selcrit =</span> <span class="st">&quot;wold&quot;</span>)</span>
+<span id="cb170-2"><a href="validation.html#cb170-2" tabindex="-1"></a><span class="fu">show</span>(m2<span class="sc">$</span>ncomp.selected)</span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
 <p>Well, in this case both pointed on the same number, 3, but sometimes they give different solutions.</p>
 <p>And here are the RMSE plots (they are identical of course), where you can see how error depends on number of components for both calibration set and cross-validated predictions. Apparently the minimum for cross-validation error (RMSECV) is indeed at 3:</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="validation.html#cb170-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb170-2"><a href="validation.html#cb170-2" tabindex="-1"></a><span class="fu">plotRMSE</span>(m1)</span>
-<span id="cb170-3"><a href="validation.html#cb170-3" tabindex="-1"></a><span class="fu">plotRMSE</span>(m2)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-110-1.png" width="864" /></p>
-<p>Another useful plot in this case is a plot which shows ratio between cross-validated RMSE values, RMSECV, and the calibrated ones, RMSEC. You can see an example in the figure below and read more about this plot in <a href="https://eigenvector.com/%EF%BF%BCevaluating-models-hating-on-r-squared/">blog post</a> by Barry M. Wise.</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="validation.html#cb171-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb171-2"><a href="validation.html#cb171-2" tabindex="-1"></a><span class="fu">plotRMSERatio</span>(m1)</span>
-<span id="cb171-3"><a href="validation.html#cb171-3" tabindex="-1"></a><span class="fu">plotRMSERatio</span>(m2, <span class="at">pch =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="validation.html#cb172-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb172-2"><a href="validation.html#cb172-2" tabindex="-1"></a><span class="fu">plotRMSE</span>(m1)</span>
+<span id="cb172-3"><a href="validation.html#cb172-3" tabindex="-1"></a><span class="fu">plotRMSE</span>(m2)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-111-1.png" width="864" /></p>
+<p>Another useful plot in this case is a plot which shows ratio between cross-validated RMSE values, RMSECV, and the calibrated ones, RMSEC. You can see an example in the figure below and read more about this plot in <a href="https://eigenvector.com/%EF%BF%BCevaluating-models-hating-on-r-squared/">blog post</a> by Barry M. Wise.</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="validation.html#cb173-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb173-2"><a href="validation.html#cb173-2" tabindex="-1"></a><span class="fu">plotRMSERatio</span>(m1)</span>
+<span id="cb173-3"><a href="validation.html#cb173-3" tabindex="-1"></a><span class="fu">plotRMSERatio</span>(m2, <span class="at">pch =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-112-1.png" width="864" /></p>
 </div>
 </div>
             </section>
@@ -463,7 +483,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null

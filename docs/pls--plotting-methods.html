@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Plotting methods | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Plotting methods | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2023-07-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -119,6 +119,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
@@ -138,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
 <li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
-<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install and update</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
 <ul>
@@ -377,17 +381,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Parameter <code>comp</code> allows to provide a number of selected components (one or several) to show the plot
 for, while parameter <code>ncomp</code> assumes that only one number is expected (number of components in a model or particular individual component). So if e.g. you create model for five components and selected three as optimal, you can also see, for example, prediction plot for having only one or for components in your model.</p>
 <p>Here is an example for creating prediction plot for <code>m</code> model (left for automatically selected number of components, right for user specified value):</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="pls--plotting-methods.html#cb181-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb181-2"><a href="pls--plotting-methods.html#cb181-2" tabindex="-1"></a><span class="fu">plotPredictions</span>(m)</span>
-<span id="cb181-3"><a href="pls--plotting-methods.html#cb181-3" tabindex="-1"></a><span class="fu">plotPredictions</span>(m, <span class="at">ncomp =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-118-1.png" width="864" /></p>
-<p>By the way, when <code>plotPredictions()</code> is made for results object, you can show performance statistics on the plot:</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="pls--plotting-methods.html#cb182-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb182-2"><a href="pls--plotting-methods.html#cb182-2" tabindex="-1"></a><span class="fu">plotPredictions</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal)</span>
-<span id="cb182-3"><a href="pls--plotting-methods.html#cb182-3" tabindex="-1"></a><span class="fu">plotPredictions</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
-<span id="cb182-4"><a href="pls--plotting-methods.html#cb182-4" tabindex="-1"></a><span class="fu">plotPredictions</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">show.stat =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb182-5"><a href="pls--plotting-methods.html#cb182-5" tabindex="-1"></a><span class="fu">plotPredictions</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">show.stat =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="pls--plotting-methods.html#cb183-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb183-2"><a href="pls--plotting-methods.html#cb183-2" tabindex="-1"></a><span class="fu">plotPredictions</span>(m)</span>
+<span id="cb183-3"><a href="pls--plotting-methods.html#cb183-3" tabindex="-1"></a><span class="fu">plotPredictions</span>(m, <span class="at">ncomp =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-119-1.png" width="864" /></p>
+<p>By the way, when <code>plotPredictions()</code> is made for results object, you can show performance statistics on the plot:</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="pls--plotting-methods.html#cb184-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb184-2"><a href="pls--plotting-methods.html#cb184-2" tabindex="-1"></a><span class="fu">plotPredictions</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal)</span>
+<span id="cb184-3"><a href="pls--plotting-methods.html#cb184-3" tabindex="-1"></a><span class="fu">plotPredictions</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
+<span id="cb184-4"><a href="pls--plotting-methods.html#cb184-4" tabindex="-1"></a><span class="fu">plotPredictions</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">show.stat =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb184-5"><a href="pls--plotting-methods.html#cb184-5" tabindex="-1"></a><span class="fu">plotPredictions</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">show.stat =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-120-1.png" width="864" /></p>
 <p>The plots for variables are available only for a model object and include:</p>
 <table>
 <colgroup>
@@ -428,8 +432,8 @@ for, while parameter <code>ncomp</code> assumes that only one number is expected
 </tbody>
 </table>
 <p>And, of course, both model and result objects have method <code>plot()</code> for giving an overview.</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="pls--plotting-methods.html#cb183-1" tabindex="-1"></a><span class="fu">plot</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-120-1.png" width="864" /></p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="pls--plotting-methods.html#cb185-1" tabindex="-1"></a><span class="fu">plot</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-121-1.png" width="864" /></p>
 <div id="excluding-rows-and-columns-1" class="section level3 unnumbered hasAnchor">
 <h3>Excluding rows and columns<a href="pls--plotting-methods.html#excluding-rows-and-columns-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>PLS, like PCA, also can exclude rows and columns from calculations. The implementation works similar to what was <a href="datasets--excluding-rows-and-columns.html#datasets--excluding-rows-and-columns">described</a> for PCA. For example, it can be useful if you have some candidates for outliers or do variable selection and do not want to remove rows and columns physically from the data matrix. In this case you can just specify two additional parameters, <code>exclcols</code> and <code>exclrows</code>, using either numbers or names of rows/columns to be excluded. You can also specify a vector with logical values (all <code>TRUE</code>s will be excluded).</p>
@@ -485,7 +489,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null

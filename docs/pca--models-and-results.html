@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Models and results | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Models and results | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2023-07-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -119,6 +119,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
@@ -138,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
 <li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
-<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install and update</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
 <ul>
@@ -295,15 +299,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="model-calibration" class="section level3 unnumbered hasAnchor">
 <h3>Model calibration<a href="pca--models-and-results.html#model-calibration" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s see how this works using a simple example — <em>People</em> data. We already used this data when was playing with plots, it consists of 32 objects (persons from Scandinavian and Mediterranean countries, 16 male and 16 female) and 12 variables (height, weight, shoesize, annual income, beer and wine consumption and so on.). More information about the data can be found using <code>?people</code>. We will first load the data matrix:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="pca--models-and-results.html#cb68-1" tabindex="-1"></a><span class="fu">library</span>(mdatools)</span>
-<span id="cb68-2"><a href="pca--models-and-results.html#cb68-2" tabindex="-1"></a><span class="fu">data</span>(people)</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="pca--models-and-results.html#cb69-1" tabindex="-1"></a><span class="fu">library</span>(mdatools)</span>
+<span id="cb69-2"><a href="pca--models-and-results.html#cb69-2" tabindex="-1"></a><span class="fu">data</span>(people)</span></code></pre></div>
 <p>Now let’s calibrate the model:</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="pca--models-and-results.html#cb69-1" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(people, <span class="dv">7</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">info =</span> <span class="st">&quot;People PCA model&quot;</span>)</span>
-<span id="cb69-2"><a href="pca--models-and-results.html#cb69-2" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">selectCompNum</span>(m, <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="pca--models-and-results.html#cb70-1" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(people, <span class="dv">7</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">info =</span> <span class="st">&quot;People PCA model&quot;</span>)</span>
+<span id="cb70-2"><a href="pca--models-and-results.html#cb70-2" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">selectCompNum</span>(m, <span class="dv">5</span>)</span></code></pre></div>
 <p>Here <code>pca</code> is a function that builds (calibrates) a PCA model and returns the model object. In terms of programming we can call function <code>pca()</code> a constructor of pca model object. The constructor has one mandatory argument — matrix or data frame with data values. Other arguments are optional as they all have default values. In this case we use three additional: <code>7</code> is maximum number of components, <code>scale = TRUE</code> tells that data values should be standardized (centering is a default option) and <code>info</code> allows to add a short text with information about the model which can be shown later.</p>
 <p>Function <code>selectCompNum()</code> allows to select an “optimal” number of components for the model. In our case we calibrate model with 7 principal components however, e.g. after investigation of explained variance, we found out that 5 components is optimal. In this case we have two choices. Either recalibrate the model using 5 components or use the model that is calibrated already but “tell” the model that 5 components is the optimal number. In this case the model will keep all results calculated for 7 components but will use optimal number of components when necessary. For example, when showing distance plot for the model. Or when PCA model is used in SIMCA classification.</p>
 <p>Function <code>print</code> prints the model object info:</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="pca--models-and-results.html#cb70-1" tabindex="-1"></a><span class="fu">print</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="pca--models-and-results.html#cb71-1" tabindex="-1"></a><span class="fu">print</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## PCA model (class pca)
 ## 
@@ -325,14 +329,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $res - list with model results (calibration, test)</code></pre>
 <p>As you can see, there are no scores, explained variance values, distances and so on. Because they actually are not part of a PCA model, they are results of applying the model to a calibration set. But loadings, eigenvalues, number of calculated and selected principal components, vectors for centering and scaling the data, significance levels and corresponding critical limits for distances — all are parameters of the model.</p>
 <p>Here is an example how to get values from loading matrix having the model object:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="pca--models-and-results.html#cb72-1" tabindex="-1"></a>m<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="pca--models-and-results.html#cb73-1" tabindex="-1"></a>m<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span></code></pre></div>
 <pre><code>##              Comp 1     Comp 2      Comp 3      Comp 4
-## Height   -0.3752858  0.1354585 -0.07237117  0.07431853
-## Weight   -0.3811357  0.1114472 -0.06810860 -0.03313762
-## Hairleng  0.3377735 -0.1501634  0.07901752  0.11431601
-## Shoesize -0.3776970  0.1508061 -0.00127806  0.06569227</code></pre>
+## Height   -0.3752858 -0.1354585 -0.07237117  0.07431853
+## Weight   -0.3811357 -0.1114472 -0.06810860 -0.03313762
+## Hairleng  0.3377735  0.1501634  0.07901752  0.11431601
+## Shoesize -0.3776970 -0.1508061 -0.00127806  0.06569227</code></pre>
 <p>One can also notice that the model object has a particular field — <code>res</code>, which is in fact a list of PCA <em>result objects</em> containing results of applying the model to the calibration set (<code>cal</code>) and (if available) validation/test set (<code>test</code>). In case of regression and classification <code>res</code> can also contain object with cross-validation results (<code>cv</code>). For example here is the description of object with calibration results:</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="pca--models-and-results.html#cb74-1" tabindex="-1"></a><span class="fu">print</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal)</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="pca--models-and-results.html#cb75-1" tabindex="-1"></a><span class="fu">print</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal)</span></code></pre></div>
 <pre><code>## 
 ## Results for PCA decomposition (class pcares)
 ## 
@@ -344,24 +348,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $expvar - explained variance for each component
 ## $cumexpvar - cumulative explained variance</code></pre>
 <p>And if we want to look at scores, here is the way:</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="pca--models-and-results.html#cb76-1" tabindex="-1"></a>m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>scores[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span></code></pre></div>
-<pre><code>##           Comp 1     Comp 2     Comp 3     Comp 4
-## Lars   -5.332528 -0.6765698  1.0673076  1.1008056
-## Peter  -3.114319 -0.2934016 -0.6707091 -1.3099103
-## Rasmus -2.996848 -0.3604689 -0.2118207 -1.1169333
-## Lene    1.084240 -1.8449249 -0.4091936 -0.1228956</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="pca--models-and-results.html#cb77-1" tabindex="-1"></a>m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>scores[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span></code></pre></div>
+<pre><code>##           Comp 1    Comp 2     Comp 3     Comp 4
+## Lars   -5.332528 0.6765698  1.0673076  1.1008056
+## Peter  -3.114319 0.2934016 -0.6707091 -1.3099103
+## Rasmus -2.996848 0.3604689 -0.2118207 -1.1169333
+## Lene    1.084240 1.8449249 -0.4091936 -0.1228956</code></pre>
 <p>Both model and result objects also have related functions (methods), first of all for visualizing various values (e.g. scores plot, loadings plot, etc.). Some of the functions will be discussed later in this chapter, a full list can be found in help for a proper constructor (e.g. <code>?pca</code>).</p>
 <p>The <em>result object</em> is also created every time you apply a model to a new data. Like in many built-in R methods, method <code>predict()</code> is used in this case. The first argument of the method is always a model object. Here is a PCA example (assuming we have already built the model):</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="pca--models-and-results.html#cb78-1" tabindex="-1"></a><span class="co"># create data matrix with three new measurements</span></span>
-<span id="cb78-2"><a href="pca--models-and-results.html#cb78-2" tabindex="-1"></a>Xt <span class="ot">=</span> <span class="fu">rbind</span>(</span>
-<span id="cb78-3"><a href="pca--models-and-results.html#cb78-3" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">180</span>, <span class="dv">80</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">44</span>, <span class="dv">35</span>, <span class="dv">35000</span>, <span class="dv">200</span>, <span class="dv">100</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">96</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">105</span>),</span>
-<span id="cb78-4"><a href="pca--models-and-results.html#cb78-4" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">170</span>, <span class="dv">67</span>,  <span class="dv">1</span>, <span class="dv">40</span>, <span class="dv">41</span>, <span class="dv">29500</span>, <span class="dv">100</span>, <span class="dv">200</span>,  <span class="dv">1</span>, <span class="dv">94</span>,  <span class="dv">1</span>, <span class="dv">105</span>),</span>
-<span id="cb78-5"><a href="pca--models-and-results.html#cb78-5" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">175</span>, <span class="dv">70</span>,  <span class="dv">1</span>, <span class="dv">41</span>, <span class="dv">28</span>, <span class="dv">21500</span>, <span class="dv">110</span>, <span class="dv">120</span>,  <span class="dv">1</span>, <span class="dv">97</span>,  <span class="dv">1</span>, <span class="dv">115</span>)</span>
-<span id="cb78-6"><a href="pca--models-and-results.html#cb78-6" tabindex="-1"></a>)</span>
-<span id="cb78-7"><a href="pca--models-and-results.html#cb78-7" tabindex="-1"></a></span>
-<span id="cb78-8"><a href="pca--models-and-results.html#cb78-8" tabindex="-1"></a><span class="co"># project the new data to the previous PCA model and show the result object</span></span>
-<span id="cb78-9"><a href="pca--models-and-results.html#cb78-9" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">predict</span>(m, Xt)</span>
-<span id="cb78-10"><a href="pca--models-and-results.html#cb78-10" tabindex="-1"></a><span class="fu">print</span>(res)</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="pca--models-and-results.html#cb79-1" tabindex="-1"></a><span class="co"># create data matrix with three new measurements</span></span>
+<span id="cb79-2"><a href="pca--models-and-results.html#cb79-2" tabindex="-1"></a>Xt <span class="ot">=</span> <span class="fu">rbind</span>(</span>
+<span id="cb79-3"><a href="pca--models-and-results.html#cb79-3" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">180</span>, <span class="dv">80</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">44</span>, <span class="dv">35</span>, <span class="dv">35000</span>, <span class="dv">200</span>, <span class="dv">100</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">96</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">105</span>),</span>
+<span id="cb79-4"><a href="pca--models-and-results.html#cb79-4" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">170</span>, <span class="dv">67</span>,  <span class="dv">1</span>, <span class="dv">40</span>, <span class="dv">41</span>, <span class="dv">29500</span>, <span class="dv">100</span>, <span class="dv">200</span>,  <span class="dv">1</span>, <span class="dv">94</span>,  <span class="dv">1</span>, <span class="dv">105</span>),</span>
+<span id="cb79-5"><a href="pca--models-and-results.html#cb79-5" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">175</span>, <span class="dv">70</span>,  <span class="dv">1</span>, <span class="dv">41</span>, <span class="dv">28</span>, <span class="dv">21500</span>, <span class="dv">110</span>, <span class="dv">120</span>,  <span class="dv">1</span>, <span class="dv">97</span>,  <span class="dv">1</span>, <span class="dv">115</span>)</span>
+<span id="cb79-6"><a href="pca--models-and-results.html#cb79-6" tabindex="-1"></a>)</span>
+<span id="cb79-7"><a href="pca--models-and-results.html#cb79-7" tabindex="-1"></a></span>
+<span id="cb79-8"><a href="pca--models-and-results.html#cb79-8" tabindex="-1"></a><span class="co"># project the new data to the previous PCA model and show the result object</span></span>
+<span id="cb79-9"><a href="pca--models-and-results.html#cb79-9" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">predict</span>(m, Xt)</span>
+<span id="cb79-10"><a href="pca--models-and-results.html#cb79-10" tabindex="-1"></a><span class="fu">print</span>(res)</span></code></pre></div>
 <pre><code>## 
 ## Results for PCA decomposition (class pcares)
 ## 
@@ -422,7 +426,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null

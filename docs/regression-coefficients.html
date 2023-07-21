@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Regression coefficients | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Regression coefficients | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2023-07-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -119,6 +119,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
@@ -138,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
 <li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
-<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install and update</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
 <ul>
@@ -291,31 +295,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="regression-coefficients" class="section level2 unnumbered hasAnchor">
 <h2>Regression coefficients<a href="regression-coefficients.html#regression-coefficients" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>First of all let us re-create the PLS model for prediction of Showsize from People data we used at the beginning of this chapter:</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="regression-coefficients.html#cb172-1" tabindex="-1"></a><span class="fu">library</span>(mdatools)</span>
-<span id="cb172-2"><a href="regression-coefficients.html#cb172-2" tabindex="-1"></a><span class="fu">data</span>(people)</span>
-<span id="cb172-3"><a href="regression-coefficients.html#cb172-3" tabindex="-1"></a></span>
-<span id="cb172-4"><a href="regression-coefficients.html#cb172-4" tabindex="-1"></a>idx <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">4</span>, <span class="dv">32</span>, <span class="dv">4</span>)</span>
-<span id="cb172-5"><a href="regression-coefficients.html#cb172-5" tabindex="-1"></a>Xc <span class="ot">=</span> people[<span class="sc">-</span>idx, <span class="sc">-</span><span class="dv">4</span>]</span>
-<span id="cb172-6"><a href="regression-coefficients.html#cb172-6" tabindex="-1"></a>yc <span class="ot">=</span> people[<span class="sc">-</span>idx, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb172-7"><a href="regression-coefficients.html#cb172-7" tabindex="-1"></a>Xt <span class="ot">=</span> people[idx, <span class="sc">-</span><span class="dv">4</span>]</span>
-<span id="cb172-8"><a href="regression-coefficients.html#cb172-8" tabindex="-1"></a>yt <span class="ot">=</span> people[idx, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="regression-coefficients.html#cb174-1" tabindex="-1"></a><span class="fu">library</span>(mdatools)</span>
+<span id="cb174-2"><a href="regression-coefficients.html#cb174-2" tabindex="-1"></a><span class="fu">data</span>(people)</span>
+<span id="cb174-3"><a href="regression-coefficients.html#cb174-3" tabindex="-1"></a></span>
+<span id="cb174-4"><a href="regression-coefficients.html#cb174-4" tabindex="-1"></a>idx <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">4</span>, <span class="dv">32</span>, <span class="dv">4</span>)</span>
+<span id="cb174-5"><a href="regression-coefficients.html#cb174-5" tabindex="-1"></a>Xc <span class="ot">=</span> people[<span class="sc">-</span>idx, <span class="sc">-</span><span class="dv">4</span>]</span>
+<span id="cb174-6"><a href="regression-coefficients.html#cb174-6" tabindex="-1"></a>yc <span class="ot">=</span> people[<span class="sc">-</span>idx, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb174-7"><a href="regression-coefficients.html#cb174-7" tabindex="-1"></a>Xt <span class="ot">=</span> people[idx, <span class="sc">-</span><span class="dv">4</span>]</span>
+<span id="cb174-8"><a href="regression-coefficients.html#cb174-8" tabindex="-1"></a>yt <span class="ot">=</span> people[idx, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code></pre></div>
 <p>But this time I will create the model using full cross-validation:</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="regression-coefficients.html#cb173-1" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">info =</span> <span class="st">&quot;Shoesize prediction model&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="regression-coefficients.html#cb175-1" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">info =</span> <span class="st">&quot;Shoesize prediction model&quot;</span>)</span></code></pre></div>
 <p>The values for regression coefficients are available in <code>m$coeffs$values</code>, it is an array with dimension <em>nVariables x nComponents x nPredictors</em>. The reason to use the object instead of just an array is mainly for being able to get and plot regression coefficients for different methods. Besides that, it is possible to calculate confidence intervals and other statistics for the coefficients using Jack-Knife method (will be shown later), which produces extra entities.</p>
 <p>The regression coefficients can be shown as plot using either function <code>plotRegcoeffs()</code> for the PLS model object or function <code>plot()</code> for the object with regression coefficients. You need to specify for which predictor (if you have more than one y-variable) and which number of components you want to see the coefficients for. By default it shows values for the optimal number of components and first y-variable as it is shown on example below.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="regression-coefficients.html#cb174-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb174-2"><a href="regression-coefficients.html#cb174-2" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m)</span>
-<span id="cb174-3"><a href="regression-coefficients.html#cb174-3" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
-<span id="cb174-4"><a href="regression-coefficients.html#cb174-4" tabindex="-1"></a><span class="fu">plot</span>(m<span class="sc">$</span>coeffs, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb174-5"><a href="regression-coefficients.html#cb174-5" tabindex="-1"></a><span class="fu">plot</span>(m<span class="sc">$</span>coeffs, <span class="at">ncomp =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-114-1.png" width="864" /></p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="regression-coefficients.html#cb176-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb176-2"><a href="regression-coefficients.html#cb176-2" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m)</span>
+<span id="cb176-3"><a href="regression-coefficients.html#cb176-3" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>)</span>
+<span id="cb176-4"><a href="regression-coefficients.html#cb176-4" tabindex="-1"></a><span class="fu">plot</span>(m<span class="sc">$</span>coeffs, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb176-5"><a href="regression-coefficients.html#cb176-5" tabindex="-1"></a><span class="fu">plot</span>(m<span class="sc">$</span>coeffs, <span class="at">ncomp =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-115-1.png" width="864" /></p>
 <p>The model keeps regression coefficients, calculated for centered and standardized data, without intercept, etc. Here are the values for three PLS components.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="regression-coefficients.html#cb175-1" tabindex="-1"></a><span class="fu">show</span>(m<span class="sc">$</span>coeffs<span class="sc">$</span>values[, <span class="dv">3</span>, <span class="dv">1</span>])</span></code></pre></div>
-<pre><code>##       Height       Weight     Hairleng          Age       Income         Beer         Wine          Sex         Swim       Region           IQ 
-##  0.210411676  0.197646483 -0.138824482  0.026613035 -0.000590693  0.148917913  0.138138095 -0.138824482  0.223962000  0.010392542 -0.088658626</code></pre>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="regression-coefficients.html#cb177-1" tabindex="-1"></a><span class="fu">show</span>(m<span class="sc">$</span>coeffs<span class="sc">$</span>values[, <span class="dv">3</span>, <span class="dv">1</span>])</span></code></pre></div>
+<pre><code>##       Height       Weight     Hairleng          Age       Income         Beer         Wine          Sex         Swim       Region 
+##  0.210411676  0.197646483 -0.138824482  0.026613035 -0.000590693  0.148917913  0.138138095 -0.138824482  0.223962000  0.010392542 
+##           IQ 
+## -0.088658626</code></pre>
 <p>You can see a summary for the regression coefficients object by calling function <code>summary()</code> for the object <code>m$coeffs</code> like it is show below. By default it shows only estimated regression coefficients for the selected y-variable and number of components.</p>
 <p>However, if you use cross-validation, <a href="https://en.wikipedia.org/wiki/Jackknife_resampling">Jack-Knifing</a> method will be used to compute some statistics, including standard error, p-value (for test if the coefficient is equal to zero in population) and confidence interval. All statistics in this case will be shown automatically with <code>summary()</code> as you can see below.</p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="regression-coefficients.html#cb177-1" tabindex="-1"></a><span class="fu">summary</span>(m<span class="sc">$</span>coeffs)</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="regression-coefficients.html#cb179-1" tabindex="-1"></a><span class="fu">summary</span>(m<span class="sc">$</span>coeffs)</span></code></pre></div>
 <pre><code>## 
 ## Regression coefficients for Shoesize (ncomp = 1)
 ## ------------------------------------------------
@@ -334,7 +340,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Degrees of freedom (Jack-Knifing): 23</code></pre>
 <p>You can also get the corrected coefficients, which can be applied directly to the raw data (without centering and standardization), by using method <code>getRegcoeffs()</code>:</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="regression-coefficients.html#cb179-1" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">getRegcoeffs</span>(m, <span class="at">ncomp =</span> <span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="regression-coefficients.html#cb181-1" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">getRegcoeffs</span>(m, <span class="at">ncomp =</span> <span class="dv">3</span>))</span></code></pre></div>
 <pre><code>##               Estimated
 ## Intercept  1.251537e+01
 ## Height     8.105287e-02
@@ -399,7 +405,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null

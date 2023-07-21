@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Randomized PCA algorithms | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Randomized PCA algorithms | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2023-07-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -119,6 +119,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
@@ -138,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
 <li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
-<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install and update</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
 <ul>
@@ -294,27 +298,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>One of the solution here is to use probabilistic algorithms, which allow to reduce the number of values needed for estimation of principal components. Starting from <em>0.9.0</em> one of the probabilistic approach is also implemented in <em>mdatools</em>. The original idea can be found in <a href="https://epubs.siam.org/doi/10.1137/090771806">this paper</a> and some examples on using the approach for PCA analysis of hyperspectral images are described <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/cem.2966">here</a>.</p>
 <p>The approach is based on calculation of matrix <span class="math inline">\(B\)</span>, which has much smaller number of rows comparing to the original data, but captures the action of the data. To produce proper values for <span class="math inline">\(B\)</span>, several parameters are used. First of all it is a rank of original data, <span class="math inline">\(k\)</span>, if it is known. Second, it is oversampling parameter, <span class="math inline">\(p\)</span>, which is important if rank is underestimated. The idea is to use <span class="math inline">\(p\)</span> to overestimate the rank thus making solution more stable. The third parameter, <span class="math inline">\(q\)</span>, is a number of iterations needed to make <span class="math inline">\(B\)</span> more robust. Usually using <span class="math inline">\(p = 5\)</span> and <span class="math inline">\(q = 1\)</span> will work well on most of the datasets and, at the same time, will take less time for finding a solution comparing with conventional methods. By default, <span class="math inline">\(k\)</span> is set to number of components, used for PCA decomposition.</p>
 <p>The example below uses two methods (classic SVD and randomized SVD) for PCA decomposition of 100 000 x 300 dataset and compares time and main outcomes (loadings and explained variance).</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="pca--randomized-algorithm.html#cb121-1" tabindex="-1"></a><span class="co"># create a dataset as a linear combination of three sin curves with random &quot;concentrations&quot;</span></span>
-<span id="cb121-2"><a href="pca--randomized-algorithm.html#cb121-2" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100000</span></span>
-<span id="cb121-3"><a href="pca--randomized-algorithm.html#cb121-3" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">29.9</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
-<span id="cb121-4"><a href="pca--randomized-algorithm.html#cb121-4" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">sin</span>(X), <span class="fu">sin</span>(<span class="dv">10</span> <span class="sc">*</span> X), <span class="fu">sin</span>(<span class="dv">5</span> <span class="sc">*</span> X))</span>
-<span id="cb121-5"><a href="pca--randomized-algorithm.html#cb121-5" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">2</span>), <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">3</span>))</span>
-<span id="cb121-6"><a href="pca--randomized-algorithm.html#cb121-6" tabindex="-1"></a>D <span class="ot">=</span> C <span class="sc">%*%</span> <span class="fu">t</span>(S)</span>
-<span id="cb121-7"><a href="pca--randomized-algorithm.html#cb121-7" tabindex="-1"></a>D <span class="ot">=</span> D <span class="sc">+</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">300</span> <span class="sc">*</span> n, <span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">ncol =</span> <span class="dv">300</span>)</span>
-<span id="cb121-8"><a href="pca--randomized-algorithm.html#cb121-8" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">dim</span>(D))</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="pca--randomized-algorithm.html#cb122-1" tabindex="-1"></a><span class="co"># create a dataset as a linear combination of three sin curves with random &quot;concentrations&quot;</span></span>
+<span id="cb122-2"><a href="pca--randomized-algorithm.html#cb122-2" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100000</span></span>
+<span id="cb122-3"><a href="pca--randomized-algorithm.html#cb122-3" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">29.9</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb122-4"><a href="pca--randomized-algorithm.html#cb122-4" tabindex="-1"></a>S <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">sin</span>(X), <span class="fu">sin</span>(<span class="dv">10</span> <span class="sc">*</span> X), <span class="fu">sin</span>(<span class="dv">5</span> <span class="sc">*</span> X))</span>
+<span id="cb122-5"><a href="pca--randomized-algorithm.html#cb122-5" tabindex="-1"></a>C <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">2</span>), <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">3</span>))</span>
+<span id="cb122-6"><a href="pca--randomized-algorithm.html#cb122-6" tabindex="-1"></a>D <span class="ot">=</span> C <span class="sc">%*%</span> <span class="fu">t</span>(S)</span>
+<span id="cb122-7"><a href="pca--randomized-algorithm.html#cb122-7" tabindex="-1"></a>D <span class="ot">=</span> D <span class="sc">+</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">300</span> <span class="sc">*</span> n, <span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">ncol =</span> <span class="dv">300</span>)</span>
+<span id="cb122-8"><a href="pca--randomized-algorithm.html#cb122-8" tabindex="-1"></a><span class="fu">show</span>(<span class="fu">dim</span>(D))</span></code></pre></div>
 <pre><code>## [1] 100000    300</code></pre>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="pca--randomized-algorithm.html#cb123-1" tabindex="-1"></a><span class="co"># conventional SVD</span></span>
-<span id="cb123-2"><a href="pca--randomized-algorithm.html#cb123-2" tabindex="-1"></a>t1 <span class="ot">=</span> <span class="fu">system.time</span>({m1 <span class="ot">=</span> <span class="fu">pca</span>(D, <span class="at">ncomp =</span> <span class="dv">2</span>)})</span>
-<span id="cb123-3"><a href="pca--randomized-algorithm.html#cb123-3" tabindex="-1"></a><span class="fu">show</span>(t1)</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="pca--randomized-algorithm.html#cb124-1" tabindex="-1"></a><span class="co"># conventional SVD</span></span>
+<span id="cb124-2"><a href="pca--randomized-algorithm.html#cb124-2" tabindex="-1"></a>t1 <span class="ot">=</span> <span class="fu">system.time</span>({m1 <span class="ot">=</span> <span class="fu">pca</span>(D, <span class="at">ncomp =</span> <span class="dv">2</span>)})</span>
+<span id="cb124-3"><a href="pca--randomized-algorithm.html#cb124-3" tabindex="-1"></a><span class="fu">show</span>(t1)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  19.913   0.926  20.939</code></pre>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="pca--randomized-algorithm.html#cb125-1" tabindex="-1"></a><span class="co"># randomized SVD with p = 5 and q = 1</span></span>
-<span id="cb125-2"><a href="pca--randomized-algorithm.html#cb125-2" tabindex="-1"></a>t2 <span class="ot">=</span> <span class="fu">system.time</span>({m2 <span class="ot">=</span> <span class="fu">pca</span>(D, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">rand =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>))})</span>
-<span id="cb125-3"><a href="pca--randomized-algorithm.html#cb125-3" tabindex="-1"></a><span class="fu">show</span>(t2)</span></code></pre></div>
+##  19.863   0.706  20.624</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="pca--randomized-algorithm.html#cb126-1" tabindex="-1"></a><span class="co"># randomized SVD with p = 5 and q = 1</span></span>
+<span id="cb126-2"><a href="pca--randomized-algorithm.html#cb126-2" tabindex="-1"></a>t2 <span class="ot">=</span> <span class="fu">system.time</span>({m2 <span class="ot">=</span> <span class="fu">pca</span>(D, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">rand =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>))})</span>
+<span id="cb126-3"><a href="pca--randomized-algorithm.html#cb126-3" tabindex="-1"></a><span class="fu">show</span>(t2)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   2.783   0.277   3.068</code></pre>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="pca--randomized-algorithm.html#cb127-1" tabindex="-1"></a><span class="co"># compare variances</span></span>
-<span id="cb127-2"><a href="pca--randomized-algorithm.html#cb127-2" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
+##   2.926   0.277   3.200</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="pca--randomized-algorithm.html#cb128-1" tabindex="-1"></a><span class="co"># compare variances</span></span>
+<span id="cb128-2"><a href="pca--randomized-algorithm.html#cb128-2" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
 <pre><code>## 
 ## Summary for PCA model (class pca)
 ## Type of limits: ddmoments
@@ -324,7 +328,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##        Eigenvals Expvar Cumexpvar Nq Nh
 ## Comp 1   112.539  62.07     62.07  4  3
 ## Comp 2    49.978  27.56     89.63  6  5</code></pre>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="pca--randomized-algorithm.html#cb129-1" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="pca--randomized-algorithm.html#cb130-1" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code></pre></div>
 <pre><code>## 
 ## Summary for PCA model (class pca)
 ## 
@@ -336,8 +340,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##        Eigenvals Expvar Cumexpvar Nq Nh
 ## Comp 1   112.539  62.07     62.07  4  3
 ## Comp 2    49.978  27.56     89.63  6  5</code></pre>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="pca--randomized-algorithm.html#cb131-1" tabindex="-1"></a><span class="co"># compare loadings</span></span>
-<span id="cb131-2"><a href="pca--randomized-algorithm.html#cb131-2" tabindex="-1"></a><span class="fu">show</span>(m1<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="pca--randomized-algorithm.html#cb132-1" tabindex="-1"></a><span class="co"># compare loadings</span></span>
+<span id="cb132-2"><a href="pca--randomized-algorithm.html#cb132-2" tabindex="-1"></a><span class="fu">show</span>(m1<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
 <pre><code>##              Comp 1        Comp 2
 ##  [1,]  7.973072e-05  1.775574e-05
 ##  [2,]  3.865753e-02  6.927834e-02
@@ -349,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  [8,] -2.892920e-02  5.313597e-02
 ##  [9,] -6.217601e-02  7.988179e-02
 ## [10,] -7.993952e-02  3.244552e-02</code></pre>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="pca--randomized-algorithm.html#cb133-1" tabindex="-1"></a><span class="fu">show</span>(m2<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="pca--randomized-algorithm.html#cb134-1" tabindex="-1"></a><span class="fu">show</span>(m2<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
 <pre><code>##              Comp 1        Comp 2
 ##  [1,] -7.973072e-05 -1.775574e-05
 ##  [2,] -3.865753e-02 -6.927834e-02
@@ -363,20 +367,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [10,]  7.993952e-02 -3.244552e-02</code></pre>
 <p>As you can see the explained variance values, eigenvalues and loadings are identical in the two models and the second method is several times faster.</p>
 <p>It is possible to make PCA decomposition even faster if only loadings and scores are needed. In this case you can use method <code>pca.run()</code> and skip other steps, like calculation of distances, variances, critical limits and so on. But in this case data matrix must be centered (and scaled if necessary) manually prior to the decomposition. Here is an example using the data generated in previous code.</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="pca--randomized-algorithm.html#cb135-1" tabindex="-1"></a>D <span class="ot">=</span> <span class="fu">scale</span>(D, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb135-2"><a href="pca--randomized-algorithm.html#cb135-2" tabindex="-1"></a></span>
-<span id="cb135-3"><a href="pca--randomized-algorithm.html#cb135-3" tabindex="-1"></a><span class="co"># conventional SVD</span></span>
-<span id="cb135-4"><a href="pca--randomized-algorithm.html#cb135-4" tabindex="-1"></a>t1 <span class="ot">=</span> <span class="fu">system.time</span>({m1 <span class="ot">=</span> <span class="fu">pca.run</span>(D, <span class="at">method =</span> <span class="st">&quot;svd&quot;</span>, <span class="at">ncomp =</span> <span class="dv">2</span>)})</span>
-<span id="cb135-5"><a href="pca--randomized-algorithm.html#cb135-5" tabindex="-1"></a><span class="fu">show</span>(t1)</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="pca--randomized-algorithm.html#cb136-1" tabindex="-1"></a>D <span class="ot">=</span> <span class="fu">scale</span>(D, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb136-2"><a href="pca--randomized-algorithm.html#cb136-2" tabindex="-1"></a></span>
+<span id="cb136-3"><a href="pca--randomized-algorithm.html#cb136-3" tabindex="-1"></a><span class="co"># conventional SVD</span></span>
+<span id="cb136-4"><a href="pca--randomized-algorithm.html#cb136-4" tabindex="-1"></a>t1 <span class="ot">=</span> <span class="fu">system.time</span>({m1 <span class="ot">=</span> <span class="fu">pca.run</span>(D, <span class="at">method =</span> <span class="st">&quot;svd&quot;</span>, <span class="at">ncomp =</span> <span class="dv">2</span>)})</span>
+<span id="cb136-5"><a href="pca--randomized-algorithm.html#cb136-5" tabindex="-1"></a><span class="fu">show</span>(t1)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  18.153   0.179  18.348</code></pre>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="pca--randomized-algorithm.html#cb137-1" tabindex="-1"></a><span class="co"># randomized SVD with p = 5 and q = 1</span></span>
-<span id="cb137-2"><a href="pca--randomized-algorithm.html#cb137-2" tabindex="-1"></a>t2 <span class="ot">=</span> <span class="fu">system.time</span>({m2 <span class="ot">=</span> <span class="fu">pca.run</span>(D, <span class="at">method =</span> <span class="st">&quot;svd&quot;</span>, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">rand =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>))})</span>
-<span id="cb137-3"><a href="pca--randomized-algorithm.html#cb137-3" tabindex="-1"></a><span class="fu">show</span>(t2)</span></code></pre></div>
+##  18.608   0.152  18.750</code></pre>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="pca--randomized-algorithm.html#cb138-1" tabindex="-1"></a><span class="co"># randomized SVD with p = 5 and q = 1</span></span>
+<span id="cb138-2"><a href="pca--randomized-algorithm.html#cb138-2" tabindex="-1"></a>t2 <span class="ot">=</span> <span class="fu">system.time</span>({m2 <span class="ot">=</span> <span class="fu">pca.run</span>(D, <span class="at">method =</span> <span class="st">&quot;svd&quot;</span>, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">rand =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>))})</span>
+<span id="cb138-3"><a href="pca--randomized-algorithm.html#cb138-3" tabindex="-1"></a><span class="fu">show</span>(t2)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   1.613   0.037   1.650</code></pre>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="pca--randomized-algorithm.html#cb139-1" tabindex="-1"></a><span class="co"># compare loadings</span></span>
-<span id="cb139-2"><a href="pca--randomized-algorithm.html#cb139-2" tabindex="-1"></a><span class="fu">show</span>(m1<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
+##    1.65    0.03    1.68</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="pca--randomized-algorithm.html#cb140-1" tabindex="-1"></a><span class="co"># compare loadings</span></span>
+<span id="cb140-2"><a href="pca--randomized-algorithm.html#cb140-2" tabindex="-1"></a><span class="fu">show</span>(m1<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
 <pre><code>##                [,1]          [,2]
 ##  [1,]  7.973072e-05  1.775574e-05
 ##  [2,]  3.865753e-02  6.927834e-02
@@ -388,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  [8,] -2.892920e-02  5.313597e-02
 ##  [9,] -6.217601e-02  7.988179e-02
 ## [10,] -7.993952e-02  3.244552e-02</code></pre>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="pca--randomized-algorithm.html#cb141-1" tabindex="-1"></a><span class="fu">show</span>(m2<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="pca--randomized-algorithm.html#cb142-1" tabindex="-1"></a><span class="fu">show</span>(m2<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
 <pre><code>##                [,1]          [,2]
 ##  [1,] -7.973072e-05 -1.775574e-05
 ##  [2,] -3.865753e-02 -6.927834e-02
@@ -452,7 +456,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null

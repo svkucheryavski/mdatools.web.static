@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Normalization | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Normalization | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2023-07-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -119,6 +119,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
@@ -138,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
 <li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
-<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install and update</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
 <ul>
@@ -301,30 +305,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>All methods are implemented in function <code>prep.norm</code> you just need to provide the name of the method as a second argument (or named argument <code>type</code>). Internal standard normalization also requires an additional argument, which specifies index of column (or several columns), corresponding to the internal standard. The Probabilistic Quotient Normalization requires reference spectrum as an additional argument.</p>
 <p>An example below shows how to make normalization for several selected types using the Simdata:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="preprocessing--norm.html#cb54-1" tabindex="-1"></a><span class="co"># get spectral data and wavelength</span></span>
-<span id="cb54-2"><a href="preprocessing--norm.html#cb54-2" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
-<span id="cb54-3"><a href="preprocessing--norm.html#cb54-3" tabindex="-1"></a>w <span class="ot">=</span> simdata<span class="sc">$</span>wavelength</span>
-<span id="cb54-4"><a href="preprocessing--norm.html#cb54-4" tabindex="-1"></a></span>
-<span id="cb54-5"><a href="preprocessing--norm.html#cb54-5" tabindex="-1"></a>X1 <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
-<span id="cb54-6"><a href="preprocessing--norm.html#cb54-6" tabindex="-1"></a><span class="fu">attr</span>(X1, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">=</span> w</span>
-<span id="cb54-7"><a href="preprocessing--norm.html#cb54-7" tabindex="-1"></a><span class="fu">attr</span>(X1, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
-<span id="cb54-8"><a href="preprocessing--norm.html#cb54-8" tabindex="-1"></a></span>
-<span id="cb54-9"><a href="preprocessing--norm.html#cb54-9" tabindex="-1"></a><span class="co"># unit area normalization</span></span>
-<span id="cb54-10"><a href="preprocessing--norm.html#cb54-10" tabindex="-1"></a>X2 <span class="ot">=</span> <span class="fu">prep.norm</span>(X1, <span class="st">&quot;area&quot;</span>)</span>
-<span id="cb54-11"><a href="preprocessing--norm.html#cb54-11" tabindex="-1"></a><span class="co"># unit length normalization</span></span>
-<span id="cb54-12"><a href="preprocessing--norm.html#cb54-12" tabindex="-1"></a>X3 <span class="ot">=</span> <span class="fu">prep.norm</span>(X1, <span class="st">&quot;length&quot;</span>)</span>
-<span id="cb54-13"><a href="preprocessing--norm.html#cb54-13" tabindex="-1"></a><span class="co"># internal standard normalization for variable (column) with wavelength 291 nm</span></span>
-<span id="cb54-14"><a href="preprocessing--norm.html#cb54-14" tabindex="-1"></a>X4 <span class="ot">=</span> <span class="fu">prep.norm</span>(X1, <span class="st">&quot;is&quot;</span>, <span class="at">col.ind =</span> <span class="fu">match</span>(<span class="dv">291</span>, w))</span>
-<span id="cb54-15"><a href="preprocessing--norm.html#cb54-15" tabindex="-1"></a></span>
-<span id="cb54-16"><a href="preprocessing--norm.html#cb54-16" tabindex="-1"></a><span class="co"># show the original and preprocessed spectra</span></span>
-<span id="cb54-17"><a href="preprocessing--norm.html#cb54-17" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb54-18"><a href="preprocessing--norm.html#cb54-18" tabindex="-1"></a></span>
-<span id="cb54-19"><a href="preprocessing--norm.html#cb54-19" tabindex="-1"></a><span class="fu">mdaplot</span>(X1, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Original&quot;</span>)</span>
-<span id="cb54-20"><a href="preprocessing--norm.html#cb54-20" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">291</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;#00000080&quot;</span>)</span>
-<span id="cb54-21"><a href="preprocessing--norm.html#cb54-21" tabindex="-1"></a></span>
-<span id="cb54-22"><a href="preprocessing--norm.html#cb54-22" tabindex="-1"></a><span class="fu">mdaplot</span>(X2, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Normalized to unit area&quot;</span>)</span>
-<span id="cb54-23"><a href="preprocessing--norm.html#cb54-23" tabindex="-1"></a><span class="fu">mdaplot</span>(X3, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Normalized to unit length&quot;</span>)</span>
-<span id="cb54-24"><a href="preprocessing--norm.html#cb54-24" tabindex="-1"></a><span class="fu">mdaplot</span>(X4, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Normalized to IS (291 nm)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="preprocessing--norm.html#cb55-1" tabindex="-1"></a><span class="co"># get spectral data and wavelength</span></span>
+<span id="cb55-2"><a href="preprocessing--norm.html#cb55-2" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
+<span id="cb55-3"><a href="preprocessing--norm.html#cb55-3" tabindex="-1"></a>w <span class="ot">=</span> simdata<span class="sc">$</span>wavelength</span>
+<span id="cb55-4"><a href="preprocessing--norm.html#cb55-4" tabindex="-1"></a></span>
+<span id="cb55-5"><a href="preprocessing--norm.html#cb55-5" tabindex="-1"></a>X1 <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
+<span id="cb55-6"><a href="preprocessing--norm.html#cb55-6" tabindex="-1"></a><span class="fu">attr</span>(X1, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">=</span> w</span>
+<span id="cb55-7"><a href="preprocessing--norm.html#cb55-7" tabindex="-1"></a><span class="fu">attr</span>(X1, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
+<span id="cb55-8"><a href="preprocessing--norm.html#cb55-8" tabindex="-1"></a></span>
+<span id="cb55-9"><a href="preprocessing--norm.html#cb55-9" tabindex="-1"></a><span class="co"># unit area normalization</span></span>
+<span id="cb55-10"><a href="preprocessing--norm.html#cb55-10" tabindex="-1"></a>X2 <span class="ot">=</span> <span class="fu">prep.norm</span>(X1, <span class="st">&quot;area&quot;</span>)</span>
+<span id="cb55-11"><a href="preprocessing--norm.html#cb55-11" tabindex="-1"></a><span class="co"># unit length normalization</span></span>
+<span id="cb55-12"><a href="preprocessing--norm.html#cb55-12" tabindex="-1"></a>X3 <span class="ot">=</span> <span class="fu">prep.norm</span>(X1, <span class="st">&quot;length&quot;</span>)</span>
+<span id="cb55-13"><a href="preprocessing--norm.html#cb55-13" tabindex="-1"></a><span class="co"># internal standard normalization for variable (column) with wavelength 291 nm</span></span>
+<span id="cb55-14"><a href="preprocessing--norm.html#cb55-14" tabindex="-1"></a>X4 <span class="ot">=</span> <span class="fu">prep.norm</span>(X1, <span class="st">&quot;is&quot;</span>, <span class="at">col.ind =</span> <span class="fu">match</span>(<span class="dv">291</span>, w))</span>
+<span id="cb55-15"><a href="preprocessing--norm.html#cb55-15" tabindex="-1"></a></span>
+<span id="cb55-16"><a href="preprocessing--norm.html#cb55-16" tabindex="-1"></a><span class="co"># show the original and preprocessed spectra</span></span>
+<span id="cb55-17"><a href="preprocessing--norm.html#cb55-17" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb55-18"><a href="preprocessing--norm.html#cb55-18" tabindex="-1"></a></span>
+<span id="cb55-19"><a href="preprocessing--norm.html#cb55-19" tabindex="-1"></a><span class="fu">mdaplot</span>(X1, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Original&quot;</span>)</span>
+<span id="cb55-20"><a href="preprocessing--norm.html#cb55-20" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">291</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;#00000080&quot;</span>)</span>
+<span id="cb55-21"><a href="preprocessing--norm.html#cb55-21" tabindex="-1"></a></span>
+<span id="cb55-22"><a href="preprocessing--norm.html#cb55-22" tabindex="-1"></a><span class="fu">mdaplot</span>(X2, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Normalized to unit area&quot;</span>)</span>
+<span id="cb55-23"><a href="preprocessing--norm.html#cb55-23" tabindex="-1"></a><span class="fu">mdaplot</span>(X3, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Normalized to unit length&quot;</span>)</span>
+<span id="cb55-24"><a href="preprocessing--norm.html#cb55-24" tabindex="-1"></a><span class="fu">mdaplot</span>(X4, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Normalized to IS (291 nm)&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="864" /></p>
 <p>The vertical dashed line on the first plot shows position of the peak, which we use as internal standard for preprocessing shown on the last plot.</p>
 </div>
@@ -376,7 +380,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null

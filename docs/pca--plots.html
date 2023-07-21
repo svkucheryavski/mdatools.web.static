@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Plotting methods | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Plotting methods | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2023-07-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -119,6 +119,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
@@ -138,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
 <li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
-<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install and update</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
 <ul>
@@ -291,75 +295,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="pca--plots" class="section level2 unnumbered hasAnchor">
 <h2>Plotting methods<a href="pca--plots.html#pca--plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>First of all you can use the methods <code>mdaplot()</code> and <code>mdaplotg()</code> (or any others, e.g. <code>ggplot2</code>) for easy visualisation of the results as they are all available as matrices with proper names, attributes, etc. In the example below I create scores and loadings plots for PC1 vs PC2. Here I assume that the model from previous section is already created and available in your Global Environment. As you can see I take matrix with scores from the objects with calibration results (<code>m$res$cal</code>).</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="pca--plots.html#cb80-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb80-2"><a href="pca--plots.html#cb80-2" tabindex="-1"></a><span class="fu">mdaplot</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>scores, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.lines =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span>
-<span id="cb80-3"><a href="pca--plots.html#cb80-3" tabindex="-1"></a><span class="fu">mdaplot</span>(m<span class="sc">$</span>loadings, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.lines =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="pca--plots.html#cb81-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb81-2"><a href="pca--plots.html#cb81-2" tabindex="-1"></a><span class="fu">mdaplot</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>scores, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.lines =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb81-3"><a href="pca--plots.html#cb81-3" tabindex="-1"></a><span class="fu">mdaplot</span>(m<span class="sc">$</span>loadings, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.lines =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="864" /></p>
 <p>To simplify this routine, every model and result class also has a number of functions for visualization. Thus for PCA the function list includes scores and loadings plots, explained variance and cumulative explained variance plots, distance/residuals plots, and many others.</p>
 <p>A function that does the same for different models and results has always the same name. For example, <code>plotPredictions</code> will show predicted vs. measured plot for PLS model and PLS result, MLR model and MLR result, SIMCA model and SIMCA result, and so on, although the plot itself will be quite different. The first argument must always be either a model or a result object.</p>
 <p>The major difference between plots for model and plots for result is following. A plot for result always shows one set of data objects — one set of points, lines or bars. For example, predicted vs. measured values for calibration set or scores values for test set and so on. For such plots method <code>mdaplot()</code> is used and you can provide any arguments, available for this method (e.g. color group scores for calibration results, add confidence ellipses for scores, etc.).</p>
 <p>And a plot for a model in most cases shows several sets of data objects, e.g. predicted values for calibration and validation. In this case, a corresponding method uses <code>mdaplotg()</code> and, therefore, you can adjust the plot using arguments described for this method.</p>
 <p>Here are some examples for results:</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="pca--plots.html#cb81-1" tabindex="-1"></a><span class="co"># create a factor for combination of Sex and Region values</span></span>
-<span id="cb81-2"><a href="pca--plots.html#cb81-2" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(people[, <span class="st">&quot;Sex&quot;</span>], <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>))</span>
-<span id="cb81-3"><a href="pca--plots.html#cb81-3" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(people[, <span class="st">&quot;Region&quot;</span>], <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;M&quot;</span>))</span>
-<span id="cb81-4"><a href="pca--plots.html#cb81-4" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">interaction</span>(g1, g2)</span>
-<span id="cb81-5"><a href="pca--plots.html#cb81-5" tabindex="-1"></a></span>
-<span id="cb81-6"><a href="pca--plots.html#cb81-6" tabindex="-1"></a><span class="co"># scores plot for calibration results colored by Height</span></span>
-<span id="cb81-7"><a href="pca--plots.html#cb81-7" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb81-8"><a href="pca--plots.html#cb81-8" tabindex="-1"></a><span class="fu">plotScores</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Height&quot;</span>])</span>
-<span id="cb81-9"><a href="pca--plots.html#cb81-9" tabindex="-1"></a></span>
-<span id="cb81-10"><a href="pca--plots.html#cb81-10" tabindex="-1"></a><span class="co"># scores plot colored by the factor created above and confidence ellipses</span></span>
-<span id="cb81-11"><a href="pca--plots.html#cb81-11" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">plotScores</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">cgroup =</span> g)</span>
-<span id="cb81-12"><a href="pca--plots.html#cb81-12" tabindex="-1"></a><span class="fu">plotConfidenceEllipse</span>(p)</span>
-<span id="cb81-13"><a href="pca--plots.html#cb81-13" tabindex="-1"></a></span>
-<span id="cb81-14"><a href="pca--plots.html#cb81-14" tabindex="-1"></a><span class="co"># distance plot for calibration results with labels</span></span>
-<span id="cb81-15"><a href="pca--plots.html#cb81-15" tabindex="-1"></a><span class="fu">plotResiduals</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb81-16"><a href="pca--plots.html#cb81-16" tabindex="-1"></a></span>
-<span id="cb81-17"><a href="pca--plots.html#cb81-17" tabindex="-1"></a><span class="co"># variance plot for calibration results with values as labels</span></span>
-<span id="cb81-18"><a href="pca--plots.html#cb81-18" tabindex="-1"></a><span class="fu">plotVariance</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;values&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="pca--plots.html#cb82-1" tabindex="-1"></a><span class="co"># create a factor for combination of Sex and Region values</span></span>
+<span id="cb82-2"><a href="pca--plots.html#cb82-2" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(people[, <span class="st">&quot;Sex&quot;</span>], <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>))</span>
+<span id="cb82-3"><a href="pca--plots.html#cb82-3" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(people[, <span class="st">&quot;Region&quot;</span>], <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;M&quot;</span>))</span>
+<span id="cb82-4"><a href="pca--plots.html#cb82-4" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">interaction</span>(g1, g2)</span>
+<span id="cb82-5"><a href="pca--plots.html#cb82-5" tabindex="-1"></a></span>
+<span id="cb82-6"><a href="pca--plots.html#cb82-6" tabindex="-1"></a><span class="co"># scores plot for calibration results colored by Height</span></span>
+<span id="cb82-7"><a href="pca--plots.html#cb82-7" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb82-8"><a href="pca--plots.html#cb82-8" tabindex="-1"></a><span class="fu">plotScores</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Height&quot;</span>])</span>
+<span id="cb82-9"><a href="pca--plots.html#cb82-9" tabindex="-1"></a></span>
+<span id="cb82-10"><a href="pca--plots.html#cb82-10" tabindex="-1"></a><span class="co"># scores plot colored by the factor created above and confidence ellipses</span></span>
+<span id="cb82-11"><a href="pca--plots.html#cb82-11" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">plotScores</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">cgroup =</span> g)</span>
+<span id="cb82-12"><a href="pca--plots.html#cb82-12" tabindex="-1"></a><span class="fu">plotConfidenceEllipse</span>(p)</span>
+<span id="cb82-13"><a href="pca--plots.html#cb82-13" tabindex="-1"></a></span>
+<span id="cb82-14"><a href="pca--plots.html#cb82-14" tabindex="-1"></a><span class="co"># distance plot for calibration results with labels</span></span>
+<span id="cb82-15"><a href="pca--plots.html#cb82-15" tabindex="-1"></a><span class="fu">plotResiduals</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb82-16"><a href="pca--plots.html#cb82-16" tabindex="-1"></a></span>
+<span id="cb82-17"><a href="pca--plots.html#cb82-17" tabindex="-1"></a><span class="co"># variance plot for calibration results with values as labels</span></span>
+<span id="cb82-18"><a href="pca--plots.html#cb82-18" tabindex="-1"></a><span class="fu">plotVariance</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;values&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="864" /></p>
 <p>Scores plot can be also used together with <code>plotHotellingEllipse()</code> function. It works similar to <code>plotConfidenceEllipse()</code> or <code>plotConvexHull()</code> however does not require grouping of the values. You can add the ellipse both to score plot for results and score plot for model. In case of model, if you have e.g. both calibration and test set results you need to specify which one you want to use for the creating the ellipse. Code below shows several examples.</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="pca--plots.html#cb82-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb82-2"><a href="pca--plots.html#cb82-2" tabindex="-1"></a></span>
-<span id="cb82-3"><a href="pca--plots.html#cb82-3" tabindex="-1"></a><span class="co"># default options for calibration results</span></span>
-<span id="cb82-4"><a href="pca--plots.html#cb82-4" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">plotScores</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>))</span>
-<span id="cb82-5"><a href="pca--plots.html#cb82-5" tabindex="-1"></a><span class="fu">plotHotellingEllipse</span>(p)</span>
-<span id="cb82-6"><a href="pca--plots.html#cb82-6" tabindex="-1"></a></span>
-<span id="cb82-7"><a href="pca--plots.html#cb82-7" tabindex="-1"></a><span class="co"># also for calibration results but with specific significance limit and color</span></span>
-<span id="cb82-8"><a href="pca--plots.html#cb82-8" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">plotScores</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>))</span>
-<span id="cb82-9"><a href="pca--plots.html#cb82-9" tabindex="-1"></a><span class="fu">plotHotellingEllipse</span>(p, <span class="at">conf.lim =</span> <span class="fl">0.9</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="pca--plots.html#cb83-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb83-2"><a href="pca--plots.html#cb83-2" tabindex="-1"></a></span>
+<span id="cb83-3"><a href="pca--plots.html#cb83-3" tabindex="-1"></a><span class="co"># default options for calibration results</span></span>
+<span id="cb83-4"><a href="pca--plots.html#cb83-4" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">plotScores</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>))</span>
+<span id="cb83-5"><a href="pca--plots.html#cb83-5" tabindex="-1"></a><span class="fu">plotHotellingEllipse</span>(p)</span>
+<span id="cb83-6"><a href="pca--plots.html#cb83-6" tabindex="-1"></a></span>
+<span id="cb83-7"><a href="pca--plots.html#cb83-7" tabindex="-1"></a><span class="co"># also for calibration results but with specific significance limit and color</span></span>
+<span id="cb83-8"><a href="pca--plots.html#cb83-8" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">plotScores</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="dv">8</span>))</span>
+<span id="cb83-9"><a href="pca--plots.html#cb83-9" tabindex="-1"></a><span class="fu">plotHotellingEllipse</span>(p, <span class="at">conf.lim =</span> <span class="fl">0.9</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-63-1.png" width="864" /></p>
 <p>The color grouping option is not available for the group (model) plots as colors are used there to underline the groups.</p>
 <p>Now let’s look at similar plots (plus loadings) for a model.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="pca--plots.html#cb83-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb83-2"><a href="pca--plots.html#cb83-2" tabindex="-1"></a><span class="fu">plotScores</span>(m, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb83-3"><a href="pca--plots.html#cb83-3" tabindex="-1"></a><span class="fu">plotLoadings</span>(m, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb83-4"><a href="pca--plots.html#cb83-4" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb83-5"><a href="pca--plots.html#cb83-5" tabindex="-1"></a><span class="fu">plotVariance</span>(m, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;values&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="pca--plots.html#cb84-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb84-2"><a href="pca--plots.html#cb84-2" tabindex="-1"></a><span class="fu">plotScores</span>(m, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb84-3"><a href="pca--plots.html#cb84-3" tabindex="-1"></a><span class="fu">plotLoadings</span>(m, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb84-4"><a href="pca--plots.html#cb84-4" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb84-5"><a href="pca--plots.html#cb84-5" tabindex="-1"></a><span class="fu">plotVariance</span>(m, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;values&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-64-1.png" width="864" /></p>
 <p>As you can see, for in case of model, the distance plot also shows some lines. These are critical limits, all details about them as well as how to use the distance/residuals plot will be given in the next section.</p>
 <p>If model plot shows values from calibration and validation objects (e.g. scores, distances, etc), you can specify which result to show. In the example below left plot is made using default settings, for the right plot we specified list with results explicitly (we show calibration results with label “train” and results for new measurements with label “new”). Note, that the results should be specified as a named list (we also assume here that you ran code from the previous part of this section and have object <code>res</code> in your environment).</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="pca--plots.html#cb84-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb84-2"><a href="pca--plots.html#cb84-2" tabindex="-1"></a><span class="fu">plotResiduals</span>(m)</span>
-<span id="cb84-3"><a href="pca--plots.html#cb84-3" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;train&quot;</span> <span class="ot">=</span> m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="st">&quot;new&quot;</span> <span class="ot">=</span> res))</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="pca--plots.html#cb85-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb85-2"><a href="pca--plots.html#cb85-2" tabindex="-1"></a><span class="fu">plotResiduals</span>(m)</span>
+<span id="cb85-3"><a href="pca--plots.html#cb85-3" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">res =</span> <span class="fu">list</span>(<span class="st">&quot;train&quot;</span> <span class="ot">=</span> m<span class="sc">$</span>res<span class="sc">$</span>cal, <span class="st">&quot;new&quot;</span> <span class="ot">=</span> res))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-65-1.png" width="864" /></p>
 <p>Finally, method <code>plot()</code> shows the four main PCA plots as a model (or results) overview.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="pca--plots.html#cb85-1" tabindex="-1"></a><span class="fu">plot</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="pca--plots.html#cb86-1" tabindex="-1"></a><span class="fu">plot</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-66-1.png" width="864" /></p>
 <p>You do not have to care about labels, names, legend and so on, however if necessary you can always change almost anything. See full list of methods available for PCA by <code>?pca</code> and <code>?pcares</code>.</p>
 <div id="manual-x-values-for-loading-line-plot" class="section level3 unnumbered hasAnchor">
 <h3>Manual x-values for loading line plot<a href="pca--plots.html#manual-x-values-for-loading-line-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As it was discussed in the previous chapter, you can specify a special attribute, <code>"xaxis.values"</code> to a dataset, which will be used as manual x-values in bar and line plots. When we create any model and/or results the most important attributes, including this one, are inherited. For example when you make a loading line plot it will be shown using the attribute values.</p>
 <p>Here is an example that demonstrate this feature using PCA decomposition of the <em>Simdata</em> (UV/Vis spectra).</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="pca--plots.html#cb86-1" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
-<span id="cb86-2"><a href="pca--plots.html#cb86-2" tabindex="-1"></a></span>
-<span id="cb86-3"><a href="pca--plots.html#cb86-3" tabindex="-1"></a>X <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
-<span id="cb86-4"><a href="pca--plots.html#cb86-4" tabindex="-1"></a><span class="fu">attr</span>(X, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
-<span id="cb86-5"><a href="pca--plots.html#cb86-5" tabindex="-1"></a><span class="fu">attr</span>(X, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">=</span> simdata<span class="sc">$</span>wavelength</span>
-<span id="cb86-6"><a href="pca--plots.html#cb86-6" tabindex="-1"></a></span>
-<span id="cb86-7"><a href="pca--plots.html#cb86-7" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(X, <span class="dv">3</span>)</span>
-<span id="cb86-8"><a href="pca--plots.html#cb86-8" tabindex="-1"></a><span class="fu">plotLoadings</span>(m, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="pca--plots.html#cb87-1" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
+<span id="cb87-2"><a href="pca--plots.html#cb87-2" tabindex="-1"></a></span>
+<span id="cb87-3"><a href="pca--plots.html#cb87-3" tabindex="-1"></a>X <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
+<span id="cb87-4"><a href="pca--plots.html#cb87-4" tabindex="-1"></a><span class="fu">attr</span>(X, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
+<span id="cb87-5"><a href="pca--plots.html#cb87-5" tabindex="-1"></a><span class="fu">attr</span>(X, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">=</span> simdata<span class="sc">$</span>wavelength</span>
+<span id="cb87-6"><a href="pca--plots.html#cb87-6" tabindex="-1"></a></span>
+<span id="cb87-7"><a href="pca--plots.html#cb87-7" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(X, <span class="dv">3</span>)</span>
+<span id="cb87-8"><a href="pca--plots.html#cb87-8" tabindex="-1"></a><span class="fu">plotLoadings</span>(m, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-67-1.png" width="864" /></p>
 </div>
 <div id="excluding-rows-and-columns" class="section level3 unnumbered hasAnchor">
@@ -367,33 +371,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>PCA as well as any other method in <code>mdatools</code> can exclude rows and columns from calculations. For example, it can be useful if you have some candidates for outliers or do variable selection and do not want to remove rows and columns from the data matrix. In this case you can just specify two additional parameters, <code>exclcols</code> and <code>exclrows</code>, using either numbers or names of rows/columns to be excluded. You can also specify a vector with logical values (all <code>TRUE</code>s will be excluded).</p>
 <p>The excluded rows are not used for creating a model and calculation of model’s and results’ performance (e.g. explained variance). However main results (for PCA — scores and residual distances) are calculated for these rows as well and set hidden, so you will not see them on plots. You can always show values for excluded objects by using parameter <code>show.excluded = TRUE</code>. It is implemented via attributes “known” for plotting methods from <em>mdatools</em> so if you use e.g. <em>ggplot2</em> you will see all points.</p>
 <p>The excluded columns are not used for any calculations either, the corresponding results (e.g. loadings or regression coefficients) will have zero values for such columns and be also hidden on plots. Here is a simple example.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="pca--plots.html#cb87-1" tabindex="-1"></a><span class="fu">data</span>(people)</span>
-<span id="cb87-2"><a href="pca--plots.html#cb87-2" tabindex="-1"></a></span>
-<span id="cb87-3"><a href="pca--plots.html#cb87-3" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(people, <span class="dv">5</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">exclrows =</span> <span class="fu">c</span>(<span class="st">&quot;Lars&quot;</span>, <span class="st">&quot;Federico&quot;</span>), <span class="at">exclcols =</span> <span class="st">&quot;Income&quot;</span>)</span>
-<span id="cb87-4"><a href="pca--plots.html#cb87-4" tabindex="-1"></a></span>
-<span id="cb87-5"><a href="pca--plots.html#cb87-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb87-6"><a href="pca--plots.html#cb87-6" tabindex="-1"></a><span class="fu">plotScores</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb87-7"><a href="pca--plots.html#cb87-7" tabindex="-1"></a><span class="fu">plotScores</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.excluded =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb87-8"><a href="pca--plots.html#cb87-8" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.excluded =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb87-9"><a href="pca--plots.html#cb87-9" tabindex="-1"></a><span class="fu">plotLoadings</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.excluded =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="pca--plots.html#cb88-1" tabindex="-1"></a><span class="fu">data</span>(people)</span>
+<span id="cb88-2"><a href="pca--plots.html#cb88-2" tabindex="-1"></a></span>
+<span id="cb88-3"><a href="pca--plots.html#cb88-3" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(people, <span class="dv">5</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">exclrows =</span> <span class="fu">c</span>(<span class="st">&quot;Lars&quot;</span>, <span class="st">&quot;Federico&quot;</span>), <span class="at">exclcols =</span> <span class="st">&quot;Income&quot;</span>)</span>
+<span id="cb88-4"><a href="pca--plots.html#cb88-4" tabindex="-1"></a></span>
+<span id="cb88-5"><a href="pca--plots.html#cb88-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb88-6"><a href="pca--plots.html#cb88-6" tabindex="-1"></a><span class="fu">plotScores</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb88-7"><a href="pca--plots.html#cb88-7" tabindex="-1"></a><span class="fu">plotScores</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.excluded =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb88-8"><a href="pca--plots.html#cb88-8" tabindex="-1"></a><span class="fu">plotResiduals</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.excluded =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb88-9"><a href="pca--plots.html#cb88-9" tabindex="-1"></a><span class="fu">plotLoadings</span>(m, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">show.excluded =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-68-1.png" width="864" /></p>
 <p>As you can see, the excluded values (or variables in case of loadings plot) are either hidden completely or shown as gray points if <code>show.excluded</code> parameter is set to <code>TRUE</code>.</p>
 <p>Here is the matrix with loadings, note that variable <code>Income</code> has zeros for loadings and the matrix has attribute <code>exclrows</code> set to 6 (which is a position of the variable):</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="pca--plots.html#cb88-1" tabindex="-1"></a><span class="co"># show matrix with loadings (look at row Income and attribute &quot;exclrows&quot;)</span></span>
-<span id="cb88-2"><a href="pca--plots.html#cb88-2" tabindex="-1"></a><span class="fu">show</span>(m<span class="sc">$</span>loadings)</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="pca--plots.html#cb89-1" tabindex="-1"></a><span class="co"># show matrix with loadings (look at row Income and attribute &quot;exclrows&quot;)</span></span>
+<span id="cb89-2"><a href="pca--plots.html#cb89-2" tabindex="-1"></a><span class="fu">show</span>(m<span class="sc">$</span>loadings)</span></code></pre></div>
 <pre><code>##                Comp 1      Comp 2       Comp 3      Comp 4      Comp 5
-## Height   -0.386393327  0.10697019 -0.004829174  0.12693029 -0.13128331
-## Weight   -0.391013398  0.07820097  0.051916032  0.04049593 -0.14757465
-## Hairleng  0.350435073 -0.11623295 -0.103852349 -0.04969503 -0.73669997
-## Shoesize -0.385424793  0.13805817 -0.069172117  0.01049098 -0.17075488
-## Age      -0.103466285  0.18964288 -0.337243182 -0.89254403 -0.02998028
+## Height   -0.386393327 -0.10697019 -0.004829174 -0.12693029 -0.13128331
+## Weight   -0.391013398 -0.07820097  0.051916032 -0.04049593 -0.14757465
+## Hairleng  0.350435073  0.11623295 -0.103852349  0.04969503 -0.73669997
+## Shoesize -0.385424793 -0.13805817 -0.069172117 -0.01049098 -0.17075488
+## Age      -0.103466285 -0.18964288 -0.337243182  0.89254403 -0.02998028
 ## Income    0.000000000  0.00000000  0.000000000  0.00000000  0.00000000
-## Beer     -0.317356319 -0.38259695  0.044338872 -0.03908064 -0.21419831
-## Wine      0.140711271  0.57861817 -0.059833970  0.12347379 -0.41488773
-## Sex       0.364537185 -0.23838610  0.010818891  0.04025631 -0.18263577
-## Swim     -0.377470722  0.04330411  0.008151288  0.18149268 -0.30163601
-## Region    0.140581701  0.60435183  0.040969200  0.15147464  0.17857614
-## IQ        0.009849911  0.09372132  0.927669306 -0.32978247 -0.11815762
+## Beer     -0.317356319  0.38259695  0.044338872  0.03908064 -0.21419831
+## Wine      0.140711271 -0.57861817 -0.059833970 -0.12347379 -0.41488773
+## Sex       0.364537185  0.23838610  0.010818891 -0.04025631 -0.18263577
+## Swim     -0.377470722 -0.04330411  0.008151288 -0.18149268 -0.30163601
+## Region    0.140581701 -0.60435183  0.040969200 -0.15147464  0.17857614
+## IQ        0.009849911 -0.09372132  0.927669306  0.32978247 -0.11815762
 ## attr(,&quot;exclrows&quot;)
 ## [1] 6
 ## attr(,&quot;name&quot;)
@@ -407,15 +411,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="support-for-images" class="section level3 unnumbered hasAnchor">
 <h3>Support for images<a href="pca--plots.html#support-for-images" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>As it was described before, images can be used as a source of data for any methods. In this case the results, related to objects/pixels will inherit all necessary attributes and can be show as images as well. In the example below we make a PCA model for the image data from the package and show scores and distances.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="pca--plots.html#cb90-1" tabindex="-1"></a><span class="fu">data</span>(pellets)</span>
-<span id="cb90-2"><a href="pca--plots.html#cb90-2" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">mda.im2data</span>(pellets)</span>
-<span id="cb90-3"><a href="pca--plots.html#cb90-3" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(X)</span>
-<span id="cb90-4"><a href="pca--plots.html#cb90-4" tabindex="-1"></a></span>
-<span id="cb90-5"><a href="pca--plots.html#cb90-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb90-6"><a href="pca--plots.html#cb90-6" tabindex="-1"></a><span class="fu">imshow</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>scores)</span>
-<span id="cb90-7"><a href="pca--plots.html#cb90-7" tabindex="-1"></a><span class="fu">imshow</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>Q)</span>
-<span id="cb90-8"><a href="pca--plots.html#cb90-8" tabindex="-1"></a><span class="fu">imshow</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>scores, <span class="dv">2</span>)</span>
-<span id="cb90-9"><a href="pca--plots.html#cb90-9" tabindex="-1"></a><span class="fu">imshow</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>Q, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="pca--plots.html#cb91-1" tabindex="-1"></a><span class="fu">data</span>(pellets)</span>
+<span id="cb91-2"><a href="pca--plots.html#cb91-2" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">mda.im2data</span>(pellets)</span>
+<span id="cb91-3"><a href="pca--plots.html#cb91-3" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(X)</span>
+<span id="cb91-4"><a href="pca--plots.html#cb91-4" tabindex="-1"></a></span>
+<span id="cb91-5"><a href="pca--plots.html#cb91-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb91-6"><a href="pca--plots.html#cb91-6" tabindex="-1"></a><span class="fu">imshow</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>scores)</span>
+<span id="cb91-7"><a href="pca--plots.html#cb91-7" tabindex="-1"></a><span class="fu">imshow</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>Q)</span>
+<span id="cb91-8"><a href="pca--plots.html#cb91-8" tabindex="-1"></a><span class="fu">imshow</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>scores, <span class="dv">2</span>)</span>
+<span id="cb91-9"><a href="pca--plots.html#cb91-9" tabindex="-1"></a><span class="fu">imshow</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>Q, <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="864" /></p>
 </div>
 </div>
@@ -467,7 +471,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null

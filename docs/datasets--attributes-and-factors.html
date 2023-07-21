@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Attributes and factors | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Attributes and factors | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2023-07-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -119,6 +119,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
@@ -138,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
 <li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
-<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install and update</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
 <ul>
@@ -334,20 +338,20 @@ kinetic data it can be a vector with time or temperature values).</td>
 </tbody>
 </table>
 <p>Here is a very simple example.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="datasets--attributes-and-factors.html#cb4-1" tabindex="-1"></a><span class="co"># generate data as matrix with two rows and 63 columns</span></span>
-<span id="cb4-2"><a href="datasets--attributes-and-factors.html#cb4-2" tabindex="-1"></a>t <span class="ot">=</span> <span class="sc">-</span><span class="dv">31</span><span class="sc">:</span><span class="dv">31</span></span>
-<span id="cb4-3"><a href="datasets--attributes-and-factors.html#cb4-3" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">rbind</span>(<span class="fu">sin</span>(t<span class="sc">/</span><span class="dv">10</span>), <span class="fu">cos</span>(t<span class="sc">/</span><span class="dv">10</span>)) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb4-4"><a href="datasets--attributes-and-factors.html#cb4-4" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="datasets--attributes-and-factors.html#cb4-5" tabindex="-1"></a><span class="co"># add name of the dataset</span></span>
-<span id="cb4-6"><a href="datasets--attributes-and-factors.html#cb4-6" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&quot;name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Concentration profiles&quot;</span></span>
-<span id="cb4-7"><a href="datasets--attributes-and-factors.html#cb4-7" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="datasets--attributes-and-factors.html#cb4-8" tabindex="-1"></a><span class="co"># add name and values for a property representing the columns (time of reaction)</span></span>
-<span id="cb4-9"><a href="datasets--attributes-and-factors.html#cb4-9" tabindex="-1"></a><span class="co"># we make values for x-axis to span from 0 to 620 seconds</span></span>
-<span id="cb4-10"><a href="datasets--attributes-and-factors.html#cb4-10" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Time, s&quot;</span></span>
-<span id="cb4-11"><a href="datasets--attributes-and-factors.html#cb4-11" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">=</span> (t <span class="sc">+</span> <span class="dv">31</span>) <span class="sc">*</span> <span class="dv">10</span></span>
-<span id="cb4-12"><a href="datasets--attributes-and-factors.html#cb4-12" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="datasets--attributes-and-factors.html#cb4-13" tabindex="-1"></a><span class="co"># make a line plot for the data</span></span>
-<span id="cb4-14"><a href="datasets--attributes-and-factors.html#cb4-14" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="datasets--attributes-and-factors.html#cb5-1" tabindex="-1"></a><span class="co"># generate data as matrix with two rows and 63 columns</span></span>
+<span id="cb5-2"><a href="datasets--attributes-and-factors.html#cb5-2" tabindex="-1"></a>t <span class="ot">=</span> <span class="sc">-</span><span class="dv">31</span><span class="sc">:</span><span class="dv">31</span></span>
+<span id="cb5-3"><a href="datasets--attributes-and-factors.html#cb5-3" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">rbind</span>(<span class="fu">sin</span>(t<span class="sc">/</span><span class="dv">10</span>), <span class="fu">cos</span>(t<span class="sc">/</span><span class="dv">10</span>)) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb5-4"><a href="datasets--attributes-and-factors.html#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="datasets--attributes-and-factors.html#cb5-5" tabindex="-1"></a><span class="co"># add name of the dataset</span></span>
+<span id="cb5-6"><a href="datasets--attributes-and-factors.html#cb5-6" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&quot;name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Concentration profiles&quot;</span></span>
+<span id="cb5-7"><a href="datasets--attributes-and-factors.html#cb5-7" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="datasets--attributes-and-factors.html#cb5-8" tabindex="-1"></a><span class="co"># add name and values for a property representing the columns (time of reaction)</span></span>
+<span id="cb5-9"><a href="datasets--attributes-and-factors.html#cb5-9" tabindex="-1"></a><span class="co"># we make values for x-axis to span from 0 to 620 seconds</span></span>
+<span id="cb5-10"><a href="datasets--attributes-and-factors.html#cb5-10" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Time, s&quot;</span></span>
+<span id="cb5-11"><a href="datasets--attributes-and-factors.html#cb5-11" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">=</span> (t <span class="sc">+</span> <span class="dv">31</span>) <span class="sc">*</span> <span class="dv">10</span></span>
+<span id="cb5-12"><a href="datasets--attributes-and-factors.html#cb5-12" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="datasets--attributes-and-factors.html#cb5-13" tabindex="-1"></a><span class="co"># make a line plot for the data</span></span>
+<span id="cb5-14"><a href="datasets--attributes-and-factors.html#cb5-14" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-3-1.png" width="864" /></p>
 <p>As you can notice, both the label and the ticks for x-axis correspond to the attributes we defined. As well as the main title of the plot. As we mentioned above these attributes will be inherited and e.g. PCA loadings will have the same x-axis if you decide to make a line plot for the loadings.</p>
 <p>See more details in the <a href="datasets--simple-plots.html#datasets--simple-plots">section</a> about plots.</p>
@@ -405,10 +409,10 @@ for columns)</td>
 <h3>Data frames with factors<a href="datasets--attributes-and-factors.html#data-frames-with-factors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>All methods, implemented in the package, work with matrices, therefore, if a user provides data values as data frame, it is converted to matrix. It is also possible to provide data frames with one or several factor columns. In this case all factors will be converted to dummy variables with values 0 and 1. You can also do it manually, by using function <code>prep.df2mat()</code> as this is shown in an example below.</p>
 <p>Let us first create a simple data with a factor column.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="datasets--attributes-and-factors.html#cb5-1" tabindex="-1"></a>h <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">180</span>, <span class="dv">175</span>, <span class="dv">165</span>, <span class="dv">190</span>, <span class="dv">188</span>)</span>
-<span id="cb5-2"><a href="datasets--attributes-and-factors.html#cb5-2" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Gray&quot;</span>, <span class="st">&quot;Green&quot;</span>, <span class="st">&quot;Gray&quot;</span>, <span class="st">&quot;Green&quot;</span>, <span class="st">&quot;Blue&quot;</span>))</span>
-<span id="cb5-3"><a href="datasets--attributes-and-factors.html#cb5-3" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">Height =</span> h, <span class="at">Eye.color =</span> c)</span>
-<span id="cb5-4"><a href="datasets--attributes-and-factors.html#cb5-4" tabindex="-1"></a><span class="fu">show</span>(d)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="datasets--attributes-and-factors.html#cb6-1" tabindex="-1"></a>h <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">180</span>, <span class="dv">175</span>, <span class="dv">165</span>, <span class="dv">190</span>, <span class="dv">188</span>)</span>
+<span id="cb6-2"><a href="datasets--attributes-and-factors.html#cb6-2" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">&quot;Gray&quot;</span>, <span class="st">&quot;Green&quot;</span>, <span class="st">&quot;Gray&quot;</span>, <span class="st">&quot;Green&quot;</span>, <span class="st">&quot;Blue&quot;</span>))</span>
+<span id="cb6-3"><a href="datasets--attributes-and-factors.html#cb6-3" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">Height =</span> h, <span class="at">Eye.color =</span> c)</span>
+<span id="cb6-4"><a href="datasets--attributes-and-factors.html#cb6-4" tabindex="-1"></a><span class="fu">show</span>(d)</span></code></pre></div>
 <pre><code>##   Height Eye.color
 ## 1    180      Gray
 ## 2    175     Green
@@ -416,8 +420,8 @@ for columns)</td>
 ## 4    190     Green
 ## 5    188      Blue</code></pre>
 <p>And this is the result of converting it to a matrix.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="datasets--attributes-and-factors.html#cb7-1" tabindex="-1"></a>d.mat <span class="ot">=</span> <span class="fu">mda.df2mat</span>(d)</span>
-<span id="cb7-2"><a href="datasets--attributes-and-factors.html#cb7-2" tabindex="-1"></a><span class="fu">show</span>(d.mat)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="datasets--attributes-and-factors.html#cb8-1" tabindex="-1"></a>d.mat <span class="ot">=</span> <span class="fu">mda.df2mat</span>(d)</span>
+<span id="cb8-2"><a href="datasets--attributes-and-factors.html#cb8-2" tabindex="-1"></a><span class="fu">show</span>(d.mat)</span></code></pre></div>
 <pre><code>##      Height Blue Gray
 ## [1,]    180    0    1
 ## [2,]    175    0    0
@@ -425,8 +429,8 @@ for columns)</td>
 ## [4,]    190    0    0
 ## [5,]    188    1    0</code></pre>
 <p>The number of dummy variables by default is the number of levels minus one. You can change this by using argument <code>full = TRUE</code> is it is shown in the example below.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="datasets--attributes-and-factors.html#cb9-1" tabindex="-1"></a>d.mat <span class="ot">=</span> <span class="fu">mda.df2mat</span>(d, <span class="at">full =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-2"><a href="datasets--attributes-and-factors.html#cb9-2" tabindex="-1"></a><span class="fu">show</span>(d.mat)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="datasets--attributes-and-factors.html#cb10-1" tabindex="-1"></a>d.mat <span class="ot">=</span> <span class="fu">mda.df2mat</span>(d, <span class="at">full =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-2"><a href="datasets--attributes-and-factors.html#cb10-2" tabindex="-1"></a><span class="fu">show</span>(d.mat)</span></code></pre></div>
 <pre><code>##      Height Blue Gray Green
 ## [1,]    180    0    1     0
 ## [2,]    175    0    0     1
@@ -484,7 +488,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null

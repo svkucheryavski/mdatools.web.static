@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Predictions for a new data | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Predictions for a new data | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2023-07-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -119,6 +119,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
@@ -138,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
 <li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
-<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install and update</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
 <ul>
@@ -292,8 +296,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Predictions for a new data<a href="plsda--predictions.html#plsda--predictions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Again very similar to PLS — just use method <code>predict()</code> and provide at least matrix or data frame with predictors (which should contain the same number of variables/columns). For test set validation you can also provide class reference information similar to what you have used for calibration of PLS-DA models.</p>
 <p>In case of multiple class model, the reference values should be provided as a factor or vector with class names as text values. Here is an example.</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="plsda--predictions.html#cb241-1" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">predict</span>(m.all, Xv, cv.all)</span>
-<span id="cb241-2"><a href="plsda--predictions.html#cb241-2" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="plsda--predictions.html#cb243-1" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">predict</span>(m.all, Xv, cv.all)</span>
+<span id="cb243-2"><a href="plsda--predictions.html#cb243-2" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code></pre></div>
 <pre><code>## 
 ## PLS-DA results (class plsdares) summary:
 ## Number of selected components: 1
@@ -318,13 +322,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Comp 2    4.560      97.484   11.216      53.920 25  4 46  0  0.92  1.00    0.947
 ## Comp 3    1.790      99.274    1.717      55.637 24  4 46  1  0.92  0.96    0.933</code></pre>
 <p>And the corresponding plot with predictions.</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="plsda--predictions.html#cb243-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb243-2"><a href="plsda--predictions.html#cb243-2" tabindex="-1"></a><span class="fu">plotPredictions</span>(res)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-156-1.png" width="864" /></p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="plsda--predictions.html#cb245-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb245-2"><a href="plsda--predictions.html#cb245-2" tabindex="-1"></a><span class="fu">plotPredictions</span>(res)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-157-1.png" width="864" /></p>
 <p>If vector with reference class values contains names of classes model knows nothing about, they will simply be considered as members of non of the known clases (“None”).</p>
 <p>In case of one-class model, the reference values can be either factor/vector with names or logical values, like the ones used for calibration of the model. Here is an example for each of the cases.</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="plsda--predictions.html#cb244-1" tabindex="-1"></a>res21 <span class="ot">=</span> <span class="fu">predict</span>(m.vir, Xv, cv.all)</span>
-<span id="cb244-2"><a href="plsda--predictions.html#cb244-2" tabindex="-1"></a><span class="fu">summary</span>(res21)</span></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="plsda--predictions.html#cb246-1" tabindex="-1"></a>res21 <span class="ot">=</span> <span class="fu">predict</span>(m.vir, Xv, cv.all)</span>
+<span id="cb246-2"><a href="plsda--predictions.html#cb246-2" tabindex="-1"></a><span class="fu">summary</span>(res21)</span></code></pre></div>
 <pre><code>## 
 ## PLS-DA results (class plsdares) summary:
 ## Number of selected components: 3
@@ -334,8 +338,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Comp 1   93.107      93.107   54.394      54.394 25  4 46  0  0.92  1.00    0.947
 ## Comp 2    1.588      94.695    6.039      60.433 24  4 46  1  0.92  0.96    0.933
 ## Comp 3    2.641      97.336   -0.149      60.284 22  4 46  3  0.92  0.88    0.907</code></pre>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="plsda--predictions.html#cb246-1" tabindex="-1"></a>res22 <span class="ot">=</span> <span class="fu">predict</span>(m.vir, Xv, cv.vir)</span>
-<span id="cb246-2"><a href="plsda--predictions.html#cb246-2" tabindex="-1"></a><span class="fu">summary</span>(res22)</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="plsda--predictions.html#cb248-1" tabindex="-1"></a>res22 <span class="ot">=</span> <span class="fu">predict</span>(m.vir, Xv, cv.vir)</span>
+<span id="cb248-2"><a href="plsda--predictions.html#cb248-2" tabindex="-1"></a><span class="fu">summary</span>(res22)</span></code></pre></div>
 <pre><code>## 
 ## PLS-DA results (class plsdares) summary:
 ## Number of selected components: 3
@@ -346,15 +350,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Comp 2    1.588      94.695    6.039      60.433 24  4 46  1  0.92  0.96    0.933
 ## Comp 3    2.641      97.336   -0.149      60.284 22  4 46  3  0.92  0.88    0.907</code></pre>
 <p>As you can see, statistically results are identical. However, predictions plot will look a bit different for these two cases, as you can see below.</p>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="plsda--predictions.html#cb248-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb248-2"><a href="plsda--predictions.html#cb248-2" tabindex="-1"></a><span class="fu">plotPredictions</span>(res21)</span>
-<span id="cb248-3"><a href="plsda--predictions.html#cb248-3" tabindex="-1"></a><span class="fu">plotPredictions</span>(res22)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-158-1.png" width="864" /></p>
-<p>And because <code>predict()</code> returns an object with results you can also use most of the plots available for PLS regression results. In the last example below you will find plots for X-distance and Y-variance.</p>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="plsda--predictions.html#cb249-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb249-2"><a href="plsda--predictions.html#cb249-2" tabindex="-1"></a><span class="fu">plotXResiduals</span>(res21)</span>
-<span id="cb249-3"><a href="plsda--predictions.html#cb249-3" tabindex="-1"></a><span class="fu">plotYVariance</span>(res22)</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="plsda--predictions.html#cb250-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb250-2"><a href="plsda--predictions.html#cb250-2" tabindex="-1"></a><span class="fu">plotPredictions</span>(res21)</span>
+<span id="cb250-3"><a href="plsda--predictions.html#cb250-3" tabindex="-1"></a><span class="fu">plotPredictions</span>(res22)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-159-1.png" width="864" /></p>
+<p>And because <code>predict()</code> returns an object with results you can also use most of the plots available for PLS regression results. In the last example below you will find plots for X-distance and Y-variance.</p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="plsda--predictions.html#cb251-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb251-2"><a href="plsda--predictions.html#cb251-2" tabindex="-1"></a><span class="fu">plotXResiduals</span>(res21)</span>
+<span id="cb251-3"><a href="plsda--predictions.html#cb251-3" tabindex="-1"></a><span class="fu">plotYVariance</span>(res22)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-160-1.png" width="864" /></p>
 
 </div>
 <!-- </div> -->
@@ -406,7 +410,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Correction of spectral baseline | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Correction of spectral baseline | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2023-07-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -119,6 +119,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
@@ -138,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
 <li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
-<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install and update</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
 <ul>
@@ -292,28 +296,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Correction of spectral baseline<a href="preprocessing--baseline.html#preprocessing--baseline" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><a href="https://www.youtube.com/watch?v=U5aNxOd3GV8&amp;list=PLvj_I3WjHa3PHNUWrqZRmu4futCMEGGqi&amp;index=3">Baseline correction methods</a> include Standard Normal Variate (SNV), Multiplicative Scatter
 Correction (MSC) and correction of baseline with Asymmetric Least Squares (ALS). SNV is a very simple procedure aiming first of all at remove additive and multiplicative scatter effects from Vis/NIR spectra as well as correct the global intensity effect. It is applied to every individual spectrum by subtracting its average and dividing its standard deviation from all spectral values. Here is an example:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="preprocessing--baseline.html#cb51-1" tabindex="-1"></a><span class="co"># load UV/Vis spectra from Simdata</span></span>
-<span id="cb51-2"><a href="preprocessing--baseline.html#cb51-2" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
-<span id="cb51-3"><a href="preprocessing--baseline.html#cb51-3" tabindex="-1"></a>ospectra <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
-<span id="cb51-4"><a href="preprocessing--baseline.html#cb51-4" tabindex="-1"></a><span class="fu">attr</span>(ospectra, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">=</span> simdata<span class="sc">$</span>wavelength</span>
-<span id="cb51-5"><a href="preprocessing--baseline.html#cb51-5" tabindex="-1"></a><span class="fu">attr</span>(ospectra, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
-<span id="cb51-6"><a href="preprocessing--baseline.html#cb51-6" tabindex="-1"></a></span>
-<span id="cb51-7"><a href="preprocessing--baseline.html#cb51-7" tabindex="-1"></a><span class="co"># apply SNV and show the spectra</span></span>
-<span id="cb51-8"><a href="preprocessing--baseline.html#cb51-8" tabindex="-1"></a>pspectra <span class="ot">=</span> <span class="fu">prep.snv</span>(ospectra)</span>
-<span id="cb51-9"><a href="preprocessing--baseline.html#cb51-9" tabindex="-1"></a></span>
-<span id="cb51-10"><a href="preprocessing--baseline.html#cb51-10" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb51-11"><a href="preprocessing--baseline.html#cb51-11" tabindex="-1"></a><span class="fu">mdaplot</span>(ospectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Original&quot;</span>)</span>
-<span id="cb51-12"><a href="preprocessing--baseline.html#cb51-12" tabindex="-1"></a><span class="fu">mdaplot</span>(pspectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;after SNV&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="preprocessing--baseline.html#cb52-1" tabindex="-1"></a><span class="co"># load UV/Vis spectra from Simdata</span></span>
+<span id="cb52-2"><a href="preprocessing--baseline.html#cb52-2" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
+<span id="cb52-3"><a href="preprocessing--baseline.html#cb52-3" tabindex="-1"></a>ospectra <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
+<span id="cb52-4"><a href="preprocessing--baseline.html#cb52-4" tabindex="-1"></a><span class="fu">attr</span>(ospectra, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">=</span> simdata<span class="sc">$</span>wavelength</span>
+<span id="cb52-5"><a href="preprocessing--baseline.html#cb52-5" tabindex="-1"></a><span class="fu">attr</span>(ospectra, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
+<span id="cb52-6"><a href="preprocessing--baseline.html#cb52-6" tabindex="-1"></a></span>
+<span id="cb52-7"><a href="preprocessing--baseline.html#cb52-7" tabindex="-1"></a><span class="co"># apply SNV and show the spectra</span></span>
+<span id="cb52-8"><a href="preprocessing--baseline.html#cb52-8" tabindex="-1"></a>pspectra <span class="ot">=</span> <span class="fu">prep.snv</span>(ospectra)</span>
+<span id="cb52-9"><a href="preprocessing--baseline.html#cb52-9" tabindex="-1"></a></span>
+<span id="cb52-10"><a href="preprocessing--baseline.html#cb52-10" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb52-11"><a href="preprocessing--baseline.html#cb52-11" tabindex="-1"></a><span class="fu">mdaplot</span>(ospectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Original&quot;</span>)</span>
+<span id="cb52-12"><a href="preprocessing--baseline.html#cb52-12" tabindex="-1"></a><span class="fu">mdaplot</span>(pspectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;after SNV&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-41-1.png" width="864" /></p>
 <p>Multiplicative Scatter Correction does similar job but in a different way. First it calculates a mean spectrum for the whole set (mean spectrum can be also provided as an extra argument). Then, for each individual spectrum, it makes a line fit for the spectral values and the mean spectrum. The coefficients of the line, intercept and slope, are used to correct the additive and multiplicative effects correspondingly.</p>
 <p>The <code>prep.msc()</code> function adds the mean spectrum calculated for the original spectral data, to the attributes of the results, so it can be reused later.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="preprocessing--baseline.html#cb52-1" tabindex="-1"></a><span class="co"># apply MSC and and get the preprocessed spectra</span></span>
-<span id="cb52-2"><a href="preprocessing--baseline.html#cb52-2" tabindex="-1"></a>pspectra <span class="ot">=</span> <span class="fu">prep.msc</span>(ospectra)</span>
-<span id="cb52-3"><a href="preprocessing--baseline.html#cb52-3" tabindex="-1"></a></span>
-<span id="cb52-4"><a href="preprocessing--baseline.html#cb52-4" tabindex="-1"></a><span class="co"># show the result</span></span>
-<span id="cb52-5"><a href="preprocessing--baseline.html#cb52-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb52-6"><a href="preprocessing--baseline.html#cb52-6" tabindex="-1"></a><span class="fu">mdaplot</span>(ospectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Original&quot;</span>)</span>
-<span id="cb52-7"><a href="preprocessing--baseline.html#cb52-7" tabindex="-1"></a><span class="fu">mdaplot</span>(pspectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;after MSC&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="preprocessing--baseline.html#cb53-1" tabindex="-1"></a><span class="co"># apply MSC and and get the preprocessed spectra</span></span>
+<span id="cb53-2"><a href="preprocessing--baseline.html#cb53-2" tabindex="-1"></a>pspectra <span class="ot">=</span> <span class="fu">prep.msc</span>(ospectra)</span>
+<span id="cb53-3"><a href="preprocessing--baseline.html#cb53-3" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="preprocessing--baseline.html#cb53-4" tabindex="-1"></a><span class="co"># show the result</span></span>
+<span id="cb53-5"><a href="preprocessing--baseline.html#cb53-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb53-6"><a href="preprocessing--baseline.html#cb53-6" tabindex="-1"></a><span class="fu">mdaplot</span>(ospectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Original&quot;</span>)</span>
+<span id="cb53-7"><a href="preprocessing--baseline.html#cb53-7" tabindex="-1"></a><span class="fu">mdaplot</span>(pspectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">main =</span> <span class="st">&quot;after MSC&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-42-1.png" width="864" /></p>
 <div id="baseline-correction-with-asymmetric-least-squares" class="section level3 unnumbered hasAnchor">
 <h3>Baseline correction with asymmetric least squares<a href="preprocessing--baseline.html#baseline-correction-with-asymmetric-least-squares" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -321,33 +325,33 @@ Correction (MSC) and correction of baseline with Asymmetric Least Squares (ALS).
 <p>The method is based on Whittaker smoother and was proposed in <a href="https://www.researchgate.net/publication/228961729_Baseline_Correction_with_Asymmetric_Least_Squares_Smoothing">this paper</a>. It is implemented as a function <code>prep.alsbasecorr()</code>, which has two main parameters — power of a penalty parameter
 (<code>plambda</code>, usually varies betwen 2 and 9) and the ratio of asymmetry (<code>p</code>, usually between 0.1 and 0.001). For example, if <code>plambda = 5</code>, the penalty parameter <span class="math inline">\(\lambda\)</span>, described in the paper will be equal to <span class="math inline">\(10^5\)</span>.</p>
 <p>The choice of the parameters depends on how broad the disturbances of the baseline are and how narrow the original spectral peaks are. In the example below we took original spectra from the <code>carbs</code> dataset, add baseline disturbance using broad Gaussian peaks and then tried to remove the disturbance by applying the <code>prep.alsbasecorr()</code>. The result is shown in form of plots.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="preprocessing--baseline.html#cb53-1" tabindex="-1"></a><span class="fu">library</span>(mdatools)</span>
-<span id="cb53-2"><a href="preprocessing--baseline.html#cb53-2" tabindex="-1"></a><span class="fu">data</span>(carbs)</span>
-<span id="cb53-3"><a href="preprocessing--baseline.html#cb53-3" tabindex="-1"></a></span>
-<span id="cb53-4"><a href="preprocessing--baseline.html#cb53-4" tabindex="-1"></a><span class="co"># take original spectra from carbs dataset</span></span>
-<span id="cb53-5"><a href="preprocessing--baseline.html#cb53-5" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">t</span>(carbs<span class="sc">$</span>S)</span>
-<span id="cb53-6"><a href="preprocessing--baseline.html#cb53-6" tabindex="-1"></a></span>
-<span id="cb53-7"><a href="preprocessing--baseline.html#cb53-7" tabindex="-1"></a><span class="co"># add disturbance to the baseline by using broad Gaussian peaks</span></span>
-<span id="cb53-8"><a href="preprocessing--baseline.html#cb53-8" tabindex="-1"></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="fu">rbind</span>(</span>
-<span id="cb53-9"><a href="preprocessing--baseline.html#cb53-9" tabindex="-1"></a>   <span class="fu">dnorm</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(x), <span class="dv">750</span>, <span class="dv">200</span>) <span class="sc">*</span> <span class="dv">10000</span>,</span>
-<span id="cb53-10"><a href="preprocessing--baseline.html#cb53-10" tabindex="-1"></a>   <span class="fu">dnorm</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(x), <span class="dv">750</span>, <span class="dv">100</span>) <span class="sc">*</span> <span class="dv">10000</span>,</span>
-<span id="cb53-11"><a href="preprocessing--baseline.html#cb53-11" tabindex="-1"></a>   <span class="fu">dnorm</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(x), <span class="dv">500</span>, <span class="dv">100</span>) <span class="sc">*</span> <span class="dv">10000</span></span>
-<span id="cb53-12"><a href="preprocessing--baseline.html#cb53-12" tabindex="-1"></a>)</span>
-<span id="cb53-13"><a href="preprocessing--baseline.html#cb53-13" tabindex="-1"></a></span>
-<span id="cb53-14"><a href="preprocessing--baseline.html#cb53-14" tabindex="-1"></a><span class="co"># preprocess the disturbed spectra using ALS baseline correction</span></span>
-<span id="cb53-15"><a href="preprocessing--baseline.html#cb53-15" tabindex="-1"></a>y.new <span class="ot">&lt;-</span> <span class="fu">prep.alsbasecorr</span>(y, <span class="at">plambda =</span> <span class="dv">5</span>, <span class="at">p =</span> <span class="fl">0.01</span>)</span>
-<span id="cb53-16"><a href="preprocessing--baseline.html#cb53-16" tabindex="-1"></a></span>
-<span id="cb53-17"><a href="preprocessing--baseline.html#cb53-17" tabindex="-1"></a><span class="co"># show the original, disturbed and the preprocessed spectra separately for each component</span></span>
-<span id="cb53-18"><a href="preprocessing--baseline.html#cb53-18" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span>
-<span id="cb53-19"><a href="preprocessing--baseline.html#cb53-19" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
-<span id="cb53-20"><a href="preprocessing--baseline.html#cb53-20" tabindex="-1"></a>   <span class="fu">mdaplotg</span>(<span class="fu">list</span>(</span>
-<span id="cb53-21"><a href="preprocessing--baseline.html#cb53-21" tabindex="-1"></a>      <span class="at">original =</span> x[i, , <span class="at">drop =</span> <span class="cn">FALSE</span>],</span>
-<span id="cb53-22"><a href="preprocessing--baseline.html#cb53-22" tabindex="-1"></a>      <span class="at">disturbed =</span> y[i, , <span class="at">drop =</span> <span class="cn">FALSE</span>],</span>
-<span id="cb53-23"><a href="preprocessing--baseline.html#cb53-23" tabindex="-1"></a>      <span class="at">preprocessed =</span> y.new[i, , <span class="at">drop =</span> <span class="cn">FALSE</span>]</span>
-<span id="cb53-24"><a href="preprocessing--baseline.html#cb53-24" tabindex="-1"></a>      ), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>),</span>
-<span id="cb53-25"><a href="preprocessing--baseline.html#cb53-25" tabindex="-1"></a>      <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Pure component #&quot;</span>, i)</span>
-<span id="cb53-26"><a href="preprocessing--baseline.html#cb53-26" tabindex="-1"></a>   )</span>
-<span id="cb53-27"><a href="preprocessing--baseline.html#cb53-27" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="preprocessing--baseline.html#cb54-1" tabindex="-1"></a><span class="fu">library</span>(mdatools)</span>
+<span id="cb54-2"><a href="preprocessing--baseline.html#cb54-2" tabindex="-1"></a><span class="fu">data</span>(carbs)</span>
+<span id="cb54-3"><a href="preprocessing--baseline.html#cb54-3" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="preprocessing--baseline.html#cb54-4" tabindex="-1"></a><span class="co"># take original spectra from carbs dataset</span></span>
+<span id="cb54-5"><a href="preprocessing--baseline.html#cb54-5" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">t</span>(carbs<span class="sc">$</span>S)</span>
+<span id="cb54-6"><a href="preprocessing--baseline.html#cb54-6" tabindex="-1"></a></span>
+<span id="cb54-7"><a href="preprocessing--baseline.html#cb54-7" tabindex="-1"></a><span class="co"># add disturbance to the baseline by using broad Gaussian peaks</span></span>
+<span id="cb54-8"><a href="preprocessing--baseline.html#cb54-8" tabindex="-1"></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="fu">rbind</span>(</span>
+<span id="cb54-9"><a href="preprocessing--baseline.html#cb54-9" tabindex="-1"></a>   <span class="fu">dnorm</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(x), <span class="dv">750</span>, <span class="dv">200</span>) <span class="sc">*</span> <span class="dv">10000</span>,</span>
+<span id="cb54-10"><a href="preprocessing--baseline.html#cb54-10" tabindex="-1"></a>   <span class="fu">dnorm</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(x), <span class="dv">750</span>, <span class="dv">100</span>) <span class="sc">*</span> <span class="dv">10000</span>,</span>
+<span id="cb54-11"><a href="preprocessing--baseline.html#cb54-11" tabindex="-1"></a>   <span class="fu">dnorm</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(x), <span class="dv">500</span>, <span class="dv">100</span>) <span class="sc">*</span> <span class="dv">10000</span></span>
+<span id="cb54-12"><a href="preprocessing--baseline.html#cb54-12" tabindex="-1"></a>)</span>
+<span id="cb54-13"><a href="preprocessing--baseline.html#cb54-13" tabindex="-1"></a></span>
+<span id="cb54-14"><a href="preprocessing--baseline.html#cb54-14" tabindex="-1"></a><span class="co"># preprocess the disturbed spectra using ALS baseline correction</span></span>
+<span id="cb54-15"><a href="preprocessing--baseline.html#cb54-15" tabindex="-1"></a>y.new <span class="ot">&lt;-</span> <span class="fu">prep.alsbasecorr</span>(y, <span class="at">plambda =</span> <span class="dv">5</span>, <span class="at">p =</span> <span class="fl">0.01</span>)</span>
+<span id="cb54-16"><a href="preprocessing--baseline.html#cb54-16" tabindex="-1"></a></span>
+<span id="cb54-17"><a href="preprocessing--baseline.html#cb54-17" tabindex="-1"></a><span class="co"># show the original, disturbed and the preprocessed spectra separately for each component</span></span>
+<span id="cb54-18"><a href="preprocessing--baseline.html#cb54-18" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb54-19"><a href="preprocessing--baseline.html#cb54-19" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb54-20"><a href="preprocessing--baseline.html#cb54-20" tabindex="-1"></a>   <span class="fu">mdaplotg</span>(<span class="fu">list</span>(</span>
+<span id="cb54-21"><a href="preprocessing--baseline.html#cb54-21" tabindex="-1"></a>      <span class="at">original =</span> x[i, , <span class="at">drop =</span> <span class="cn">FALSE</span>],</span>
+<span id="cb54-22"><a href="preprocessing--baseline.html#cb54-22" tabindex="-1"></a>      <span class="at">disturbed =</span> y[i, , <span class="at">drop =</span> <span class="cn">FALSE</span>],</span>
+<span id="cb54-23"><a href="preprocessing--baseline.html#cb54-23" tabindex="-1"></a>      <span class="at">preprocessed =</span> y.new[i, , <span class="at">drop =</span> <span class="cn">FALSE</span>]</span>
+<span id="cb54-24"><a href="preprocessing--baseline.html#cb54-24" tabindex="-1"></a>      ), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>),</span>
+<span id="cb54-25"><a href="preprocessing--baseline.html#cb54-25" tabindex="-1"></a>      <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">&quot;Pure component #&quot;</span>, i)</span>
+<span id="cb54-26"><a href="preprocessing--baseline.html#cb54-26" tabindex="-1"></a>   )</span>
+<span id="cb54-27"><a href="preprocessing--baseline.html#cb54-27" tabindex="-1"></a>}</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="864" /></p>
 <p>As one can notice, the blue curves with corrected spectra are pretty similar to the original spectra shown as dashed black curves.</p>
 </div>
@@ -400,7 +404,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null

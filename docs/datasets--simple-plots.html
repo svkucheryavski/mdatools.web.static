@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Simple plots | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Simple plots | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2023-03-31" />
+<meta name="date" content="2023-07-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -119,6 +119,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
@@ -138,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
 <li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
-<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install</a></li>
+<li class="chapter" data-level="" data-path="overview--how-to-install.html"><a href="overview--how-to-install.html"><i class="fa fa-check"></i>How to install and update</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="datasets.html"><a href="datasets.html"><i class="fa fa-check"></i>Datasets and plots</a>
 <ul>
@@ -393,221 +397,221 @@ adjust the grid look.</td>
 <div id="scatter-plots" class="section level3 unnumbered hasAnchor">
 <h3>Scatter plots<a href="datasets--simple-plots.html#scatter-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will use <code>people</code> dataset for illustration how scatter plots work (see <code>?people</code> for details).</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="datasets--simple-plots.html#cb16-1" tabindex="-1"></a><span class="fu">data</span>(people)</span>
-<span id="cb16-2"><a href="datasets--simple-plots.html#cb16-2" tabindex="-1"></a><span class="fu">attr</span>(people, <span class="st">&quot;name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;People&quot;</span></span>
-<span id="cb16-3"><a href="datasets--simple-plots.html#cb16-3" tabindex="-1"></a><span class="fu">attr</span>(people, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Variables&quot;</span></span>
-<span id="cb16-4"><a href="datasets--simple-plots.html#cb16-4" tabindex="-1"></a><span class="fu">attr</span>(people, <span class="st">&quot;yaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Persons&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="datasets--simple-plots.html#cb17-1" tabindex="-1"></a><span class="fu">data</span>(people)</span>
+<span id="cb17-2"><a href="datasets--simple-plots.html#cb17-2" tabindex="-1"></a><span class="fu">attr</span>(people, <span class="st">&quot;name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;People&quot;</span></span>
+<span id="cb17-3"><a href="datasets--simple-plots.html#cb17-3" tabindex="-1"></a><span class="fu">attr</span>(people, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Variables&quot;</span></span>
+<span id="cb17-4"><a href="datasets--simple-plots.html#cb17-4" tabindex="-1"></a><span class="fu">attr</span>(people, <span class="st">&quot;yaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Persons&quot;</span></span></code></pre></div>
 <p>For scatter plots the method takes first two columns of a dataset as x and y vectors. If only one column is available <code>mdaplot()</code> uses it for y-values and generate x-values as an index for each value.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="datasets--simple-plots.html#cb17-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb17-2"><a href="datasets--simple-plots.html#cb17-2" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="datasets--simple-plots.html#cb17-3" tabindex="-1"></a><span class="co"># show plot for the whole dataset (columns 1 and 2 will be taken)</span></span>
-<span id="cb17-4"><a href="datasets--simple-plots.html#cb17-4" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>)</span>
-<span id="cb17-5"><a href="datasets--simple-plots.html#cb17-5" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="datasets--simple-plots.html#cb17-6" tabindex="-1"></a><span class="co"># subset the dataset and keep only columns 6 and 7 and then make a plot</span></span>
-<span id="cb17-7"><a href="datasets--simple-plots.html#cb17-7" tabindex="-1"></a><span class="fu">mdaplot</span>(<span class="fu">mda.subset</span>(people, <span class="at">select =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">7</span>)), <span class="at">type =</span> <span class="st">&quot;p&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="datasets--simple-plots.html#cb18-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb18-2"><a href="datasets--simple-plots.html#cb18-2" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="datasets--simple-plots.html#cb18-3" tabindex="-1"></a><span class="co"># show plot for the whole dataset (columns 1 and 2 will be taken)</span></span>
+<span id="cb18-4"><a href="datasets--simple-plots.html#cb18-4" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>)</span>
+<span id="cb18-5"><a href="datasets--simple-plots.html#cb18-5" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="datasets--simple-plots.html#cb18-6" tabindex="-1"></a><span class="co"># subset the dataset and keep only columns 6 and 7 and then make a plot</span></span>
+<span id="cb18-7"><a href="datasets--simple-plots.html#cb18-7" tabindex="-1"></a><span class="fu">mdaplot</span>(<span class="fu">mda.subset</span>(people, <span class="at">select =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">7</span>)), <span class="at">type =</span> <span class="st">&quot;p&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="864" /></p>
 <p>All parameters, available for the standard <code>points()</code> method will work with <code>mdaplot()</code> as well. Besides that, you can colorize points according to some values using a color gradient. By default, the gradient is generated using one of the diverging color schemes from <a href="http://colorbrewer2.org">colorbrewer2.org</a>, but this can be changed using parameter <code>colmap</code> as it is shown below.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="datasets--simple-plots.html#cb18-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb18-2"><a href="datasets--simple-plots.html#cb18-2" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="datasets--simple-plots.html#cb18-3" tabindex="-1"></a><span class="co"># show Height vs Weight and color points by the Beer consumption</span></span>
-<span id="cb18-4"><a href="datasets--simple-plots.html#cb18-4" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>])</span>
-<span id="cb18-5"><a href="datasets--simple-plots.html#cb18-5" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="datasets--simple-plots.html#cb18-6" tabindex="-1"></a><span class="co"># do the same but do not show colorbar</span></span>
-<span id="cb18-7"><a href="datasets--simple-plots.html#cb18-7" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>], <span class="at">show.colorbar =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb18-8"><a href="datasets--simple-plots.html#cb18-8" tabindex="-1"></a></span>
-<span id="cb18-9"><a href="datasets--simple-plots.html#cb18-9" tabindex="-1"></a><span class="co"># do the same but use grayscale color map</span></span>
-<span id="cb18-10"><a href="datasets--simple-plots.html#cb18-10" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>], <span class="at">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span>
-<span id="cb18-11"><a href="datasets--simple-plots.html#cb18-11" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="datasets--simple-plots.html#cb18-12" tabindex="-1"></a><span class="co"># do the same but using colormap with gradients between red, yellow and green colors</span></span>
-<span id="cb18-13"><a href="datasets--simple-plots.html#cb18-13" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>], <span class="at">colmap =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;green&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="datasets--simple-plots.html#cb19-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb19-2"><a href="datasets--simple-plots.html#cb19-2" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="datasets--simple-plots.html#cb19-3" tabindex="-1"></a><span class="co"># show Height vs Weight and color points by the Beer consumption</span></span>
+<span id="cb19-4"><a href="datasets--simple-plots.html#cb19-4" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>])</span>
+<span id="cb19-5"><a href="datasets--simple-plots.html#cb19-5" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="datasets--simple-plots.html#cb19-6" tabindex="-1"></a><span class="co"># do the same but do not show colorbar</span></span>
+<span id="cb19-7"><a href="datasets--simple-plots.html#cb19-7" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>], <span class="at">show.colorbar =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-8"><a href="datasets--simple-plots.html#cb19-8" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="datasets--simple-plots.html#cb19-9" tabindex="-1"></a><span class="co"># do the same but use grayscale color map</span></span>
+<span id="cb19-10"><a href="datasets--simple-plots.html#cb19-10" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>], <span class="at">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span>
+<span id="cb19-11"><a href="datasets--simple-plots.html#cb19-11" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="datasets--simple-plots.html#cb19-12" tabindex="-1"></a><span class="co"># do the same but using colormap with gradients between red, yellow and green colors</span></span>
+<span id="cb19-13"><a href="datasets--simple-plots.html#cb19-13" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>], <span class="at">colmap =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;green&quot;</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="864" /></p>
 <p>If the vector with values for color grouping is a factor, level labels will be shown on a colorbar legend and there will be a small margin between bars.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="datasets--simple-plots.html#cb19-1" tabindex="-1"></a><span class="co"># make a factor using values of variable Sex and define labels for the factor levels</span></span>
-<span id="cb19-2"><a href="datasets--simple-plots.html#cb19-2" tabindex="-1"></a>g <span class="ot">=</span> <span class="fu">factor</span>(people[, <span class="st">&quot;Sex&quot;</span>], <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))</span>
-<span id="cb19-3"><a href="datasets--simple-plots.html#cb19-3" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="datasets--simple-plots.html#cb19-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb19-5"><a href="datasets--simple-plots.html#cb19-5" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> g)</span>
-<span id="cb19-6"><a href="datasets--simple-plots.html#cb19-6" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> g, <span class="at">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="datasets--simple-plots.html#cb20-1" tabindex="-1"></a><span class="co"># make a factor using values of variable Sex and define labels for the factor levels</span></span>
+<span id="cb20-2"><a href="datasets--simple-plots.html#cb20-2" tabindex="-1"></a>g <span class="ot">=</span> <span class="fu">factor</span>(people[, <span class="st">&quot;Sex&quot;</span>], <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))</span>
+<span id="cb20-3"><a href="datasets--simple-plots.html#cb20-3" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="datasets--simple-plots.html#cb20-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb20-5"><a href="datasets--simple-plots.html#cb20-5" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> g)</span>
+<span id="cb20-6"><a href="datasets--simple-plots.html#cb20-6" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> g, <span class="at">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="864" /></p>
 <p>If you use point characters from 21 to 25 (the ones which allow to specify both color of border and
 background of the marker symbol), then the <code>cgroup</code> is applied to color of the borders of the symbols by default.
 If you want to apply it to background color, use logical parameter <code>pch.colinv</code> for that as shown below:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="datasets--simple-plots.html#cb20-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb20-2"><a href="datasets--simple-plots.html#cb20-2" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="datasets--simple-plots.html#cb20-3" tabindex="-1"></a><span class="co"># default way - color grouping is used for borders and &quot;bg&quot; for background</span></span>
-<span id="cb20-4"><a href="datasets--simple-plots.html#cb20-4" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>], <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">bg =</span> <span class="st">&quot;white&quot;</span>)</span>
-<span id="cb20-5"><a href="datasets--simple-plots.html#cb20-5" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="datasets--simple-plots.html#cb20-6" tabindex="-1"></a><span class="co"># inverse - color grouping is used for background and &quot;bg&quot; for border</span></span>
-<span id="cb20-7"><a href="datasets--simple-plots.html#cb20-7" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>], <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">bg =</span> <span class="st">&quot;white&quot;</span>, <span class="at">pch.colinv =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="datasets--simple-plots.html#cb21-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb21-2"><a href="datasets--simple-plots.html#cb21-2" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="datasets--simple-plots.html#cb21-3" tabindex="-1"></a><span class="co"># default way - color grouping is used for borders and &quot;bg&quot; for background</span></span>
+<span id="cb21-4"><a href="datasets--simple-plots.html#cb21-4" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>], <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">bg =</span> <span class="st">&quot;white&quot;</span>)</span>
+<span id="cb21-5"><a href="datasets--simple-plots.html#cb21-5" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="datasets--simple-plots.html#cb21-6" tabindex="-1"></a><span class="co"># inverse - color grouping is used for background and &quot;bg&quot; for border</span></span>
+<span id="cb21-7"><a href="datasets--simple-plots.html#cb21-7" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>], <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">bg =</span> <span class="st">&quot;white&quot;</span>, <span class="at">pch.colinv =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="864" /></p>
 <p>Another useful option is adding labels to the data points. By default row names will be taken for the labels but you can specify a parameter <code>labels</code>, which can be either a text (<code>"names"</code> or <code>"indices"</code>) or a vector with values to show as labels. Color and size of the labels can be adjusted.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="datasets--simple-plots.html#cb21-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb21-2"><a href="datasets--simple-plots.html#cb21-2" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="datasets--simple-plots.html#cb21-3" tabindex="-1"></a><span class="co"># by default row names will be used as labels</span></span>
-<span id="cb21-4"><a href="datasets--simple-plots.html#cb21-4" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb21-5"><a href="datasets--simple-plots.html#cb21-5" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="datasets--simple-plots.html#cb21-6" tabindex="-1"></a><span class="co"># here we tell to use indices as labels instead</span></span>
-<span id="cb21-7"><a href="datasets--simple-plots.html#cb21-7" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;indices&quot;</span>)</span>
-<span id="cb21-8"><a href="datasets--simple-plots.html#cb21-8" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="datasets--simple-plots.html#cb21-9" tabindex="-1"></a><span class="co"># here we use names again but change color and size of the labels</span></span>
-<span id="cb21-10"><a href="datasets--simple-plots.html#cb21-10" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;names&quot;</span>, <span class="at">lab.col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lab.cex =</span> <span class="fl">0.5</span>)</span>
-<span id="cb21-11"><a href="datasets--simple-plots.html#cb21-11" tabindex="-1"></a></span>
-<span id="cb21-12"><a href="datasets--simple-plots.html#cb21-12" tabindex="-1"></a><span class="co"># finally we provide a vector with manual values to be used as the labels</span></span>
-<span id="cb21-13"><a href="datasets--simple-plots.html#cb21-13" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="st">&quot;O&quot;</span>, <span class="fu">seq_len</span>(<span class="fu">nrow</span>(people))))</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="datasets--simple-plots.html#cb22-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb22-2"><a href="datasets--simple-plots.html#cb22-2" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="datasets--simple-plots.html#cb22-3" tabindex="-1"></a><span class="co"># by default row names will be used as labels</span></span>
+<span id="cb22-4"><a href="datasets--simple-plots.html#cb22-4" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-5"><a href="datasets--simple-plots.html#cb22-5" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="datasets--simple-plots.html#cb22-6" tabindex="-1"></a><span class="co"># here we tell to use indices as labels instead</span></span>
+<span id="cb22-7"><a href="datasets--simple-plots.html#cb22-7" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;indices&quot;</span>)</span>
+<span id="cb22-8"><a href="datasets--simple-plots.html#cb22-8" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="datasets--simple-plots.html#cb22-9" tabindex="-1"></a><span class="co"># here we use names again but change color and size of the labels</span></span>
+<span id="cb22-10"><a href="datasets--simple-plots.html#cb22-10" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;names&quot;</span>, <span class="at">lab.col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lab.cex =</span> <span class="fl">0.5</span>)</span>
+<span id="cb22-11"><a href="datasets--simple-plots.html#cb22-11" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="datasets--simple-plots.html#cb22-12" tabindex="-1"></a><span class="co"># finally we provide a vector with manual values to be used as the labels</span></span>
+<span id="cb22-13"><a href="datasets--simple-plots.html#cb22-13" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="st">&quot;O&quot;</span>, <span class="fu">seq_len</span>(<span class="fu">nrow</span>(people))))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="864" /></p>
 <p>You can also manually specify axis ticks and tick labels. The labels can be rotated using parameters <code>xlas</code> and <code>ylas</code>, see the examples below. It is important though, that if you provide manual values for the tick labels you must also provide a vector of values with the positions the labels should be shown at. And, of course, the two vectors must
 have the same number of values.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="datasets--simple-plots.html#cb22-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb22-2"><a href="datasets--simple-plots.html#cb22-2" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="datasets--simple-plots.html#cb22-3" tabindex="-1"></a><span class="co"># manual values and tick labels for the x-axis</span></span>
-<span id="cb22-4"><a href="datasets--simple-plots.html#cb22-4" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">xticks =</span> <span class="fu">c</span>(<span class="dv">165</span>, <span class="dv">175</span>, <span class="dv">185</span>), <span class="at">xticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Small&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Hight&quot;</span>))</span>
-<span id="cb22-5"><a href="datasets--simple-plots.html#cb22-5" tabindex="-1"></a></span>
-<span id="cb22-6"><a href="datasets--simple-plots.html#cb22-6" tabindex="-1"></a><span class="co"># same but with rotation of the tick labels</span></span>
-<span id="cb22-7"><a href="datasets--simple-plots.html#cb22-7" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">xticks =</span> <span class="fu">c</span>(<span class="dv">165</span>, <span class="dv">175</span>, <span class="dv">185</span>), <span class="at">xticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Small&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Hight&quot;</span>), <span class="at">xlas =</span> <span class="dv">2</span>)</span>
-<span id="cb22-8"><a href="datasets--simple-plots.html#cb22-8" tabindex="-1"></a></span>
-<span id="cb22-9"><a href="datasets--simple-plots.html#cb22-9" tabindex="-1"></a><span class="co"># manual values and tick labels for the y-axis</span></span>
-<span id="cb22-10"><a href="datasets--simple-plots.html#cb22-10" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">yticks =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">70</span>, <span class="dv">85</span>), <span class="at">yticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Light&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Heavy&quot;</span>))</span>
-<span id="cb22-11"><a href="datasets--simple-plots.html#cb22-11" tabindex="-1"></a></span>
-<span id="cb22-12"><a href="datasets--simple-plots.html#cb22-12" tabindex="-1"></a><span class="co"># same but with rotation of the tick labels</span></span>
-<span id="cb22-13"><a href="datasets--simple-plots.html#cb22-13" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">yticks =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">70</span>, <span class="dv">85</span>), <span class="at">yticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Light&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Heavy&quot;</span>), <span class="at">ylas =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="datasets--simple-plots.html#cb23-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb23-2"><a href="datasets--simple-plots.html#cb23-2" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="datasets--simple-plots.html#cb23-3" tabindex="-1"></a><span class="co"># manual values and tick labels for the x-axis</span></span>
+<span id="cb23-4"><a href="datasets--simple-plots.html#cb23-4" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">xticks =</span> <span class="fu">c</span>(<span class="dv">165</span>, <span class="dv">175</span>, <span class="dv">185</span>), <span class="at">xticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Small&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Hight&quot;</span>))</span>
+<span id="cb23-5"><a href="datasets--simple-plots.html#cb23-5" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="datasets--simple-plots.html#cb23-6" tabindex="-1"></a><span class="co"># same but with rotation of the tick labels</span></span>
+<span id="cb23-7"><a href="datasets--simple-plots.html#cb23-7" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">xticks =</span> <span class="fu">c</span>(<span class="dv">165</span>, <span class="dv">175</span>, <span class="dv">185</span>), <span class="at">xticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Small&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Hight&quot;</span>), <span class="at">xlas =</span> <span class="dv">2</span>)</span>
+<span id="cb23-8"><a href="datasets--simple-plots.html#cb23-8" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="datasets--simple-plots.html#cb23-9" tabindex="-1"></a><span class="co"># manual values and tick labels for the y-axis</span></span>
+<span id="cb23-10"><a href="datasets--simple-plots.html#cb23-10" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">yticks =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">70</span>, <span class="dv">85</span>), <span class="at">yticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Light&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Heavy&quot;</span>))</span>
+<span id="cb23-11"><a href="datasets--simple-plots.html#cb23-11" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="datasets--simple-plots.html#cb23-12" tabindex="-1"></a><span class="co"># same but with rotation of the tick labels</span></span>
+<span id="cb23-13"><a href="datasets--simple-plots.html#cb23-13" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">yticks =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">70</span>, <span class="dv">85</span>), <span class="at">yticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Light&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Heavy&quot;</span>), <span class="at">ylas =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="864" /></p>
 <p>If both axis labels and rotated axis ticks have to be shown, you can adjust plot margins and position of the label using <code>par()</code> function and <code>mtext()</code> for positioning axis label manually.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="datasets--simple-plots.html#cb23-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb23-2"><a href="datasets--simple-plots.html#cb23-2" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="datasets--simple-plots.html#cb23-3" tabindex="-1"></a><span class="co"># change margin for bottom part</span></span>
-<span id="cb23-4"><a href="datasets--simple-plots.html#cb23-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>) <span class="sc">+</span> <span class="fl">0.1</span>)</span>
-<span id="cb23-5"><a href="datasets--simple-plots.html#cb23-5" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">xticks =</span> <span class="fu">c</span>(<span class="dv">165</span>, <span class="dv">175</span>, <span class="dv">185</span>), <span class="at">xticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Small&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Hight&quot;</span>),</span>
-<span id="cb23-6"><a href="datasets--simple-plots.html#cb23-6" tabindex="-1"></a>        <span class="at">xlas =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb23-7"><a href="datasets--simple-plots.html#cb23-7" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Height&quot;</span>, <span class="at">side =</span> <span class="dv">1</span>, <span class="at">line =</span> <span class="dv">5</span>)</span>
-<span id="cb23-8"><a href="datasets--simple-plots.html#cb23-8" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="datasets--simple-plots.html#cb23-9" tabindex="-1"></a><span class="co"># change margin for left part</span></span>
-<span id="cb23-10"><a href="datasets--simple-plots.html#cb23-10" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.1</span>)</span>
-<span id="cb23-11"><a href="datasets--simple-plots.html#cb23-11" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">yticks =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">70</span>, <span class="dv">85</span>), <span class="at">yticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Light&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Heavy&quot;</span>),</span>
-<span id="cb23-12"><a href="datasets--simple-plots.html#cb23-12" tabindex="-1"></a>        <span class="at">ylas =</span> <span class="dv">2</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb23-13"><a href="datasets--simple-plots.html#cb23-13" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Weight&quot;</span>, <span class="at">side =</span> <span class="dv">2</span>, <span class="at">line =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="datasets--simple-plots.html#cb24-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb24-2"><a href="datasets--simple-plots.html#cb24-2" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="datasets--simple-plots.html#cb24-3" tabindex="-1"></a><span class="co"># change margin for bottom part</span></span>
+<span id="cb24-4"><a href="datasets--simple-plots.html#cb24-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>) <span class="sc">+</span> <span class="fl">0.1</span>)</span>
+<span id="cb24-5"><a href="datasets--simple-plots.html#cb24-5" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">xticks =</span> <span class="fu">c</span>(<span class="dv">165</span>, <span class="dv">175</span>, <span class="dv">185</span>), <span class="at">xticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Small&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Hight&quot;</span>),</span>
+<span id="cb24-6"><a href="datasets--simple-plots.html#cb24-6" tabindex="-1"></a>        <span class="at">xlas =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb24-7"><a href="datasets--simple-plots.html#cb24-7" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Height&quot;</span>, <span class="at">side =</span> <span class="dv">1</span>, <span class="at">line =</span> <span class="dv">5</span>)</span>
+<span id="cb24-8"><a href="datasets--simple-plots.html#cb24-8" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="datasets--simple-plots.html#cb24-9" tabindex="-1"></a><span class="co"># change margin for left part</span></span>
+<span id="cb24-10"><a href="datasets--simple-plots.html#cb24-10" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.1</span>)</span>
+<span id="cb24-11"><a href="datasets--simple-plots.html#cb24-11" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">yticks =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">70</span>, <span class="dv">85</span>), <span class="at">yticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Light&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Heavy&quot;</span>),</span>
+<span id="cb24-12"><a href="datasets--simple-plots.html#cb24-12" tabindex="-1"></a>        <span class="at">ylas =</span> <span class="dv">2</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb24-13"><a href="datasets--simple-plots.html#cb24-13" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Weight&quot;</span>, <span class="at">side =</span> <span class="dv">2</span>, <span class="at">line =</span> <span class="dv">5</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="864" /></p>
 <p>There is also a couple of other parameters, allowing to show/hide grid as well as show horizontal and vertical lines on the plot (axes limits will be adjusted correspondingly).</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="datasets--simple-plots.html#cb24-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb24-2"><a href="datasets--simple-plots.html#cb24-2" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">show.grid =</span> <span class="cn">FALSE</span>, <span class="at">show.lines =</span> <span class="fu">c</span>(<span class="dv">170</span>, <span class="dv">65</span>))</span>
-<span id="cb24-3"><a href="datasets--simple-plots.html#cb24-3" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">show.lines =</span> <span class="fu">c</span>(<span class="dv">220</span>, <span class="cn">NA</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="datasets--simple-plots.html#cb25-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb25-2"><a href="datasets--simple-plots.html#cb25-2" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">show.grid =</span> <span class="cn">FALSE</span>, <span class="at">show.lines =</span> <span class="fu">c</span>(<span class="dv">170</span>, <span class="dv">65</span>))</span>
+<span id="cb25-3"><a href="datasets--simple-plots.html#cb25-3" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">show.lines =</span> <span class="fu">c</span>(<span class="dv">220</span>, <span class="cn">NA</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="864" /></p>
 <p>Function <code>mdaplot()</code> can also return plot series data, which can be used for
 extra options. For example, in case of scatter plot you can add confidence ellipse or convex
 hull for data points. To do this, points must be color grouped by a factor as shown below. For confidence ellipse you can specify the confidence level (default 0.95).</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="datasets--simple-plots.html#cb25-1" tabindex="-1"></a><span class="co"># define a factor using values of variable Sex and simple labels</span></span>
-<span id="cb25-2"><a href="datasets--simple-plots.html#cb25-2" tabindex="-1"></a>g <span class="ot">=</span> <span class="fu">factor</span>(people[, <span class="st">&quot;Sex&quot;</span>], <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>))</span>
-<span id="cb25-3"><a href="datasets--simple-plots.html#cb25-3" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="datasets--simple-plots.html#cb25-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb25-5"><a href="datasets--simple-plots.html#cb25-5" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="datasets--simple-plots.html#cb25-6" tabindex="-1"></a><span class="co"># make a scatter plot grouping points by the factor and then show convex hull for each group</span></span>
-<span id="cb25-7"><a href="datasets--simple-plots.html#cb25-7" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">mdaplot</span>(people, <span class="at">cgroup =</span> g)</span>
-<span id="cb25-8"><a href="datasets--simple-plots.html#cb25-8" tabindex="-1"></a><span class="fu">plotConvexHull</span>(p)</span>
-<span id="cb25-9"><a href="datasets--simple-plots.html#cb25-9" tabindex="-1"></a></span>
-<span id="cb25-10"><a href="datasets--simple-plots.html#cb25-10" tabindex="-1"></a><span class="co"># make a scatter plot grouping points by the factor and then show 90% confidence intervals</span></span>
-<span id="cb25-11"><a href="datasets--simple-plots.html#cb25-11" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">mdaplot</span>(people, <span class="at">cgroup =</span> g)</span>
-<span id="cb25-12"><a href="datasets--simple-plots.html#cb25-12" tabindex="-1"></a><span class="fu">plotConfidenceEllipse</span>(p, <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="datasets--simple-plots.html#cb26-1" tabindex="-1"></a><span class="co"># define a factor using values of variable Sex and simple labels</span></span>
+<span id="cb26-2"><a href="datasets--simple-plots.html#cb26-2" tabindex="-1"></a>g <span class="ot">=</span> <span class="fu">factor</span>(people[, <span class="st">&quot;Sex&quot;</span>], <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>))</span>
+<span id="cb26-3"><a href="datasets--simple-plots.html#cb26-3" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="datasets--simple-plots.html#cb26-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb26-5"><a href="datasets--simple-plots.html#cb26-5" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="datasets--simple-plots.html#cb26-6" tabindex="-1"></a><span class="co"># make a scatter plot grouping points by the factor and then show convex hull for each group</span></span>
+<span id="cb26-7"><a href="datasets--simple-plots.html#cb26-7" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">mdaplot</span>(people, <span class="at">cgroup =</span> g)</span>
+<span id="cb26-8"><a href="datasets--simple-plots.html#cb26-8" tabindex="-1"></a><span class="fu">plotConvexHull</span>(p)</span>
+<span id="cb26-9"><a href="datasets--simple-plots.html#cb26-9" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="datasets--simple-plots.html#cb26-10" tabindex="-1"></a><span class="co"># make a scatter plot grouping points by the factor and then show 90% confidence intervals</span></span>
+<span id="cb26-11"><a href="datasets--simple-plots.html#cb26-11" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">mdaplot</span>(people, <span class="at">cgroup =</span> g)</span>
+<span id="cb26-12"><a href="datasets--simple-plots.html#cb26-12" tabindex="-1"></a><span class="fu">plotConfidenceEllipse</span>(p, <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="864" /></p>
 <p>In case when number of data points is large (e.g. when dealing with images, where every pixel is a data point), using density plot is a good alternative to conventional scatter plots. The plot does not show all data points but instead split the whole plot space into small hexagonal regions and use color gradient for illustration a density of the points in each region. This approach is known as <em>hexagonal binning</em>. To create a density plot simply use <code>type="d"</code>. You can also specify color map and number of bins along each axes (<code>nbins</code>).</p>
 <p>The code below show an example of using density plots for 100000 data points with x and y values taken from normally distributed population.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="datasets--simple-plots.html#cb26-1" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100000</span>)</span>
-<span id="cb26-2"><a href="datasets--simple-plots.html#cb26-2" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100000</span>)</span>
-<span id="cb26-3"><a href="datasets--simple-plots.html#cb26-3" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">cbind</span>(x, y)</span>
-<span id="cb26-4"><a href="datasets--simple-plots.html#cb26-4" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="datasets--simple-plots.html#cb26-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb26-6"><a href="datasets--simple-plots.html#cb26-6" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>)</span>
-<span id="cb26-7"><a href="datasets--simple-plots.html#cb26-7" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>, <span class="at">nbins =</span> <span class="dv">80</span>)</span>
-<span id="cb26-8"><a href="datasets--simple-plots.html#cb26-8" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>, <span class="at">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span>
-<span id="cb26-9"><a href="datasets--simple-plots.html#cb26-9" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>, <span class="at">nbins =</span> <span class="dv">80</span>, <span class="at">colmap =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="datasets--simple-plots.html#cb27-1" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100000</span>)</span>
+<span id="cb27-2"><a href="datasets--simple-plots.html#cb27-2" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100000</span>)</span>
+<span id="cb27-3"><a href="datasets--simple-plots.html#cb27-3" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">cbind</span>(x, y)</span>
+<span id="cb27-4"><a href="datasets--simple-plots.html#cb27-4" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="datasets--simple-plots.html#cb27-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb27-6"><a href="datasets--simple-plots.html#cb27-6" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>)</span>
+<span id="cb27-7"><a href="datasets--simple-plots.html#cb27-7" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>, <span class="at">nbins =</span> <span class="dv">80</span>)</span>
+<span id="cb27-8"><a href="datasets--simple-plots.html#cb27-8" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>, <span class="at">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span>
+<span id="cb27-9"><a href="datasets--simple-plots.html#cb27-9" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>, <span class="at">nbins =</span> <span class="dv">80</span>, <span class="at">colmap =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="864" /></p>
 </div>
 <div id="line-plots" class="section level3 unnumbered hasAnchor">
 <h3>Line plots<a href="datasets--simple-plots.html#line-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When line plot is created, the <code>mdatools()</code> shows a line plot for every row of the provided dataset. So if data set has more than one row, the plot will show a bunch of lines having same properties (color, type, etc). This is particularly useful when working with signals and spectroscopic data. In this subsection we will use simulated UV/Vis spectra from <code>simdata</code>. See <code>?simdata</code> for more details about this set.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="datasets--simple-plots.html#cb27-1" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
-<span id="cb27-2"><a href="datasets--simple-plots.html#cb27-2" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="datasets--simple-plots.html#cb27-3" tabindex="-1"></a><span class="co"># get the calibration spectra, wavelength and</span></span>
-<span id="cb27-4"><a href="datasets--simple-plots.html#cb27-4" tabindex="-1"></a><span class="co"># concentration of first component as separate variables</span></span>
-<span id="cb27-5"><a href="datasets--simple-plots.html#cb27-5" tabindex="-1"></a>spectra <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
-<span id="cb27-6"><a href="datasets--simple-plots.html#cb27-6" tabindex="-1"></a>wavelength <span class="ot">=</span> simdata<span class="sc">$</span>wavelength</span>
-<span id="cb27-7"><a href="datasets--simple-plots.html#cb27-7" tabindex="-1"></a>conc <span class="ot">=</span> simdata<span class="sc">$</span>conc.c[, <span class="dv">1</span>]</span>
-<span id="cb27-8"><a href="datasets--simple-plots.html#cb27-8" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="datasets--simple-plots.html#cb27-9" tabindex="-1"></a><span class="co"># add names as attributes</span></span>
-<span id="cb27-10"><a href="datasets--simple-plots.html#cb27-10" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;UV/Vis spectra&quot;</span></span>
-<span id="cb27-11"><a href="datasets--simple-plots.html#cb27-11" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Band index&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="datasets--simple-plots.html#cb28-1" tabindex="-1"></a><span class="fu">data</span>(simdata)</span>
+<span id="cb28-2"><a href="datasets--simple-plots.html#cb28-2" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="datasets--simple-plots.html#cb28-3" tabindex="-1"></a><span class="co"># get the calibration spectra, wavelength and</span></span>
+<span id="cb28-4"><a href="datasets--simple-plots.html#cb28-4" tabindex="-1"></a><span class="co"># concentration of first component as separate variables</span></span>
+<span id="cb28-5"><a href="datasets--simple-plots.html#cb28-5" tabindex="-1"></a>spectra <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
+<span id="cb28-6"><a href="datasets--simple-plots.html#cb28-6" tabindex="-1"></a>wavelength <span class="ot">=</span> simdata<span class="sc">$</span>wavelength</span>
+<span id="cb28-7"><a href="datasets--simple-plots.html#cb28-7" tabindex="-1"></a>conc <span class="ot">=</span> simdata<span class="sc">$</span>conc.c[, <span class="dv">1</span>]</span>
+<span id="cb28-8"><a href="datasets--simple-plots.html#cb28-8" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="datasets--simple-plots.html#cb28-9" tabindex="-1"></a><span class="co"># add names as attributes</span></span>
+<span id="cb28-10"><a href="datasets--simple-plots.html#cb28-10" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;UV/Vis spectra&quot;</span></span>
+<span id="cb28-11"><a href="datasets--simple-plots.html#cb28-11" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Band index&quot;</span></span></code></pre></div>
 <p>Here are simple examples of how to make the line plots.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="datasets--simple-plots.html#cb28-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb28-2"><a href="datasets--simple-plots.html#cb28-2" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
-<span id="cb28-3"><a href="datasets--simple-plots.html#cb28-3" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="datasets--simple-plots.html#cb29-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb29-2"><a href="datasets--simple-plots.html#cb29-2" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb29-3"><a href="datasets--simple-plots.html#cb29-3" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="864" /></p>
 <p>Most of the parameters described for scatter plots will work for the line plots as well. For example, you can colorise the lines by using a vector with some values (in the example below I use concentration of one of the chemical components).</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="datasets--simple-plots.html#cb29-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb29-2"><a href="datasets--simple-plots.html#cb29-2" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">cgroup =</span> conc)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="datasets--simple-plots.html#cb30-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb30-2"><a href="datasets--simple-plots.html#cb30-2" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">cgroup =</span> conc)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="864" /></p>
 <p>And of course you can use the attributes, allowing to provide manual x-values — <code>'xaxis.values'</code> (similar parameter for y-values is <code>'yaxis.values'</code>). In the example below we show the spectra using wavelength in nm and wavenumbers in inverse cm.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="datasets--simple-plots.html#cb30-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb30-2"><a href="datasets--simple-plots.html#cb30-2" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="datasets--simple-plots.html#cb30-3" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="fu">expression</span>(<span class="st">&quot;Wavenumbers, cm&quot;</span><span class="sc">^-</span><span class="dv">1</span>)</span>
-<span id="cb30-4"><a href="datasets--simple-plots.html#cb30-4" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">=</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">7</span><span class="sc">/</span>wavelength</span>
-<span id="cb30-5"><a href="datasets--simple-plots.html#cb30-5" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
-<span id="cb30-6"><a href="datasets--simple-plots.html#cb30-6" tabindex="-1"></a></span>
-<span id="cb30-7"><a href="datasets--simple-plots.html#cb30-7" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
-<span id="cb30-8"><a href="datasets--simple-plots.html#cb30-8" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">=</span> wavelength</span>
-<span id="cb30-9"><a href="datasets--simple-plots.html#cb30-9" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="datasets--simple-plots.html#cb31-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb31-2"><a href="datasets--simple-plots.html#cb31-2" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="datasets--simple-plots.html#cb31-3" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="fu">expression</span>(<span class="st">&quot;Wavenumbers, cm&quot;</span><span class="sc">^-</span><span class="dv">1</span>)</span>
+<span id="cb31-4"><a href="datasets--simple-plots.html#cb31-4" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">=</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">7</span><span class="sc">/</span>wavelength</span>
+<span id="cb31-5"><a href="datasets--simple-plots.html#cb31-5" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
+<span id="cb31-6"><a href="datasets--simple-plots.html#cb31-6" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="datasets--simple-plots.html#cb31-7" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
+<span id="cb31-8"><a href="datasets--simple-plots.html#cb31-8" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">=</span> wavelength</span>
+<span id="cb31-9"><a href="datasets--simple-plots.html#cb31-9" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="864" /></p>
 <p>When you provide such data to any model methods (e.g. PCA, PLS, etc), then all variable related results (loadings, regression coefficients, etc.) will inherit this attribute and use it for making line plots.</p>
 </div>
 <div id="bar-and-errorbar-plots" class="section level3 unnumbered hasAnchor">
 <h3>Bar and errorbar plots<a href="datasets--simple-plots.html#bar-and-errorbar-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Bar plot is perhaps the simplest as it shows values for the first row of the data as bars. Let us start with simple dataset, where we have a matrix with explained variance of a data from e.g. PCA decomposition.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="datasets--simple-plots.html#cb31-1" tabindex="-1"></a><span class="co"># make a simple two rows matrix with values</span></span>
-<span id="cb31-2"><a href="datasets--simple-plots.html#cb31-2" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">rbind</span>(</span>
-<span id="cb31-3"><a href="datasets--simple-plots.html#cb31-3" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">90</span>),</span>
-<span id="cb31-4"><a href="datasets--simple-plots.html#cb31-4" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">14</span>, <span class="dv">45</span>, <span class="dv">59</span>, <span class="dv">88</span>)</span>
-<span id="cb31-5"><a href="datasets--simple-plots.html#cb31-5" tabindex="-1"></a>)</span>
-<span id="cb31-6"><a href="datasets--simple-plots.html#cb31-6" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="datasets--simple-plots.html#cb31-7" tabindex="-1"></a><span class="co"># add some names and attributes</span></span>
-<span id="cb31-8"><a href="datasets--simple-plots.html#cb31-8" tabindex="-1"></a><span class="fu">colnames</span>(d) <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&quot;PC&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
-<span id="cb31-9"><a href="datasets--simple-plots.html#cb31-9" tabindex="-1"></a><span class="fu">rownames</span>(d) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Cal&quot;</span>, <span class="st">&quot;CV&quot;</span>)</span>
-<span id="cb31-10"><a href="datasets--simple-plots.html#cb31-10" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Components&quot;</span></span>
-<span id="cb31-11"><a href="datasets--simple-plots.html#cb31-11" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&quot;name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Explained variance&quot;</span></span>
-<span id="cb31-12"><a href="datasets--simple-plots.html#cb31-12" tabindex="-1"></a></span>
-<span id="cb31-13"><a href="datasets--simple-plots.html#cb31-13" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb31-14"><a href="datasets--simple-plots.html#cb31-14" tabindex="-1"></a></span>
-<span id="cb31-15"><a href="datasets--simple-plots.html#cb31-15" tabindex="-1"></a><span class="co"># make a default bar plot</span></span>
-<span id="cb31-16"><a href="datasets--simple-plots.html#cb31-16" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>)</span>
-<span id="cb31-17"><a href="datasets--simple-plots.html#cb31-17" tabindex="-1"></a></span>
-<span id="cb31-18"><a href="datasets--simple-plots.html#cb31-18" tabindex="-1"></a><span class="co"># make a bar plot with manual xtick labels, color and labels for data values</span></span>
-<span id="cb31-19"><a href="datasets--simple-plots.html#cb31-19" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">xticks =</span> <span class="fu">seq_len</span>(<span class="fu">ncol</span>(d)), <span class="at">xticklabels =</span> <span class="fu">colnames</span>(d), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb31-20"><a href="datasets--simple-plots.html#cb31-20" tabindex="-1"></a>   <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;values&quot;</span>, <span class="at">xlas =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Variance, %&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="datasets--simple-plots.html#cb32-1" tabindex="-1"></a><span class="co"># make a simple two rows matrix with values</span></span>
+<span id="cb32-2"><a href="datasets--simple-plots.html#cb32-2" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">rbind</span>(</span>
+<span id="cb32-3"><a href="datasets--simple-plots.html#cb32-3" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">90</span>),</span>
+<span id="cb32-4"><a href="datasets--simple-plots.html#cb32-4" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">14</span>, <span class="dv">45</span>, <span class="dv">59</span>, <span class="dv">88</span>)</span>
+<span id="cb32-5"><a href="datasets--simple-plots.html#cb32-5" tabindex="-1"></a>)</span>
+<span id="cb32-6"><a href="datasets--simple-plots.html#cb32-6" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="datasets--simple-plots.html#cb32-7" tabindex="-1"></a><span class="co"># add some names and attributes</span></span>
+<span id="cb32-8"><a href="datasets--simple-plots.html#cb32-8" tabindex="-1"></a><span class="fu">colnames</span>(d) <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&quot;PC&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb32-9"><a href="datasets--simple-plots.html#cb32-9" tabindex="-1"></a><span class="fu">rownames</span>(d) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Cal&quot;</span>, <span class="st">&quot;CV&quot;</span>)</span>
+<span id="cb32-10"><a href="datasets--simple-plots.html#cb32-10" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Components&quot;</span></span>
+<span id="cb32-11"><a href="datasets--simple-plots.html#cb32-11" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&quot;name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Explained variance&quot;</span></span>
+<span id="cb32-12"><a href="datasets--simple-plots.html#cb32-12" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="datasets--simple-plots.html#cb32-13" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb32-14"><a href="datasets--simple-plots.html#cb32-14" tabindex="-1"></a></span>
+<span id="cb32-15"><a href="datasets--simple-plots.html#cb32-15" tabindex="-1"></a><span class="co"># make a default bar plot</span></span>
+<span id="cb32-16"><a href="datasets--simple-plots.html#cb32-16" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>)</span>
+<span id="cb32-17"><a href="datasets--simple-plots.html#cb32-17" tabindex="-1"></a></span>
+<span id="cb32-18"><a href="datasets--simple-plots.html#cb32-18" tabindex="-1"></a><span class="co"># make a bar plot with manual xtick labels, color and labels for data values</span></span>
+<span id="cb32-19"><a href="datasets--simple-plots.html#cb32-19" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">xticks =</span> <span class="fu">seq_len</span>(<span class="fu">ncol</span>(d)), <span class="at">xticklabels =</span> <span class="fu">colnames</span>(d), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb32-20"><a href="datasets--simple-plots.html#cb32-20" tabindex="-1"></a>   <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;values&quot;</span>, <span class="at">xlas =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Variance, %&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="864" /></p>
 <p>As you can notice, the values from the second rows were ignored, as bar plot always takes the first row.</p>
 <p>Errorbar plot, in contrast, always expect data to have two or three rows. The first row is the origin points of the error bars, second row is the size of the bottom error bar and the third row is the size of the top error bar. If data has only two rows the both parts will be symmetric related to the origin.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="datasets--simple-plots.html#cb32-1" tabindex="-1"></a><span class="co"># generate some mean and standard deviation values and combine them as rows of a matrix</span></span>
-<span id="cb32-2"><a href="datasets--simple-plots.html#cb32-2" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">rbind</span>(</span>
-<span id="cb32-3"><a href="datasets--simple-plots.html#cb32-3" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">75</span>),</span>
-<span id="cb32-4"><a href="datasets--simple-plots.html#cb32-4" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">3</span>)</span>
-<span id="cb32-5"><a href="datasets--simple-plots.html#cb32-5" tabindex="-1"></a>)</span>
-<span id="cb32-6"><a href="datasets--simple-plots.html#cb32-6" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="datasets--simple-plots.html#cb32-7" tabindex="-1"></a><span class="co"># add names and attributes</span></span>
-<span id="cb32-8"><a href="datasets--simple-plots.html#cb32-8" tabindex="-1"></a><span class="fu">rownames</span>(d) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Mean&quot;</span>, <span class="st">&quot;Std&quot;</span>)</span>
-<span id="cb32-9"><a href="datasets--simple-plots.html#cb32-9" tabindex="-1"></a><span class="fu">colnames</span>(d) <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&quot;PC&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
-<span id="cb32-10"><a href="datasets--simple-plots.html#cb32-10" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&#39;name&#39;</span>) <span class="ot">=</span> <span class="st">&quot;Statistics&quot;</span></span>
-<span id="cb32-11"><a href="datasets--simple-plots.html#cb32-11" tabindex="-1"></a></span>
-<span id="cb32-12"><a href="datasets--simple-plots.html#cb32-12" tabindex="-1"></a></span>
-<span id="cb32-13"><a href="datasets--simple-plots.html#cb32-13" tabindex="-1"></a><span class="co"># show the plots</span></span>
-<span id="cb32-14"><a href="datasets--simple-plots.html#cb32-14" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb32-15"><a href="datasets--simple-plots.html#cb32-15" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;e&quot;</span>)</span>
-<span id="cb32-16"><a href="datasets--simple-plots.html#cb32-16" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;e&quot;</span>, <span class="at">xticks =</span> <span class="fu">seq_len</span>(<span class="fu">ncol</span>(d)),</span>
-<span id="cb32-17"><a href="datasets--simple-plots.html#cb32-17" tabindex="-1"></a>   <span class="at">xticklabels =</span> <span class="fu">colnames</span>(d), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">xlas =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="datasets--simple-plots.html#cb33-1" tabindex="-1"></a><span class="co"># generate some mean and standard deviation values and combine them as rows of a matrix</span></span>
+<span id="cb33-2"><a href="datasets--simple-plots.html#cb33-2" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">rbind</span>(</span>
+<span id="cb33-3"><a href="datasets--simple-plots.html#cb33-3" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">75</span>),</span>
+<span id="cb33-4"><a href="datasets--simple-plots.html#cb33-4" tabindex="-1"></a>   <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">3</span>)</span>
+<span id="cb33-5"><a href="datasets--simple-plots.html#cb33-5" tabindex="-1"></a>)</span>
+<span id="cb33-6"><a href="datasets--simple-plots.html#cb33-6" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="datasets--simple-plots.html#cb33-7" tabindex="-1"></a><span class="co"># add names and attributes</span></span>
+<span id="cb33-8"><a href="datasets--simple-plots.html#cb33-8" tabindex="-1"></a><span class="fu">rownames</span>(d) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Mean&quot;</span>, <span class="st">&quot;Std&quot;</span>)</span>
+<span id="cb33-9"><a href="datasets--simple-plots.html#cb33-9" tabindex="-1"></a><span class="fu">colnames</span>(d) <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">&quot;PC&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb33-10"><a href="datasets--simple-plots.html#cb33-10" tabindex="-1"></a><span class="fu">attr</span>(d, <span class="st">&#39;name&#39;</span>) <span class="ot">=</span> <span class="st">&quot;Statistics&quot;</span></span>
+<span id="cb33-11"><a href="datasets--simple-plots.html#cb33-11" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="datasets--simple-plots.html#cb33-12" tabindex="-1"></a></span>
+<span id="cb33-13"><a href="datasets--simple-plots.html#cb33-13" tabindex="-1"></a><span class="co"># show the plots</span></span>
+<span id="cb33-14"><a href="datasets--simple-plots.html#cb33-14" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb33-15"><a href="datasets--simple-plots.html#cb33-15" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;e&quot;</span>)</span>
+<span id="cb33-16"><a href="datasets--simple-plots.html#cb33-16" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;e&quot;</span>, <span class="at">xticks =</span> <span class="fu">seq_len</span>(<span class="fu">ncol</span>(d)),</span>
+<span id="cb33-17"><a href="datasets--simple-plots.html#cb33-17" tabindex="-1"></a>   <span class="at">xticklabels =</span> <span class="fu">colnames</span>(d), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">xlas =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="864" /></p>
 <p>All simple plots can be combined together on the same axes. In this case, first plot is created as usual and all other plots have to be created with option <code>show.axes = FALSE</code> as it is shown below. It must be noted that in this case axes limits have to be set manually when creating the first plot.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="datasets--simple-plots.html#cb33-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb33-2"><a href="datasets--simple-plots.html#cb33-2" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="datasets--simple-plots.html#cb33-3" tabindex="-1"></a><span class="fu">mdaplot</span>(<span class="fu">mda.subset</span>(d, <span class="dv">1</span>), <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>)</span>
-<span id="cb33-4"><a href="datasets--simple-plots.html#cb33-4" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;e&quot;</span>, <span class="at">show.axes =</span> <span class="cn">FALSE</span>, <span class="at">pch =</span> <span class="cn">NA</span>)</span>
-<span id="cb33-5"><a href="datasets--simple-plots.html#cb33-5" tabindex="-1"></a></span>
-<span id="cb33-6"><a href="datasets--simple-plots.html#cb33-6" tabindex="-1"></a><span class="fu">mdaplot</span>(<span class="fu">mda.subset</span>(d, <span class="dv">1</span>), <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span>
-<span id="cb33-7"><a href="datasets--simple-plots.html#cb33-7" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;e&quot;</span>, <span class="at">show.axes =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="datasets--simple-plots.html#cb34-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb34-2"><a href="datasets--simple-plots.html#cb34-2" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="datasets--simple-plots.html#cb34-3" tabindex="-1"></a><span class="fu">mdaplot</span>(<span class="fu">mda.subset</span>(d, <span class="dv">1</span>), <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>)</span>
+<span id="cb34-4"><a href="datasets--simple-plots.html#cb34-4" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;e&quot;</span>, <span class="at">show.axes =</span> <span class="cn">FALSE</span>, <span class="at">pch =</span> <span class="cn">NA</span>)</span>
+<span id="cb34-5"><a href="datasets--simple-plots.html#cb34-5" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="datasets--simple-plots.html#cb34-6" tabindex="-1"></a><span class="fu">mdaplot</span>(<span class="fu">mda.subset</span>(d, <span class="dv">1</span>), <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span>
+<span id="cb34-7"><a href="datasets--simple-plots.html#cb34-7" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;e&quot;</span>, <span class="at">show.axes =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="864" /></p>
 <p>In the next section we will discuss plots for several groups of objects (rows).</p>
 </div>
@@ -660,7 +664,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf"],
+"download": null,
 "search": {
 "engine": "fuse",
 "options": null
