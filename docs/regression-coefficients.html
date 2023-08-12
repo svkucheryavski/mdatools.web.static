@@ -315,10 +315,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="_main_files/figure-html/unnamed-chunk-115-1.png" width="864" /></p>
 <p>The model keeps regression coefficients, calculated for centered and standardized data, without intercept, etc. Here are the values for three PLS components.</p>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="regression-coefficients.html#cb177-1" tabindex="-1"></a><span class="fu">show</span>(m<span class="sc">$</span>coeffs<span class="sc">$</span>values[, <span class="dv">3</span>, <span class="dv">1</span>])</span></code></pre></div>
-<pre><code>##       Height       Weight     Hairleng          Age       Income         Beer         Wine          Sex         Swim       Region 
-##  0.210411676  0.197646483 -0.138824482  0.026613035 -0.000590693  0.148917913  0.138138095 -0.138824482  0.223962000  0.010392542 
-##           IQ 
-## -0.088658626</code></pre>
+<pre><code>##       Height       Weight     Hairleng          Age       Income         Beer         Wine          Sex         Swim       Region           IQ 
+##  0.210411676  0.197646483 -0.138824482  0.026613035 -0.000590693  0.148917913  0.138138095 -0.138824482  0.223962000  0.010392542 -0.088658626</code></pre>
 <p>You can see a summary for the regression coefficients object by calling function <code>summary()</code> for the object <code>m$coeffs</code> like it is show below. By default it shows only estimated regression coefficients for the selected y-variable and number of components.</p>
 <p>However, if you use cross-validation, <a href="https://en.wikipedia.org/wiki/Jackknife_resampling">Jack-Knifing</a> method will be used to compute some statistics, including standard error, p-value (for test if the coefficient is equal to zero in population) and confidence interval. All statistics in this case will be shown automatically with <code>summary()</code> as you can see below.</p>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="regression-coefficients.html#cb179-1" tabindex="-1"></a><span class="fu">summary</span>(m<span class="sc">$</span>coeffs)</span></code></pre></div>

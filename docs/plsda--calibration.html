@@ -309,22 +309,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb221-10"><a href="plsda--calibration.html#cb221-10" tabindex="-1"></a>cv.all <span class="ot">=</span> iris[val.ind, <span class="dv">5</span>]</span></code></pre></div>
 <p>In this case, the fifth column of dataset <em>Iris</em> is already factor, otherwise we have to make it as a factor explicitely. Lets check if it is indeed correct.</p>
 <div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="plsda--calibration.html#cb222-1" tabindex="-1"></a><span class="fu">show</span>(cc.all)</span></code></pre></div>
-<pre><code>##  [1] setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa    
-## [12] setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa    
-## [23] setosa     setosa     setosa     versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor
-## [34] versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor
-## [45] versicolor versicolor versicolor versicolor versicolor versicolor virginica  virginica  virginica  virginica  virginica 
-## [56] virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica 
-## [67] virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica 
+<pre><code>##  [1] setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa    
+## [16] setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     setosa     versicolor versicolor versicolor versicolor versicolor
+## [31] versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor versicolor
+## [46] versicolor versicolor versicolor versicolor versicolor virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica 
+## [61] virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica  virginica 
 ## Levels: setosa versicolor virginica</code></pre>
 <p>However, for the model with just one class, <em>virginica</em>, we need to prepare the class variable in a different way. In this case it is enought to provide a vector with logical values, where <code>TRUE</code> will correspond to a member and <code>FALSE</code> to a non-member of the class. Here is an example how to do it (we will make two — one for calibration and one for validation subsets).</p>
 <div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="plsda--calibration.html#cb224-1" tabindex="-1"></a>cc.vir <span class="ot">=</span> cc.all <span class="sc">==</span> <span class="st">&quot;virginica&quot;</span></span>
 <span id="cb224-2"><a href="plsda--calibration.html#cb224-2" tabindex="-1"></a>cv.vir <span class="ot">=</span> cv.all <span class="sc">==</span> <span class="st">&quot;virginica&quot;</span></span>
 <span id="cb224-3"><a href="plsda--calibration.html#cb224-3" tabindex="-1"></a><span class="fu">show</span>(cc.vir)</span></code></pre></div>
-<pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [22] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [43] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [64]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [29] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [57]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
 <p>Now we can calibrate the models:</p>
 <div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="plsda--calibration.html#cb226-1" tabindex="-1"></a>m.all <span class="ot">=</span> <span class="fu">plsda</span>(Xc, cc.all, <span class="dv">3</span>, <span class="at">cv =</span> <span class="dv">1</span>)</span>
 <span id="cb226-2"><a href="plsda--calibration.html#cb226-2" tabindex="-1"></a>m.vir <span class="ot">=</span> <span class="fu">plsda</span>(Xc, cc.vir, <span class="dv">3</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">classname =</span> <span class="st">&quot;virginica&quot;</span>)</span></code></pre></div>

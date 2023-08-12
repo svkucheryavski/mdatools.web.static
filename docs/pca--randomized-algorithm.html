@@ -311,12 +311,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb124-2"><a href="pca--randomized-algorithm.html#cb124-2" tabindex="-1"></a>t1 <span class="ot">=</span> <span class="fu">system.time</span>({m1 <span class="ot">=</span> <span class="fu">pca</span>(D, <span class="at">ncomp =</span> <span class="dv">2</span>)})</span>
 <span id="cb124-3"><a href="pca--randomized-algorithm.html#cb124-3" tabindex="-1"></a><span class="fu">show</span>(t1)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  19.863   0.706  20.624</code></pre>
+##  20.074   0.415  20.524</code></pre>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="pca--randomized-algorithm.html#cb126-1" tabindex="-1"></a><span class="co"># randomized SVD with p = 5 and q = 1</span></span>
 <span id="cb126-2"><a href="pca--randomized-algorithm.html#cb126-2" tabindex="-1"></a>t2 <span class="ot">=</span> <span class="fu">system.time</span>({m2 <span class="ot">=</span> <span class="fu">pca</span>(D, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">rand =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>))})</span>
 <span id="cb126-3"><a href="pca--randomized-algorithm.html#cb126-3" tabindex="-1"></a><span class="fu">show</span>(t2)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   2.926   0.277   3.200</code></pre>
+##   2.885   0.300   3.197</code></pre>
 <div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="pca--randomized-algorithm.html#cb128-1" tabindex="-1"></a><span class="co"># compare variances</span></span>
 <span id="cb128-2"><a href="pca--randomized-algorithm.html#cb128-2" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code></pre></div>
 <pre><code>## 
@@ -373,12 +373,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb136-4"><a href="pca--randomized-algorithm.html#cb136-4" tabindex="-1"></a>t1 <span class="ot">=</span> <span class="fu">system.time</span>({m1 <span class="ot">=</span> <span class="fu">pca.run</span>(D, <span class="at">method =</span> <span class="st">&quot;svd&quot;</span>, <span class="at">ncomp =</span> <span class="dv">2</span>)})</span>
 <span id="cb136-5"><a href="pca--randomized-algorithm.html#cb136-5" tabindex="-1"></a><span class="fu">show</span>(t1)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##  18.608   0.152  18.750</code></pre>
+##  18.690   0.117  18.808</code></pre>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="pca--randomized-algorithm.html#cb138-1" tabindex="-1"></a><span class="co"># randomized SVD with p = 5 and q = 1</span></span>
 <span id="cb138-2"><a href="pca--randomized-algorithm.html#cb138-2" tabindex="-1"></a>t2 <span class="ot">=</span> <span class="fu">system.time</span>({m2 <span class="ot">=</span> <span class="fu">pca.run</span>(D, <span class="at">method =</span> <span class="st">&quot;svd&quot;</span>, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">rand =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>))})</span>
 <span id="cb138-3"><a href="pca--randomized-algorithm.html#cb138-3" tabindex="-1"></a><span class="fu">show</span>(t2)</span></code></pre></div>
 <pre><code>##    user  system elapsed 
-##    1.65    0.03    1.68</code></pre>
+##   1.657   0.025   1.683</code></pre>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="pca--randomized-algorithm.html#cb140-1" tabindex="-1"></a><span class="co"># compare loadings</span></span>
 <span id="cb140-2"><a href="pca--randomized-algorithm.html#cb140-2" tabindex="-1"></a><span class="fu">show</span>(m1<span class="sc">$</span>loadings[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
 <pre><code>##                [,1]          [,2]
