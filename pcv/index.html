@@ -3,36 +3,244 @@
 <head>
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width,initial-scale=1'>
-	<title>Procrustes cross-validation</title>
-
-	<script defer type="module" src='./pcv.js'></script>
+	<title>mdatools | procrustes cross-validation</title>
 
    <style>
+      @font-face {
+         font-family: 'Open Sans';
+         src: url('/fonts/OpenSans-Regular.ttf') format('truetype');
+         font-weight: normal;
+         font-style: normal;
+         font-display: fallback;
+      }
+
+      @font-face {
+         font-family: 'Open Sans';
+         src: url('/fonts/OpenSans-Italic.ttf') format('truetype');
+         font-weight: normal;
+         font-style: italic;
+         font-display: fallback;
+      }
+
+      @font-face {
+         font-family: 'Open Sans';
+         src: url('/fonts/OpenSans-Bold.ttf') format('truetype');
+         font-weight: bold;
+         font-style: normal;
+         font-display: fallback;
+      }
+
       html, body {
          height: 100%;
          width: 100%;
          padding: 0;
          margin: 0;
+         font-family: 'Open Sans', Helvetica, Arial, sans-serif;
          font-size: 16px;
-         font-family: Helvetica, Arial, sans-serif;
-         background-color: #80888f;
+         background-color: #fffffd;
       }
 
-      @media (max-width: 1180px) {
+
+      @media (min-width: 1000px) {
          html, body {
-            font-size: 14px;
+            font-size: 18px;
          }
       }
 
-      @media (max-width: 1024px) {
+      a {
+         color: #4080a0;
+      }
+
+      a:hover {
+         color: #40a0f0;
+      }
+
+      .content {
+         margin: 0 auto;
+      }
+
+      .header, .info, .app-selectors-list {
+         max-width: 960px;
+         margin: 0 auto;
+      }
+
+      .info {
+         color: #606060;
+         padding: 0.5em;
+         line-height: 1.5em;
+      }
+
+      .header {
+         display: grid;
+         grid-template-columns: 33% 67%;
+         grid-template-rows: 50% 50%;
+         grid-template-areas:
+            "logo title"
+            "logo subtitle";
+         padding: 1em 0;
+      }
+
+      .header__logo {
+         grid-area: logo;
+         justify-self: right;
+      }
+
+      .header__title {
+         grid-area: title;
+         color: #606060;
+         align-self: end;
+         margin: 0;
+         padding: 0;
+         font-size: 1.75rem;
+      }
+
+      .header__subtitle {
+         grid-area: subtitle;
+         color: #8e9092;
+         align-self: start;
+         margin: 0;
+         padding: 0;
+      }
+
+      .app-selectors-section {
+         background-color: #f0f8ff;
+         border-top: solid 1px #e8f0f4;
+         border-bottom: solid 1px #e8f0f4;
+         margin: 1em 0;
+         display: flex;
+         justify-content: center;
+      }
+
+      .app-selectors-list {
+         list-style-type: none;
+         margin: 0;
+         padding: 0;
+         justify-self: center;
+         display: flex;
+         justify-content: center;
+         flex-wrap: wrap;
+      }
+
+      .app-selectors-list__item {
+         padding: 1em;
+         margin: 1em;
+      }
+
+      .app-selector {
+         display: block;
+         font-size: 1.3rem;
+         font-weight: bold;
+         border-radius: 0.25em;
+         text-decoration: none;
+         text-align: left;
+
+         min-width: 100px;
+         flex: 1 1 40%;
+
+         padding: 0.5em 1em 0.5em 35px;
+
+         color: #607080;
+         box-shadow: 0 4px 8px 0 rgba(80, 120, 130, 0.2), 0 -4px 8px 0 rgba(80, 120, 130, 0.19);
+         background-color: #fdfeff;
+
+         background-repeat: no-repeat;
+         background-position: 10px 50%;
+         background-size: auto 20px;
+         background-image: url('data:image/svg+xml;utf8,<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="%23a0c0f0" d="M459.654,233.373l-90.531,90.5c-49.969,50-131.031,50-181,0c-7.875-7.844-14.031-16.688-19.438-25.813	l42.063-42.063c2-2.016,4.469-3.172,6.828-4.531c2.906,9.938,7.984,19.344,15.797,27.156c24.953,24.969,65.563,24.938,90.5,0	l90.5-90.5c24.969-24.969,24.969-65.563,0-90.516c-24.938-24.953-65.531-24.953-90.5,0l-32.188,32.219	c-26.109-10.172-54.25-12.906-81.641-8.891l68.578-68.578c50-49.984,131.031-49.984,181.031,0	C509.623,102.342,509.623,183.389,459.654,233.373z M220.326,382.186l-32.203,32.219c-24.953,24.938-65.563,24.938-90.516,0	c-24.953-24.969-24.953-65.563,0-90.531l90.516-90.5c24.969-24.969,65.547-24.969,90.5,0c7.797,7.797,12.875,17.203,15.813,27.125	c2.375-1.375,4.813-2.5,6.813-4.5l42.063-42.047c-5.375-9.156-11.563-17.969-19.438-25.828c-49.969-49.984-131.031-49.984-181.016,0	l-90.5,90.5c-49.984,50-49.984,131.031,0,181.031c49.984,49.969,131.031,49.969,181.016,0l68.594-68.594	C274.561,395.092,246.42,392.342,220.326,382.186z"/></svg>');
+      }
+
+      .app-info {
+         display: block;
+         color: #808090;
+         font-size: 0.9rem;
+         padding: 1em 2em 1em 35px;
+         line-height: 1.5em;
+      }
+
+      .app-selector:hover {
+         color: #406080;
+
+         box-shadow: 0 4px 8px 0 rgba(80, 120, 200, 0.2), 0 -4px 8px 0 rgba(80, 120, 200, 0.19);
+         background-color: #fff;
+         background-image: url('data:image/svg+xml;utf8,<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="%2390b0ff" d="M459.654,233.373l-90.531,90.5c-49.969,50-131.031,50-181,0c-7.875-7.844-14.031-16.688-19.438-25.813	l42.063-42.063c2-2.016,4.469-3.172,6.828-4.531c2.906,9.938,7.984,19.344,15.797,27.156c24.953,24.969,65.563,24.938,90.5,0	l90.5-90.5c24.969-24.969,24.969-65.563,0-90.516c-24.938-24.953-65.531-24.953-90.5,0l-32.188,32.219	c-26.109-10.172-54.25-12.906-81.641-8.891l68.578-68.578c50-49.984,131.031-49.984,181.031,0	C509.623,102.342,509.623,183.389,459.654,233.373z M220.326,382.186l-32.203,32.219c-24.953,24.938-65.563,24.938-90.516,0	c-24.953-24.969-24.953-65.563,0-90.531l90.516-90.5c24.969-24.969,65.547-24.969,90.5,0c7.797,7.797,12.875,17.203,15.813,27.125	c2.375-1.375,4.813-2.5,6.813-4.5l42.063-42.047c-5.375-9.156-11.563-17.969-19.438-25.828c-49.969-49.984-131.031-49.984-181.016,0	l-90.5,90.5c-49.984,50-49.984,131.031,0,181.031c49.984,49.969,131.031,49.969,181.016,0l68.594-68.594	C274.561,395.092,246.42,392.342,220.326,382.186z"/></svg>');
+
+      }
+
+      .app-selector:hover ~ .app-info {
+         color: #607080;
+      }
+
+      @media (min-width: 700px) {
          html, body {
-            font-size: 12px;
+            font-size: 17px;
          }
+
+         .app-selectors-list {
+            flex-wrap: nowrap;
+         }
+
+         .app-info {
+            padding-left: 40px;
+         }
+
+         .app-selector {
+            font-size: 1.4em;
+            padding-left: 40px;
+            background-position: 10px 50%;
+            background-size: auto 20px;
+         }
+      }
+
+      @media (min-width: 1000px) {
+         html, body {
+            font-size: 18px;
+         }
+
+         .app-info {
+            padding-left: 65px;
+         }
+
+         .app-selector {
+            font-size: 1.6em;
+            padding-left: 65px;
+            background-position: 20px 50%;
+            background-size: auto 30px;
+         }
+
       }
 
    </style>
 </head>
 
 <body>
+   <article class="content">
+   <header class="header">
+      <img class="header__logo" alt="PCV logo" src="logo.svg">
+      <h1 class="header__title">Procrustes cross-validation</h1>
+      <p class="header__subtitle">Create a validation set in your browser</p>
+   </header>
+   <main>
+      <p class="info">
+         Procrustes cross-validation (PCV) is a novel approach for validation of regression or classification models. It generates a new dataset — PV-set, which can be used for validation of PCA/SIMCA/PCR/PLS and other models in the same way as with an independent validation set.
+      </p>
+      <p class="info">Use one of the two algorithms:</p>
+      <section class="app-selectors-section">
+         <ul class="app-selectors-list">
+            <li class="app-selectors-list__item">
+               <a class="app-selector" href="/pcvpca/">PCVPCA</a>
+               <span class="app-info">Algorithm based on Principal Component Decomposition. Works best for validation or data augmentation of one class classifier or discrimination model (create PV-sets for each class separately).</span>
+            </li>
+            <li class="app-selectors-list__item">
+               <a class="app-selector" href="/pcvpca/">PCVPLS</a>
+               <span class="app-info">Algorithm based on Partial Least Squares. Works best for validation or data augmentation of regression or discrimination model (use dummy response variable).</span>
+            </li>
+         </ul>
+      </section>
+      <p class="info">
+         You can read more about the method in <a href="https://doi.org/10.1016/j.aca.2023.341096">this paper</a> (open access). You can also get PCV code for R, Python, MATLAB, Javascript in <a href="https://github.com/svkucheryavski/pcv">GitHub repository</a> of the project.
+      </p>
+
+   </main>
+   </article>
 </body>
 </html>

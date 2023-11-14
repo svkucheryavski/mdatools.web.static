@@ -7,27 +7,30 @@
    <style>
       @font-face {
          font-family: 'Open Sans';
-         src: url('fonts/OpenSans-Regular.ttf') format('truetype');
+         src: url('/fonts/OpenSans-Regular.ttf') format('truetype');
          font-weight: normal;
          font-style: normal;
+         font-display: fallback;
       }
 
       @font-face {
          font-family: 'Open Sans';
-         src: url('fonts/OpenSans-Italic.ttf') format('truetype');
+         src: url('/fonts/OpenSans-Italic.ttf') format('truetype');
          font-weight: normal;
          font-style: italic;
+         font-display: fallback;
       }
 
       @font-face {
          font-family: 'Open Sans';
-         src: url('fonts/OpenSans-Bold.ttf') format('truetype');
+         src: url('/fonts/OpenSans-Bold.ttf') format('truetype');
          font-weight: bold;
          font-style: normal;
+         font-display: fallback;
       }
 
    </style>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -84,14 +87,17 @@
 
    <section class="page-section page-section_main page-section_small page-section_apps">
       <header class="page-section__header">
-         <h2>Interactive web-applications</h2>
+         <h2>Procrustes cross-validation</h2>
       </header>
       <p class="page-section__info">
-         Small interactive web-applications that let you try different chemometric methods directly in a browser.
+         Procrustes cross-validation (PCV) is a novel approach for validation of regression or classification models. Here you can try PCA or PLS implementation of the approach directly in your browser. You can read more about the method in <a href="https://doi.org/10.1016/j.aca.2023.341096">this paper</a> (open access). You can also get PCV code for R, Python, MATLAB, Javascript in <a href="https://github.com/svkucheryavski/pcv">GitHub repository</a> of the project.
       </p>
       <ul class="page-section__list">
          <li class="list-item list-item_app">
-            <a href="https://mda.tools/pcv/">Procrustes cross-validation</a>
+            <a href="/pcvpca/">PCV for PCA/SIMCA</a>
+         </li>
+         <li class="list-item list-item_app">
+            <a href="/pcvpls/">PCV for PLS/PLS-DA</a>
          </li>
       </ul>
    </section>
@@ -102,8 +108,8 @@
       </header>
       <ul class="cards">
          <li class="card card_github">
-            <h3><a href="https://github.com/svkucheryavski/pcv">Procrustes cross-validation</a></h3>
-            <p>R and MATLAB code implementing Procrustes cross-validation proposed in <a href="https://doi.org/10.1016/j.aca.2023.341096">this paper</a>.</p>
+            <h3><a href="https://github.com/svkucheryavski/cdmc">Calibration design with multiple components</a></h3>
+            <p>R code implementing algorithm for generating design matrices for mixtures.</p>
          </li>
          <li class="card card_github">
             <h3><a href="https://github.com/svkucheryavski/newpcatools">New PCA tools</a></h3>
