@@ -4,6 +4,20 @@
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width,initial-scale=1'>
 	<title>Data Driven SIMCA (DD-SIMCA)</title>
+   <link rel="shortcut icon" type="image/svg" href="/ddsimca/logo.svg"/>
+
+  <!-- Register the service worker first -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/ddsimca/service-worker.js')
+        .then((registration) => {
+          console.log('Service Worker registered with scope:', registration.scope);
+        })
+        .catch((error) => {
+          console.error('Service Worker registration failed:', error);
+        });
+    }
+  </script>
 
 	<script defer type="module" src='./ddsimca.js'></script>
 
