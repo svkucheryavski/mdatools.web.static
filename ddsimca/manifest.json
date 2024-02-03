@@ -5,7 +5,7 @@
   "start_url": "/ddsimca/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "theme_color": "#909090",
   "icons": [
     {
       "src": "/ddsimca/icon.png",
