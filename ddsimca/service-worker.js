@@ -1,6 +1,6 @@
 // service-worker.js
 const CACHE_NAME = 'ddsimca-cache';
-const CACHE_VERSION = '0.9.1f';
+const CACHE_VERSION = '0.9.1g';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -37,12 +37,12 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName.startsWith(CACHE_NAME) && cacheName !== `${CACHE_NAME}-${CACHE_VERSION}`) {
-            console.log("deleting cache")
-            return caches.delete(cacheName);
-          }
-          return null;
+         cacheNames.map((cacheName) => {
+            if (cacheName.startsWith(CACHE_NAME) && cacheName !== `${CACHE_NAME}-${CACHE_VERSION}`) {
+               console.log("deleting cache")
+               return caches.delete(cacheName);
+            }
+            return null;
         })
       );
     })
