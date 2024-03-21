@@ -8,20 +8,16 @@
 
   <!-- Register the service worker first -->
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/ddsimca/service-worker.js')
-        .then((registration) => {
-          console.log('Service Worker registered with scope:', registration.scope);
-          import('/ddsimca/ddsimca.js');
-        })
-        .catch((error) => {
-          console.error('Service Worker registration failed:', error);
-        });
-    }
-  </script>
-<!--
-	<script defer type="module" src='/ddsimca/ddsimca.js'></script>
--->
+      if ('serviceWorker' in navigator) {
+         navigator.serviceWorker.register('/ddsimca/service-worker.js')
+         .then((registration) => {
+            console.log('Service Worker registered with scope:', registration.scope);
+         })
+         .catch((error) => {
+            console.error('Service Worker registration failed:', error);
+         });
+      }
+   </script>
    <style>
       html, body {
          height: 100%;
@@ -50,5 +46,6 @@
 </head>
 
 <body>
+	<script defer type="module" src='/ddsimca/ddsimca.js'></script>
 </body>
 </html>
