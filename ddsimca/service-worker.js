@@ -1,6 +1,6 @@
 // service-worker.js
 const CACHE_NAME = 'ddsimca-cache';
-const CACHE_VERSION = '0.9.1i';
+const CACHE_VERSION = '0.9.1j';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -13,6 +13,7 @@ self.addEventListener('install', (event) => {
         '/ddsimca/ddsimca.wasm',
         '/ddsimca/logo.svg',
         '/ddsimca/icon.png',
+        '/ddsimca/Oregano.zip',
       ]);
     })
     .then(() => console.log('Resources cached successfully.'))
@@ -21,12 +22,12 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-   console.log("ddsimca: try to fetch:")
-   console.log(event.request);
+   // console.log("ddsimca: try to fetch:")
+   // console.log(event.request);
    event.respondWith(
       caches.match(event.request, {ignoreSearch: true, ignoreMethod: true, ignoreVary: true}).then((response) => {
-         console.log("cache response: ");
-         console.log(response);
+         // console.log("cache response: ");
+         // console.log(response);
          return response || fetch(event.request);
       })
    );
