@@ -1,6 +1,6 @@
 // service-worker.js
 const CACHE_NAME = 'ddsimca-cache';
-const CACHE_VERSION = '0.9.1b';
+const CACHE_VERSION = '0.9.1d';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
