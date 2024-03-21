@@ -1,6 +1,6 @@
 // service-worker.js
 const CACHE_NAME = 'ddsimca-cache';
-const CACHE_VERSION = '0.9.1h';
+const CACHE_VERSION = '0.9.1i';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -24,7 +24,7 @@ self.addEventListener('fetch', (event) => {
    console.log("ddsimca: try to fetch:")
    console.log(event.request);
    event.respondWith(
-      caches.match(event.request).then((response) => {
+      caches.match(event.request, {ignoreSearch: true, ignoreMethod: true, ignoreVary: true}).then((response) => {
          console.log("cache response: ");
          console.log(response);
          return response || fetch(event.request);
