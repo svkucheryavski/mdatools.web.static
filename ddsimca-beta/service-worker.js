@@ -1,7 +1,6 @@
 // service-worker.js
 const CACHE_NAME = 'ddsimca-beta-cache';
-const CACHE_VERSION = '2.0.0k';
-console.log(CACHE_VERSION)
+const CACHE_VERSION = '2.0.0l';
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
