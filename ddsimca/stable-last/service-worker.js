@@ -1,17 +1,18 @@
 // service-worker.js
-const CACHE_NAME = 'ddsimca-love-cache';
-const CACHE_VERSION = '0.0.4b';
+const CACHE_NAME = 'ddsimca-cache';
+const CACHE_VERSION = '2.0.3b';
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
       return cache.addAll([
-        '/ddsimca-love/',
-        '/ddsimca-love/manifest.json',
-        '/ddsimca-love/index.html',
-        '/ddsimca-love/ddsimca-love.js',
-        '/ddsimca-love/ddsimca-love.wasm',
-        '/ddsimca-love/logo.svg',
-        '/ddsimca-love/icon.png',
+        '/ddsimca/',
+        '/ddsimca/manifest.json',
+        '/ddsimca/index.html',
+        '/ddsimca/ddsimca.js',
+        '/ddsimca/ddsimca.wasm',
+        '/ddsimca/logo.svg',
+        '/ddsimca/icon.png',
+        '/ddsimca/Oregano.zip',
       ]);
     })
     .then(() => console.log('Resources cached successfully.'))

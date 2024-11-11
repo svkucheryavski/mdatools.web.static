@@ -1,17 +1,18 @@
 // service-worker.js
-const CACHE_NAME = 'ddsimca-love-cache';
-const CACHE_VERSION = '0.0.4b';
+const CACHE_NAME = 'pca-cache';
+const CACHE_VERSION = '1.0.1a';
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
       return cache.addAll([
-        '/ddsimca-love/',
-        '/ddsimca-love/manifest.json',
-        '/ddsimca-love/index.html',
-        '/ddsimca-love/ddsimca-love.js',
-        '/ddsimca-love/ddsimca-love.wasm',
-        '/ddsimca-love/logo.svg',
-        '/ddsimca-love/icon.png',
+        '/pca/',
+        '/pca/manifest.json',
+        '/pca/index.html',
+        '/pca/pca.js',
+        '/pca/pca.wasm',
+        '/pca/logo.svg',
+        '/pca/icon.png',
+        '/pca/Wines.zip'
       ]);
     })
     .then(() => console.log('Resources cached successfully.'))
@@ -20,7 +21,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-   // console.log("ddsimca: try to fetch:")
+   // console.log("pca: try to fetch:")
    // console.log(event.request);
    event.respondWith(
       caches.match(event.request, {ignoreSearch: true, ignoreMethod: true, ignoreVary: true}).then((response) => {

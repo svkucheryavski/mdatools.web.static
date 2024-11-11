@@ -3,13 +3,13 @@
 <head>
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width,initial-scale=1'>
-	<title>Principal Component Analysis (PCA), beta version</title>
-   <link rel="manifest" href="/pca-beta/manifest.json" />
+	<title>Principal Component Analysis (PCA)</title>
+   <link rel="manifest" href="/pca/manifest.json" />
 
   <!-- Register the service worker first -->
   <script>
       if ('serviceWorker' in navigator) {
-         navigator.serviceWorker.register('/pca-beta/service-worker.js')
+         navigator.serviceWorker.register('/pca/service-worker.js')
          .then((registration) => {
             console.log('Service Worker registered with scope:', registration.scope);
          })
@@ -42,10 +42,10 @@
       }
 
    </style>
-   <link rel="shortcut icon" type="image/svg" href="/pca-beta/logo.svg"/>
+   <link rel="shortcut icon" type="image/svg" href="/pca/logo.svg"/>
 </head>
 
 <body>
-	<script defer type="module" src="/pca-beta/pca.js"></script>
+	<script defer type="module" src="/pca/pca.js"></script>
 </body>
 </html>

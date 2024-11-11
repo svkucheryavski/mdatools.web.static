@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1'>
+	<title>Data Driven SIMCA (DD-SIMCA)</title>
+   <link rel="manifest" href="/ddsimca/manifest.json" />
+
+  <!-- Register the service worker first -->
+  <script>
+      if ('serviceWorker' in navigator) {
+         navigator.serviceWorker.register('/ddsimca/service-worker.js')
+         .then((registration) => {
+            console.log('Service Worker registered with scope:', registration.scope);
+         })
+         .catch((error) => {
+            console.error('Service Worker registration failed:', error);
+         });
+      }
+   </script>
+   <style>
+      html, body {
+         height: 100%;
+         width: 100%;
+         padding: 0;
+         margin: 0;
+         font-family: Helvetica, Arial, sans-serif;
+         font-size: 14px;
+         background-color: #80888f;
+      }
+
+      @media (min-width: 1200px) {
+         html, body {
+            font-size: 15px;
+         }
+      }
+
+      @media (min-width: 1300px) {
+         html, body {
+            font-size: 16px;
+         }
+      }
+
+   </style>
+   <link rel="shortcut icon" type="image/svg" href="/ddsimca/logo.svg"/>
+</head>
+
+<body>
+	<script defer type="module" src="/ddsimca/ddsimca.js"></script>
+</body>
+</html>

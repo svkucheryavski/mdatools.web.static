@@ -1,14 +1,14 @@
 {
-  "name": "Principal Component Analysis, beta version",
+  "name": "Principal Component Analysis",
   "short_name": "PCA",
   "description": "Create and apply PCA models.",
-  "start_url": "/pca-beta/index.html",
+  "start_url": "/pca/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#909090",
   "icons": [
     {
-      "src": "/pca-beta/icon.png",
+      "src": "/pca/icon.png",
       "sizes": "192x192",
       "type": "image/png"
     }

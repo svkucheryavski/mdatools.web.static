@@ -1,0 +1,16 @@
+{
+  "name": "Data Driven SIMCA",
+  "short_name": "DD-SIMCA",
+  "description": "Create, test and apply one class classification models using Data Driven SIMCA method.",
+  "start_url": "/ddsimca/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#909090",
+  "icons": [
+    {
+      "src": "/ddsimca/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
