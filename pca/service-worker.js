@@ -1,6 +1,6 @@
 // service-worker.js
 const CACHE_NAME = 'pca-cache';
-const CACHE_VERSION = '1.0.1a';
+const CACHE_VERSION = '2.0.7c';
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
@@ -12,7 +12,6 @@ self.addEventListener('install', (event) => {
         '/pca/pca.wasm',
         '/pca/logo.svg',
         '/pca/icon.png',
-        '/pca/Wines.zip'
       ]);
     })
     .then(() => console.log('Resources cached successfully.'))
