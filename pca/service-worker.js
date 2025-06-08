@@ -1,9 +1,10 @@
 // service-worker.js
 const CACHE_NAME = 'pca-cache';
-const CACHE_VERSION = '2.0.10a';
+const CACHE_VERSION = '2.0.11a';
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
+   self.skipWaiting();
+   event.waitUntil(
+      caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
       return cache.addAll([
         '/pca/',
         '/pca/manifest.json',
@@ -38,12 +39,12 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
          cacheNames.map((cacheName) => {
             if (cacheName.startsWith(CACHE_NAME) && cacheName !== `${CACHE_NAME}-${CACHE_VERSION}`) {
-               console.log("deleting cache")
+               // console.log("deleting cache")
                return caches.delete(cacheName);
             }
             return null;
         })
       );
-    })
+    }).then(() => self.clients.claim()) // this is needed to start controling clients immediately
   );
 });

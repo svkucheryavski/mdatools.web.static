@@ -1,8 +1,9 @@
 // service-worker.js
 const CACHE_NAME = 'ddsimca-cache';
-const CACHE_VERSION = '2.1.9b';
+const CACHE_VERSION = '2.1.10a';
 self.addEventListener('install', (event) => {
-  event.waitUntil(
+   self.skipWaiting();
+   event.waitUntil(
     caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
       return cache.addAll([
         '/ddsimca/',
@@ -44,6 +45,6 @@ self.addEventListener('activate', (event) => {
             return null;
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });
