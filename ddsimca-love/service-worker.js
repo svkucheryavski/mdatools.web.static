@@ -1,8 +1,9 @@
 // service-worker.js
-const CACHE_NAME = 'ddsimca-love-cache';
-const CACHE_VERSION = '0.1.0b';
+const CACHE_NAME = 'ddsimca-cache';
+const CACHE_VERSION = '1.1.0a';
 self.addEventListener('install', (event) => {
-  event.waitUntil(
+   self.skipWaiting();
+   event.waitUntil(
     caches.open(`${CACHE_NAME}-${CACHE_VERSION}`).then((cache) => {
       return cache.addAll([
         '/ddsimca-love/',
@@ -38,12 +39,12 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
          cacheNames.map((cacheName) => {
             if (cacheName.startsWith(CACHE_NAME) && cacheName !== `${CACHE_NAME}-${CACHE_VERSION}`) {
-               console.log("deleting cache")
+               //console.log("deleting cache")
                return caches.delete(cacheName);
             }
             return null;
         })
       );
-    })
+    }).then(() => self.clients.claim()) // this is needed to start controling clients immediately
   );
 });
