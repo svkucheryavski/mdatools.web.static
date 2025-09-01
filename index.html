@@ -28,7 +28,6 @@
          font-style: normal;
          font-display: fallback;
       }
-
    </style>
 
   <link rel="stylesheet" href="/css/style.css">
@@ -40,6 +39,53 @@
       <p class="page-header__subtitle">make chemometrics easy</p>
    </header>
 
+   <section class="page-section page-section_apps">
+      <header class="page-section__header">
+         <h2>Web-applications</h2>
+      </header>
+      <p class="page-section__info">
+         Try most common chemometric methods directly in your browser. All calculations will run on your local computer without sending data or any other information anywhere. Check video tutorials at <a href="https://www.youtube.com/@mdatools">youtube.com/@mdatools</a>.
+      </p>
+      <ul class="page-section__list">
+
+         <li class="list-item list-item_app">
+            <h3>Principal Component Analysis</h3>
+            <span class="app-release">v. 2.1.4 from 1/09/2025</span><br>
+            <a href="/pca/" class="app-run">Run</a>
+            <a href="https://www.youtube.com/playlist?list=PLep7KM9cEyFnCpcLEwI63Zj1YJZrVL0WH" class="app-video">Video-tutorial</a>
+         </li>
+
+         <li class="list-item list-item_app">
+            <h3>Preprocessing</h3>
+            <span class="app-release">v. 1.1.6 from 14/08/2025</span><br>
+            <a href="/prep/" class="app-run">Run</a>
+            <a href="" class="app-video">Video-tutorial</a>
+         </li>
+
+         <li class="list-item list-item_app">
+            <h3>PLS regression</h3>
+            <span class="app-release">v. 1.2.6 from 25/08/2025</span><br>
+            <a href="/pls/" class="app-run">Run</a>
+            <a href="" class="app-video">Video-tutorial</a>
+         </li>
+
+         <li class="list-item list-item_app">
+            <h3>DD-SIMCA classification</h3>
+            <span class="app-release">v. 2.2.2 from 31/08/2025</span><br>
+            <a href="/ddsimca/" class="app-run">Run</a>
+            <a href="https://www.youtube.com/playlist?list=PLep7KM9cEyFmoOR8sWDt7vJdnOCHvPEo2" class="app-video">Video-tutorial</a>
+         </li>
+
+         <li class="list-item list-item_app">
+            <h3>DDSIMCA-LOVE variable selection</h3>
+            <span class="app-release">v. 1.2.1 from 11/06/2025</span><br>
+            <a href="/ddsimca-love/" class="app-run">Run</a>
+            <a href="https://www.youtube.com/watch?v=ZqKtHZAEEi4&t=2s" class="app-video">Video-tutorial</a>
+         </li>
+      </ul>
+   </section>
+
+   <hr>
    <section class="page-section page-section_main">
       <header class="page-section__header">
          <h2>mdatools for R</h2>
@@ -63,31 +109,6 @@
       </ul>
    </section>
 
-   <section class="page-section page-section_main page-section_small page-section_apps">
-      <header class="page-section__header">
-         <h2>Web-applications</h2>
-      </header>
-      <p class="page-section__info">
-         Interactive web-applications, where you can use selected chemometric methods directly in browser. The applications run all calculations on your computer and do not send any data or any other information anywhere.
-      </p>
-      <ul class="page-section__list">
-         <li class="list-item list-item_app">
-            <a href="/pca/" style="font-weight:bold;">PCA</a>
-         </li>
-         <li class="list-item list-item_app">
-            <a href="/ddsimca/" style="font-weight:bold;">DD-SIMCA</a>
-         </li>
-         <li class="list-item list-item_app">
-            <a href="/ddsimca-love/" style="font-weight:bold;">DDSIMCA-LOVE</a>
-         </li>
-         <li class="list-item list-item_app">
-            <a href="/pcvpca/">PCV for PCA/SIMCA</a>
-         </li>
-         <li class="list-item list-item_app">
-            <a href="/pcvpls/">PCV for PLS/PLS-DA</a>
-         </li>
-      </ul>
-   </section>
 
    <section class="page-section page-section_main page-section_small">
       <header class="page-section__header">
@@ -128,6 +149,10 @@
             <p>novel method for generating validation sets and augmentation of colinear datasets.</p>
          </li>
          <li class="card card_github">
+            <h3><a href="https://github.com/svkucheryavski/vaesimca">VAESIMCA</a></h3>
+            <p>Python package implementing SIMCA approach for one-class classifier with Variational Autoencoders.</p>
+         </li>
+         <li class="card card_github">
             <h3><a href="https://github.com/svkucheryavski/cdmc">Calibration design with multiple components</a></h3>
             <p>R code implementing algorithm for generating design matrices for mixtures.</p>
          </li>
@@ -150,6 +175,35 @@
       </p>
    </footer>
 
+<script>
+  const items = document.querySelectorAll("li.list-item_app");
 
+  const now = new Date();
+
+  items.forEach(item => {
+    const releaseElem = item.querySelector(".app-release");
+    if (!releaseElem) return;
+
+    // Example: "v. 1.2.6 from 25/08/2025"
+    const text = releaseElem.textContent.trim();
+    const match = text.match(/(\d{2})\/(\d{2})\/(\d{4})$/);
+
+    if (match) {
+      const day = parseInt(match[1], 10);
+      const month = parseInt(match[2], 10) - 1; // JS months: 0–11
+      const year = parseInt(match[3], 10);
+
+      const releaseDate = new Date(year, month, day);
+
+      // Difference in days
+      const diffTime = now - releaseDate;
+      const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+      if (diffDays >= 0 && diffDays <= 14) {
+        item.classList.add("list-item_new");
+      }
+    }
+  });
+</script>
   </body>
 </html>

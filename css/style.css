@@ -1,4 +1,5 @@
 /* generic styles */
+
 * {
    box-sizing: border-box;
    padding: 0;
@@ -34,6 +35,14 @@ kbd {
    margin: 0 0.1em;
    border-radius: 3px;
    color: #606060;
+}
+
+hr{
+   height: 1px;
+   color: #d8e2ff;
+   background: #d8e2ff;
+   font-size: 0;
+   border: 0;
 }
 
 /* top page elements */
@@ -345,6 +354,93 @@ kbd {
 
 .page-footer > p > span > a{
    font-weight: normal;
+}
+
+
+/*******************************/
+/* Apps                        */
+/*******************************/
+
+.page-section_apps {
+   display: block;
+   max-width: 1000px;
+   margin: 0 auto;
+   padding: 2em 0;
+}
+
+.page-section_apps > .page-section__list{
+   display: flex;
+   flex-wrap: wrap;
+   box-sizing: border-box;
+   justify-content: center;
+   align-items: center;
+}
+
+.page-section_apps .list-item_app{
+   flex: 1 1 30%;
+   box-sizing: border-box;
+   background: #f4f7f8;
+   padding: 0.75em 1em;
+   margin: 1em;
+   border-radius: 0.5em;
+   border: 1px solid transparent;
+   display: block;
+}
+
+.page-section_apps .list-item_app:hover{
+   background: #fdfaf0;
+}
+
+
+
+.page-section_apps  .list-item_app h3{
+   font-size: 0.85rem;
+   padding: 0.25em 0;
+}
+
+.page-section_apps  .list-item_app a{
+   display: inline-block;
+   box-sizing: border-box;
+   font-size: 0.7rem;
+   padding: 0.2em 0.5em;
+   margin: 1em 0 0.5em 0;
+   border-radius: 0.25em;
+   text-decoration: none;
+}
+
+.page-section_apps  .list-item_app a,
+.page-section_apps  .list-item_app a:focus,
+.page-section_apps  .list-item_app a:visited{
+   background-color: #606570a0;
+   color: #fafafa;
+   border: solid 1px transparent;
+   text-decoration: none;
+}
+
+
+.page-section_apps .list-item_app a:hover{
+   color: #fefefe;
+   background-color: #6eb8ff;
+}
+
+.page-section_apps  .list-item_app a::before{
+   padding-right: 0.25em;
+   text-decoration: none;
+}
+
+.page-section_apps  .list-item_app.list-item_new {
+   background: #f8f7f4;
+}
+
+.page-section_apps  .list-item_app.list-item_new h3::after{
+   content: ' ✨';
+}
+
+.page-section_apps  .list-item_app a.app-run::before{
+   content: '⏵ ';
+}
+.page-section_apps  .list-item_app a.app-video::before{
+   content: '';
 }
 
 @media(max-width: 1020px) {

@@ -1,0 +1,16 @@
+{
+  "name": "Partial Least Squares regression",
+  "short_name": "PLS",
+  "description": "Create and apply PLS models.",
+  "start_url": "/pls/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#909090",
+  "icons": [
+    {
+      "src": "/pls/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

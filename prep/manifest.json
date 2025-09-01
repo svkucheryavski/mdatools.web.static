@@ -1,0 +1,16 @@
+{
+  "name": "Preprocessing",
+  "short_name": "Prep",
+  "description": "Data preprocessing.",
+  "start_url": "/prep/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#909090",
+  "icons": [
+    {
+      "src": "/prep/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
