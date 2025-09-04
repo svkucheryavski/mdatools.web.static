@@ -1,6 +1,6 @@
 // service-worker.js
 const CACHE_NAME = 'pls-cache';
-const CACHE_VERSION = '1.2.6a';
+const CACHE_VERSION = '1.2.7a';
 self.addEventListener('install', (event) => {
    self.skipWaiting();
    event.waitUntil(
