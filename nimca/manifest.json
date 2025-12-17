@@ -1,0 +1,16 @@
+{
+  "name": "Naïve DD-SIMCA",
+  "short_name": "NIMCA",
+  "description": "Create, test and apply one class classification models using Naïve DD-SIMCA method.",
+  "start_url": "/nimca/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#909090",
+  "icons": [
+    {
+      "src": "/nimca/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
