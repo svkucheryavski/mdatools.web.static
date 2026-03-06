@@ -5,25 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>What is new | Getting started with mdatools for R</title>
-  <meta name="description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="description" content="This is a user guide for mdatools — an R package for preprocessing, exploring and analysis of multivariate data. The package provides methods common in Chemometrics. The general idea of the package is to collect the popular chemometric methods and give a similar user interface for applying them to different datasets. So if a user knows how to make a model and visualize results for one method, they can easily do this for the other methods as well." />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="What is new | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
+  <meta property="og:description" content="This is a user guide for mdatools — an R package for preprocessing, exploring and analysis of multivariate data. The package provides methods common in Chemometrics. The general idea of the package is to collect the popular chemometric methods and give a similar user interface for applying them to different datasets. So if a user knows how to make a model and visualize results for one method, they can easily do this for the other methods as well." />
   <meta name="github-repo" content="svkucheryavski/mdatools.bookdown" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="What is new | Getting started with mdatools for R" />
   
-  <meta name="twitter:description" content="This is a user guide for mdatools — R package for preprocessing, exploring and analysis of multivariate data. The package provides methods mostly common for Chemometrics. The general idea of the package is to collect most of the common chemometric methods and give a similar user interface for using them. So if a user knows how to make a model and visualize results for one method, he or she can easily do this for the others." />
+  <meta name="twitter:description" content="This is a user guide for mdatools — an R package for preprocessing, exploring and analysis of multivariate data. The package provides methods common in Chemometrics. The general idea of the package is to collect the popular chemometric methods and give a similar user interface for applying them to different datasets. So if a user knows how to make a model and visualize results for one method, they can easily do this for the other methods as well." />
   
 
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2023-07-21" />
+<meta name="date" content="2025-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -55,6 +55,7 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -138,7 +139,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
-<li class="chapter" data-level="" data-path="news.html"><a href="news.html"><i class="fa fa-check"></i>What is new</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html"><i class="fa fa-check"></i>What is new</a>
+<ul>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>5/03/2026</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
 <li class="chapter" data-level="" data-path="overview--what-mdatools-can-do.html"><a href="overview--what-mdatools-can-do.html"><i class="fa fa-check"></i>What mdatools can do?</a></li>
@@ -169,17 +173,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="preprocessing.html"><a href="preprocessing.html"><i class="fa fa-check"></i>Preprocessing</a>
 <ul>
-<li class="chapter" data-level="" data-path="preprocessing--autoscaling.html"><a href="preprocessing--autoscaling.html"><i class="fa fa-check"></i>Autoscaling</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--autoscaling.html"><a href="preprocessing--autoscaling.html"><i class="fa fa-check"></i>Centering and scaling</a>
+<ul>
+<li class="chapter" data-level="" data-path="preprocessing--autoscaling.html"><a href="preprocessing--autoscaling.html#centering"><i class="fa fa-check"></i>Centering</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--autoscaling.html"><a href="preprocessing--autoscaling.html#scaling"><i class="fa fa-check"></i>Scaling</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="preprocessing--baseline.html"><a href="preprocessing--baseline.html"><i class="fa fa-check"></i>Correction of spectral baseline</a>
 <ul>
-<li class="chapter" data-level="" data-path="preprocessing--baseline.html"><a href="preprocessing--baseline.html#baseline-correction-with-asymmetric-least-squares"><i class="fa fa-check"></i>Baseline correction with asymmetric least squares</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--baseline.html"><a href="preprocessing--baseline.html#extended-multiplicative-scatter-correction"><i class="fa fa-check"></i>Extended Multiplicative Scatter Correction</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--baseline.html"><a href="preprocessing--baseline.html#asymmetric-least-squares"><i class="fa fa-check"></i>Asymmetric least squares</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="preprocessing--norm.html"><a href="preprocessing--norm.html"><i class="fa fa-check"></i>Normalization</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--spikes.html"><a href="preprocessing--spikes.html"><i class="fa fa-check"></i>Removing cosmic spikes</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--savgol.html"><a href="preprocessing--savgol.html"><i class="fa fa-check"></i>Smoothing and derivatives</a></li>
-<li class="chapter" data-level="" data-path="preprocessing--eltransform.html"><a href="preprocessing--eltransform.html"><i class="fa fa-check"></i>Element wise transformations</a></li>
 <li class="chapter" data-level="" data-path="preprocessing--varsel.html"><a href="preprocessing--varsel.html"><i class="fa fa-check"></i>Variable selection as preprocessing method</a></li>
 <li class="chapter" data-level="" data-path="preprocessing-combine.html"><a href="preprocessing-combine.html"><i class="fa fa-check"></i>Combining methods together</a></li>
-<li class="chapter" data-level="" data-path="preprocessing--mvreplace.html"><a href="preprocessing--mvreplace.html"><i class="fa fa-check"></i>Replacing missing values</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--interop.html"><a href="preprocessing--interop.html"><i class="fa fa-check"></i>Interoperability with web-applications</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--additional.html"><a href="preprocessing--additional.html"><i class="fa fa-check"></i>Additional methods and features</a>
+<ul>
+<li class="chapter" data-level="" data-path="preprocessing--additional.html"><a href="preprocessing--additional.html#preprocessing--eltransform"><i class="fa fa-check"></i>Element-wise transformations</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--additional.html"><a href="preprocessing--additional.html#kubelka-munk-transformation"><i class="fa fa-check"></i>Kubelka-Munk transformation</a></li>
+<li class="chapter" data-level="" data-path="preprocessing--additional.html"><a href="preprocessing--additional.html#preprocessing--mvreplace"><i class="fa fa-check"></i>Replacing missing values</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="preprocessing--deprecated.html"><a href="preprocessing--deprecated.html"><i class="fa fa-check"></i>Deprecated methods</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i>Principal component analysis</a>
 <ul>
@@ -193,18 +209,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#excluding-rows-and-columns"><i class="fa fa-check"></i>Excluding rows and columns</a></li>
 <li class="chapter" data-level="" data-path="pca--plots.html"><a href="pca--plots.html#support-for-images"><i class="fa fa-check"></i>Support for images</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html"><i class="fa fa-check"></i>Model validation</a>
+<li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a></li>
+<li class="chapter" data-level="" data-path="pca--validation.html"><a href="pca--validation.html"><i class="fa fa-check"></i>Model validation</a>
 <ul>
-<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#using-validation-set"><i class="fa fa-check"></i>Using validation set</a></li>
-<li class="chapter" data-level="" data-path="model-validation.html"><a href="model-validation.html#procrustes-cross-validation"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
+<li class="chapter" data-level="" data-path="pca--validation.html"><a href="pca--validation.html#using-validation-set"><i class="fa fa-check"></i>Using validation set</a></li>
+<li class="chapter" data-level="" data-path="pca--validation.html"><a href="pca--validation.html#procrustes-cross-validation"><i class="fa fa-check"></i>Procrustes cross-validation</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html"><i class="fa fa-check"></i>Distances and critical limits</a>
-<ul>
-<li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html#distance-to-model-and-score-distance"><i class="fa fa-check"></i>Distance to model and score distance</a></li>
-<li class="chapter" data-level="" data-path="pca--distances-and-limits.html"><a href="pca--distances-and-limits.html#critical-limits"><i class="fa fa-check"></i>Critical limits</a></li>
-</ul></li>
+<li class="chapter" data-level="" data-path="pca--preprocessing.html"><a href="pca--preprocessing.html"><i class="fa fa-check"></i>Preprocessing as part of the model</a></li>
 <li class="chapter" data-level="" data-path="pca--model-complexity.html"><a href="pca--model-complexity.html"><i class="fa fa-check"></i>Model complexity</a></li>
 <li class="chapter" data-level="" data-path="pca--randomized-algorithm.html"><a href="pca--randomized-algorithm.html"><i class="fa fa-check"></i>Randomized PCA algorithms</a></li>
+<li class="chapter" data-level="" data-path="pca--interop.html"><a href="pca--interop.html"><i class="fa fa-check"></i>Interoperability with web-applications</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ddsimca.html"><a href="ddsimca.html"><i class="fa fa-check"></i>DD-SIMCA classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="ddsimca--calibration-and-validation.html"><a href="ddsimca--calibration-and-validation.html"><i class="fa fa-check"></i>Calibration and validation</a></li>
+<li class="chapter" data-level="" data-path="ddimca--predictions.html"><a href="ddimca--predictions.html"><i class="fa fa-check"></i>Making predictions</a>
+<ul>
+<li class="chapter" data-level="" data-path="ddimca--predictions.html"><a href="ddimca--predictions.html#dataset-with-target-class-only"><i class="fa fa-check"></i>Dataset with target class only</a></li>
+<li class="chapter" data-level="" data-path="ddimca--predictions.html"><a href="ddimca--predictions.html#datasets-with-objects-from-alternative-classes"><i class="fa fa-check"></i>Datasets with objects from alternative classes</a></li>
+<li class="chapter" data-level="" data-path="ddimca--predictions.html"><a href="ddimca--predictions.html#datasets-with-objects-from-both-target-and-alternative-classes"><i class="fa fa-check"></i>Datasets with objects from both target and alternative classes</a></li>
+<li class="chapter" data-level="" data-path="ddimca--predictions.html"><a href="ddimca--predictions.html#datasets-without-reference-classes"><i class="fa fa-check"></i>Datasets without reference classes</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ddsimca--preprocessing.html"><a href="ddsimca--preprocessing.html"><i class="fa fa-check"></i>Using preprocessing</a></li>
+<li class="chapter" data-level="" data-path="ddsimca--iterop.html"><a href="ddsimca--iterop.html"><i class="fa fa-check"></i>Interoperability with web-application</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -231,23 +258,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="pls--distances-and-outliers.html"><a href="pls--distances-and-outliers.html#distance-plot-for-y-decomposition-and-total-distance"><i class="fa fa-check"></i>Distance plot for Y-decomposition and total distance</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls--randomization-test.html"><a href="pls--randomization-test.html"><i class="fa fa-check"></i>Randomization test</a></li>
+<li class="chapter" data-level="" data-path="pls--prep.html"><a href="pls--prep.html"><i class="fa fa-check"></i>Preprocessing as part of the model</a></li>
+<li class="chapter" data-level="" data-path="pls--interop.html"><a href="pls--interop.html"><i class="fa fa-check"></i>Interoperability with web-applications</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="plsda.html"><a href="plsda.html"><i class="fa fa-check"></i>PLS Discriminant Analysis</a>
 <ul>
 <li class="chapter" data-level="" data-path="plsda--calibration.html"><a href="plsda--calibration.html"><i class="fa fa-check"></i>Calibration of PLS-DA model</a></li>
 <li class="chapter" data-level="" data-path="plsda-classification-plots.html"><a href="plsda-classification-plots.html"><i class="fa fa-check"></i>Classification plots</a></li>
 <li class="chapter" data-level="" data-path="plsda--performance-plots.html"><a href="plsda--performance-plots.html"><i class="fa fa-check"></i>Performance plots</a></li>
-<li class="chapter" data-level="" data-path="plsda--predictions.html"><a href="plsda--predictions.html"><i class="fa fa-check"></i>Predictions for a new data</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="simca.html"><a href="simca.html"><i class="fa fa-check"></i>SIMCA/DD-SIMCA classification</a>
-<ul>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html"><i class="fa fa-check"></i>Calibration and validation</a>
-<ul>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#validation-1"><i class="fa fa-check"></i>Validation</a></li>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-testing-the-model"><i class="fa fa-check"></i>Predictions and testing the model</a></li>
-<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#class-belonging-probabilities"><i class="fa fa-check"></i>Class belonging probabilities</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="simca--multiclass-classification.html"><a href="simca--multiclass-classification.html"><i class="fa fa-check"></i>Multiclass classification</a></li>
+<li class="chapter" data-level="" data-path="plsda--predictions.html"><a href="plsda--predictions.html"><i class="fa fa-check"></i>Predictions for new data</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="ipls.html"><a href="ipls.html"><i class="fa fa-check"></i>Interval PLS</a>
 <ul>
@@ -275,6 +294,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="mcr--als.html"><a href="mcr--als.html#overview-of-resolving-process-and-results"><i class="fa fa-check"></i>Overview of resolving process and results</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="simca.html"><a href="simca.html"><i class="fa fa-check"></i>SIMCA classification</a>
+<ul>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html"><i class="fa fa-check"></i>Calibration and validation</a>
+<ul>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#validation-1"><i class="fa fa-check"></i>Validation</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#predictions-and-testing-the-model"><i class="fa fa-check"></i>Predictions and testing the model</a></li>
+<li class="chapter" data-level="" data-path="simca--calibration-and-validation.html"><a href="simca--calibration-and-validation.html#class-belonging-probabilities"><i class="fa fa-check"></i>Class belonging probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="simca--multiclass-classification.html"><a href="simca--multiclass-classification.html"><i class="fa fa-check"></i>Multiclass classification</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -294,37 +323,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="news" class="section level1 unnumbered hasAnchor">
 <h1>What is new<a href="news.html#news" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><strong>12.08.2023</strong></p>
+<div id="section" class="section level3 unnumbered hasAnchor">
+<h3>5/03/2026<a href="news.html#section" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>New release, <strong>0.15.0</strong> is out and the tutorial text has been revised accordingly.</p>
+<p>This release contains numerous improvements, bug fixes, and new methods. The main highlights are a standalone DD-SIMCA implementation, overhauled preprocessing pipelines (with some breaking changes), and JSON/CSV interoperability with the <a href="https://mda.tools">mda.tools</a> web-applications.</p>
+<div id="new-dedicated-methods-for-dd-simca" class="section level4 unnumbered hasAnchor">
+<h4>New dedicated methods for DD-SIMCA<a href="news.html#new-dedicated-methods-for-dd-simca" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>In the previous version, DD-SIMCA was implemented via more versatile method <code>simca</code>, which also lets you use other SIMCA implementations. While versatility is generally good, it limited the DD-SIMCA possibilities and it was decided to implement it separately.</p>
+<p>Method <code>ddsimca</code> can now be used for training, testing, and applying <a href="https://doi.org/10.1002/cem.3556">Data Driven SIMCA</a> models. It matches functionality of the corresponding <a href="https://mda.tools/ddsimca">web-application</a>, including all plots and figures of merit (for example estimation of beta, selectivity, etc.). It also lets you change decision boundary parameters without rebuilding the main model.</p>
+<p>The original method <code>simca</code> is still available (and always will) for compatibility.</p>
+</div>
+<div id="improvements-to-preprocessing-methods" class="section level4 unnumbered hasAnchor">
+<h4>Improvements to preprocessing methods<a href="news.html#improvements-to-preprocessing-methods" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>There are several new methods for preprocessing, including:</p>
 <ul>
-<li>Added information about new feature in 0.14.1 — <code>cv.scope</code> parameter. See <a href="pls--models-and-results.html#pls--models-and-results">Model and results</a> part of PLS chapter, just scroll down to cross-validation section.</li>
-<li>Small improvements to various parts of this tutorial.</li>
+<li><code>prep.spikes()</code> for cosmic spikes removal from Raman spectra.</li>
+<li><code>prep.center()</code> for centering of data columns.</li>
+<li><code>prep.scale()</code> for scaling of data columns.</li>
+<li><code>prep.emsc()</code> for extended multiplicative scatter correction.</li>
 </ul>
-<p><strong>31.03.2023</strong></p>
+<p>The following methods are considered <em>deprecated</em>, you can still use them (they will be kept for compatibility), but for new code it is recommended to use the alternatives:</p>
 <ul>
-<li>Added section about <a href="preprocessing--norm.html#preprocessing--norm">normalization</a> to Preprocessing chapter.</li>
-<li>Added section about <a href="preprocessing--mvreplace.html#preprocessing--mvreplace">missing values replacement</a> to Preprocessing chapter.</li>
-<li>Improved description of validation procedure in PCA, PLS and other methods, including the use of Procrustes cross-validation.</li>
-<li>Small improvements in selected parts of text.</li>
+<li><code>prep.autoscale()</code> — use <code>prep.center()</code> and <code>prep.scale()</code> instead.</li>
+<li><code>prep.snv()</code> — use <code>prep.norm()</code> with parameter <code>type = "snv"</code> as an alternative.</li>
+<li><code>prep.msc()</code> — use <code>prep.emsc()</code> with parameter <code>degree = 0</code>.</li>
+<li><code>employ.prep()</code> — use <code>prep.apply()</code> instead.</li>
 </ul>
-<p><strong>09.11.2022</strong></p>
-<p>Improved description of <a href="ipls.html#ipls">iPLS</a> section, including new features appeared in v. 0.13.1.</p>
-<p><strong>03.03.2022</strong></p>
+<p>In addition to that, the ability to combine the preprocessing methods together into a preprocessing chain (we will call it <em>preprocessing model</em>) has been improved. However, these improvements <strong>cause breaking changes</strong>, so if you used this feature before, check the text below and the updated user guides very carefully.</p>
+<p>First of all, the syntax for creating preprocessing items for combining them into the chain has changed — parameters are now passed as named arguments instead of a list:</p>
 <ul>
-<li><p>Added section explaining how to use <code>pcv.nareplace()</code> method</p></li>
-<li><p>Added separate section for Procrustes cross-validation.</p></li>
+<li>Old: <code>prep("savgol", list(width = 7, porder = 2, dorder = 2))</code></li>
+<li>New: <code>prep("savgol", width = 7, porder = 2, dorder = 2)</code></li>
 </ul>
-<p><strong>14.07.2022</strong></p>
-<p>Added description of new features appeared in v. 0.13.0 of the package, including new plotting method <code>plotRMSERatio()</code> for PLS models and new cross-validation possibilities. Validation of PLS model text has been extended and made as separate section.</p>
-<p><strong>12.09.2021</strong></p>
-<p>Added description of new features appeared in v. 0.12.0 of the package, including:</p>
-<ul>
-<li>new preprocessing methods <code>prep.transform()</code>, <code>prep.varsel()</code>.</li>
-<li>improvements to <code>prep.savgol()</code> and <code>prep.norm()</code>.</li>
-<li>a possibility to combine several preprocessing method together and apply at once.</li>
-</ul>
-<p>In addition to that, text for <a href="datasets.html#datasets">Datasets</a> chapter has been revised to provide more clear guides while the part about preprocessing was detached and now is available as <a href="preprocessing.html#preprocessing">separate chapter</a> where
-you can find all details. Description of ALS baseline correction was moved to the section <a href="preprocessing--baseline.html#preprocessing--baseline">Correction of baseline</a>.</p>
+<p>Also, the option to add user defined preprocessing methods into a preprocessing model has been removed as it caused issues and unstable behavior in some cases. From this version, only selected methods can be combined into a preprocessing model. You can see a full list of the currently supported methods by running <code>prep.list()</code>. This list will be extended eventually. And you can still use user defined methods and methods which are not in the list separately.</p>
+<p>Second, a preprocessing model can now be integrated directly into <code>pca</code>, <code>pls</code>, <code>simca</code>, <code>ddsimca</code>, and <code>plsda</code> via the <code>prep</code> parameter — the model will train the preprocessing pipeline and apply it automatically during calibration and prediction.</p>
+<p>Finally, preprocessing methods can also be <em>trained</em> independently using <code>prep.fit()</code>, which pre-computes parameters that depend on the training set (e.g. values for centering, scaling, or the reference spectrum for EMSC). Applying the trained preprocessing model to new data is done with <code>prep.apply()</code>.</p>
 
+</div>
+</div>
 </div>
             </section>
 
@@ -346,42 +382,42 @@ you can find all details. Description of ALS baseline correction was moved to th
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
 });
 });
 </script>
