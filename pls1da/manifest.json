@@ -1,0 +1,16 @@
+{
+  "name": "PLS1 Discriminant Analysis",
+  "short_name": "PLS1-DA",
+  "description": "Create and apply PLS1-DA models.",
+  "start_url": "/pls1da/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#909090",
+  "icons": [
+    {
+      "src": "/pls1da/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

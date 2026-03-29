@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1'>
+	<title>PLS1 Discriminant Analysis (PLS1-DA)</title>
+   <link rel="manifest" href="/pls/manifest.json" />
+
+  <!-- Register the service worker first -->
+  <script>
+      if ('serviceWorker' in navigator) {
+         navigator.serviceWorker.register('/pls1da/service-worker.js')
+         .then((registration) => {
+            console.log('Service Worker registered with scope:', registration.scope);
+         })
+         .catch((error) => {
+            console.error('Service Worker registration failed:', error);
+         });
+      }
+
+      self.addEventListener('activate', (event) => {
+      event.waitUntil(
+         caches.keys().then((cacheNames) => {
+            return Promise.all(
+            cacheNames.map((cacheName) => {
+               if (cacheName.startsWith(CACHE_NAME) && cacheName !== `${CACHE_NAME}-${CACHE_VERSION}`) {
+                  console.log("deleting old cache:", cacheName);
+                  return caches.delete(cacheName);
+               }
+               return null;
+            })
+            );
+         }).then(() => self.clients.claim())  // <-- add this line
+      );
+      });
+
+   </script>
+   <style>
+      html, body {
+         height: 100%;
+         width: 100%;
+         padding: 0;
+         margin: 0;
+         font-family: Helvetica, Arial, sans-serif;
+         font-size: 14px;
+         background-color: #80888f;
+      }
+
+      @media (min-width: 1200px) {
+         html, body {
+            font-size: 15px;
+         }
+      }
+
+      @media (min-width: 1300px) {
+         html, body {
+            font-size: 16px;
+         }
+      }
+
+   </style>
+   <link rel="shortcut icon" type="image/svg" href="/pls1da/logo.svg"/>
+</head>
+
+<body>
+	<script defer type="module" src="/pls1da/pls1da.js"></script>
+</body>
+</html>
