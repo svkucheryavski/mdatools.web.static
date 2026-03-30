@@ -377,7 +377,7 @@ hr{
 }
 
 .page-section_apps .list-item_app{
-   flex: 1 1 30%;
+   flex: 0 0 28%;
    box-sizing: border-box;
    background: #f4f7f8;
    padding: 0.75em 1em;
@@ -396,6 +396,7 @@ hr{
 .page-section_apps  .list-item_app h3{
    font-size: 0.85rem;
    padding: 0.25em 0;
+   white-space:nowrap;
 }
 
 .page-section_apps  .list-item_app a{
@@ -434,6 +435,7 @@ hr{
 
 .page-section_apps  .list-item_app.list-item_new h3::after{
    content: ' ✨';
+    display: inline-block;
 }
 
 .page-section_apps  .list-item_app a.app-run::before{
