@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Making predictions | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — an R package for preprocessing, exploring and analysis of multivariate data. The package provides methods common in Chemometrics. The general idea of the package is to collect the popular chemometric methods and give a similar user interface for applying them to different datasets. So if a user knows how to make a model and visualize results for one method, they can easily do this for the other methods as well." />
-  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Making predictions | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2025-03-06" />
+<meta name="date" content="2026-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -141,7 +141,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="" data-path="news.html"><a href="news.html"><i class="fa fa-check"></i>What is new</a>
 <ul>
-<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>5/03/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>26/06/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section-1"><i class="fa fa-check"></i>5/03/2026</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
@@ -232,6 +233,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="ddsimca--preprocessing.html"><a href="ddsimca--preprocessing.html"><i class="fa fa-check"></i>Using preprocessing</a></li>
 <li class="chapter" data-level="" data-path="ddsimca--iterop.html"><a href="ddsimca--iterop.html"><i class="fa fa-check"></i>Interoperability with web-application</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ddsimca3w.html"><a href="ddsimca3w.html"><i class="fa fa-check"></i>DD-SIMCA for 3-way data</a>
+<ul>
+<li class="chapter" data-level="" data-path="ddsimca3w--datasets.html"><a href="ddsimca3w--datasets.html"><i class="fa fa-check"></i>Prepare datasets</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--parafac.html"><a href="ddsimca3w--parafac.html"><i class="fa fa-check"></i>PARAFAC DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--tucker.html"><a href="ddsimca3w--tucker.html"><i class="fa fa-check"></i>Tucker DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--nonneg.html"><a href="ddsimca3w--nonneg.html"><i class="fa fa-check"></i>Imposing non-negativity</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -364,13 +372,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb184-3"><a href="ddimca--predictions.html#cb184-3" tabindex="-1"></a><span class="fu">plotAcceptance</span>(rtt, <span class="at">log =</span> <span class="cn">TRUE</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb184-4"><a href="ddimca--predictions.html#cb184-4" tabindex="-1"></a><span class="fu">plotSensitivity</span>(m<span class="sc">$</span>res<span class="sc">$</span>pv, <span class="at">show.ci =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb184-5"><a href="ddimca--predictions.html#cb184-5" tabindex="-1"></a><span class="fu">plotSensitivity</span>(rtt, <span class="at">show.ci =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-124-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-124-1.png" alt="" width="864" /></p>
 <p>Apparently, both PV-set and test set point to <span class="math inline">\(A = 3\)</span> as optimal selection.</p>
 <p>As in case of PCA, one can make <em>Extremes plot</em> for the DD-SIMCA results, which can be helpful in identifying overfitting:</p>
 <div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="ddimca--predictions.html#cb185-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb185-2"><a href="ddimca--predictions.html#cb185-2" tabindex="-1"></a><span class="fu">plotExtremes</span>(rtt, <span class="at">ncomp =</span> <span class="dv">3</span>)</span>
 <span id="cb185-3"><a href="ddimca--predictions.html#cb185-3" tabindex="-1"></a><span class="fu">plotExtremes</span>(rtt, <span class="at">ncomp =</span> <span class="dv">6</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-125-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-125-1.png" alt="" width="864" /></p>
 <p>You can get all classification details by converting the DD-SIMCA result object into a data frame:</p>
 <div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="ddimca--predictions.html#cb186-1" tabindex="-1"></a>df.tt <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(rtt)</span>
 <span id="cb186-2"><a href="ddimca--predictions.html#cb186-2" tabindex="-1"></a><span class="fu">head</span>(df.tt)</span></code></pre></div>
@@ -438,7 +446,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="ddimca--predictions.html#cb193-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb193-2"><a href="ddimca--predictions.html#cb193-2" tabindex="-1"></a><span class="fu">plotAcceptance</span>(rtn, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb193-3"><a href="ddimca--predictions.html#cb193-3" tabindex="-1"></a><span class="fu">plotAcceptance</span>(rtn, <span class="at">log =</span> <span class="cn">TRUE</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-130-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-130-1.png" alt="" width="864" /></p>
 <p>In this case we know in advance that all objects are from non-target classes, so they are supposed to be extreme. But they are extreme in a different way. The ones marked with role “alien” are objects from possibly the same population, closest to the target class. The objects marked as “external” are possibly from other groups/populations which are the most distinct from the target class. The plot also does not contain the limits for outliers, as “outlier” is a role that can be assigned only to a target class member.</p>
 <p>The specificity is computed based on all non-target class objects. While selectivity is computed only by taking the “aliens” into account. Moreover, in this case we fit aliens with non-central chi-square distribution and find the overlap between the distribution of the target class objects and the distribution of the aliens. The selectivity is related to this overlap.</p>
 <p>This approach is also known as <em>power of test</em> in statistics. It gives more realistic estimate on how the model will behave for rejecting the aliens. The value complementary to selectivity is a chance of making Type II error, <span class="math inline">\(\beta\)</span>. For example for <span class="math inline">\(A = 3\)</span> the beta is <span class="math inline">\(1 - 0.9682 = 0.0318\)</span> or approximately 3%.</p>
@@ -446,7 +454,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="ddimca--predictions.html#cb194-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb194-2"><a href="ddimca--predictions.html#cb194-2" tabindex="-1"></a><span class="fu">plotSelectivityArea</span>(rtn)</span>
 <span id="cb194-3"><a href="ddimca--predictions.html#cb194-3" tabindex="-1"></a><span class="fu">plotSelectivityArea</span>(rtn, <span class="at">ncomp =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-131-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-131-1.png" alt="" width="864" /></p>
 <p>The plot shows the dependence as a curve and the current model as a point on the curve. It also computes the area under the curve (AUC), which can be used as auxiliary figure of merit.</p>
 </div>
 <div id="datasets-with-objects-from-both-target-and-alternative-classes" class="section level3 unnumbered hasAnchor">
@@ -494,7 +502,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb198-4"><a href="ddimca--predictions.html#cb198-4" tabindex="-1"></a><span class="fu">plotFoMs</span>(rta, <span class="at">fom =</span> <span class="fu">c</span>(<span class="st">&quot;sens&quot;</span>, <span class="st">&quot;spec&quot;</span>, <span class="st">&quot;eff&quot;</span>))</span>
 <span id="cb198-5"><a href="ddimca--predictions.html#cb198-5" tabindex="-1"></a><span class="fu">plotFoMs</span>(rta, <span class="at">fom =</span> <span class="fu">c</span>(<span class="st">&quot;spec&quot;</span>, <span class="st">&quot;sel&quot;</span>), <span class="at">legend.position =</span> <span class="st">&quot;bottomright&quot;</span>,</span>
 <span id="cb198-6"><a href="ddimca--predictions.html#cb198-6" tabindex="-1"></a>   <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">4</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-134-1.png" width="864" />
+<p><img src="_main_files/figure-html/unnamed-chunk-134-1.png" alt="" width="864" />
 And of course similar to other plots one can define own colors, markers, etc.</p>
 <p>When you make Acceptance plot, you need to specify, whether you want to show only members (this is a default option), only strangers or both. In the latter case the objects will be color grouped by the reference classes:</p>
 <div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="ddimca--predictions.html#cb199-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
@@ -502,7 +510,7 @@ And of course similar to other plots one can define own colors, markers, etc.</p
 <span id="cb199-3"><a href="ddimca--predictions.html#cb199-3" tabindex="-1"></a><span class="fu">plotAcceptance</span>(rta, <span class="at">show =</span> <span class="st">&quot;members&quot;</span>)</span>
 <span id="cb199-4"><a href="ddimca--predictions.html#cb199-4" tabindex="-1"></a><span class="fu">plotAcceptance</span>(rta, <span class="at">show =</span> <span class="st">&quot;strangers&quot;</span>, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb199-5"><a href="ddimca--predictions.html#cb199-5" tabindex="-1"></a><span class="fu">plotAcceptance</span>(rta, <span class="at">show =</span> <span class="st">&quot;all&quot;</span>, <span class="at">log =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-135-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-135-1.png" alt="" width="864" /></p>
 </div>
 <div id="datasets-without-reference-classes" class="section level3 unnumbered hasAnchor">
 <h3>Datasets without reference classes<a href="ddimca--predictions.html#datasets-without-reference-classes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -549,7 +557,7 @@ And of course similar to other plots one can define own colors, markers, etc.</p
 <div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="ddimca--predictions.html#cb204-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb204-2"><a href="ddimca--predictions.html#cb204-2" tabindex="-1"></a><span class="fu">plotAcceptance</span>(rn)</span>
 <span id="cb204-3"><a href="ddimca--predictions.html#cb204-3" tabindex="-1"></a><span class="fu">plotAcceptance</span>(rn, <span class="at">log =</span> <span class="cn">TRUE</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-138-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-138-1.png" alt="" width="864" /></p>
 </div>
 </div>
             </section>
@@ -600,7 +608,7 @@ gitbook.start({
     "link": null,
     "text": null
   },
-  "download": null,
+  "download": ["_main.pdf"],
   "search": {
     "engine": "fuse",
     "options": null

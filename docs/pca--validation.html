@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Model validation | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — an R package for preprocessing, exploring and analysis of multivariate data. The package provides methods common in Chemometrics. The general idea of the package is to collect the popular chemometric methods and give a similar user interface for applying them to different datasets. So if a user knows how to make a model and visualize results for one method, they can easily do this for the other methods as well." />
-  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Model validation | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2025-03-06" />
+<meta name="date" content="2026-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -141,7 +141,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="" data-path="news.html"><a href="news.html"><i class="fa fa-check"></i>What is new</a>
 <ul>
-<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>5/03/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>26/06/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section-1"><i class="fa fa-check"></i>5/03/2026</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
@@ -232,6 +233,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="ddsimca--preprocessing.html"><a href="ddsimca--preprocessing.html"><i class="fa fa-check"></i>Using preprocessing</a></li>
 <li class="chapter" data-level="" data-path="ddsimca--iterop.html"><a href="ddsimca--iterop.html"><i class="fa fa-check"></i>Interoperability with web-application</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ddsimca3w.html"><a href="ddsimca3w.html"><i class="fa fa-check"></i>DD-SIMCA for 3-way data</a>
+<ul>
+<li class="chapter" data-level="" data-path="ddsimca3w--datasets.html"><a href="ddsimca3w--datasets.html"><i class="fa fa-check"></i>Prepare datasets</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--parafac.html"><a href="ddsimca3w--parafac.html"><i class="fa fa-check"></i>PARAFAC DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--tucker.html"><a href="ddsimca3w--tucker.html"><i class="fa fa-check"></i>Tucker DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--nonneg.html"><a href="ddsimca3w--nonneg.html"><i class="fa fa-check"></i>Imposing non-negativity</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -337,7 +345,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb106-8"><a href="pca--validation.html#cb106-8" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pca</span>(Xc, <span class="dv">7</span>, <span class="at">x.test =</span> Xt)</span></code></pre></div>
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="pca--validation.html#cb107-1" tabindex="-1"></a><span class="co"># show the model overview plot</span></span>
 <span id="cb107-2"><a href="pca--validation.html#cb107-2" tabindex="-1"></a><span class="fu">plot</span>(m, <span class="at">ncomp =</span> <span class="dv">3</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-85-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-85-1.png" alt="" width="864" /></p>
 <p>The validation results are, of course, represented by <em>result objects</em>, which are fields of a <em>model object</em> similar to <code>cal</code>, but with names <code>test</code>. And here is the info for both result objects:</p>
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="pca--validation.html#cb108-1" tabindex="-1"></a><span class="fu">print</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal)</span></code></pre></div>
 <pre><code>## 
@@ -437,18 +445,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="pca--validation.html#cb121-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb121-2"><a href="pca--validation.html#cb121-2" tabindex="-1"></a><span class="fu">mdaplot</span>(Xc, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
 <span id="cb121-3"><a href="pca--validation.html#cb121-3" tabindex="-1"></a><span class="fu">mdaplot</span>(Xpv, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-91-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-91-1.png" alt="" width="864" /></p>
 <p>Now we can create a PCA model and validate it using the created PV-set similar to what we have done in the case of a dedicated validation set:</p>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="pca--validation.html#cb122-1" tabindex="-1"></a>m2 <span class="ot">=</span> <span class="fu">pca</span>(Xc, <span class="dv">7</span>, <span class="at">x.test =</span> Xpv)</span></code></pre></div>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="pca--validation.html#cb123-1" tabindex="-1"></a><span class="fu">plot</span>(m2, <span class="at">ncomp =</span> <span class="dv">3</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-93-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-93-1.png" alt="" width="864" /></p>
 <p>The four plots below show distance plots for a model validated using a separate validation set (top) and the PV-set (bottom). The left plots are made for 2 principal components and the right plots are made for 7 components. As you can see both separate validation set and the one generated using PCV show similar patterns.</p>
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="pca--validation.html#cb124-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb124-2"><a href="pca--validation.html#cb124-2" tabindex="-1"></a><span class="fu">plotDistances</span>(m, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">&quot;Validation set (2 PCs)&quot;</span>)</span>
 <span id="cb124-3"><a href="pca--validation.html#cb124-3" tabindex="-1"></a><span class="fu">plotDistances</span>(m, <span class="at">ncomp =</span> <span class="dv">7</span>, <span class="at">main =</span> <span class="st">&quot;Validation set (7 PCs)&quot;</span>)</span>
 <span id="cb124-4"><a href="pca--validation.html#cb124-4" tabindex="-1"></a><span class="fu">plotDistances</span>(m2, <span class="at">ncomp =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">&quot;PV set (2 PCs)&quot;</span>)</span>
 <span id="cb124-5"><a href="pca--validation.html#cb124-5" tabindex="-1"></a><span class="fu">plotDistances</span>(m2, <span class="at">ncomp =</span> <span class="dv">7</span>, <span class="at">main =</span> <span class="st">&quot;PV set (7 PCs)&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-94-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-94-1.png" alt="" width="864" /></p>
 </div>
 </div>
             </section>
@@ -499,7 +507,7 @@ gitbook.start({
     "link": null,
     "text": null
   },
-  "download": null,
+  "download": ["_main.pdf"],
   "search": {
     "engine": "fuse",
     "options": null

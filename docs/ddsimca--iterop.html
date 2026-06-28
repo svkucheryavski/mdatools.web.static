@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Interoperability with web-application | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — an R package for preprocessing, exploring and analysis of multivariate data. The package provides methods common in Chemometrics. The general idea of the package is to collect the popular chemometric methods and give a similar user interface for applying them to different datasets. So if a user knows how to make a model and visualize results for one method, they can easily do this for the other methods as well." />
-  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Interoperability with web-application | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2025-03-06" />
+<meta name="date" content="2026-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="ddsimca--preprocessing.html"/>
-<link rel="next" href="pls.html"/>
+<link rel="next" href="ddsimca3w.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -141,7 +141,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="" data-path="news.html"><a href="news.html"><i class="fa fa-check"></i>What is new</a>
 <ul>
-<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>5/03/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>26/06/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section-1"><i class="fa fa-check"></i>5/03/2026</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
@@ -232,6 +233,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="ddsimca--preprocessing.html"><a href="ddsimca--preprocessing.html"><i class="fa fa-check"></i>Using preprocessing</a></li>
 <li class="chapter" data-level="" data-path="ddsimca--iterop.html"><a href="ddsimca--iterop.html"><i class="fa fa-check"></i>Interoperability with web-application</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ddsimca3w.html"><a href="ddsimca3w.html"><i class="fa fa-check"></i>DD-SIMCA for 3-way data</a>
+<ul>
+<li class="chapter" data-level="" data-path="ddsimca3w--datasets.html"><a href="ddsimca3w--datasets.html"><i class="fa fa-check"></i>Prepare datasets</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--parafac.html"><a href="ddsimca3w--parafac.html"><i class="fa fa-check"></i>PARAFAC DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--tucker.html"><a href="ddsimca3w--tucker.html"><i class="fa fa-check"></i>Tucker DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--nonneg.html"><a href="ddsimca3w--nonneg.html"><i class="fa fa-check"></i>Imposing non-negativity</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -363,31 +371,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  - from non-target classes: 49
 ##  - from unknown classes: 0
 ## 
-##           Expvar Cumexpvar In Out TP FN   Sens TN FP   Spec    Sel    Acc    Eff
-## Comp 1  17.92650     17.93 30  37 18  0 1.0000 37 12 0.7551 0.8155 0.8209 0.8690
-## Comp 2* 34.87615     52.80 20  47 18  0 1.0000 47  2 0.9592 0.9347 0.9701 0.9794
-## Comp 3  28.74276     81.55 20  47 18  0 1.0000 47  2 0.9592 0.9350 0.9701 0.9794
-## Comp 4   3.94647     85.49 16  51 16  2 0.8889 49  0 1.0000 0.9621 0.9701 0.9428
-## Comp 5   2.32847     87.82 15  52 15  3 0.8333 49  0 1.0000 0.9755 0.9552 0.9129
-## Comp 6   6.37712     94.20 13  54 13  5 0.7222 49  0 1.0000 0.9638 0.9254 0.8498
-## Comp 7   1.50471     95.70 12  55 12  6 0.6667 49  0 1.0000 0.9858 0.9104 0.8165
-## Comp 8   1.57521     97.28 10  57 10  8 0.5556 49  0 1.0000 0.9845 0.8806 0.7454
-## Comp 9   0.22496     97.50  6  61  6 12 0.3333 49  0 1.0000 0.9960 0.8209 0.5774
-## Comp 10  0.53530     98.04  6  61  6 12 0.3333 49  0 1.0000 0.9990 0.8209 0.5774
-## Comp 11  0.12531     98.16  5  62  5 13 0.2778 49  0 1.0000 0.9997 0.8060 0.5270
-## Comp 12  0.06786     98.23  5  62  5 13 0.2778 49  0 1.0000 0.9999 0.8060 0.5270
-## Comp 13  0.09338     98.32  2  65  2 16 0.1111 49  0 1.0000 1.0000 0.7612 0.3333
-## Comp 14  0.07814     98.40  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000 0.0000
-## Comp 15  0.07341     98.48  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000 0.0000
-## Comp 16  0.12804     98.60  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000 0.0000
-## Comp 17  0.03662     98.64  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000 0.0000
-## Comp 18  0.09743     98.74  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000 0.0000
-## Comp 19  0.07831     98.82  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000 0.0000
-## Comp 20  0.13056     98.95  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000 0.0000</code></pre>
+##           Expvar Cumexpvar In Out TP FN   Sens TN FP   Spec    Sel    Acc
+## Comp 1  17.92650     17.93 30  37 18  0 1.0000 37 12 0.7551 0.8155 0.8209
+## Comp 2* 34.87615     52.80 20  47 18  0 1.0000 47  2 0.9592 0.9347 0.9701
+## Comp 3  28.74276     81.55 20  47 18  0 1.0000 47  2 0.9592 0.9350 0.9701
+## Comp 4   3.94647     85.49 16  51 16  2 0.8889 49  0 1.0000 0.9621 0.9701
+## Comp 5   2.32847     87.82 15  52 15  3 0.8333 49  0 1.0000 0.9755 0.9552
+## Comp 6   6.37712     94.20 13  54 13  5 0.7222 49  0 1.0000 0.9638 0.9254
+## Comp 7   1.50471     95.70 12  55 12  6 0.6667 49  0 1.0000 0.9858 0.9104
+## Comp 8   1.57521     97.28 10  57 10  8 0.5556 49  0 1.0000 0.9845 0.8806
+## Comp 9   0.22496     97.50  6  61  6 12 0.3333 49  0 1.0000 0.9960 0.8209
+## Comp 10  0.53530     98.04  6  61  6 12 0.3333 49  0 1.0000 0.9990 0.8209
+## Comp 11  0.12531     98.16  5  62  5 13 0.2778 49  0 1.0000 0.9997 0.8060
+## Comp 12  0.06786     98.23  5  62  5 13 0.2778 49  0 1.0000 0.9999 0.8060
+## Comp 13  0.09338     98.32  2  65  2 16 0.1111 49  0 1.0000 1.0000 0.7612
+## Comp 14  0.07814     98.40  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000
+## Comp 15  0.07341     98.48  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000
+## Comp 16  0.12804     98.60  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000
+## Comp 17  0.03662     98.64  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000
+## Comp 18  0.09743     98.74  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000
+## Comp 19  0.07831     98.82  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000
+## Comp 20  0.13056     98.95  0  67  0 18 0.0000 49  0 1.0000 1.0000 0.0000
+##            Eff
+## Comp 1  0.8690
+## Comp 2* 0.9794
+## Comp 3  0.9794
+## Comp 4  0.9428
+## Comp 5  0.9129
+## Comp 6  0.8498
+## Comp 7  0.8165
+## Comp 8  0.7454
+## Comp 9  0.5774
+## Comp 10 0.5774
+## Comp 11 0.5270
+## Comp 12 0.5270
+## Comp 13 0.3333
+## Comp 14 0.0000
+## Comp 15 0.0000
+## Comp 16 0.0000
+## Comp 17 0.0000
+## Comp 18 0.0000
+## Comp 19 0.0000
+## Comp 20 0.0000</code></pre>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="ddsimca--iterop.html#cb209-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb209-2"><a href="ddsimca--iterop.html#cb209-2" tabindex="-1"></a><span class="fu">plotFoMs</span>(r, <span class="at">fom =</span> <span class="fu">c</span>(<span class="st">&quot;sens&quot;</span>, <span class="st">&quot;spec&quot;</span>, <span class="st">&quot;eff&quot;</span>), <span class="at">legend.position =</span> <span class="st">&quot;bottomleft&quot;</span>)</span>
 <span id="cb209-3"><a href="ddsimca--iterop.html#cb209-3" tabindex="-1"></a><span class="fu">plotAcceptance</span>(r, <span class="at">show =</span> <span class="st">&quot;all&quot;</span>, <span class="at">log =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-141-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-141-1.png" alt="" width="864" /></p>
 <p>There is also a limitation though, model loaded from JSON file created by the web-application does not contain calibration results, it can only be used for predictions/projections:</p>
 <div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="ddsimca--iterop.html#cb210-1" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
@@ -403,7 +432,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="ddsimca--iterop.html#cb213-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb213-2"><a href="ddsimca--iterop.html#cb213-2" tabindex="-1"></a><span class="fu">plotDistDoF</span>(m)</span>
 <span id="cb213-3"><a href="ddsimca--iterop.html#cb213-3" tabindex="-1"></a><span class="fu">plotLoadings</span>(m, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-143-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-143-1.png" alt="" width="864" /></p>
 
 </div>
 <!-- </div> -->
@@ -413,7 +442,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="ddsimca--preprocessing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pls.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ddsimca3w.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -455,7 +484,7 @@ gitbook.start({
     "link": null,
     "text": null
   },
-  "download": null,
+  "download": ["_main.pdf"],
   "search": {
     "engine": "fuse",
     "options": null

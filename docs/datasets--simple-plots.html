@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Simple plots | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — an R package for preprocessing, exploring and analysis of multivariate data. The package provides methods common in Chemometrics. The general idea of the package is to collect the popular chemometric methods and give a similar user interface for applying them to different datasets. So if a user knows how to make a model and visualize results for one method, they can easily do this for the other methods as well." />
-  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Simple plots | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2025-03-06" />
+<meta name="date" content="2026-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -141,7 +141,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="" data-path="news.html"><a href="news.html"><i class="fa fa-check"></i>What is new</a>
 <ul>
-<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>5/03/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>26/06/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section-1"><i class="fa fa-check"></i>5/03/2026</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
@@ -232,6 +233,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="ddsimca--preprocessing.html"><a href="ddsimca--preprocessing.html"><i class="fa fa-check"></i>Using preprocessing</a></li>
 <li class="chapter" data-level="" data-path="ddsimca--iterop.html"><a href="ddsimca--iterop.html"><i class="fa fa-check"></i>Interoperability with web-application</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ddsimca3w.html"><a href="ddsimca3w.html"><i class="fa fa-check"></i>DD-SIMCA for 3-way data</a>
+<ul>
+<li class="chapter" data-level="" data-path="ddsimca3w--datasets.html"><a href="ddsimca3w--datasets.html"><i class="fa fa-check"></i>Prepare datasets</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--parafac.html"><a href="ddsimca3w--parafac.html"><i class="fa fa-check"></i>PARAFAC DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--tucker.html"><a href="ddsimca3w--tucker.html"><i class="fa fa-check"></i>Tucker DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--nonneg.html"><a href="ddsimca3w--nonneg.html"><i class="fa fa-check"></i>Imposing non-negativity</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -438,7 +446,7 @@ adjust the grid look.</td>
 <span id="cb24-5"><a href="datasets--simple-plots.html#cb24-5" tabindex="-1"></a></span>
 <span id="cb24-6"><a href="datasets--simple-plots.html#cb24-6" tabindex="-1"></a><span class="co"># subset the dataset and keep only columns 6 and 7 and then make a plot</span></span>
 <span id="cb24-7"><a href="datasets--simple-plots.html#cb24-7" tabindex="-1"></a><span class="fu">mdaplot</span>(<span class="fu">mda.subset</span>(people, <span class="at">select =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">7</span>)), <span class="at">type =</span> <span class="st">&quot;p&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" alt="" width="864" /></p>
 <p>All parameters available for the standard <code>points()</code> method will work with <code>mdaplot()</code> as well. Besides that, you can colorize points according to some values using a color gradient. By default, the gradient is generated using one of the diverging color schemes from <a href="http://colorbrewer2.org">colorbrewer2.org</a>, but this can be changed using parameter <code>colmap</code> as it is shown below.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="datasets--simple-plots.html#cb25-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb25-2"><a href="datasets--simple-plots.html#cb25-2" tabindex="-1"></a></span>
@@ -453,7 +461,7 @@ adjust the grid look.</td>
 <span id="cb25-11"><a href="datasets--simple-plots.html#cb25-11" tabindex="-1"></a></span>
 <span id="cb25-12"><a href="datasets--simple-plots.html#cb25-12" tabindex="-1"></a><span class="co"># do the same but using colormap with gradients between red, yellow and green colors</span></span>
 <span id="cb25-13"><a href="datasets--simple-plots.html#cb25-13" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>], <span class="at">colmap =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;green&quot;</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" alt="" width="864" /></p>
 <p>If the vector with values for color grouping is a factor, level labels will be shown on a colorbar legend and there will be a small margin between bars.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="datasets--simple-plots.html#cb26-1" tabindex="-1"></a><span class="co"># make a factor using values of variable Sex and define labels for the factor levels</span></span>
 <span id="cb26-2"><a href="datasets--simple-plots.html#cb26-2" tabindex="-1"></a>g <span class="ot">=</span> <span class="fu">factor</span>(people[, <span class="st">&quot;Sex&quot;</span>], <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))</span>
@@ -461,7 +469,7 @@ adjust the grid look.</td>
 <span id="cb26-4"><a href="datasets--simple-plots.html#cb26-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb26-5"><a href="datasets--simple-plots.html#cb26-5" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> g)</span>
 <span id="cb26-6"><a href="datasets--simple-plots.html#cb26-6" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> g, <span class="at">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" alt="" width="864" /></p>
 <p>If you use point characters from 21 to 25 (the ones which allow you to specify both color of border and
 background of the marker symbol), then the <code>cgroup</code> is applied to color of the borders of the symbols by default.
 If you want to apply it to background color, use logical parameter <code>pch.colinv</code> for that as shown below:</p>
@@ -472,7 +480,7 @@ If you want to apply it to background color, use logical parameter <code>pch.col
 <span id="cb27-5"><a href="datasets--simple-plots.html#cb27-5" tabindex="-1"></a></span>
 <span id="cb27-6"><a href="datasets--simple-plots.html#cb27-6" tabindex="-1"></a><span class="co"># inverse - color grouping is used for background and &quot;bg&quot; for border</span></span>
 <span id="cb27-7"><a href="datasets--simple-plots.html#cb27-7" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">cgroup =</span> people[, <span class="st">&quot;Beer&quot;</span>], <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">bg =</span> <span class="st">&quot;white&quot;</span>, <span class="at">pch.colinv =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" alt="" width="864" /></p>
 <p>Another useful option is adding labels to the data points. By default, row names will be taken for the labels but you can specify a parameter <code>labels</code>, which can be either a text (<code>"names"</code> or <code>"indices"</code>) or a vector with values to show as labels. Color and size of the labels can be adjusted.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="datasets--simple-plots.html#cb28-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb28-2"><a href="datasets--simple-plots.html#cb28-2" tabindex="-1"></a></span>
@@ -487,7 +495,7 @@ If you want to apply it to background color, use logical parameter <code>pch.col
 <span id="cb28-11"><a href="datasets--simple-plots.html#cb28-11" tabindex="-1"></a></span>
 <span id="cb28-12"><a href="datasets--simple-plots.html#cb28-12" tabindex="-1"></a><span class="co"># finally we provide a vector with manual values to be used as the labels</span></span>
 <span id="cb28-13"><a href="datasets--simple-plots.html#cb28-13" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">type =</span> <span class="st">&quot;p&quot;</span>, <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="st">&quot;O&quot;</span>, <span class="fu">seq_len</span>(<span class="fu">nrow</span>(people))))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" alt="" width="864" /></p>
 <p>You can also manually specify axis ticks and tick labels. The labels can be rotated using parameters <code>xlas</code> and <code>ylas</code>, see the examples below. It is important though, that if you provide manual values for the tick labels you must also provide a vector of values with the positions the labels should be shown at. And, of course, the two vectors must
 have the same number of values.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="datasets--simple-plots.html#cb29-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
@@ -503,7 +511,7 @@ have the same number of values.</p>
 <span id="cb29-11"><a href="datasets--simple-plots.html#cb29-11" tabindex="-1"></a></span>
 <span id="cb29-12"><a href="datasets--simple-plots.html#cb29-12" tabindex="-1"></a><span class="co"># same but with rotation of the tick labels</span></span>
 <span id="cb29-13"><a href="datasets--simple-plots.html#cb29-13" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">yticks =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">70</span>, <span class="dv">85</span>), <span class="at">yticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Light&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Heavy&quot;</span>), <span class="at">ylas =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" alt="" width="864" /></p>
 <p>If both axis labels and rotated axis ticks have to be shown, you can adjust plot margins and position of the label using <code>par()</code> function and <code>mtext()</code> for positioning axis label manually.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="datasets--simple-plots.html#cb30-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb30-2"><a href="datasets--simple-plots.html#cb30-2" tabindex="-1"></a></span>
@@ -518,12 +526,12 @@ have the same number of values.</p>
 <span id="cb30-11"><a href="datasets--simple-plots.html#cb30-11" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">yticks =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">70</span>, <span class="dv">85</span>), <span class="at">yticklabels =</span> <span class="fu">c</span>(<span class="st">&quot;Light&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;Heavy&quot;</span>),</span>
 <span id="cb30-12"><a href="datasets--simple-plots.html#cb30-12" tabindex="-1"></a>        <span class="at">ylas =</span> <span class="dv">2</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>)</span>
 <span id="cb30-13"><a href="datasets--simple-plots.html#cb30-13" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Weight&quot;</span>, <span class="at">side =</span> <span class="dv">2</span>, <span class="at">line =</span> <span class="dv">5</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" alt="" width="864" /></p>
 <p>There are also a couple of other parameters, allowing to show/hide grid as well as show horizontal and vertical lines on the plot (axes limits will be adjusted correspondingly).</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="datasets--simple-plots.html#cb31-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb31-2"><a href="datasets--simple-plots.html#cb31-2" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">show.grid =</span> <span class="cn">FALSE</span>, <span class="at">show.lines =</span> <span class="fu">c</span>(<span class="dv">170</span>, <span class="dv">65</span>))</span>
 <span id="cb31-3"><a href="datasets--simple-plots.html#cb31-3" tabindex="-1"></a><span class="fu">mdaplot</span>(people, <span class="at">show.lines =</span> <span class="fu">c</span>(<span class="dv">220</span>, <span class="cn">NA</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" alt="" width="864" /></p>
 <p>Function <code>mdaplot()</code> can also return plot series data, which can be used for
 extra options. For example, in the case of a scatter plot you can add a confidence ellipse or convex
 hull for data points. To do this, points must be color grouped by a factor as shown below. For confidence ellipse you can specify the confidence level (default 0.95).</p>
@@ -539,7 +547,7 @@ hull for data points. To do this, points must be color grouped by a factor as sh
 <span id="cb32-10"><a href="datasets--simple-plots.html#cb32-10" tabindex="-1"></a><span class="co"># make a scatter plot grouping points by the factor and then show 90% confidence intervals</span></span>
 <span id="cb32-11"><a href="datasets--simple-plots.html#cb32-11" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">mdaplot</span>(people, <span class="at">cgroup =</span> g)</span>
 <span id="cb32-12"><a href="datasets--simple-plots.html#cb32-12" tabindex="-1"></a><span class="fu">plotConfidenceEllipse</span>(p, <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" alt="" width="864" /></p>
 <p>In case when number of data points is large (e.g. when dealing with images, where every pixel is a data point), using a density plot is a good alternative to conventional scatter plots. The plot does not show all data points but instead splits the whole plot space into small hexagonal regions and uses a color gradient for illustrating the density of the points in each region. This approach is known as <em>hexagonal binning</em>. To create a density plot simply use <code>type="d"</code>. You can also specify color map and number of bins along each axes (<code>nbins</code>).</p>
 <p>The code below shows an example of using density plots for 100000 data points with x and y values taken from normally distributed population.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="datasets--simple-plots.html#cb33-1" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100000</span>)</span>
@@ -551,7 +559,7 @@ hull for data points. To do this, points must be color grouped by a factor as sh
 <span id="cb33-7"><a href="datasets--simple-plots.html#cb33-7" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>, <span class="at">nbins =</span> <span class="dv">80</span>)</span>
 <span id="cb33-8"><a href="datasets--simple-plots.html#cb33-8" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>, <span class="at">colmap =</span> <span class="st">&quot;gray&quot;</span>)</span>
 <span id="cb33-9"><a href="datasets--simple-plots.html#cb33-9" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;d&quot;</span>, <span class="at">nbins =</span> <span class="dv">80</span>, <span class="at">colmap =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" alt="" width="864" /></p>
 </div>
 <div id="line-plots" class="section level3 unnumbered hasAnchor">
 <h3>Line plots<a href="datasets--simple-plots.html#line-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -571,11 +579,11 @@ hull for data points. To do this, points must be color grouped by a factor as sh
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="datasets--simple-plots.html#cb35-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
 <span id="cb35-2"><a href="datasets--simple-plots.html#cb35-2" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
 <span id="cb35-3"><a href="datasets--simple-plots.html#cb35-3" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;darkgray&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-27-1.png" alt="" width="864" /></p>
 <p>Most of the parameters described for scatter plots will work for the line plots as well. For example, you can colorize the lines by using a vector with some values (in the example below I use concentration of one of the chemical components).</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="datasets--simple-plots.html#cb36-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
 <span id="cb36-2"><a href="datasets--simple-plots.html#cb36-2" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">cgroup =</span> conc)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" alt="" width="864" /></p>
 <p>And of course you can use the attributes, allowing to provide manual x-values — <code>'xaxis.values'</code> (similar parameter for y-values is <code>'yaxis.values'</code>). In the example below we show the spectra using wavelength in nm and wavenumbers in inverse cm.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="datasets--simple-plots.html#cb37-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
 <span id="cb37-2"><a href="datasets--simple-plots.html#cb37-2" tabindex="-1"></a></span>
@@ -586,7 +594,7 @@ hull for data points. To do this, points must be color grouped by a factor as sh
 <span id="cb37-7"><a href="datasets--simple-plots.html#cb37-7" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;xaxis.name&quot;</span>) <span class="ot">=</span> <span class="st">&quot;Wavelength, nm&quot;</span></span>
 <span id="cb37-8"><a href="datasets--simple-plots.html#cb37-8" tabindex="-1"></a><span class="fu">attr</span>(spectra, <span class="st">&quot;xaxis.values&quot;</span>) <span class="ot">=</span> wavelength</span>
 <span id="cb37-9"><a href="datasets--simple-plots.html#cb37-9" tabindex="-1"></a><span class="fu">mdaplot</span>(spectra, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-29-1.png" alt="" width="864" /></p>
 <p>When you provide such data to any model methods (e.g. PCA, PLS, etc), then all variable related results (loadings, regression coefficients, etc.) will inherit this attribute and use it for making line plots.</p>
 </div>
 <div id="bar-and-errorbar-plots" class="section level3 unnumbered hasAnchor">
@@ -612,7 +620,7 @@ hull for data points. To do this, points must be color grouped by a factor as sh
 <span id="cb38-18"><a href="datasets--simple-plots.html#cb38-18" tabindex="-1"></a><span class="co"># make a bar plot with manual xtick labels, color and labels for data values</span></span>
 <span id="cb38-19"><a href="datasets--simple-plots.html#cb38-19" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>, <span class="at">xticks =</span> <span class="fu">seq_len</span>(<span class="fu">ncol</span>(d)), <span class="at">xticklabels =</span> <span class="fu">colnames</span>(d), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
 <span id="cb38-20"><a href="datasets--simple-plots.html#cb38-20" tabindex="-1"></a>   <span class="at">show.labels =</span> <span class="cn">TRUE</span>, <span class="at">labels =</span> <span class="st">&quot;values&quot;</span>, <span class="at">xlas =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Variance, %&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" alt="" width="864" /></p>
 <p>As you can notice, the values from the second row were ignored, as bar plot always takes the first row.</p>
 <p>Errorbar plot, in contrast, always expects data to have two or three rows. The first row is the origin points of the error bars, the second row is the size of the bottom error bar and the third row is the size of the top error bar. If data has only two rows both parts will be symmetric relative to the origin.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="datasets--simple-plots.html#cb39-1" tabindex="-1"></a><span class="co"># generate some mean and standard deviation values and combine them as rows of a matrix</span></span>
@@ -632,7 +640,7 @@ hull for data points. To do this, points must be color grouped by a factor as sh
 <span id="cb39-15"><a href="datasets--simple-plots.html#cb39-15" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;e&quot;</span>)</span>
 <span id="cb39-16"><a href="datasets--simple-plots.html#cb39-16" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;e&quot;</span>, <span class="at">xticks =</span> <span class="fu">seq_len</span>(<span class="fu">ncol</span>(d)),</span>
 <span id="cb39-17"><a href="datasets--simple-plots.html#cb39-17" tabindex="-1"></a>   <span class="at">xticklabels =</span> <span class="fu">colnames</span>(d), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">xlas =</span> <span class="dv">2</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" alt="" width="864" /></p>
 <p>All simple plots can be combined together on the same axes. In this case, the first plot is created as usual and all other plots have to be created with option <code>show.axes = FALSE</code> as it is shown below. It must be noted that in this case axes limits have to be set manually when creating the first plot.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="datasets--simple-plots.html#cb40-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb40-2"><a href="datasets--simple-plots.html#cb40-2" tabindex="-1"></a></span>
@@ -641,7 +649,7 @@ hull for data points. To do this, points must be color grouped by a factor as sh
 <span id="cb40-5"><a href="datasets--simple-plots.html#cb40-5" tabindex="-1"></a></span>
 <span id="cb40-6"><a href="datasets--simple-plots.html#cb40-6" tabindex="-1"></a><span class="fu">mdaplot</span>(<span class="fu">mda.subset</span>(d, <span class="dv">1</span>), <span class="at">type =</span> <span class="st">&quot;o&quot;</span>)</span>
 <span id="cb40-7"><a href="datasets--simple-plots.html#cb40-7" tabindex="-1"></a><span class="fu">mdaplot</span>(d, <span class="at">type =</span> <span class="st">&quot;e&quot;</span>, <span class="at">show.axes =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="864" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-32-1.png" alt="" width="864" /></p>
 <p>In the next section we will discuss plots for several groups of objects (rows).</p>
 </div>
 </div>
@@ -693,7 +701,7 @@ gitbook.start({
     "link": null,
     "text": null
   },
-  "download": null,
+  "download": ["_main.pdf"],
   "search": {
     "engine": "fuse",
     "options": null

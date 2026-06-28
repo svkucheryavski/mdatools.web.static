@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Interoperability with web-applications | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — an R package for preprocessing, exploring and analysis of multivariate data. The package provides methods common in Chemometrics. The general idea of the package is to collect the popular chemometric methods and give a similar user interface for applying them to different datasets. So if a user knows how to make a model and visualize results for one method, they can easily do this for the other methods as well." />
-  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Interoperability with web-applications | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2025-03-06" />
+<meta name="date" content="2026-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -141,7 +141,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="" data-path="news.html"><a href="news.html"><i class="fa fa-check"></i>What is new</a>
 <ul>
-<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>5/03/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>26/06/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section-1"><i class="fa fa-check"></i>5/03/2026</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
@@ -232,6 +233,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="ddsimca--preprocessing.html"><a href="ddsimca--preprocessing.html"><i class="fa fa-check"></i>Using preprocessing</a></li>
 <li class="chapter" data-level="" data-path="ddsimca--iterop.html"><a href="ddsimca--iterop.html"><i class="fa fa-check"></i>Interoperability with web-application</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ddsimca3w.html"><a href="ddsimca3w.html"><i class="fa fa-check"></i>DD-SIMCA for 3-way data</a>
+<ul>
+<li class="chapter" data-level="" data-path="ddsimca3w--datasets.html"><a href="ddsimca3w--datasets.html"><i class="fa fa-check"></i>Prepare datasets</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--parafac.html"><a href="ddsimca3w--parafac.html"><i class="fa fa-check"></i>PARAFAC DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--tucker.html"><a href="ddsimca3w--tucker.html"><i class="fa fa-check"></i>Tucker DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--nonneg.html"><a href="ddsimca3w--nonneg.html"><i class="fa fa-check"></i>Imposing non-negativity</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -325,21 +333,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Interoperability with web-applications<a href="pls--interop.html#pls--interop" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Similar to preprocessing there is an interactive web-application, <a href="https://mda.tools/pls/">https://mda.tools/pls</a>, which lets you create PLS models and apply them to a new dataset in any modern browser. Any PLS model created using <code>pls()</code> can be saved into a JSON file and then be loaded into the <em>Project</em> tab of the web-application. Including preprocessing methods!</p>
 <p>Here is an example based on <em>Simdata</em>:</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="pls--interop.html#cb294-1" tabindex="-1"></a><span class="co"># define calibration set</span></span>
-<span id="cb294-2"><a href="pls--interop.html#cb294-2" tabindex="-1"></a>Xc <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
-<span id="cb294-3"><a href="pls--interop.html#cb294-3" tabindex="-1"></a>yc <span class="ot">=</span> simdata<span class="sc">$</span>conc.c[, <span class="dv">2</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb294-4"><a href="pls--interop.html#cb294-4" tabindex="-1"></a></span>
-<span id="cb294-5"><a href="pls--interop.html#cb294-5" tabindex="-1"></a><span class="co"># create a sequence of preprocessing methods</span></span>
-<span id="cb294-6"><a href="pls--interop.html#cb294-6" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb294-7"><a href="pls--interop.html#cb294-7" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;savgol&quot;</span>, <span class="at">width =</span> <span class="dv">11</span>, <span class="at">porder =</span> <span class="dv">2</span>, <span class="at">dorder =</span> <span class="dv">2</span>),</span>
-<span id="cb294-8"><a href="pls--interop.html#cb294-8" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;varsel&quot;</span>, <span class="at">var.ind =</span> <span class="dv">20</span><span class="sc">:</span><span class="dv">120</span>)</span>
-<span id="cb294-9"><a href="pls--interop.html#cb294-9" tabindex="-1"></a>)</span>
-<span id="cb294-10"><a href="pls--interop.html#cb294-10" tabindex="-1"></a></span>
-<span id="cb294-11"><a href="pls--interop.html#cb294-11" tabindex="-1"></a><span class="co"># create a PCA model with preprocessing as a part of the model</span></span>
-<span id="cb294-12"><a href="pls--interop.html#cb294-12" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">6</span>, <span class="at">prep =</span> p)</span></code></pre></div>
-<pre><code>## Warning in selectCompNum.pls(model, selcrit = ncomp.selcrit): No validation results were found.</code></pre>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="pls--interop.html#cb296-1" tabindex="-1"></a><span class="co"># save the model to JSON file</span></span>
-<span id="cb296-2"><a href="pls--interop.html#cb296-2" tabindex="-1"></a><span class="fu">writeJSON</span>(m, <span class="st">&quot;pls-model.json&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="pls--interop.html#cb334-1" tabindex="-1"></a><span class="co"># define calibration set</span></span>
+<span id="cb334-2"><a href="pls--interop.html#cb334-2" tabindex="-1"></a>Xc <span class="ot">=</span> simdata<span class="sc">$</span>spectra.c</span>
+<span id="cb334-3"><a href="pls--interop.html#cb334-3" tabindex="-1"></a>yc <span class="ot">=</span> simdata<span class="sc">$</span>conc.c[, <span class="dv">2</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb334-4"><a href="pls--interop.html#cb334-4" tabindex="-1"></a></span>
+<span id="cb334-5"><a href="pls--interop.html#cb334-5" tabindex="-1"></a><span class="co"># create a sequence of preprocessing methods</span></span>
+<span id="cb334-6"><a href="pls--interop.html#cb334-6" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb334-7"><a href="pls--interop.html#cb334-7" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;savgol&quot;</span>, <span class="at">width =</span> <span class="dv">11</span>, <span class="at">porder =</span> <span class="dv">2</span>, <span class="at">dorder =</span> <span class="dv">2</span>),</span>
+<span id="cb334-8"><a href="pls--interop.html#cb334-8" tabindex="-1"></a>   <span class="fu">prep</span>(<span class="st">&quot;varsel&quot;</span>, <span class="at">var.ind =</span> <span class="dv">20</span><span class="sc">:</span><span class="dv">120</span>)</span>
+<span id="cb334-9"><a href="pls--interop.html#cb334-9" tabindex="-1"></a>)</span>
+<span id="cb334-10"><a href="pls--interop.html#cb334-10" tabindex="-1"></a></span>
+<span id="cb334-11"><a href="pls--interop.html#cb334-11" tabindex="-1"></a><span class="co"># create a PCA model with preprocessing as a part of the model</span></span>
+<span id="cb334-12"><a href="pls--interop.html#cb334-12" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">6</span>, <span class="at">prep =</span> p)</span></code></pre></div>
+<pre><code>## Warning in selectCompNum.pls(model, selcrit = ncomp.selcrit): No validation
+## results were found.</code></pre>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="pls--interop.html#cb336-1" tabindex="-1"></a><span class="co"># save the model to JSON file</span></span>
+<span id="cb336-2"><a href="pls--interop.html#cb336-2" tabindex="-1"></a><span class="fu">writeJSON</span>(m, <span class="st">&quot;pls-model.json&quot;</span>)</span></code></pre></div>
 <p>If you run the code on your computer you will see a new <code>pls-model.json</code> file created in the working directory. Now open <a href="https://mda.tools/pls/">https://mda.tools/pls</a> in your browser, select tab <em>Project</em> and load the file with the model. You will see something similar to the following:</p>
 <div class="float" id="id">
 <img src="images/pls-screenshot.png" class="class" width="600" alt="Screenshot with PLS model loaded to mda.tools/pls" />
@@ -347,12 +356,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>After that you can upload <a href="./files/simdata_pls.csv">dataset</a> and see the result of projecting it to the PLS model directly in the app.</p>
 <p>Likewise, any PLS model created in the application can be saved into a JSON file and loaded into R, so you can use it via <code>predict()</code>. For example <a href="./files/pls-model-fromweb.json">this JSON file</a> I created using the <em>Train</em> tab of the app and <em>Simdata</em>. It contains a PLS model on data with a preprocessing chain that includes SG smoothing with first derivative, trimming tails, and mean centering. Download it to your working directory and run the following code (here I assume you already have <code>Xc</code> and <code>yc</code> matrices from the previous blocks of code):</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="pls--interop.html#cb297-1" tabindex="-1"></a><span class="co"># load preprocessing model from JSON file</span></span>
-<span id="cb297-2"><a href="pls--interop.html#cb297-2" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">readJSON</span>(<span class="st">&quot;pls-model-fromweb.json&quot;</span>)</span>
-<span id="cb297-3"><a href="pls--interop.html#cb297-3" tabindex="-1"></a></span>
-<span id="cb297-4"><a href="pls--interop.html#cb297-4" tabindex="-1"></a><span class="co"># apply it to Xc</span></span>
-<span id="cb297-5"><a href="pls--interop.html#cb297-5" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">predict</span>(m, Xc, yc)</span>
-<span id="cb297-6"><a href="pls--interop.html#cb297-6" tabindex="-1"></a><span class="fu">summary</span>(r)</span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="pls--interop.html#cb337-1" tabindex="-1"></a><span class="co"># load preprocessing model from JSON file</span></span>
+<span id="cb337-2"><a href="pls--interop.html#cb337-2" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">readJSON</span>(<span class="st">&quot;pls-model-fromweb.json&quot;</span>)</span>
+<span id="cb337-3"><a href="pls--interop.html#cb337-3" tabindex="-1"></a></span>
+<span id="cb337-4"><a href="pls--interop.html#cb337-4" tabindex="-1"></a><span class="co"># apply it to Xc</span></span>
+<span id="cb337-5"><a href="pls--interop.html#cb337-5" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">predict</span>(m, Xc, yc)</span>
+<span id="cb337-6"><a href="pls--interop.html#cb337-6" tabindex="-1"></a><span class="fu">summary</span>(r)</span></code></pre></div>
 <pre><code>## 
 ## PLS regression results (class plsres) summary
 ## Info: 
@@ -372,11 +381,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Comp 10    0.002      99.945    0.171      98.819 0.988 0.016 0.988    0  9.25
 ## Comp 11    0.002      99.947    0.141      98.960 0.990 0.015 0.990    0  9.86
 ## Comp 12    0.003      99.950    0.109      99.069 0.991 0.014 0.991    0 10.42</code></pre>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="pls--interop.html#cb299-1" tabindex="-1"></a><span class="co"># show plots</span></span>
-<span id="cb299-2"><a href="pls--interop.html#cb299-2" tabindex="-1"></a><span class="fu">plot</span>(r)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-193-1.png" width="864" /></p>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="pls--interop.html#cb339-1" tabindex="-1"></a><span class="co"># show plots</span></span>
+<span id="cb339-2"><a href="pls--interop.html#cb339-2" tabindex="-1"></a><span class="fu">plot</span>(r)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-217-1.png" alt="" width="864" /></p>
 <p>There is also a limitation though, model loaded from JSON file created by the web-application does not contain calibration results, it can only be used for predictions:</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="pls--interop.html#cb300-1" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="pls--interop.html#cb340-1" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## PLS model (class pls) summary
 ## -------------------------------
@@ -389,10 +398,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  - varsel: var.ind = 13:132</code></pre>
 <pre><code>## Objects with results not found (most probably this model is loaded from web-application).</code></pre>
 <p>Most of the plots, which rely on calibration set results will not work with such model object and give you the same message as above. However plots, which are only based on model outcomes, such as loadings, weights and regression coefficients are available:</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="pls--interop.html#cb303-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb303-2"><a href="pls--interop.html#cb303-2" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m)</span>
-<span id="cb303-3"><a href="pls--interop.html#cb303-3" tabindex="-1"></a><span class="fu">plotWeights</span>(m)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-195-1.png" width="864" /></p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="pls--interop.html#cb343-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb343-2"><a href="pls--interop.html#cb343-2" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m)</span>
+<span id="cb343-3"><a href="pls--interop.html#cb343-3" tabindex="-1"></a><span class="fu">plotWeights</span>(m)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-219-1.png" alt="" width="864" /></p>
 
 </div>
 <!-- </div> -->
@@ -444,7 +453,7 @@ gitbook.start({
     "link": null,
     "text": null
   },
-  "download": null,
+  "download": ["_main.pdf"],
   "search": {
     "engine": "fuse",
     "options": null

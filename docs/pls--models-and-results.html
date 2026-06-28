@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Models and results | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — an R package for preprocessing, exploring and analysis of multivariate data. The package provides methods common in Chemometrics. The general idea of the package is to collect the popular chemometric methods and give a similar user interface for applying them to different datasets. So if a user knows how to make a model and visualize results for one method, they can easily do this for the other methods as well." />
-  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Models and results | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2025-03-06" />
+<meta name="date" content="2026-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -141,7 +141,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="" data-path="news.html"><a href="news.html"><i class="fa fa-check"></i>What is new</a>
 <ul>
-<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>5/03/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>26/06/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section-1"><i class="fa fa-check"></i>5/03/2026</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
@@ -232,6 +233,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="ddsimca--preprocessing.html"><a href="ddsimca--preprocessing.html"><i class="fa fa-check"></i>Using preprocessing</a></li>
 <li class="chapter" data-level="" data-path="ddsimca--iterop.html"><a href="ddsimca--iterop.html"><i class="fa fa-check"></i>Interoperability with web-application</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ddsimca3w.html"><a href="ddsimca3w.html"><i class="fa fa-check"></i>DD-SIMCA for 3-way data</a>
+<ul>
+<li class="chapter" data-level="" data-path="ddsimca3w--datasets.html"><a href="ddsimca3w--datasets.html"><i class="fa fa-check"></i>Prepare datasets</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--parafac.html"><a href="ddsimca3w--parafac.html"><i class="fa fa-check"></i>PARAFAC DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--tucker.html"><a href="ddsimca3w--tucker.html"><i class="fa fa-check"></i>Tucker DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--nonneg.html"><a href="ddsimca3w--nonneg.html"><i class="fa fa-check"></i>Imposing non-negativity</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -327,20 +335,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="model-calibration-1" class="section level3 unnumbered hasAnchor">
 <h3>Model calibration<a href="pls--models-and-results.html#model-calibration-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s use the same <em>People</em> data and create a PLS-model for prediction of <em>Shoesize</em> (column number four) using other 11 variables as predictors. As usual, we start with preparing datasets (we will also split the data into calibration and test subsets):</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="pls--models-and-results.html#cb214-1" tabindex="-1"></a><span class="fu">library</span>(mdatools)</span>
-<span id="cb214-2"><a href="pls--models-and-results.html#cb214-2" tabindex="-1"></a><span class="fu">data</span>(people)</span>
-<span id="cb214-3"><a href="pls--models-and-results.html#cb214-3" tabindex="-1"></a></span>
-<span id="cb214-4"><a href="pls--models-and-results.html#cb214-4" tabindex="-1"></a>idx <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">4</span>, <span class="dv">32</span>, <span class="dv">4</span>)</span>
-<span id="cb214-5"><a href="pls--models-and-results.html#cb214-5" tabindex="-1"></a>Xc <span class="ot">=</span> people[<span class="sc">-</span>idx, <span class="sc">-</span><span class="dv">4</span>]</span>
-<span id="cb214-6"><a href="pls--models-and-results.html#cb214-6" tabindex="-1"></a>yc <span class="ot">=</span> people[<span class="sc">-</span>idx, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb214-7"><a href="pls--models-and-results.html#cb214-7" tabindex="-1"></a>Xt <span class="ot">=</span> people[idx, <span class="sc">-</span><span class="dv">4</span>]</span>
-<span id="cb214-8"><a href="pls--models-and-results.html#cb214-8" tabindex="-1"></a>yt <span class="ot">=</span> people[idx, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="pls--models-and-results.html#cb254-1" tabindex="-1"></a><span class="fu">library</span>(mdatools)</span>
+<span id="cb254-2"><a href="pls--models-and-results.html#cb254-2" tabindex="-1"></a><span class="fu">data</span>(people)</span>
+<span id="cb254-3"><a href="pls--models-and-results.html#cb254-3" tabindex="-1"></a></span>
+<span id="cb254-4"><a href="pls--models-and-results.html#cb254-4" tabindex="-1"></a>idx <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">4</span>, <span class="dv">32</span>, <span class="dv">4</span>)</span>
+<span id="cb254-5"><a href="pls--models-and-results.html#cb254-5" tabindex="-1"></a>Xc <span class="ot">=</span> people[<span class="sc">-</span>idx, <span class="sc">-</span><span class="dv">4</span>]</span>
+<span id="cb254-6"><a href="pls--models-and-results.html#cb254-6" tabindex="-1"></a>yc <span class="ot">=</span> people[<span class="sc">-</span>idx, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb254-7"><a href="pls--models-and-results.html#cb254-7" tabindex="-1"></a>Xt <span class="ot">=</span> people[idx, <span class="sc">-</span><span class="dv">4</span>]</span>
+<span id="cb254-8"><a href="pls--models-and-results.html#cb254-8" tabindex="-1"></a>yt <span class="ot">=</span> people[idx, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span></code></pre></div>
 <p>So <code>Xc</code> and <code>yc</code> are predictors and response values for calibration subset. Now let’s calibrate the model and show an information about the model object:</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="pls--models-and-results.html#cb215-1" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">info =</span> <span class="st">&quot;Shoesize prediction model&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning in selectCompNum.pls(model, selcrit = ncomp.selcrit): No validation results were found.</code></pre>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="pls--models-and-results.html#cb255-1" tabindex="-1"></a>m <span class="ot">=</span> <span class="fu">pls</span>(Xc, yc, <span class="dv">7</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">info =</span> <span class="st">&quot;Shoesize prediction model&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in selectCompNum.pls(model, selcrit = ncomp.selcrit): No validation
+## results were found.</code></pre>
 <p>You can notice that the calibration succeeded but there is also a warning about lack of validation results. For supervised models, which have complexity parameter (in this case — number of components), doing proper validation is important as it helps to find the optimal complexity. When you calibrate a PLS model the calibration also tries to find the optimal number (details will be discussed later in this chapter) and this needs some validation. How to do proper validation of PLS models is discussed in the next section.</p>
 <p>Here is an info for the model object:</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="pls--models-and-results.html#cb217-1" tabindex="-1"></a><span class="fu">print</span>(m)</span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="pls--models-and-results.html#cb257-1" tabindex="-1"></a><span class="fu">print</span>(m)</span></code></pre></div>
 <pre><code>## 
 ## PLS model (class pls)
 ## 
@@ -361,7 +370,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="result-object" class="section level4 unnumbered hasAnchor">
 <h4>Result object<a href="pls--models-and-results.html#result-object" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Similar to PCA, model object contains a list with result objects (<code>res</code>), obtained using calibration set (<code>cal</code>), cross-validation (<code>cv</code>) and test set validation (<code>test</code>). All three have class <code>plsres</code>, here is how <code>res$cal</code> looks like:</p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="pls--models-and-results.html#cb219-1" tabindex="-1"></a><span class="fu">print</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal)</span></code></pre></div>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="pls--models-and-results.html#cb259-1" tabindex="-1"></a><span class="fu">print</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal)</span></code></pre></div>
 <pre><code>## 
 ## PLS results (class plsres)
 ## 
@@ -380,7 +389,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ydecomp - decomposition of y values (ldecomp object)
 ##  $xdecomp - decomposition of x values (ldecomp object)</code></pre>
 <p>The <code>xdecomp</code> and <code>ydecomp</code> are objects similar to <code>pcares</code>, they contain scores, residuals and variances for decomposition of X and Y correspondingly.</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="pls--models-and-results.html#cb221-1" tabindex="-1"></a><span class="fu">print</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>xdecomp)</span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="pls--models-and-results.html#cb261-1" tabindex="-1"></a><span class="fu">print</span>(m<span class="sc">$</span>res<span class="sc">$</span>cal<span class="sc">$</span>xdecomp)</span></code></pre></div>
 <pre><code>## 
 ## Results of data decomposition (class ldecomp).
 ## 
@@ -393,8 +402,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $cumexpvar - cumulative explained variance</code></pre>
 <p>Other fields are mostly various performance statistics, including slope, coefficient of determination (R<sup>2</sup>), bias, and root mean squared error (RMSE). Besides that, the results also include reference y-values and an array with predicted y-values. The array has dimension <em>nObjects x nComponents x nResponses</em>.</p>
 <p>PLS predictions for a new set can be obtained using method <code>predict</code>:</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="pls--models-and-results.html#cb223-1" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">predict</span>(m, Xt, yt)</span>
-<span id="cb223-2"><a href="pls--models-and-results.html#cb223-2" tabindex="-1"></a><span class="fu">print</span>(res)</span></code></pre></div>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="pls--models-and-results.html#cb263-1" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">predict</span>(m, Xt, yt)</span>
+<span id="cb263-2"><a href="pls--models-and-results.html#cb263-2" tabindex="-1"></a><span class="fu">print</span>(res)</span></code></pre></div>
 <pre><code>## 
 ## PLS results (class plsres)
 ## 
@@ -464,7 +473,7 @@ gitbook.start({
     "link": null,
     "text": null
   },
-  "download": null,
+  "download": ["_main.pdf"],
   "search": {
     "engine": "fuse",
     "options": null

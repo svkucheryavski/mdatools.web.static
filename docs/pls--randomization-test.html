@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Randomization test | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — an R package for preprocessing, exploring and analysis of multivariate data. The package provides methods common in Chemometrics. The general idea of the package is to collect the popular chemometric methods and give a similar user interface for applying them to different datasets. So if a user knows how to make a model and visualize results for one method, they can easily do this for the other methods as well." />
-  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Randomization test | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2025-03-06" />
+<meta name="date" content="2026-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -141,7 +141,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="" data-path="news.html"><a href="news.html"><i class="fa fa-check"></i>What is new</a>
 <ul>
-<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>5/03/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>26/06/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section-1"><i class="fa fa-check"></i>5/03/2026</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
@@ -232,6 +233,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="ddsimca--preprocessing.html"><a href="ddsimca--preprocessing.html"><i class="fa fa-check"></i>Using preprocessing</a></li>
 <li class="chapter" data-level="" data-path="ddsimca--iterop.html"><a href="ddsimca--iterop.html"><i class="fa fa-check"></i>Interoperability with web-application</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ddsimca3w.html"><a href="ddsimca3w.html"><i class="fa fa-check"></i>DD-SIMCA for 3-way data</a>
+<ul>
+<li class="chapter" data-level="" data-path="ddsimca3w--datasets.html"><a href="ddsimca3w--datasets.html"><i class="fa fa-check"></i>Prepare datasets</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--parafac.html"><a href="ddsimca3w--parafac.html"><i class="fa fa-check"></i>PARAFAC DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--tucker.html"><a href="ddsimca3w--tucker.html"><i class="fa fa-check"></i>Tucker DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--nonneg.html"><a href="ddsimca3w--nonneg.html"><i class="fa fa-check"></i>Imposing non-negativity</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -327,13 +335,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If a component is important, then the covariance for non-permuted data should be larger than the covariance for permuted data and therefore the value for <code>alpha</code> will be quite small (there is still a small chance to get similar covariance). This makes <code>alpha</code> very similar to p-value in a statistical test.</p>
 <p>The function <code>randtest()</code> calculates alpha for each component, the values can be observed using <code>summary()</code> or <code>plot()</code> functions. There are also several functions, allowing e.g. to show distribution of statistics and the critical value for each component.</p>
 <p>In the code example below most of the functions are shown.</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="pls--randomization-test.html#cb288-1" tabindex="-1"></a><span class="fu">data</span>(people)</span>
-<span id="cb288-2"><a href="pls--randomization-test.html#cb288-2" tabindex="-1"></a></span>
-<span id="cb288-3"><a href="pls--randomization-test.html#cb288-3" tabindex="-1"></a>y <span class="ot">=</span> people[, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb288-4"><a href="pls--randomization-test.html#cb288-4" tabindex="-1"></a>X <span class="ot">=</span> people[, <span class="sc">-</span><span class="dv">4</span>]</span>
-<span id="cb288-5"><a href="pls--randomization-test.html#cb288-5" tabindex="-1"></a></span>
-<span id="cb288-6"><a href="pls--randomization-test.html#cb288-6" tabindex="-1"></a>r <span class="ot">=</span> <span class="fu">randtest</span>(X, y, <span class="at">ncomp =</span> <span class="dv">5</span>, <span class="at">nperm =</span> <span class="dv">1000</span>, <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb288-7"><a href="pls--randomization-test.html#cb288-7" tabindex="-1"></a><span class="fu">summary</span>(r)</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="pls--randomization-test.html#cb328-1" tabindex="-1"></a><span class="fu">data</span>(people)</span>
+<span id="cb328-2"><a href="pls--randomization-test.html#cb328-2" tabindex="-1"></a></span>
+<span id="cb328-3"><a href="pls--randomization-test.html#cb328-3" tabindex="-1"></a>y <span class="ot">=</span> people[, <span class="dv">4</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb328-4"><a href="pls--randomization-test.html#cb328-4" tabindex="-1"></a>X <span class="ot">=</span> people[, <span class="sc">-</span><span class="dv">4</span>]</span>
+<span id="cb328-5"><a href="pls--randomization-test.html#cb328-5" tabindex="-1"></a></span>
+<span id="cb328-6"><a href="pls--randomization-test.html#cb328-6" tabindex="-1"></a>r <span class="ot">=</span> <span class="fu">randtest</span>(X, y, <span class="at">ncomp =</span> <span class="dv">5</span>, <span class="at">nperm =</span> <span class="dv">1000</span>, <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb328-7"><a href="pls--randomization-test.html#cb328-7" tabindex="-1"></a><span class="fu">summary</span>(r)</span></code></pre></div>
 <pre><code>## 
 ## Summary for permutation test results
 ## Number of permutations: 1000
@@ -341,15 +349,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Statistics and alpha values:
 ##              Comp 1    Comp 2    Comp 3    Comp 4     Comp 5
-## Alpha     0.0540000 0.0000000 0.0000000 0.0000000 0.13400000
+## Alpha     0.0550000 0.0000000 0.0000000 0.0000000 0.13000000
 ## Statistic 0.2403837 0.4349094 0.3571243 0.2678767 0.03603819</code></pre>
 <p>As you can see, <code>alpha</code> is very small for components 2–4 and then jumps up.</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="pls--randomization-test.html#cb290-1" tabindex="-1"></a><span class="fu">par</span>( <span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb290-2"><a href="pls--randomization-test.html#cb290-2" tabindex="-1"></a><span class="fu">plotHist</span>(r, <span class="at">ncomp =</span> <span class="dv">3</span>)</span>
-<span id="cb290-3"><a href="pls--randomization-test.html#cb290-3" tabindex="-1"></a><span class="fu">plotHist</span>(r, <span class="at">ncomp =</span> <span class="dv">5</span>)</span>
-<span id="cb290-4"><a href="pls--randomization-test.html#cb290-4" tabindex="-1"></a><span class="fu">plotCorr</span>(r, <span class="at">ncomp =</span> <span class="dv">3</span>)</span>
-<span id="cb290-5"><a href="pls--randomization-test.html#cb290-5" tabindex="-1"></a><span class="fu">plotCorr</span>(r, <span class="at">ncomp =</span> <span class="dv">5</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-189-1.png" width="864" /></p>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="pls--randomization-test.html#cb330-1" tabindex="-1"></a><span class="fu">par</span>( <span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb330-2"><a href="pls--randomization-test.html#cb330-2" tabindex="-1"></a><span class="fu">plotHist</span>(r, <span class="at">ncomp =</span> <span class="dv">3</span>)</span>
+<span id="cb330-3"><a href="pls--randomization-test.html#cb330-3" tabindex="-1"></a><span class="fu">plotHist</span>(r, <span class="at">ncomp =</span> <span class="dv">5</span>)</span>
+<span id="cb330-4"><a href="pls--randomization-test.html#cb330-4" tabindex="-1"></a><span class="fu">plotCorr</span>(r, <span class="at">ncomp =</span> <span class="dv">3</span>)</span>
+<span id="cb330-5"><a href="pls--randomization-test.html#cb330-5" tabindex="-1"></a><span class="fu">plotCorr</span>(r, <span class="at">ncomp =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-213-1.png" alt="" width="864" /></p>
 </div>
             </section>
 
@@ -399,7 +407,7 @@ gitbook.start({
     "link": null,
     "text": null
   },
-  "download": null,
+  "download": ["_main.pdf"],
   "search": {
     "engine": "fuse",
     "options": null

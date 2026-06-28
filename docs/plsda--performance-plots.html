@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Performance plots | Getting started with mdatools for R</title>
   <meta name="description" content="This is a user guide for mdatools — an R package for preprocessing, exploring and analysis of multivariate data. The package provides methods common in Chemometrics. The general idea of the package is to collect the popular chemometric methods and give a similar user interface for applying them to different datasets. So if a user knows how to make a model and visualize results for one method, they can easily do this for the other methods as well." />
-  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.47 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Performance plots | Getting started with mdatools for R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Sergey Kucheryavskiy" />
 
 
-<meta name="date" content="2025-03-06" />
+<meta name="date" content="2026-06-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -141,7 +141,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="" data-path="news.html"><a href="news.html"><i class="fa fa-check"></i>What is new</a>
 <ul>
-<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>5/03/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section"><i class="fa fa-check"></i>26/06/2026</a></li>
+<li class="chapter" data-level="" data-path="news.html"><a href="news.html#section-1"><i class="fa fa-check"></i>5/03/2026</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="overview.html"><a href="overview.html"><i class="fa fa-check"></i>Overview</a>
 <ul>
@@ -232,6 +233,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="ddsimca--preprocessing.html"><a href="ddsimca--preprocessing.html"><i class="fa fa-check"></i>Using preprocessing</a></li>
 <li class="chapter" data-level="" data-path="ddsimca--iterop.html"><a href="ddsimca--iterop.html"><i class="fa fa-check"></i>Interoperability with web-application</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="ddsimca3w.html"><a href="ddsimca3w.html"><i class="fa fa-check"></i>DD-SIMCA for 3-way data</a>
+<ul>
+<li class="chapter" data-level="" data-path="ddsimca3w--datasets.html"><a href="ddsimca3w--datasets.html"><i class="fa fa-check"></i>Prepare datasets</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--parafac.html"><a href="ddsimca3w--parafac.html"><i class="fa fa-check"></i>PARAFAC DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--tucker.html"><a href="ddsimca3w--tucker.html"><i class="fa fa-check"></i>Tucker DD-SIMCA</a></li>
+<li class="chapter" data-level="" data-path="ddsimca3w--nonneg.html"><a href="ddsimca3w--nonneg.html"><i class="fa fa-check"></i>Imposing non-negativity</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="pls.html"><a href="pls.html"><i class="fa fa-check"></i>Partial least squares regression</a>
 <ul>
@@ -324,19 +332,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="plsda--performance-plots" class="section level2 unnumbered hasAnchor">
 <h2>Performance plots<a href="plsda--performance-plots.html#plsda--performance-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>As in SIMCA you can show how sensitivity, specificity and total amount of misclassified samples depending on the number of components by using corresponding plots. In case of multiple-classes model you can also provide a class number to show the plot for (by default package will show the plot for overall statistic computed for all classes).</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="plsda--performance-plots.html#cb324-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>))</span>
-<span id="cb324-2"><a href="plsda--performance-plots.html#cb324-2" tabindex="-1"></a><span class="fu">plotMisclassified</span>(m.all, <span class="at">nc =</span> <span class="dv">2</span>)</span>
-<span id="cb324-3"><a href="plsda--performance-plots.html#cb324-3" tabindex="-1"></a><span class="fu">plotMisclassified</span>(m.vir)</span>
-<span id="cb324-4"><a href="plsda--performance-plots.html#cb324-4" tabindex="-1"></a><span class="fu">plotSensitivity</span>(m.all, <span class="at">nc =</span> <span class="dv">2</span>)</span>
-<span id="cb324-5"><a href="plsda--performance-plots.html#cb324-5" tabindex="-1"></a><span class="fu">plotSensitivity</span>(m.vir)</span>
-<span id="cb324-6"><a href="plsda--performance-plots.html#cb324-6" tabindex="-1"></a><span class="fu">plotSpecificity</span>(m.all, <span class="at">nc =</span> <span class="dv">2</span>)</span>
-<span id="cb324-7"><a href="plsda--performance-plots.html#cb324-7" tabindex="-1"></a><span class="fu">plotSpecificity</span>(m.vir)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-209-1.png" width="864" /></p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="plsda--performance-plots.html#cb364-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>))</span>
+<span id="cb364-2"><a href="plsda--performance-plots.html#cb364-2" tabindex="-1"></a><span class="fu">plotMisclassified</span>(m.all, <span class="at">nc =</span> <span class="dv">2</span>)</span>
+<span id="cb364-3"><a href="plsda--performance-plots.html#cb364-3" tabindex="-1"></a><span class="fu">plotMisclassified</span>(m.vir)</span>
+<span id="cb364-4"><a href="plsda--performance-plots.html#cb364-4" tabindex="-1"></a><span class="fu">plotSensitivity</span>(m.all, <span class="at">nc =</span> <span class="dv">2</span>)</span>
+<span id="cb364-5"><a href="plsda--performance-plots.html#cb364-5" tabindex="-1"></a><span class="fu">plotSensitivity</span>(m.vir)</span>
+<span id="cb364-6"><a href="plsda--performance-plots.html#cb364-6" tabindex="-1"></a><span class="fu">plotSpecificity</span>(m.all, <span class="at">nc =</span> <span class="dv">2</span>)</span>
+<span id="cb364-7"><a href="plsda--performance-plots.html#cb364-7" tabindex="-1"></a><span class="fu">plotSpecificity</span>(m.vir)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-233-1.png" alt="" width="864" /></p>
 <p>As usual, you can also change type of plot to line or scatter-line, change colors, etc. All PLS regression plots, including RMSE, X and Y variance, etc. will also work smoothly with PLS-DA models or results. You can also show regression coefficients like in the example below. To show regression coefficients for particular class you need to provide its number using parameter <code>ny</code> (the reason we use <code>ny</code> and not <code>nc</code> here is that this plot is inherited from PLS model). So in our example both plots show regression coefficients for prediction of virginica objects (left obtained using multiple class model and right — using one class model).</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="plsda--performance-plots.html#cb325-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb325-2"><a href="plsda--performance-plots.html#cb325-2" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m.all, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">ny =</span> <span class="dv">3</span>)</span>
-<span id="cb325-3"><a href="plsda--performance-plots.html#cb325-3" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m.vir, <span class="at">ncomp =</span> <span class="dv">1</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-210-1.png" width="864" /></p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="plsda--performance-plots.html#cb365-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb365-2"><a href="plsda--performance-plots.html#cb365-2" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m.all, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">ny =</span> <span class="dv">3</span>)</span>
+<span id="cb365-3"><a href="plsda--performance-plots.html#cb365-3" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m.vir, <span class="at">ncomp =</span> <span class="dv">1</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-234-1.png" alt="" width="864" /></p>
 </div>
             </section>
 
@@ -386,7 +394,7 @@ gitbook.start({
     "link": null,
     "text": null
   },
-  "download": null,
+  "download": ["_main.pdf"],
   "search": {
     "engine": "fuse",
     "options": null
